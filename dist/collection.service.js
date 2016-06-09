@@ -27,7 +27,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
             CollectionService = (function () {
                 function CollectionService(http) {
                     this.http = http;
-                    this.collectionUrl = 'stubs/getAlbums.json';
+                    this.collectionUrl = 'stubs/allTracks.json';
                 }
                 CollectionService.prototype.getCollection = function () {
                     return this.http.get(this.collectionUrl)
@@ -39,7 +39,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
                     return body || {};
                 };
                 CollectionService.prototype.handleError = function (error) {
-                    var errorMessage = (error.message) ? error.message : error.status ? error.status + " - " + error.statusText : 'Server error';
+                    var errorMessage = (error.message) ? error.message : (error.status) ? error.status + " - " + error.statusText : 'Server error';
                     return Observable_1.Observable.throw(errorMessage);
                 };
                 CollectionService = __decorate([

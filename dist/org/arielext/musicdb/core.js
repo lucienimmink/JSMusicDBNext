@@ -25,6 +25,7 @@ System.register(['./models/Artist', './models/Album', './models/Track', './model
                     this.albums = {};
                     this.tracks = {};
                     this.letters = {};
+                    this.sortedLetters = [];
                     this.totals = {
                         artists: 0,
                         albums: 0,
@@ -70,6 +71,15 @@ System.register(['./models/Artist', './models/Album', './models/Track', './model
                         track.artist = artist;
                         track.album = album;
                         album.tracks.push(track);
+                        // group by discnumber
+                        var disc = track.disc;
+                        if (!album.discs[disc - 1]) {
+                            album.discs[disc - 1] = [];
+                            album.discs[disc - 1].push(track);
+                        }
+                        else {
+                            album.discs[disc - 1].push(track);
+                        }
                     });
                 };
                 musicdbcore.prototype.parseLine = function (line) {
@@ -108,7 +118,6 @@ System.register(['./models/Artist', './models/Album', './models/Track', './model
                     var start = new Date().getTime();
                     if (json.length) {
                         // this json is flat; all lines in the json is 1 track
-                        console.log("this json has " + json.length + " records");
                         for (var _i = 0, json_1 = json; _i < json_1.length; _i++) {
                             var line = json_1[_i];
                             this.parseLine(line);
@@ -118,6 +127,17 @@ System.register(['./models/Artist', './models/Album', './models/Track', './model
                         // this json is build up as an object; with nested data
                         this.parseTree(json.tree);
                     }
+                    // sort letters
+                    var sorted = Object.keys(this.letters).sort(function (a, b) {
+                        return (a < b) ? -1 : 1;
+                    });
+                    var t = [];
+                    var core = this;
+                    sorted.forEach(function (value, index) {
+                        t.push(core.letters[value]);
+                    });
+                    this.sortedLetters = t;
+                    // update parsing time
                     this.totals.parsingTime += (new Date().getTime() - start);
                 };
                 return musicdbcore;

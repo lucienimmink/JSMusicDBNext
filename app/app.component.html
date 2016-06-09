@@ -1,17 +1,2 @@
-<div class="row">
-  <div class="col-xs-24">
-    <ul class="nav nav-pills nav-justified">
-      <li *ngFor="let letter of letters">
-        <a href="#{{letter.url()}}">{{letter.letter}}</a>
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-24">
-    <h3>Sample: all artists in '{{letter}}'</h3>
-  </div>
-  <div class="panel panel-default col-xs-8 col-sm-6 col-md-4" *ngFor="let artist of artists">
-      <div class="panel-body">{{artist.name}}</div>
-  </div>
-</div>
+<letters #letter></letters>
+<router-outlet></router-outlet>

@@ -16,6 +16,7 @@ System.register(["./MediaSource"], function(exports_1, context_1) {
                     this.title = json.title;
                     this.source = new MediaSource_1.default(json);
                     this.disc = json.disc || this.guessBySource(json);
+                    this.number = json.number;
                 }
                 Track.prototype.guessBySource = function (json) {
                     var guessable = this.source.url;

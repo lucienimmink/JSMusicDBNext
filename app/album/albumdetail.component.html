@@ -1,0 +1,9 @@
+<div class="row">
+    <h2>{{album.name}}</h2>
+
+    <ul class="list-group" *ngFor="let disc of album.discs">
+        <li class="list-group-item active" *ngIf="album.discs.length > 1">Disc {{disc[0].disc}}</li>
+        <li class="list-group-item" *ngFor="let track of disc">{{track.number}} - {{track.title}} ({{track.duration}})</li>
+    </ul>
+
+</div>

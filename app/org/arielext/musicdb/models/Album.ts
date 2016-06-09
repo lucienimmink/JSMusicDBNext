@@ -7,6 +7,7 @@ export default class Album {
   sortName:string;
   artist:Artist;
   tracks:Array<Track> = [];
+  discs:Array<any> = [];
   year:number;
   art:string;
 

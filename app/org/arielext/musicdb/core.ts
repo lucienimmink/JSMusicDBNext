@@ -3,6 +3,7 @@ import Artist from './models/Artist';
 import Album from './models/Album';
 import Track from './models/Track';
 import Letter from './models/Letter';
+import * as _ from "lodash";
 
 const VERSION: string = "1.0.0";
 
@@ -12,6 +13,7 @@ export class musicdbcore {
     public albums: INameToValueMap = {};
     public tracks: INameToValueMap = {};
     public letters: INameToValueMap = {};
+    public sortedLetters:Array<Letter> = [];
 
     public totals: any = {
         artists: 0,
@@ -62,6 +64,14 @@ export class musicdbcore {
             track.artist = artist;
             track.album = album;
             album.tracks.push(track);
+            // group by discnumber
+            let disc = track.disc;
+            if (!album.discs[disc-1]) {
+                album.discs[disc-1] = [];
+                album.discs[disc-1].push(track);
+            } else {
+                album.discs[disc-1].push(track);
+            }
         });
     }
 
@@ -103,7 +113,6 @@ export class musicdbcore {
         let start:number = new Date().getTime();
         if (json.length) {
             // this json is flat; all lines in the json is 1 track
-            console.log(`this json has ${json.length} records`);
             for (let line of json) {
                 this.parseLine(line);
             }
@@ -111,6 +120,17 @@ export class musicdbcore {
             // this json is build up as an object; with nested data
             this.parseTree(json.tree);
         }
+        // sort letters
+        let sorted = Object.keys(this.letters).sort(function (a,b) {
+            return (a < b) ? -1 : 1;
+        });
+        let t = [];
+        let core = this;
+        sorted.forEach(function (value, index) {
+            t.push(core.letters[value]);
+        });
+        this.sortedLetters = t;
+        // update parsing time
         this.totals.parsingTime += (new Date().getTime() - start);
     }
 }

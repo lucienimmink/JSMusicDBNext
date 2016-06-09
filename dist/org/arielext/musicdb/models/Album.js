@@ -8,6 +8,7 @@ System.register([], function(exports_1, context_1) {
             Album = (function () {
                 function Album(json) {
                     this.tracks = [];
+                    this.discs = [];
                     this.name = json.album;
                     this.sortName = this.name.toUpperCase();
                     this.year = json.year;

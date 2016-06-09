@@ -11,6 +11,7 @@ export default class Track {
   duration: number;
   title: string;
   disc: number;
+  number: number;
 
   constructor(json: any) {
     this.id = json.id;
@@ -18,6 +19,7 @@ export default class Track {
     this.title = json.title;
     this.source = new MediaSource(json);
     this.disc = json.disc || this.guessBySource(json);
+    this.number = json.number;
   }
 
   private guessBySource(json: any): number {

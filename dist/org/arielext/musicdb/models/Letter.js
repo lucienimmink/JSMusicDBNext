@@ -12,7 +12,9 @@ System.register(["lodash"], function(exports_1, context_1) {
             Letter = (function () {
                 function Letter(json) {
                     this.artists = [];
-                    this.letter = this.getFirstLetterOf(json.letter || json.albumArtist || json.artist);
+                    this.letter = json.letter || this.getFirstLetterOf(json.albumArtist || json.artist);
+                    if (this.letter === "1")
+                        this.letter = "#";
                     this.escapedLetter = encodeURIComponent(this.letter);
                 }
                 ;

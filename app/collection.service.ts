@@ -6,7 +6,7 @@ import { Observable } from "rxjs/Observable";
 export class CollectionService {
   constructor (private http: Http) {}
 
-  private collectionUrl = 'stubs/getAlbums.json';
+  private collectionUrl = 'stubs/allTracks.json';
 
   getCollection(): Observable<any[]> {
     return this.http.get(this.collectionUrl)
@@ -19,7 +19,7 @@ export class CollectionService {
   }
 
   private handleError(error: any) {
-    let errorMessage = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    let errorMessage = (error.message) ? error.message : (error.status) ? `${error.status} - ${error.statusText}` : 'Server error';
     return Observable.throw(errorMessage);
   }
 }
