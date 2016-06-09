@@ -15,6 +15,8 @@ import './rxjs-operators';
 })
 export class AppComponent implements OnInit {
   private letters:Array<any>;
+  private letter:string = 'N';
+  private artists:Array<any>;
   constructor (private collectionService: CollectionService) {}
 
   ngOnInit() {
@@ -40,5 +42,6 @@ export class AppComponent implements OnInit {
       t.push(lettersObject[value]);
     });
     this.letters = t;
+    this.artists = core.letters[this.letter].sortAndReturnArtistsBy('name', 'asc');
   }
 }

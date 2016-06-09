@@ -28,6 +28,7 @@ System.register(["@angular/core", './org/arielext/musicdb/core', './collection.s
             AppComponent = (function () {
                 function AppComponent(collectionService) {
                     this.collectionService = collectionService;
+                    this.letter = 'N';
                 }
                 AppComponent.prototype.ngOnInit = function () {
                     this.getCollection();
@@ -49,6 +50,7 @@ System.register(["@angular/core", './org/arielext/musicdb/core', './collection.s
                         t.push(lettersObject[value]);
                     });
                     this.letters = t;
+                    this.artists = core.letters[this.letter].sortAndReturnArtistsBy('name', 'asc');
                 };
                 AppComponent = __decorate([
                     core_1.Component({
