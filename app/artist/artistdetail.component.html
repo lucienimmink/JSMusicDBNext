@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="albums && artist">
     <h2>{{artist.name}}</h2>
   <div class="panel panel-default col-xs-6 col-sm-4 col-md-3" *ngFor="let album of albums">
       <div class="panel-body" (click)="onSelect(album)">{{album.name}} ({{album.year}})</div>

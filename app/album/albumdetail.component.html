@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="album">
     <h2>{{album.name}}</h2>
 
     <ul class="list-group" *ngFor="let disc of album.discs">
