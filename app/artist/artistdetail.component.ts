@@ -2,24 +2,28 @@ import { Component, OnInit } from "@angular/core";
 import { Router, RouteParams } from '@angular/router-deprecated';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
+import { AlbumArt } from './../utils/albumart.component';
 import { CoreService } from './../core.service';
+import { AlbumComponent } from './../album/album.component';
 
 
 @Component({
-  templateUrl: 'app/artist/artistdetail.component.html'
+  templateUrl: 'app/artist/artistdetail.component.html',
+  directives: [ AlbumComponent ]
 })
 export class ArtistDetailComponent implements OnInit {
-  private artistName:string = '';
   private artist:any;
   private albums:Array<any> = [];
   
   constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams) {}
 
   ngOnInit() {
-    this.artistName = decodeURIComponent(this.routeParams.get('artist'));
+    let artistName = decodeURIComponent(this.routeParams.get('artist'));
     let core:musicdbcore = this.coreService.getCore();
-    this.artist = core.artists[this.artistName]
-    this.albums = this.artist.albums;
+    this.artist = core.artists[artistName];
+    if (this.artist) {
+      this.albums = this.artist.albums;
+    }
   }
 
   onSelect(album:any) {

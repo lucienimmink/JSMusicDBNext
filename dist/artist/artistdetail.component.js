@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './../core.service'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../album/album.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, core_service_1;
+    var core_1, router_deprecated_1, core_service_1, album_component_1;
     var ArtistDetailComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
             },
             function (core_service_1_1) {
                 core_service_1 = core_service_1_1;
+            },
+            function (album_component_1_1) {
+                album_component_1 = album_component_1_1;
             }],
         execute: function() {
             ArtistDetailComponent = (function () {
@@ -29,21 +32,23 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     this.coreService = coreService;
                     this.router = router;
                     this.routeParams = routeParams;
-                    this.artistName = '';
                     this.albums = [];
                 }
                 ArtistDetailComponent.prototype.ngOnInit = function () {
-                    this.artistName = decodeURIComponent(this.routeParams.get('artist'));
+                    var artistName = decodeURIComponent(this.routeParams.get('artist'));
                     var core = this.coreService.getCore();
-                    this.artist = core.artists[this.artistName];
-                    this.albums = this.artist.albums;
+                    this.artist = core.artists[artistName];
+                    if (this.artist) {
+                        this.albums = this.artist.albums;
+                    }
                 };
                 ArtistDetailComponent.prototype.onSelect = function (album) {
                     this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
                 };
                 ArtistDetailComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/artist/artistdetail.component.html'
+                        templateUrl: 'app/artist/artistdetail.component.html',
+                        directives: [album_component_1.AlbumComponent]
                     }), 
                     __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
                 ], ArtistDetailComponent);

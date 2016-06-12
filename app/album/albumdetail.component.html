@@ -1,9 +1,36 @@
-<div class="row" *ngIf="album">
-    <h2>{{album.name}}</h2>
-
-    <ul class="list-group" *ngFor="let disc of album.discs">
-        <li class="list-group-item active" *ngIf="album.discs.length > 1">Disc {{disc[0].disc}}</li>
-        <li class="list-group-item" *ngFor="let track of disc">{{track.number}} - {{track.title}} ({{track.duration}})</li>
-    </ul>
-
+<div class="albumdetail" *ngIf="album">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-no-gutter-right">
+            <albumart></albumart>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10 col-no-gutter-left">
+            <br />
+            <table class="table table-condensed table-striped">
+                <tr (click)="navigateToArtist(album.artist)">
+                    <td>Artist</td>
+                    <td>{{album.artist.name}}
+                </tr>
+                <tr>
+                    <td>Album</td>
+                    <td>{{album.name}}
+                </tr>
+                <tr>
+                    <td>Year</td>
+                    <td>{{album.year}}
+                </tr>
+                <tr>
+                    <td>Tracks</td>
+                    <td>{{album.tracks.length}}
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-group" *ngFor="let disc of album.discs">
+                <li class="list-group-item active" *ngIf="album.discs.length > 1">Disc {{disc[0].disc}}</li>
+                <li class="list-group-item" *ngFor="let track of disc">{{track.number}} - {{track.title}} ({{track.duration | timeFormat }})</li>
+            </ul>
+        </div>
+    </div>
 </div>

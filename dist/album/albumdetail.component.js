@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './../core.service'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../utils/albumart.component', './../timeformat.pipe'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, core_service_1;
+    var core_1, router_deprecated_1, core_service_1, albumart_component_1, timeformat_pipe_1;
     var AlbumDetailComponent;
     return {
         setters:[
@@ -22,6 +22,12 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
             },
             function (core_service_1_1) {
                 core_service_1 = core_service_1_1;
+            },
+            function (albumart_component_1_1) {
+                albumart_component_1 = albumart_component_1_1;
+            },
+            function (timeformat_pipe_1_1) {
+                timeformat_pipe_1 = timeformat_pipe_1_1;
             }],
         execute: function() {
             AlbumDetailComponent = (function () {
@@ -32,16 +38,33 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     this.albumName = '';
                 }
                 AlbumDetailComponent.prototype.ngOnInit = function () {
+                    var c = this;
                     this.albumName = decodeURIComponent(this.routeParams.get('album'));
                     var core = this.coreService.getCore();
                     this.album = core.albums[this.albumName];
+                    // avoid timing issue
+                    setTimeout(function () {
+                        if (c.albumart) {
+                            c.albumart.setAlbum(c.album);
+                        }
+                    }, 0);
                 };
                 AlbumDetailComponent.prototype.onSelect = function (track) {
                     // setup the player
                 };
+                AlbumDetailComponent.prototype.navigateToArtist = function (artist) {
+                    this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
+                };
+                __decorate([
+                    core_1.ViewChild(albumart_component_1.AlbumArt), 
+                    __metadata('design:type', albumart_component_1.AlbumArt)
+                ], AlbumDetailComponent.prototype, "albumart", void 0);
                 AlbumDetailComponent = __decorate([
                     core_1.Component({
-                        templateUrl: 'app/album/albumdetail.component.html'
+                        templateUrl: 'app/album/albumdetail.component.html',
+                        pipes: [timeformat_pipe_1.TimeFormatPipe],
+                        directives: [albumart_component_1.AlbumArt],
+                        styleUrls: ['app/album/albumdetail.component.css']
                     }), 
                     __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
                 ], AlbumDetailComponent);

@@ -4,10 +4,12 @@ import { Router, RouteParams } from '@angular/router-deprecated';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
+import { ArtistComponent } from './../artist/artist.component';
 
 
 @Component({
-  templateUrl: 'app/letter/letterdetail.component.html'
+  templateUrl: 'app/letter/letterdetail.component.html',
+  directives: [ ArtistComponent ]
 })
 
 export class LetterDetailComponent implements OnInit {
@@ -19,7 +21,10 @@ export class LetterDetailComponent implements OnInit {
   ngOnInit() {
     this.letter = decodeURIComponent(this.routeParams.get('letter'));
     let core:musicdbcore = this.coreService.getCore();
-    this.artists = core.letters[this.letter].artists;
+    let coreletter = core.letters[this.letter];
+    if (coreletter) {
+      this.artists = coreletter.artists;
+    }
   }
   onSelect(artist:any) {
     this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);

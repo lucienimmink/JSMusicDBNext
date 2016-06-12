@@ -1,0 +1,14 @@
+.albumdetail >>> .albumart {
+    display: block;
+    width: 100%;
+}
+.albumdetail >>> .col-no-gutter-left {
+    padding-left: 0;
+}
+.albumdetail >>> .col-no-gutter-right {
+    padding-right: 0;
+}
+.albumdetail >>> .col-no-gutter {
+    padding-left: 0;
+    padding-right: 0;
+}
