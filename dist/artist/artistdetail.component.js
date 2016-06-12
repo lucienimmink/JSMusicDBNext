@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../album/album.component'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../album/album.component', './../utils/backgroundart.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, core_service_1, album_component_1;
+    var core_1, router_deprecated_1, core_service_1, album_component_1, backgroundart_directive_1;
     var ArtistDetailComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
             },
             function (album_component_1_1) {
                 album_component_1 = album_component_1_1;
+            },
+            function (backgroundart_directive_1_1) {
+                backgroundart_directive_1 = backgroundart_directive_1_1;
             }],
         execute: function() {
             ArtistDetailComponent = (function () {
@@ -39,7 +42,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     var core = this.coreService.getCore();
                     this.artist = core.artists[artistName];
                     if (this.artist) {
-                        this.albums = this.artist.albums;
+                        this.albums = this.artist.sortAndReturnAlbumsBy('year', 'desc');
                     }
                 };
                 ArtistDetailComponent.prototype.onSelect = function (album) {
@@ -49,7 +52,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     core_1.Component({
                         templateUrl: 'app/artist/artistdetail.component.html',
                         styleUrls: ['app/artist/artistdetail.component.css'],
-                        directives: [album_component_1.AlbumComponent]
+                        directives: [album_component_1.AlbumComponent, backgroundart_directive_1.BackgroundArtDirective]
                     }), 
                     __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
                 ], ArtistDetailComponent);

@@ -4,12 +4,13 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
 import { AlbumArt } from './../utils/albumart.component';
+import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
 
 @Component({
   templateUrl: 'app/album/albumdetail.component.html',
   pipes: [ TimeFormatPipe ],
-  directives: [ AlbumArt ],
+  directives: [ AlbumArt, BackgroundArtDirective ],
   styleUrls: [ 'app/album/albumdetail.component.css' ]
 })
 export class AlbumDetailComponent implements OnInit {

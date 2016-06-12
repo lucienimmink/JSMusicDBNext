@@ -1,6 +1,9 @@
 <div class="row" *ngIf="albums && artist">
-    <h2>{{artist.name}}</h2>
-    <div class="col-xs-6 col-sm-4 col-md-3 album-panel media-panel" *ngFor="let album of albums">
-      <mdbalbum [album]="album"></mdbalbum>
+  <div>
+    <div [backgroundArt]="artist" class="blurred-background"></div>
+    <div class="blurred-background-overlay"></div>
   </div>
+  <h2>{{artist.name}}</h2>
+  <div class="col-xs-6 col-sm-4 col-md-3 album-panel media-panel" *ngFor="let album of albums">
+    <mdbalbum [album]="album"></mdbalbum>
 </div>

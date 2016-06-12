@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../utils/albumart.component', './../timeformat.pipe'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../utils/albumart.component', './../utils/backgroundart.directive', './../timeformat.pipe'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, core_service_1, albumart_component_1, timeformat_pipe_1;
+    var core_1, router_deprecated_1, core_service_1, albumart_component_1, backgroundart_directive_1, timeformat_pipe_1;
     var AlbumDetailComponent;
     return {
         setters:[
@@ -25,6 +25,9 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
             },
             function (albumart_component_1_1) {
                 albumart_component_1 = albumart_component_1_1;
+            },
+            function (backgroundart_directive_1_1) {
+                backgroundart_directive_1 = backgroundart_directive_1_1;
             },
             function (timeformat_pipe_1_1) {
                 timeformat_pipe_1 = timeformat_pipe_1_1;
@@ -63,7 +66,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     core_1.Component({
                         templateUrl: 'app/album/albumdetail.component.html',
                         pipes: [timeformat_pipe_1.TimeFormatPipe],
-                        directives: [albumart_component_1.AlbumArt],
+                        directives: [albumart_component_1.AlbumArt, backgroundart_directive_1.BackgroundArtDirective],
                         styleUrls: ['app/album/albumdetail.component.css']
                     }), 
                     __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])

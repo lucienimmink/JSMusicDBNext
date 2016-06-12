@@ -4,12 +4,13 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
 import { AlbumComponent } from './../album/album.component';
+import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
 
 @Component({
   templateUrl: 'app/artist/artistdetail.component.html',
   styleUrls: [ 'app/artist/artistdetail.component.css' ],
-  directives: [ AlbumComponent ]
+  directives: [ AlbumComponent, BackgroundArtDirective ]
 })
 export class ArtistDetailComponent implements OnInit {
   private artist:any;
@@ -22,7 +23,7 @@ export class ArtistDetailComponent implements OnInit {
     let core:musicdbcore = this.coreService.getCore();
     this.artist = core.artists[artistName];
     if (this.artist) {
-      this.albums = this.artist.albums;
+      this.albums = this.artist.sortAndReturnAlbumsBy('year', 'desc');
     }
   }
 
