@@ -1,4 +1,4 @@
-System.register(["@angular/core", './artistart.service'], function(exports_1, context_1) {
+System.register(['@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,43 +10,31 @@ System.register(["@angular/core", './artistart.service'], function(exports_1, co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, artistart_service_1;
-    var ArtistArt;
+    var core_1;
+    var HighlightDirective;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (artistart_service_1_1) {
-                artistart_service_1 = artistart_service_1_1;
             }],
         execute: function() {
-            ArtistArt = (function () {
-                function ArtistArt(artistArtService) {
-                    this.artistArtService = artistArtService;
-                    this.artistart = {};
-                    this.artistart = {
-                        url: '/global/images/no-cover.png',
-                        name: 'unknown artist'
-                    };
+            HighlightDirective = (function () {
+                function HighlightDirective(el) {
+                    this.el = el.nativeElement;
                 }
-                ArtistArt.prototype.setArtist = function (artist) {
-                    var _this = this;
-                    this.artistart.name = artist.name;
-                    this.artistArtService.getArtistArt(artist.name)
-                        .subscribe(function (data) { return _this.artistart.url = data; }, function (error) { return console.log('error', error); });
-                };
-                ArtistArt = __decorate([
-                    core_1.Component({
-                        selector: 'artistart',
-                        templateUrl: 'app/utils/artistart.component.html',
-                        providers: [artistart_service_1.ArtistArtService]
+                __decorate([
+                    core_1.Input('artist'), 
+                    __metadata('design:type', Object)
+                ], HighlightDirective.prototype, "artist", void 0);
+                HighlightDirective = __decorate([
+                    core_1.Directive({
+                        selector: '[artistart]'
                     }), 
-                    __metadata('design:paramtypes', [artistart_service_1.ArtistArtService])
-                ], ArtistArt);
-                return ArtistArt;
+                    __metadata('design:paramtypes', [core_1.ElementRef])
+                ], HighlightDirective);
+                return HighlightDirective;
             }());
-            exports_1("ArtistArt", ArtistArt);
+            exports_1("HighlightDirective", HighlightDirective);
         }
     }
 });

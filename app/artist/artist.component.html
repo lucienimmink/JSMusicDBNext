@@ -1,2 +1,6 @@
-<artistart></artistart> <br />
-{{artist.name}}
+<div [artistArt]="artist">
+    <div class="panel-info">
+        {{artist.name}} <br />
+        <span class="small muted">Albums: {{artist.albums.length}}</span>
+    </div>
+</div>

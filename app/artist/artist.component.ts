@@ -1,27 +1,13 @@
-import { Component, ViewChild, OnInit, Input } from "@angular/core";
-import { ArtistArt } from './../utils/artistart.component';
+import { Component, ViewChild, Input } from "@angular/core";
+import { ArtistArtDirective } from './../utils/artistart.directive';
 
 @Component({
   selector: 'mdbartist',
   templateUrl: 'app/artist/artist.component.html',
-  directives: [ ArtistArt ],
+  directives: [ ArtistArtDirective ],
   styleUrls: [ 'app/artist/artist.component.css' ]
 })
-export class ArtistComponent implements OnInit {
-    @Input()
-    artist:any = {};
-
-    @ViewChild(ArtistArt)
- 	private artistart:ArtistArt;
-
+export class ArtistComponent {
+    @Input() artist:any = {};
     constructor() {}
-
-    ngOnInit() {
-        let c = this;
-        setTimeout(function () {
-            if (c.artist) {
-                c.artistart.setArtist(c.artist);
-            }
-        }, 0);
-    }
 }

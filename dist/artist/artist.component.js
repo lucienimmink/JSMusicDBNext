@@ -1,4 +1,4 @@
-System.register(["@angular/core", './../utils/artistart.component'], function(exports_1, context_1) {
+System.register(["@angular/core", './../utils/artistart.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,42 +10,30 @@ System.register(["@angular/core", './../utils/artistart.component'], function(ex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, artistart_component_1;
+    var core_1, artistart_directive_1;
     var ArtistComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (artistart_component_1_1) {
-                artistart_component_1 = artistart_component_1_1;
+            function (artistart_directive_1_1) {
+                artistart_directive_1 = artistart_directive_1_1;
             }],
         execute: function() {
             ArtistComponent = (function () {
                 function ArtistComponent() {
                     this.artist = {};
                 }
-                ArtistComponent.prototype.ngOnInit = function () {
-                    var c = this;
-                    setTimeout(function () {
-                        if (c.artist) {
-                            c.artistart.setArtist(c.artist);
-                        }
-                    }, 0);
-                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Object)
                 ], ArtistComponent.prototype, "artist", void 0);
-                __decorate([
-                    core_1.ViewChild(artistart_component_1.ArtistArt), 
-                    __metadata('design:type', artistart_component_1.ArtistArt)
-                ], ArtistComponent.prototype, "artistart", void 0);
                 ArtistComponent = __decorate([
                     core_1.Component({
                         selector: 'mdbartist',
                         templateUrl: 'app/artist/artist.component.html',
-                        directives: [artistart_component_1.ArtistArt],
+                        directives: [artistart_directive_1.ArtistArtDirective],
                         styleUrls: ['app/artist/artist.component.css']
                     }), 
                     __metadata('design:paramtypes', [])
