@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit, Input } from "@angular/core";
+import { Router } from '@angular/router-deprecated';
 import { AlbumArt } from './../utils/albumart.component';
 
 @Component({
@@ -14,15 +15,17 @@ export class AlbumComponent implements OnInit {
     @ViewChild(AlbumArt)
  	private albumart:AlbumArt;
 
-    constructor() {}
+    constructor(private router:Router) {}
 
     ngOnInit() {
         let c = this;
         setTimeout(function () {
-            console.log('nginit');
             if (c.album) {
                 c.albumart.setAlbum(c.album);
             }
         }, 0);
+    }
+    select() {
+        this.router.navigate(['Album', { letter: this.album.artist.letter.escapedLetter, artist: this.album.artist.sortName, album: this.album.sortName }]);
     }
 }

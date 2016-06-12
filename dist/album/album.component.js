@@ -1,4 +1,4 @@
-System.register(["@angular/core", './../utils/albumart.component'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../utils/albumart.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,29 +10,35 @@ System.register(["@angular/core", './../utils/albumart.component'], function(exp
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, albumart_component_1;
+    var core_1, router_deprecated_1, albumart_component_1;
     var AlbumComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (router_deprecated_1_1) {
+                router_deprecated_1 = router_deprecated_1_1;
+            },
             function (albumart_component_1_1) {
                 albumart_component_1 = albumart_component_1_1;
             }],
         execute: function() {
             AlbumComponent = (function () {
-                function AlbumComponent() {
+                function AlbumComponent(router) {
+                    this.router = router;
                     this.album = {};
                 }
                 AlbumComponent.prototype.ngOnInit = function () {
                     var c = this;
                     setTimeout(function () {
-                        console.log('nginit');
                         if (c.album) {
                             c.albumart.setAlbum(c.album);
                         }
                     }, 0);
+                };
+                AlbumComponent.prototype.select = function () {
+                    this.router.navigate(['Album', { letter: this.album.artist.letter.escapedLetter, artist: this.album.artist.sortName, album: this.album.sortName }]);
                 };
                 __decorate([
                     core_1.Input(), 
@@ -49,7 +55,7 @@ System.register(["@angular/core", './../utils/albumart.component'], function(exp
                         directives: [albumart_component_1.AlbumArt],
                         styleUrls: ['app/album/album.component.css']
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [router_deprecated_1.Router])
                 ], AlbumComponent);
                 return AlbumComponent;
             }());

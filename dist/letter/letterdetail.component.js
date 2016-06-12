@@ -49,7 +49,8 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                 LetterDetailComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/letter/letterdetail.component.html',
-                        directives: [artist_component_1.ArtistComponent]
+                        directives: [artist_component_1.ArtistComponent],
+                        styleUrls: ['app/letter/letterdetail.component.css']
                     }), 
                     __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
                 ], LetterDetailComponent);

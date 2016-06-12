@@ -1,4 +1,33 @@
-:host >>> img {
-    display: block;
+.panel-background {
+    position: relative;
     width: 100%;
+    height: 12vw;
+    overflow: hidden;
+    -webkit-transition: .1s ease-out;
+    -moz-transition: .1s ease-out;
+    -o-transition: .1s ease-out;
+    transition: .1s ease-out;
+    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+    background-size: cover;
+    background-position: center center;
+}
+.panel-background:hover, .panel-background:active {
+    transform: scale(1.01);
+}
+.panel-info {
+    color: #98d1ff;
+    position: absolute;
+    padding: 30px 10px 10px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0,transparent),color-stop(85%,#000));
+    background: linear-gradient(to bottom,rgba(0,0,0,0) 0,#000 85%);
+    margin: 0;
+    line-height: 1.05;
+    -webkit-transition: .1s ease-out;
+    -moz-transition: .1s ease-out;
+    -o-transition: .1s ease-out;
+    transition: .1s ease-out;
+    overflow: hidden;
 }

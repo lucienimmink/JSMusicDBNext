@@ -9,7 +9,8 @@ import { ArtistComponent } from './../artist/artist.component';
 
 @Component({
   templateUrl: 'app/letter/letterdetail.component.html',
-  directives: [ ArtistComponent ]
+  directives: [ ArtistComponent ],
+  styleUrls: [ 'app/letter/letterdetail.component.css' ]
 })
 
 export class LetterDetailComponent implements OnInit {

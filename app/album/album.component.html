@@ -1,2 +1,7 @@
-<albumart></albumart> <br />
-{{album.name}}
+<div class="panel-background" (click)="select()">
+    <albumart></albumart>
+    <div class="panel-info">
+        {{album.name}} <br />
+        <span class="small muted">Year: {{album.year}}</span>
+    </div>
+</div>
