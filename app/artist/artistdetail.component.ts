@@ -2,13 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { Router, RouteParams } from '@angular/router-deprecated';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
-import { AlbumArt } from './../utils/albumart.component';
 import { CoreService } from './../core.service';
 import { AlbumComponent } from './../album/album.component';
 
 
 @Component({
   templateUrl: 'app/artist/artistdetail.component.html',
+  styleUrls: [ 'app/artist/artistdetail.component.css' ],
   directives: [ AlbumComponent ]
 })
 export class ArtistDetailComponent implements OnInit {

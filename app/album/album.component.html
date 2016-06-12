@@ -1,5 +1,4 @@
-<div class="panel-background" (click)="select()">
-    <albumart></albumart>
+<div class="panel-background" (click)="select()" [backgroundArt]="album">
     <div class="panel-info">
         {{album.name}} <br />
         <span class="small muted">Year: {{album.year}}</span>

@@ -1,30 +1,18 @@
-import { Component, ViewChild, OnInit, Input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
-import { AlbumArt } from './../utils/albumart.component';
+import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
 @Component({
   selector: 'mdbalbum',
   templateUrl: 'app/album/album.component.html',
-  directives: [ AlbumArt ],
+  directives: [ BackgroundArtDirective ],
   styleUrls: [ 'app/album/album.component.css' ]
 })
-export class AlbumComponent implements OnInit {
-    @Input()
-    album:any = {};
-
-    @ViewChild(AlbumArt)
- 	private albumart:AlbumArt;
-
+export class AlbumComponent {
+    @Input() album:any = {};
+    
     constructor(private router:Router) {}
 
-    ngOnInit() {
-        let c = this;
-        setTimeout(function () {
-            if (c.album) {
-                c.albumart.setAlbum(c.album);
-            }
-        }, 0);
-    }
     select() {
         this.router.navigate(['Album', { letter: this.album.artist.letter.escapedLetter, artist: this.album.artist.sortName, album: this.album.sortName }]);
     }

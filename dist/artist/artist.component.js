@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './../utils/artistart.directive'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../utils/backgroundart.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../utils/arti
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, artistart_directive_1;
+    var core_1, router_deprecated_1, backgroundart_directive_1;
     var ArtistComponent;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(["@angular/core", '@angular/router-deprecated', './../utils/arti
             function (router_deprecated_1_1) {
                 router_deprecated_1 = router_deprecated_1_1;
             },
-            function (artistart_directive_1_1) {
-                artistart_directive_1 = artistart_directive_1_1;
+            function (backgroundart_directive_1_1) {
+                backgroundart_directive_1 = backgroundart_directive_1_1;
             }],
         execute: function() {
             ArtistComponent = (function () {
@@ -40,7 +40,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../utils/arti
                     core_1.Component({
                         selector: 'mdbartist',
                         templateUrl: 'app/artist/artist.component.html',
-                        directives: [artistart_directive_1.ArtistArtDirective],
+                        directives: [backgroundart_directive_1.BackgroundArtDirective],
                         styleUrls: ['app/artist/artist.component.css']
                     }), 
                     __metadata('design:paramtypes', [router_deprecated_1.Router])

@@ -14,12 +14,6 @@
 .panel-background:hover, .panel-background:active {
     transform: scale(1.01);
 }
-.panel-background >>> img {
-    border: 0 none;
-    display: block;
-    height: 100%;
-    margin: 0 auto;
-}
 .panel-info {
     color: #98d1ff;
     position: absolute;

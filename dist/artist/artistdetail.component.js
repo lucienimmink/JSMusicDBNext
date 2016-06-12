@@ -48,6 +48,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                 ArtistDetailComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/artist/artistdetail.component.html',
+                        styleUrls: ['app/artist/artistdetail.component.css'],
                         directives: [album_component_1.AlbumComponent]
                     }), 
                     __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])

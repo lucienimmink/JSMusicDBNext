@@ -5,14 +5,22 @@ import { Observable } from "rxjs/Observable";
 const NOIMAGE = 'global/images/no-cover.png';
 
 @Injectable()
-export class ArtistArtService {
+export class BackgroundArtService {
     
   constructor (private http: Http) {}
   
   private artistartUrl = 'https://api.spotify.com/v1/search?q={0}&type=artist&limit=1';
+	private albumartUrl = 'https://api.spotify.com/v1/search?q=album:{1}+artist:{0}&type=album&limit=1';
 
-  getArtistArt(artist:string): Observable<any[]> {
-    return this.http.get(this.artistartUrl.replace('{0}', artist))
+  getMediaArt(media:any): Observable<any[]> {
+    let mediaartUrl = '';
+    if (media.artist) {
+      mediaartUrl = this.albumartUrl.replace('{1}', media.name).replace('{0}', media.artist.name);
+    } else {
+      mediaartUrl = this.artistartUrl.replace('{0}', media.name);
+    }
+
+    return this.http.get(mediaartUrl)
       .map(this.extractData)
       .catch(this.handleError);
   }
