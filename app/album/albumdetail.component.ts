@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router, RouteParams } from '@angular/router-deprecated';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
@@ -18,7 +18,6 @@ export class AlbumDetailComponent implements OnInit {
   private albumName:string = '';
   private album:any;
 
-  @ViewChild(AlbumArt)
   private albumart:AlbumArt;
   
   constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService) {}
@@ -30,12 +29,6 @@ export class AlbumDetailComponent implements OnInit {
     this.album = core.albums[this.albumName];
     if (this.album) {
       this.pathService.announcePath({artist: this.album.artist, album:this.album});
-      // avoid timing issue
-      setTimeout(function () {
-        if (c.albumart) {
-          c.albumart.setAlbum(c.album);
-        }
-      }, 0);
     }
   }
 

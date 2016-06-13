@@ -51,12 +51,6 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     this.album = core.albums[this.albumName];
                     if (this.album) {
                         this.pathService.announcePath({ artist: this.album.artist, album: this.album });
-                        // avoid timing issue
-                        setTimeout(function () {
-                            if (c.albumart) {
-                                c.albumart.setAlbum(c.album);
-                            }
-                        }, 0);
                     }
                 };
                 AlbumDetailComponent.prototype.onSelect = function (track) {
@@ -65,10 +59,6 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                 AlbumDetailComponent.prototype.navigateToArtist = function (artist) {
                     this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
                 };
-                __decorate([
-                    core_1.ViewChild(albumart_component_1.AlbumArt), 
-                    __metadata('design:type', albumart_component_1.AlbumArt)
-                ], AlbumDetailComponent.prototype, "albumart", void 0);
                 AlbumDetailComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/album/albumdetail.component.html',

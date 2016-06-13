@@ -1,3 +1,6 @@
 body {
     padding-top: 105px;
 }
+.progress-bar{
+    width: 0;
+} 

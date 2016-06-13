@@ -1,4 +1,4 @@
-System.register(["@angular/core", './albumart.service'], function(exports_1, context_1) {
+System.register(["@angular/core", './../org/arielext/musicdb/models/Album', './albumart.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(["@angular/core", './albumart.service'], function(exports_1, con
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, albumart_service_1;
+    var core_1, Album_1, albumart_service_1;
     var AlbumArt;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (Album_1_1) {
+                Album_1 = Album_1_1;
             },
             function (albumart_service_1_1) {
                 albumart_service_1 = albumart_service_1_1;
@@ -30,12 +33,16 @@ System.register(["@angular/core", './albumart.service'], function(exports_1, con
                         name: 'unknown album'
                     };
                 }
-                AlbumArt.prototype.setAlbum = function (album) {
+                AlbumArt.prototype.ngOnInit = function () {
                     var _this = this;
-                    this.albumart.name = album.name;
-                    this.albumArtService.getAlbumArt(album.artist.name, album.name)
+                    this.albumart.name = this.album.name;
+                    this.albumArtService.getAlbumArt(this.album.artist.name, this.album.name)
                         .subscribe(function (data) { return _this.albumart.url = data; }, function (error) { return console.log('error', error); });
                 };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Album_1.default)
+                ], AlbumArt.prototype, "album", void 0);
                 AlbumArt = __decorate([
                     core_1.Component({
                         selector: 'albumart',

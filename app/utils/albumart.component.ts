@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import Album from './../org/arielext/musicdb/models/Album';
 import { AlbumArtService } from './albumart.service';
 
@@ -9,16 +9,16 @@ import { AlbumArtService } from './albumart.service';
 })
 export class AlbumArt {
     public albumart: any = {}
+    @Input() album:Album; 
     constructor(private albumArtService: AlbumArtService) {
         this.albumart = {
             url: '/global/images/no-cover.png',
             name: 'unknown album'
         }
     }
-
-    setAlbum(album: Album): void {
-        this.albumart.name = album.name;
-        this.albumArtService.getAlbumArt(album.artist.name, album.name)
+    ngOnInit() {
+        this.albumart.name = this.album.name;
+        this.albumArtService.getAlbumArt(this.album.artist.name, this.album.name)
             .subscribe(
             data => this.albumart.url = data,
             error => console.log('error', error)
