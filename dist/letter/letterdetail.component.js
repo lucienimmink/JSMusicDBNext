@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../artist/artist.component'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../core.service', './../artist/artist.component', './../utils/path.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, core_service_1, artist_component_1;
+    var core_1, router_deprecated_1, core_service_1, artist_component_1, path_service_1;
     var LetterDetailComponent;
     return {
         setters:[
@@ -25,13 +25,17 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
             },
             function (artist_component_1_1) {
                 artist_component_1 = artist_component_1_1;
+            },
+            function (path_service_1_1) {
+                path_service_1 = path_service_1_1;
             }],
         execute: function() {
             LetterDetailComponent = (function () {
-                function LetterDetailComponent(coreService, router, routeParams) {
+                function LetterDetailComponent(coreService, router, routeParams, pathService) {
                     this.coreService = coreService;
                     this.router = router;
                     this.routeParams = routeParams;
+                    this.pathService = pathService;
                     this.letter = 'N';
                     this.artists = [];
                 }
@@ -40,6 +44,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     var core = this.coreService.getCore();
                     var coreletter = core.letters[this.letter];
                     if (coreletter) {
+                        this.pathService.announcePath(null);
                         this.artists = coreletter.artists;
                     }
                 };
@@ -52,7 +57,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                         directives: [artist_component_1.ArtistComponent],
                         styleUrls: ['app/letter/letterdetail.component.css']
                     }), 
-                    __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
+                    __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams, path_service_1.PathService])
                 ], LetterDetailComponent);
                 return LetterDetailComponent;
             }());

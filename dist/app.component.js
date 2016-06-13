@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './collection.service', './core.service', './letter.component', './letter/letterdetail.component', './artist/artistdetail.component', './album/albumdetail.component', './rxjs-operators'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './collection.service', './core.service', './letter/letter.component', './letter/letterdetail.component', './artist/artistdetail.component', './album/albumdetail.component', './menu/topmenu.component', './utils/path.service', './rxjs-operators'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, collection_service_1, core_service_1, letter_component_1, letterdetail_component_1, artistdetail_component_1, albumdetail_component_1;
+    var core_1, router_deprecated_1, collection_service_1, core_service_1, letter_component_1, letterdetail_component_1, artistdetail_component_1, albumdetail_component_1, topmenu_component_1, path_service_1;
     var AppComponent;
     return {
         setters:[
@@ -38,6 +38,12 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
             function (albumdetail_component_1_1) {
                 albumdetail_component_1 = albumdetail_component_1_1;
             },
+            function (topmenu_component_1_1) {
+                topmenu_component_1 = topmenu_component_1_1;
+            },
+            function (path_service_1_1) {
+                path_service_1 = path_service_1_1;
+            },
             function (_1) {}],
         execute: function() {
             AppComponent = (function () {
@@ -45,6 +51,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
                     this.collectionService = collectionService;
                     this.coreService = coreService;
                     this.letter = 'N';
+                    this.path = "JSMusicDB Next";
                 }
                 AppComponent.prototype.ngOnInit = function () {
                     this.getCollection();
@@ -66,8 +73,8 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
                     core_1.Component({
                         selector: 'musicdb',
                         templateUrl: 'app/app.component.html',
-                        providers: [collection_service_1.CollectionService, core_service_1.CoreService],
-                        directives: [letter_component_1.LetterComponent, router_deprecated_1.ROUTER_DIRECTIVES]
+                        providers: [collection_service_1.CollectionService, core_service_1.CoreService, path_service_1.PathService],
+                        directives: [letter_component_1.LetterComponent, router_deprecated_1.ROUTER_DIRECTIVES, topmenu_component_1.TopMenuComponent]
                     }),
                     router_deprecated_1.RouteConfig([
                         { path: '/letter/:letter', name: 'Letter', component: letterdetail_component_1.LetterDetailComponent },

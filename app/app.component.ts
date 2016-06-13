@@ -5,10 +5,12 @@ import { Observable } from 'rxjs/Observable';
 
 import { CollectionService } from './collection.service';
 import { CoreService } from './core.service';
-import { LetterComponent } from './letter.component';
+import { LetterComponent } from './letter/letter.component';
 import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
+import { TopMenuComponent } from './menu/topmenu.component';
+import { PathService } from './utils/path.service';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -17,8 +19,8 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService],
-  directives: [LetterComponent, ROUTER_DIRECTIVES]
+  providers: [CollectionService, CoreService, PathService ],
+  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent ]
 })
 @RouteConfig([
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
@@ -28,6 +30,8 @@ import './rxjs-operators';
 export class AppComponent implements OnInit {
   private letter: string = 'N';
   private artists: Array<any>;
+
+  private path:string = "JSMusicDB Next";
 
   @ViewChild(LetterComponent)
   private letterComponent:LetterComponent;

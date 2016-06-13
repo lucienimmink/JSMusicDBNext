@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './core.service'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './../core.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -32,11 +32,6 @@ System.register(["@angular/core", '@angular/router-deprecated', './core.service'
                 LetterComponent.prototype.ngOnInit = function () {
                     var core = this.coreService.getCore();
                     this.letters = core.sortedLetters;
-                    var c = this;
-                    // TODO: how can this component know that the data from the service is loaded in the app component?
-                    setTimeout(function () {
-                        c.letters = core.sortedLetters;
-                    }, 1000);
                 };
                 LetterComponent.prototype.onSelect = function (letter) {
                     this.router.navigate(['Letter', { letter: letter.escapedLetter }]);
@@ -44,12 +39,12 @@ System.register(["@angular/core", '@angular/router-deprecated', './core.service'
                 LetterComponent = __decorate([
                     core_1.Component({
                         selector: 'letters',
-                        templateUrl: 'app/letter.component.html'
+                        templateUrl: 'app/letter/letter.component.html',
+                        styleUrls: ['app/letter/letter.component.css']
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof core_service_1.CoreService !== 'undefined' && core_service_1.CoreService) === 'function' && _a) || Object, router_deprecated_1.Router])
+                    __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router])
                 ], LetterComponent);
                 return LetterComponent;
-                var _a;
             }());
             exports_1("LetterComponent", LetterComponent);
         }

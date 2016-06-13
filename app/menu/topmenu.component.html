@@ -1,0 +1,11 @@
+<div class="menu-top">
+    <button class="btn btn-menu">
+        <span class="glyph glyph-hamburger" aria-hidden="true"></span>
+    </button>
+    <h1>
+        <span *ngIf="path && path.album">{{path.artist.name}} &bull; {{path.album.name}}</span>
+        <span *ngIf="path && !path.album">{{path.artist.name}}</span>
+        <span *ngIf="path && !path.artist">JSMusicDB Next</span>
+        <span *ngIf="!path">JSMusicDB Next</span>
+    </h1>
+</div>

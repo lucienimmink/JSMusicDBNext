@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
-import { musicdbcore } from './org/arielext/musicdb/core';
+import { musicdbcore } from './../org/arielext/musicdb/core';
 
-import { CoreService } from './core.service';
+import { CoreService } from './../core.service';
 
 
 @Component({
   selector: 'letters',
-  templateUrl: 'app/letter.component.html',
-  styleUrls: [ 'app/letter.component.css' ]
+  templateUrl: 'app/letter/letter.component.html',
+  styleUrls: [ 'app/letter/letter.component.css' ]
 })
 export class LetterComponent implements OnInit {
   private letters:Array<any>;

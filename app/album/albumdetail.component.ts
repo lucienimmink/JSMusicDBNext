@@ -6,6 +6,7 @@ import { CoreService } from './../core.service';
 import { AlbumArt } from './../utils/albumart.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
+import { PathService } from './../utils/path.service';
 
 @Component({
   templateUrl: 'app/album/albumdetail.component.html',
@@ -20,19 +21,22 @@ export class AlbumDetailComponent implements OnInit {
   @ViewChild(AlbumArt)
   private albumart:AlbumArt;
   
-  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams) {}
+  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService) {}
 
   ngOnInit() {
     let c = this;
     this.albumName = decodeURIComponent(this.routeParams.get('album'));
     let core:musicdbcore = this.coreService.getCore();
     this.album = core.albums[this.albumName];
-    // avoid timing issue
-    setTimeout(function () {
-      if (c.albumart) {
-        c.albumart.setAlbum(c.album);
-      }
-    }, 0);
+    if (this.album) {
+      this.pathService.announcePath({artist: this.album.artist, album:this.album});
+      // avoid timing issue
+      setTimeout(function () {
+        if (c.albumart) {
+          c.albumart.setAlbum(c.album);
+        }
+      }, 0);
+    }
   }
 
   onSelect(track:any) {
