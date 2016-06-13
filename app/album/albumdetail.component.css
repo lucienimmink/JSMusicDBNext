@@ -1,35 +1,31 @@
+.jumbotron {
+    margin-top: -5px;
+    padding: 24px 0;
+}
 .albumdetail >>> .albumart {
     display: block;
     width: 100%;
 }
-.albumdetail >>> .col-no-gutter-left {
-    padding-left: 0;
+.albumdetail h2 {
+    padding-top: 0;
+    margin-top: -10px;
 }
-.albumdetail >>> .col-no-gutter-right {
-    padding-right: 0;
+.albumdetail h3 {
+    padding-top: 5px;
 }
-.albumdetail >>> .col-no-gutter {
-    padding-left: 0;
-    padding-right: 0;
+.albumdetail h4 {
+    padding-top: 2px;
 }
-
-.blurred-background {
-  background-position: center center;
-  background-size: cover;
-  height: 100%;
-  left: 0;
-  opacity: 0.15;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: -1;
+.list-group-item {
+    overflow: hidden;
 }
-.blurred-background-overlay {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0px, rgba(255, 255, 255, 1.0) 100%) repeat scroll 0 0;
-  height: 100%;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: -1;
+.list-group-item:hover {
+    background-color: rgba(0,120,215,1);
+    color:#ffffff;
+}
+.disc-row {
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0,120,215,1);
+    border-top: none;
+    padding-left: 25px;
 }

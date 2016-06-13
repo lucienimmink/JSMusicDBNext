@@ -3,4 +3,20 @@ body {
 }
 .progress-bar{
     width: 0;
-} 
+}
+
+.media-container {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: stretch;
+  display: flex;
+  padding: 20px;
+}
+
+.media-panel {
+  width: 11vw;
+  height: 11vw;
+  margin: 0 1vw 1vw 0;
+}

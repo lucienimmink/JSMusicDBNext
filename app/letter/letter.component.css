@@ -4,6 +4,7 @@
     right: 0;
     top: 50px;
     z-index: 1;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.26);
 }
 .navbar-local .navbar-nav {
     float: none;
