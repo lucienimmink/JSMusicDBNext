@@ -10,11 +10,15 @@
     float: none;
     margin: 0 auto;
     text-align: center;
+
+    display: flex;
+    flex-direction: row;
 }
 .navbar-local li {
     margin: 0;
     display: inline-block;
     float: none;
+    flex: 3 1 0;
 }
 .navbar-local li a {
     padding: 15px 30px;
