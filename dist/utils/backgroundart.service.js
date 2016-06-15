@@ -97,11 +97,10 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
                             }
                         });
                     }
-                    return image;
+                    return image || NOIMAGE;
                 };
                 BackgroundArtService.prototype.handleError = function (error) {
-                    var errorMessage = (error.message) ? error.message : (error.status) ? error.status + " - " + error.statusText : 'Server error';
-                    return Observable_1.Observable.throw(errorMessage);
+                    return Observable_1.Observable.throw(NOIMAGE);
                 };
                 BackgroundArtService = __decorate([
                     core_1.Injectable(), 

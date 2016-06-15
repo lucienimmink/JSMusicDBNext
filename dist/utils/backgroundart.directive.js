@@ -11,7 +11,7 @@ System.register(['@angular/core', "./backgroundart.service"], function(exports_1
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, backgroundart_service_1;
-    var BackgroundArtDirective;
+    var NOIMAGE, BackgroundArtDirective;
     return {
         setters:[
             function (core_1_1) {
@@ -21,6 +21,7 @@ System.register(['@angular/core', "./backgroundart.service"], function(exports_1
                 backgroundart_service_1 = backgroundart_service_1_1;
             }],
         execute: function() {
+            NOIMAGE = 'global/images/no-cover.png';
             BackgroundArtDirective = (function () {
                 function BackgroundArtDirective(el, backgroundArtService) {
                     this.backgroundArtService = backgroundArtService;
@@ -29,12 +30,12 @@ System.register(['@angular/core', "./backgroundart.service"], function(exports_1
                 BackgroundArtDirective.prototype.ngOnInit = function () {
                     var _this = this;
                     this.backgroundArtService.getMediaArt(this.media)
-                        .subscribe(function (data) { return _this.setImage(data); }, function (error) { return console.log('error', error); });
+                        .subscribe(function (data) { return _this.setImage(data); }, function (error) { return _this.el.style.backgroundImage = "url(" + NOIMAGE + ")"; });
                 };
                 BackgroundArtDirective.prototype.setImage = function (data) {
                     var _this = this;
-                    if (data === 'global/images/no-cover.png') {
-                        this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(function (data) { return _this.el.style.backgroundImage = "url(" + data + ")"; }, function (error) { return console.log('error', error); });
+                    if (data === 'global/images/no-cover.png' || data === '') {
+                        this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(function (data) { return _this.el.style.backgroundImage = "url(" + data + ")"; }, function (error) { return _this.el.style.backgroundImage = "url(" + NOIMAGE + ")"; });
                     }
                     else {
                         this.el.style.backgroundImage = "url(" + data + ")";
