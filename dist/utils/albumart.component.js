@@ -11,7 +11,7 @@ System.register(["@angular/core", './../org/arielext/musicdb/models/Album', './a
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, Album_1, albumart_service_1;
-    var AlbumArt;
+    var NOIMAGE, AlbumArt;
     return {
         setters:[
             function (core_1_1) {
@@ -24,12 +24,13 @@ System.register(["@angular/core", './../org/arielext/musicdb/models/Album', './a
                 albumart_service_1 = albumart_service_1_1;
             }],
         execute: function() {
+            NOIMAGE = 'global/images/no-cover.png';
             AlbumArt = (function () {
                 function AlbumArt(albumArtService) {
                     this.albumArtService = albumArtService;
                     this.albumart = {};
                     this.albumart = {
-                        url: '/global/images/no-cover.png',
+                        url: NOIMAGE,
                         name: 'unknown album'
                     };
                 }
@@ -37,7 +38,17 @@ System.register(["@angular/core", './../org/arielext/musicdb/models/Album', './a
                     var _this = this;
                     this.albumart.name = this.album.name;
                     this.albumArtService.getAlbumArt(this.album.artist.name, this.album.name)
-                        .subscribe(function (data) { return _this.albumart.url = data; }, function (error) { return console.log('error', error); });
+                        .subscribe(function (data) { return _this.setImage(data); }, function (error) { return _this.albumart.url = NOIMAGE; });
+                };
+                AlbumArt.prototype.setImage = function (data) {
+                    var _this = this;
+                    if (data === 'global/images/no-cover.png' || data === '') {
+                        this.albumArtService.getMediaArtFromLastFm(this.album.artist.name, this.album.name)
+                            .subscribe(function (data) { return _this.albumart.url = data; }, function (error) { return _this.albumart.url = NOIMAGE; });
+                    }
+                    else {
+                        this.albumart.url = data;
+                    }
                 };
                 __decorate([
                     core_1.Input(), 

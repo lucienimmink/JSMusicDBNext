@@ -16,6 +16,7 @@ import { PathService } from './../utils/path.service';
 })
 export class AlbumDetailComponent implements OnInit {
   private albumName:string = '';
+  private artistName:string = '';
   private album:any;
 
   private albumart:AlbumArt;
@@ -25,8 +26,9 @@ export class AlbumDetailComponent implements OnInit {
   ngOnInit() {
     let c = this;
     this.albumName = decodeURIComponent(this.routeParams.get('album'));
+    this.artistName = decodeURIComponent(this.routeParams.get('artist'));
     let core:musicdbcore = this.coreService.getCore();
-    this.album = core.albums[this.albumName];
+    this.album = core.albums[this.artistName+'|'+this.albumName];
     if (this.album) {
       this.pathService.announcePath({artist: this.album.artist, album:this.album});
     }

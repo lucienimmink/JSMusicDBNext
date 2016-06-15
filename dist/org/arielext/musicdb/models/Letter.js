@@ -30,7 +30,9 @@ System.register(["lodash"], function(exports_1, context_1) {
                     var s = strip.toUpperCase();
                     var f = name.toUpperCase();
                     f = _.trim(f);
-                    f = _.trimStart(f, s);
+                    if (_.startsWith(f, s)) {
+                        f = f.substring(4);
+                    }
                     return this.groupIfSpecialChar(_.split(f, '', 1)[0]);
                 };
                 Letter.prototype.groupIfSpecialChar = function (c) {
@@ -55,7 +57,7 @@ System.register(["lodash"], function(exports_1, context_1) {
                                 return 0;
                             }
                         }
-                        if (a[sortkey] < b[sortkey]) {
+                        if (a[sortkey].toUpperCase() < b[sortkey].toUpperCase()) {
                             return (direction === 'asc') ? -1 : 1;
                         }
                         else if (a[sortkey] > b[sortkey]) {

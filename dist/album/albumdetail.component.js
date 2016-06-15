@@ -43,12 +43,14 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     this.routeParams = routeParams;
                     this.pathService = pathService;
                     this.albumName = '';
+                    this.artistName = '';
                 }
                 AlbumDetailComponent.prototype.ngOnInit = function () {
                     var c = this;
                     this.albumName = decodeURIComponent(this.routeParams.get('album'));
+                    this.artistName = decodeURIComponent(this.routeParams.get('artist'));
                     var core = this.coreService.getCore();
-                    this.album = core.albums[this.albumName];
+                    this.album = core.albums[this.artistName + '|' + this.albumName];
                     if (this.album) {
                         this.pathService.announcePath({ artist: this.album.artist, album: this.album });
                     }

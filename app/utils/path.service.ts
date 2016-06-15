@@ -6,7 +6,7 @@ export class PathService {
     private pathAnnouncementSource = new Subject<any>();
     pathAnnounced$ = this.pathAnnouncementSource.asObservable();
 
-    announcePath(path:string) {
+    announcePath(path:any) {
         this.pathAnnouncementSource.next(path);
     }
 }

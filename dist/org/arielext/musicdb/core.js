@@ -58,7 +58,7 @@ System.register(['./models/Artist', './models/Album', './models/Track', './model
                     });
                 };
                 musicdbcore.prototype.handleAlbum = function (artist, album) {
-                    return this.instanceIfPresent(this, album.sortName, this.albums, album, function (core) {
+                    return this.instanceIfPresent(this, artist.sortName + '|' + album.sortName, this.albums, album, function (core) {
                         album.artist = artist;
                         artist.albums.push(album);
                         core.totals.albums++;

@@ -25,7 +25,7 @@ export class LetterDetailComponent implements OnInit {
     let coreletter = core.letters[this.letter];
     if (coreletter) {
       this.pathService.announcePath(null);
-      this.artists = coreletter.artists;
+      this.artists = coreletter.sortAndReturnArtistsBy('name', 'asc');
     }
   }
   onSelect(artist:any) {

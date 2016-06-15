@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1;
+    var core_1, http_1, Observable_1, _;
     var NOIMAGE, AlbumArtService;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
+            },
+            function (_1) {
+                _ = _1;
             }],
         execute: function() {
             NOIMAGE = 'global/images/no-cover.png';
@@ -35,6 +38,21 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
+                AlbumArtService.prototype.getMediaArtFromLastFm = function (artist, album) {
+                    var urlSearchParams = new http_1.URLSearchParams();
+                    urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
+                    urlSearchParams.set('artist', artist);
+                    urlSearchParams.set('format', 'json');
+                    urlSearchParams.set('autoCorrect', 'true');
+                    urlSearchParams.set('method', 'album.getinfo');
+                    urlSearchParams.set('album', album);
+                    var query = {
+                        search: urlSearchParams
+                    };
+                    return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+                        .map(this.extractLastFM)
+                        .catch(this.handleError);
+                };
                 AlbumArtService.prototype.extractData = function (res) {
                     var json = res.json();
                     if (json && json.albums && json.albums.items && json.albums.items.length > 0 && json.albums.items[0].images[0]) {
@@ -45,9 +63,27 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
                     }
                     return NOIMAGE;
                 };
+                AlbumArtService.prototype.extractLastFM = function (res) {
+                    var json = res.json();
+                    var image = NOIMAGE;
+                    if (json && json.album) {
+                        _.each(json.album.image, function (e) {
+                            if (e.size === "mega") {
+                                image = e["#text"];
+                            }
+                        });
+                    }
+                    else if (json && json.artist) {
+                        _.each(json.artist.image, function (e) {
+                            if (e.size === "mega") {
+                                image = e["#text"];
+                            }
+                        });
+                    }
+                    return image || NOIMAGE;
+                };
                 AlbumArtService.prototype.handleError = function (error) {
-                    var errorMessage = (error.message) ? error.message : (error.status) ? error.status + " - " + error.statusText : 'Server error';
-                    return Observable_1.Observable.throw(errorMessage);
+                    return Observable_1.Observable.throw(NOIMAGE);
                 };
                 AlbumArtService = __decorate([
                     core_1.Injectable(), 

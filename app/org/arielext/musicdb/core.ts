@@ -51,7 +51,7 @@ export class musicdbcore {
         });
     }
     private handleAlbum(artist: Artist, album: Album): Album {
-        return this.instanceIfPresent(this, album.sortName, this.albums, album, function (core: any) {
+        return this.instanceIfPresent(this, artist.sortName+'|'+album.sortName, this.albums, album, function (core: any) {
             album.artist = artist;
             artist.albums.push(album);
             core.totals.albums++;
@@ -81,7 +81,7 @@ export class musicdbcore {
 
         let artist = new Artist(line);
         artist = this.handleArtist(letter, artist);
-
+        
         let album = new Album(line);
         album = this.handleAlbum(artist, album);
 

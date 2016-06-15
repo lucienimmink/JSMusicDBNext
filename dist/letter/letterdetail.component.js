@@ -45,7 +45,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './../core.servi
                     var coreletter = core.letters[this.letter];
                     if (coreletter) {
                         this.pathService.announcePath(null);
-                        this.artists = coreletter.artists;
+                        this.artists = coreletter.sortAndReturnArtistsBy('name', 'asc');
                     }
                 };
                 LetterDetailComponent.prototype.onSelect = function (artist) {
