@@ -10,6 +10,7 @@ import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
 import { TopMenuComponent } from './menu/topmenu.component';
+import { HomeComponent } from './home/home.component';
 import { PathService } from './utils/path.service';
 
 // Add the RxJS Observable operators we need in this app.
@@ -23,6 +24,7 @@ import './rxjs-operators';
   directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent ]
 })
 @RouteConfig([
+  { path: '/home', name: 'Home', component: HomeComponent},
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
   { path: '/letter/:letter/artist/:artist', name: 'Artist', component: ArtistDetailComponent },
   { path: '/letter/:letter/artist/:artist/album/:album', name: 'Album', component: AlbumDetailComponent }

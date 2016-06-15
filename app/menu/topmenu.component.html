@@ -1,7 +1,10 @@
 <div class="menu-top">
-    <button class="btn btn-menu">
+    <button class="btn btn-menu hidden-md hidden-lg">
         <span class="glyph glyph-hamburger" aria-hidden="true"></span>
     </button>
+    <a [routerLink]="['Home']" class="visible-md-inline-block visible-lg-inline-block">
+        <img class="logo" src="/global/images/logo.png">
+    </a>
     <h1>
         <span *ngIf="path && path.album">{{path.artist.name}} &bull; {{path.album.name}}</span>
         <span *ngIf="path && !path.album">{{path.artist.name}}</span>

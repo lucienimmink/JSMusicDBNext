@@ -1,4 +1,4 @@
-System.register(["@angular/core", '@angular/router-deprecated', './collection.service', './core.service', './letter/letter.component', './letter/letterdetail.component', './artist/artistdetail.component', './album/albumdetail.component', './menu/topmenu.component', './utils/path.service', './rxjs-operators'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', './collection.service', './core.service', './letter/letter.component', './letter/letterdetail.component', './artist/artistdetail.component', './album/albumdetail.component', './menu/topmenu.component', './home/home.component', './utils/path.service', './rxjs-operators'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, collection_service_1, core_service_1, letter_component_1, letterdetail_component_1, artistdetail_component_1, albumdetail_component_1, topmenu_component_1, path_service_1;
+    var core_1, router_deprecated_1, collection_service_1, core_service_1, letter_component_1, letterdetail_component_1, artistdetail_component_1, albumdetail_component_1, topmenu_component_1, home_component_1, path_service_1;
     var AppComponent;
     return {
         setters:[
@@ -40,6 +40,9 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
             },
             function (topmenu_component_1_1) {
                 topmenu_component_1 = topmenu_component_1_1;
+            },
+            function (home_component_1_1) {
+                home_component_1 = home_component_1_1;
             },
             function (path_service_1_1) {
                 path_service_1 = path_service_1_1;
@@ -77,6 +80,7 @@ System.register(["@angular/core", '@angular/router-deprecated', './collection.se
                         directives: [letter_component_1.LetterComponent, router_deprecated_1.ROUTER_DIRECTIVES, topmenu_component_1.TopMenuComponent]
                     }),
                     router_deprecated_1.RouteConfig([
+                        { path: '/home', name: 'Home', component: home_component_1.HomeComponent },
                         { path: '/letter/:letter', name: 'Letter', component: letterdetail_component_1.LetterDetailComponent },
                         { path: '/letter/:letter/artist/:artist', name: 'Artist', component: artistdetail_component_1.ArtistDetailComponent },
                         { path: '/letter/:letter/artist/:artist/album/:album', name: 'Album', component: albumdetail_component_1.AlbumDetailComponent }

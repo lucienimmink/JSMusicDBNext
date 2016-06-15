@@ -15,12 +15,17 @@
     position: relative;
     top: -12px;
 }
-
+.logo {
+    max-width: 50px;
+    min-width: 50px;
+    position: relative;
+    top: -12px;
+}
 h1 {
     display: inline-block;
     font-size: 32px;
     line-height: 1.3;
-    padding: 0 0 0 20px;
+    padding: 0;
     position: relative;
     top: 0;
     white-space: nowrap;

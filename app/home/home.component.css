@@ -1,0 +1,19 @@
+.list-group-item {
+    overflow: hidden;
+}
+.now-playing {
+  color: rgba(0,120,215,1);
+}
+.glyph {
+  font-size: 24px;
+  display: inline-block;
+  margin-top: 6px;
+}
+.nowplaying-image {
+  width: 100%;
+  display: inline-block;
+  margin-top: 6px;
+}
+.list-group-item:nth-child(2n) {
+  background-color: #EFEFEF;
+}
