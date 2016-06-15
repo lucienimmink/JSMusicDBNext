@@ -9,7 +9,7 @@ const NOIMAGE = 'global/images/no-cover.png';
 })
 export class BackgroundArtDirective implements OnInit {
     private el: HTMLElement;
-
+    
     @Input('backgroundArt') media: any;
 
     constructor(el: ElementRef, private backgroundArtService:BackgroundArtService) {
