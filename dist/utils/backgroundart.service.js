@@ -31,18 +31,23 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
             BackgroundArtService = (function () {
                 function BackgroundArtService(http) {
                     this.http = http;
-                    this.artistartUrl = 'https://api.spotify.com/v1/search?q={0}&type=artist&limit=1';
-                    this.albumartUrl = 'https://api.spotify.com/v1/search?q=album:{1}+artist:{0}&type=album&limit=1';
                 }
                 BackgroundArtService.prototype.getMediaArt = function (media) {
+                    var urlSearchParams = new http_1.URLSearchParams();
+                    urlSearchParams.set('limit', '1');
                     var mediaartUrl = '';
                     if (media.artist) {
-                        mediaartUrl = this.albumartUrl.replace('{1}', media.name).replace('{0}', media.artist.name);
+                        urlSearchParams.set('q', "album:" + media.name + "+artist:" + media.artist.name);
+                        urlSearchParams.set('type', 'album');
                     }
                     else {
-                        mediaartUrl = this.artistartUrl.replace('{0}', media.name);
+                        urlSearchParams.set('q', "" + media.name);
+                        urlSearchParams.set('type', 'artist');
                     }
-                    return this.http.get(mediaartUrl)
+                    var query = {
+                        search: urlSearchParams
+                    };
+                    return this.http.get('//api.spotify.com/v1/search', query)
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
