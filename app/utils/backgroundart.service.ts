@@ -8,21 +8,12 @@ const NOIMAGE = 'global/images/no-cover.png';
 @Injectable()
 export class BackgroundArtService {
 
-  private cacheMap:any = {};
-  private media:any;
-
   constructor(private http: Http) { }
 
   getMediaArt(media: any): Observable<any[]> {
-    this.media = media;
-    let cached = this.getFromCache(media);
-    if (cached) {
-      console.log('got cached URL', cached);
-      return cached;
-    }
-
     let urlSearchParams:URLSearchParams = new URLSearchParams();
     urlSearchParams.set('limit', '1');
+    let mediaartUrl = '';
     if (media.artist) {
       urlSearchParams.set('q', `album:${media.name}+artist:${media.artist.name}`);
       urlSearchParams.set('type', 'album');
@@ -39,21 +30,7 @@ export class BackgroundArtService {
       .catch(this.handleError);
   }
 
-  getFromCache(media: any) {
-    if (media.artist) {
-      return this.cacheMap[media.artist.sortName+"|"+media.sortName];
-    } else {
-      return this.cacheMap[media.sortName];
-    }
-  }
-
   getMediaArtFromLastFm(media:any): Observable<any> {
-    let cached = this.getFromCache(media);
-    if (cached) {
-      console.log('got cached URL', cached);
-      return cached;
-    }
-
     let urlSearchParams:URLSearchParams = new URLSearchParams();
     urlSearchParams.set('method', 'artist.getinfo');
     urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
@@ -78,10 +55,8 @@ export class BackgroundArtService {
   private extractData(res: Response): string {
     let json = res.json();
     if (json && json.albums && json.albums.items && json.albums.items.length > 0 && json.albums.items[0].images[0]) {
-      this.cacheMap[this.media.artist.sortName+"|"+this.media.sortName] = json.albums.items[0].images[0].url;
       return (json.albums.items[0].images[0].url || NOIMAGE);
     } else if (json && json.artists && json.artists.items && json.artists.items.length > 0 && json.artists.items[0].images[0]) {
-      this.cacheMap[this.media.sortName] = json.artists.items[0].images[0].url;
       return (json.artists.items[0].images[0].url || NOIMAGE);
     }
     return NOIMAGE;
@@ -89,19 +64,16 @@ export class BackgroundArtService {
   private extractLastFM(res: Response): string {
     let json = res.json();
     let image = NOIMAGE;
-    let c = this;
     if (json && json.album) {
       _.each(json.album.image, function (e) {
         if (e.size === "mega") {
           image = e["#text"];
-          c.cacheMap[c.media.artist.sortName+"|"+c.media.sortName] = image;
         }
       });
     } else if (json && json.artist) {
       _.each(json.artist.image, function (e) {
         if (e.size === "mega") {
           image = e["#text"];
-          c.cacheMap[c.media.sortName] = image;
         }
       });
     }

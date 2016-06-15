@@ -31,17 +31,11 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
             BackgroundArtService = (function () {
                 function BackgroundArtService(http) {
                     this.http = http;
-                    this.cacheMap = {};
                 }
                 BackgroundArtService.prototype.getMediaArt = function (media) {
-                    this.media = media;
-                    var cached = this.getFromCache(media);
-                    if (cached) {
-                        console.log('got cached URL', cached);
-                        return cached;
-                    }
                     var urlSearchParams = new http_1.URLSearchParams();
                     urlSearchParams.set('limit', '1');
+                    var mediaartUrl = '';
                     if (media.artist) {
                         urlSearchParams.set('q', "album:" + media.name + "+artist:" + media.artist.name);
                         urlSearchParams.set('type', 'album');
@@ -57,20 +51,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
-                BackgroundArtService.prototype.getFromCache = function (media) {
-                    if (media.artist) {
-                        return this.cacheMap[media.artist.sortName + "|" + media.sortName];
-                    }
-                    else {
-                        return this.cacheMap[media.sortName];
-                    }
-                };
                 BackgroundArtService.prototype.getMediaArtFromLastFm = function (media) {
-                    var cached = this.getFromCache(media);
-                    if (cached) {
-                        console.log('got cached URL', cached);
-                        return cached;
-                    }
                     var urlSearchParams = new http_1.URLSearchParams();
                     urlSearchParams.set('method', 'artist.getinfo');
                     urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
@@ -92,11 +73,9 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
                 BackgroundArtService.prototype.extractData = function (res) {
                     var json = res.json();
                     if (json && json.albums && json.albums.items && json.albums.items.length > 0 && json.albums.items[0].images[0]) {
-                        this.cacheMap[this.media.artist.sortName + "|" + this.media.sortName] = json.albums.items[0].images[0].url;
                         return (json.albums.items[0].images[0].url || NOIMAGE);
                     }
                     else if (json && json.artists && json.artists.items && json.artists.items.length > 0 && json.artists.items[0].images[0]) {
-                        this.cacheMap[this.media.sortName] = json.artists.items[0].images[0].url;
                         return (json.artists.items[0].images[0].url || NOIMAGE);
                     }
                     return NOIMAGE;
@@ -104,12 +83,10 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
                 BackgroundArtService.prototype.extractLastFM = function (res) {
                     var json = res.json();
                     var image = NOIMAGE;
-                    var c = this;
                     if (json && json.album) {
                         _.each(json.album.image, function (e) {
                             if (e.size === "mega") {
                                 image = e["#text"];
-                                c.cacheMap[c.media.artist.sortName + "|" + c.media.sortName] = image;
                             }
                         });
                     }
@@ -117,7 +94,6 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'],
                         _.each(json.artist.image, function (e) {
                             if (e.size === "mega") {
                                 image = e["#text"];
-                                c.cacheMap[c.media.sortName] = image;
                             }
                         });
                     }
