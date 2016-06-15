@@ -29,7 +29,16 @@ System.register(['@angular/core', "./backgroundart.service"], function(exports_1
                 BackgroundArtDirective.prototype.ngOnInit = function () {
                     var _this = this;
                     this.backgroundArtService.getMediaArt(this.media)
-                        .subscribe(function (data) { return _this.el.style.backgroundImage = "url(" + data + ")"; }, function (error) { return console.log('error', error); });
+                        .subscribe(function (data) { return _this.setImage(data); }, function (error) { return console.log('error', error); });
+                };
+                BackgroundArtDirective.prototype.setImage = function (data) {
+                    var _this = this;
+                    if (data === 'global/images/no-cover.png') {
+                        this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(function (data) { return _this.el.style.backgroundImage = "url(" + data + ")"; }, function (error) { return console.log('error', error); });
+                    }
+                    else {
+                        this.el.style.backgroundImage = "url(" + data + ")";
+                    }
                 };
                 __decorate([
                     core_1.Input('backgroundArt'), 

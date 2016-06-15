@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/http", "rxjs/Observable", 'lodash'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Observable_1;
+    var core_1, http_1, Observable_1, _;
     var NOIMAGE, BackgroundArtService;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
             },
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
+            },
+            function (_1) {
+                _ = _1;
             }],
         execute: function() {
             NOIMAGE = 'global/images/no-cover.png';
@@ -43,6 +46,25 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
+                BackgroundArtService.prototype.getMediaArtFromLastFm = function (media) {
+                    var urlSearchParams = new http_1.URLSearchParams();
+                    urlSearchParams.set('method', 'artist.getinfo');
+                    urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
+                    urlSearchParams.set('artist', media.name);
+                    urlSearchParams.set('format', 'json');
+                    urlSearchParams.set('autoCorrect', 'true');
+                    if (media.artist) {
+                        urlSearchParams.set('method', 'album.getinfo');
+                        urlSearchParams.set('artist', media.artist.name);
+                        urlSearchParams.set('album', media.name);
+                    }
+                    var query = {
+                        search: urlSearchParams
+                    };
+                    return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+                        .map(this.extractLastFM)
+                        .catch(this.handleError);
+                };
                 BackgroundArtService.prototype.extractData = function (res) {
                     var json = res.json();
                     if (json && json.albums && json.albums.items && json.albums.items.length > 0 && json.albums.items[0].images[0]) {
@@ -52,6 +74,25 @@ System.register(["@angular/core", "@angular/http", "rxjs/Observable"], function(
                         return (json.artists.items[0].images[0].url || NOIMAGE);
                     }
                     return NOIMAGE;
+                };
+                BackgroundArtService.prototype.extractLastFM = function (res) {
+                    var json = res.json();
+                    var image = NOIMAGE;
+                    if (json && json.album) {
+                        _.each(json.album.image, function (e) {
+                            if (e.size === "mega") {
+                                image = e["#text"];
+                            }
+                        });
+                    }
+                    else if (json && json.artist) {
+                        _.each(json.artist.image, function (e) {
+                            if (e.size === "mega") {
+                                image = e["#text"];
+                            }
+                        });
+                    }
+                    return image;
                 };
                 BackgroundArtService.prototype.handleError = function (error) {
                     var errorMessage = (error.message) ? error.message : (error.status) ? error.status + " - " + error.statusText : 'Server error';
