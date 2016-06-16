@@ -18,6 +18,8 @@ export class AlbumArt {
             name: 'unknown album'
         }
     }
+
+    // how to react on @input changes?
     ngOnInit() {
         this.albumart.name = this.album.name;
         this.albumArtService.getAlbumArt(this.album.artist.name, this.album.name)

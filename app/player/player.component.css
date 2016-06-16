@@ -1,0 +1,21 @@
+.player {
+    background: #efefef;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.row >>> img {
+    width: 100%;
+    margin-left: -10px;
+}
+.row h3 {
+    padding-top: 0;
+}
+.row h5 {
+    padding-top: 4px;
+}
+.row .btn {
+    font-size: 32px;
+    min-width: 65px;
+}

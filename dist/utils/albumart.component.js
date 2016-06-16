@@ -21,6 +21,7 @@ var AlbumArt = (function () {
             name: 'unknown album'
         };
     }
+    // how to react on @input changes?
     AlbumArt.prototype.ngOnInit = function () {
         var _this = this;
         this.albumart.name = this.album.name;

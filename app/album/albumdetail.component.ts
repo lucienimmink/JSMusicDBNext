@@ -7,6 +7,7 @@ import { AlbumArt } from './../utils/albumart.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { PathService } from './../utils/path.service';
+import { PlayerService } from './../player/player.service';
 
 @Component({
   templateUrl: 'app/album/albumdetail.component.html',
@@ -21,7 +22,7 @@ export class AlbumDetailComponent implements OnInit {
 
   private albumart:AlbumArt;
   
-  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService) {}
+  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService, private playerService:PlayerService) {}
 
   ngOnInit() {
     let c = this;
@@ -35,7 +36,7 @@ export class AlbumDetailComponent implements OnInit {
   }
 
   onSelect(track:any) {
-    // setup the player
+    this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track));
   }
   navigateToArtist(artist:any) {
     this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);

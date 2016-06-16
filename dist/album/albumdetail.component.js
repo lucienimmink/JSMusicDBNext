@@ -15,12 +15,14 @@ var albumart_component_1 = require('./../utils/albumart.component');
 var backgroundart_directive_1 = require('./../utils/backgroundart.directive');
 var timeformat_pipe_1 = require('./../timeformat.pipe');
 var path_service_1 = require('./../utils/path.service');
+var player_service_1 = require('./../player/player.service');
 var AlbumDetailComponent = (function () {
-    function AlbumDetailComponent(coreService, router, routeParams, pathService) {
+    function AlbumDetailComponent(coreService, router, routeParams, pathService, playerService) {
         this.coreService = coreService;
         this.router = router;
         this.routeParams = routeParams;
         this.pathService = pathService;
+        this.playerService = playerService;
         this.albumName = '';
         this.artistName = '';
     }
@@ -35,7 +37,7 @@ var AlbumDetailComponent = (function () {
         }
     };
     AlbumDetailComponent.prototype.onSelect = function (track) {
-        // setup the player
+        this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track));
     };
     AlbumDetailComponent.prototype.navigateToArtist = function (artist) {
         this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
@@ -47,7 +49,7 @@ var AlbumDetailComponent = (function () {
             directives: [albumart_component_1.AlbumArt, backgroundart_directive_1.BackgroundArtDirective],
             styleUrls: ['app/album/albumdetail.component.css']
         }), 
-        __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams, path_service_1.PathService])
+        __metadata('design:paramtypes', [core_service_1.CoreService, router_deprecated_1.Router, router_deprecated_1.RouteParams, path_service_1.PathService, player_service_1.PlayerService])
     ], AlbumDetailComponent);
     return AlbumDetailComponent;
 }());

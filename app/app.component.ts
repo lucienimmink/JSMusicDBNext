@@ -11,6 +11,8 @@ import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
 import { TopMenuComponent } from './menu/topmenu.component';
 import { PathService } from './utils/path.service';
+import { PlayerService } from './player/player.service';
+import { PlayerComponent } from './player/player.component';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -19,8 +21,8 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService ],
-  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent ]
+  providers: [CollectionService, CoreService, PathService, PlayerService ],
+  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent ]
 })
 @RouteConfig([
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },

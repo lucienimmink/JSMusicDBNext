@@ -18,6 +18,8 @@ var artistdetail_component_1 = require('./artist/artistdetail.component');
 var albumdetail_component_1 = require('./album/albumdetail.component');
 var topmenu_component_1 = require('./menu/topmenu.component');
 var path_service_1 = require('./utils/path.service');
+var player_service_1 = require('./player/player.service');
+var player_component_1 = require('./player/player.component');
 // Add the RxJS Observable operators we need in this app.
 require('./rxjs-operators');
 var AppComponent = (function () {
@@ -47,8 +49,8 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'musicdb',
             templateUrl: 'app/app.component.html',
-            providers: [collection_service_1.CollectionService, core_service_1.CoreService, path_service_1.PathService],
-            directives: [letter_component_1.LetterComponent, router_deprecated_1.ROUTER_DIRECTIVES, topmenu_component_1.TopMenuComponent]
+            providers: [collection_service_1.CollectionService, core_service_1.CoreService, path_service_1.PathService, player_service_1.PlayerService],
+            directives: [letter_component_1.LetterComponent, router_deprecated_1.ROUTER_DIRECTIVES, topmenu_component_1.TopMenuComponent, player_component_1.PlayerComponent]
         }),
         router_deprecated_1.RouteConfig([
             { path: '/letter/:letter', name: 'Letter', component: letterdetail_component_1.LetterDetailComponent },
