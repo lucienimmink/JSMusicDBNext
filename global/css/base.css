@@ -5,6 +5,9 @@ body {
 .progress-bar{
     width: 0;
 }
+a {
+    cursor: pointer;
+}
 
 .media-container {
   flex-direction: row;
