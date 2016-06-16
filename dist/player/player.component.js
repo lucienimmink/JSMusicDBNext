@@ -26,6 +26,11 @@ var PlayerComponent = (function () {
         });
     }
     PlayerComponent.prototype.setTrack = function () {
+        var c = this;
+        setTimeout(function () {
+            if (c.albumart)
+                c.albumart.ngOnInit();
+        });
         this.track = this.playlist.tracks[this.trackIndex];
     };
     PlayerComponent.prototype.ngOnDestroy = function () {
@@ -37,6 +42,10 @@ var PlayerComponent = (function () {
     PlayerComponent.prototype.navigateToAlbum = function () {
         this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
     };
+    __decorate([
+        core_1.ViewChild(albumart_component_1.AlbumArt), 
+        __metadata('design:type', albumart_component_1.AlbumArt)
+    ], PlayerComponent.prototype, "albumart", void 0);
     PlayerComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/player/player.component.html',

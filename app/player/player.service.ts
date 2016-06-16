@@ -9,7 +9,6 @@ export class PlayerService {
     constructor() {};
 
     doPlayAlbum(album:Album, startIndex:number) {
-        console.log('go start play album', album, 'start at track', startIndex);
         this.playlistSource.next({
             playlist: album,
             startIndex: startIndex

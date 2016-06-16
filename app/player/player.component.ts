@@ -1,4 +1,4 @@
-import { Component, OnDestroy  } from "@angular/core";
+import { Component, OnDestroy, ViewChild  } from "@angular/core";
 import { PlayerService } from './player.service';
 import { Router } from '@angular/router-deprecated';
 import { Subscription }   from 'rxjs/Subscription';
@@ -18,6 +18,8 @@ export class PlayerComponent implements OnDestroy {
     private track:any;
     private showPlayer:boolean = false;
 
+    @ViewChild(AlbumArt) albumart:AlbumArt;
+
     constructor(private playerService:PlayerService, private router:Router) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
@@ -29,6 +31,10 @@ export class PlayerComponent implements OnDestroy {
         )
     }
     setTrack() {
+        let c = this;
+        setTimeout(function () {
+            if (c.albumart) c.albumart.ngOnInit();
+        });
         this.track = this.playlist.tracks[this.trackIndex];
     }
 
@@ -39,6 +45,6 @@ export class PlayerComponent implements OnDestroy {
         this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
     }
     navigateToAlbum() {
-        this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName album: this.track.album.sortName }]);
+        this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
     }
 }

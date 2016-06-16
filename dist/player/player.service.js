@@ -17,7 +17,6 @@ var PlayerService = (function () {
     }
     ;
     PlayerService.prototype.doPlayAlbum = function (album, startIndex) {
-        console.log('go start play album', album, 'start at track', startIndex);
         this.playlistSource.next({
             playlist: album,
             startIndex: startIndex
