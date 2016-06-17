@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private core:musicdbcore;
   private recentlyListenedTracks:Array<Track> = [];
+  private newListenedTracks:Array<Track> = [];
   private counter:any;
 
   constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService) { }
@@ -42,7 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   checkRecentlyListened() {
-    this.recentlyListenedTracks = [];
+    // this.recentlyListenedTracks = [];
+    this.newListenedTracks = [];
     this.recentlyListened.getRecentlyListened('arielext').subscribe(
         data => this.populate(data),
         error => console.log(error)
@@ -72,8 +74,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         nowPlaying:(fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false,
         date: c.setDate(fmtrack)
       }
-      c.recentlyListenedTracks.push(track);
+      c.newListenedTracks.push(track);
     });
+    if (this.recentlyListenedTracks !== this.newListenedTracks) {
+      this.recentlyListenedTracks = this.newListenedTracks;
+    }
   }
 
   onSelect(album: any) {

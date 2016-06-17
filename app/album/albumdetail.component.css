@@ -23,9 +23,6 @@
     background-color: rgba(0,120,215,1);
     color:#ffffff;
 }
-.list-group-item:nth-child(2n) {
-  background-color: #EFEFEF;
-}
 .disc-row {
     overflow: hidden;
     border-bottom: 1px solid rgba(0,120,215,1);

@@ -14,6 +14,6 @@
   display: inline-block;
   margin-top: 6px;
 }
-.list-group-item:nth-child(2n) {
+.list-group-item:nth-child(2n+1) {
   background-color: #EFEFEF;
 }

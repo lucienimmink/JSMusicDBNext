@@ -11,7 +11,7 @@
                 <albumart [album]="playlist"></albumart>
             </div>
             <div class="col-xs-16 col-sm-17 col-lg-20">
-                <h3>{{track.title}}</h3>
+                <h4>{{track.title}}</h4>
                 <h5>
                     <a (click)="navigateToArtist()">{{track.album.artist.name}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
             </div>
