@@ -6,7 +6,13 @@ export class PathService {
     private pathAnnouncementSource = new Subject<any>();
     pathAnnounced$ = this.pathAnnouncementSource.asObservable();
 
+    private pageAnnouncementSource = new Subject<any>();
+    pageAnnounced$ = this.pageAnnouncementSource.asObservable();
+
     announcePath(path:any) {
         this.pathAnnouncementSource.next(path);
+    }
+    announcePage(page:any) {
+        this.pageAnnouncementSource.next(page);
     }
 }

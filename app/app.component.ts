@@ -11,6 +11,7 @@ import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
 import { TopMenuComponent } from './menu/topmenu.component';
 import { HomeComponent } from './home/home.component';
+import { SettingsComponent } from './settings/settings.component';
 import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
 import { PlayerComponent } from './player/player.component';
@@ -27,6 +28,7 @@ import './rxjs-operators';
 })
 @RouteConfig([
   { path: '/home', name: 'Home', component: HomeComponent},
+  { path: '/settings', name: 'Settings', component: SettingsComponent},
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
   { path: '/letter/:letter/artist/:artist', name: 'Artist', component: ArtistDetailComponent },
   { path: '/letter/:letter/artist/:artist/album/:album', name: 'Album', component: AlbumDetailComponent }

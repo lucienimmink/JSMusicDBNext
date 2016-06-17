@@ -33,3 +33,38 @@ h1 {
     max-width: calc(100% - 60px);
     text-overflow: ellipsis;
 }
+
+
+.menu-offcanvas {
+    background: #efefef;
+    position: absolute;
+    left: 0;
+    width: 15vw;
+    bottom: 0;
+    top: 50px;
+    z-index: 10;
+    transform: translateX(-100%);
+    transition: transform 0.1s ease-in;
+}
+.menu-offcanvas.open {
+    transform: translateX(0);
+}
+.menu-offcanvas li {
+    border-left: 3px solid transparent;
+}
+.menu-offcanvas li a {
+    color: #000;
+    padding: 10px 20px;
+}
+.menu-offcanvas li:hover, .menu-offcanvas li.active {
+    border-left: 3px solid rgba(0,120,215,1);
+}
+.menu-offcanvas li:hover a, .menu-offcanvas li.active a {
+    color: rgba(0,120,215,1);
+}
+.menu-offcanvas li a .glyph {
+    margin-right: 10px;
+    font-size: 1.5em;
+    position: relative;
+    top: -2px;
+}

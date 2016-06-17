@@ -13,6 +13,9 @@ import { Subscription }   from 'rxjs/Subscription';
 export class TopMenuComponent implements OnDestroy {
     path:string;
     subscription:Subscription;
+    page:string;
+    subscription2:Subscription;
+    menuVisible:boolean = false;
 
     constructor(pathService:PathService) {
       // subscribe to a change in path; so we can display it
@@ -21,9 +24,16 @@ export class TopMenuComponent implements OnDestroy {
           this.path = path;
         }
       );
+      this.subscription2 = pathService.pageAnnounced$.subscribe(
+        page => { this.page = page }
+      );
     }
 
     ngOnDestroy() {
       this.subscription.unsubscribe(); // prevent memory leakage
+      this.subscription2.unsubscribe();
+    }
+    toggleMenu() {
+      this.menuVisible = !this.menuVisible;
     }
 }

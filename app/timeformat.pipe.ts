@@ -18,6 +18,12 @@ export class TimeFormatPipe implements PipeTransform {
     seconds = seconds % 60; // rest seconds
     let hours = Math.floor(minutes / 60); // total hours
     minutes = minutes % 60; // rest minutes
+    let days = Math.floor(hours / 24); // total days
+    hours = hours % 24; // rest hours
+
+    if (days > 0) {
+        ret+=days + " days,";
+    }
     if (hours > 0) {
         ret+= this.prefixZero(hours) + ":";
     }

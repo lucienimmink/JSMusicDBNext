@@ -1,14 +1,27 @@
 <div class="menu-top">
-    <button class="btn btn-menu hidden-md hidden-lg">
-        <span class="glyph glyph-hamburger" aria-hidden="true"></span>
-    </button>
-    <a [routerLink]="['Home']" class="visible-md-inline-block visible-lg-inline-block">
-        <img class="logo" src="/global/images/logo.png">
-    </a>
+    <span (click)="toggleMenu()">
+        <button class="btn btn-menu hidden-md hidden-lg">
+            <span class="glyph glyph-hamburger" aria-hidden="true"></span>
+        </button>
+        <a class="visible-md-inline-block visible-lg-inline-block">
+            <img class="logo" src="/global/images/logo.png">
+        </a>
+    </span>
     <h1>
-        <span *ngIf="path && path.album">{{path.artist.name}} &bull; {{path.album.name}}</span>
+        <span *ngIf="path && path.album && path.atist">{{path.artist.name}} &bull; {{path.album.name}}</span>
         <span *ngIf="path && !path.album">{{path.artist.name}}</span>
         <span *ngIf="path && !path.artist">JSMusicDB Next</span>
-        <span *ngIf="!path">JSMusicDB Next</span>
+        <span *ngIf="!path && page">{{page}}</span>
+        <span *ngIf="!path && !page">JSMusicDB Next</span>
     </h1>
+</div>
+<div class="menu-offcanvas" [ngClass]="{'open': menuVisible}">
+    <ul class="nav nav-pills nav-stacked">
+        <li><a [routerLink]="['Home']" title="Home" [ngClass]="{'active': page === 'Home'}"><span class="glyph glyph-home"></span> Home</a></li>
+        <li><a href="#" title="Artists" [ngClass]="{'active': page === 'Artists'}"><span class="glyph glyph-people"></span> Artists</a></li>
+        <li><a href="#" title="Albums" [ngClass]="{'active': page === 'Albums'}"><span class="glyph glyph-music-album"></span> Albums</a></li>
+        <li><a href="#" title="Playlists" [ngClass]="{'active': page === 'Playlists'}"><span class="glyph glyph-music-info"></span> Playlists</a></li>
+        <li><a href="#" title="Now playing" [ngClass]="{'active': page === 'Now playing'}"><span class="glyph glyph-audio"></span> Now playing</a></li>
+        <li><a [routerLink]="['Settings']" title="Settings" [ngClass]="{'active': page === 'Settings'}"><span class="glyph glyph-settings"></span> Settings</a></li>
+    </ul>
 </div>

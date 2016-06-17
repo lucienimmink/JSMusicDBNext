@@ -7,6 +7,7 @@ import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
 
 import { CoreService } from './../core.service';
+import { PathService } from './../utils/path.service';
 import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { RecentlyListenedService } from './../utils/recentlyListened.service';
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private newListenedTracks:Array<Track> = [];
   private counter:any;
 
-  constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService) { }
+  constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService) { }
 
   ngOnInit() {
     let c = this;
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       c.checkRecentlyListened();
     }, RECENTLYLISTENEDINTERVAL);
     this.checkRecentlyListened();
+    this.pathService.announcePage('Home');
   }
 
   ngOnDestroy() {
