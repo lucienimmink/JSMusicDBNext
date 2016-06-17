@@ -8,8 +8,8 @@
         </a>
     </span>
     <h1>
-        <span *ngIf="path && path.album && path.atist">{{path.artist.name}} &bull; {{path.album.name}}</span>
-        <span *ngIf="path && !path.album">{{path.artist.name}}</span>
+        <span *ngIf="path && path.album">{{path.artist.name}} &bull; {{path.album.name}}</span>
+        <span *ngIf="path && path.artist && !path.album">{{path.artist.name}}</span>
         <span *ngIf="path && !path.artist">JSMusicDB Next</span>
         <span *ngIf="!path && page">{{page}}</span>
         <span *ngIf="!path && !page">JSMusicDB Next</span>
