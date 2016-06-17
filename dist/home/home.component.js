@@ -11,7 +11,7 @@ System.register(["@angular/core", '@angular/router-deprecated', 'lodash', './../
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_deprecated_1, _, core_service_1, recentlyListened_service_1;
-    var HomeComponent;
+    var RECENTLYLISTENEDINTERVAL, HomeComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -30,6 +30,7 @@ System.register(["@angular/core", '@angular/router-deprecated', 'lodash', './../
                 recentlyListened_service_1 = recentlyListened_service_1_1;
             }],
         execute: function() {
+            RECENTLYLISTENEDINTERVAL = 1000 * 60;
             HomeComponent = (function () {
                 function HomeComponent(coreService, router, recentlyListened) {
                     this.coreService = coreService;
@@ -38,8 +39,19 @@ System.register(["@angular/core", '@angular/router-deprecated', 'lodash', './../
                     this.recentlyListenedTracks = [];
                 }
                 HomeComponent.prototype.ngOnInit = function () {
-                    var _this = this;
+                    var c = this;
                     this.core = this.coreService.getCore();
+                    this.counter = setInterval(function () {
+                        c.checkRecentlyListened();
+                    }, RECENTLYLISTENEDINTERVAL);
+                    this.checkRecentlyListened();
+                };
+                HomeComponent.prototype.ngOnDestroy = function () {
+                    clearInterval(this.counter);
+                };
+                HomeComponent.prototype.checkRecentlyListened = function () {
+                    var _this = this;
+                    this.recentlyListenedTracks = [];
                     this.recentlyListened.getRecentlyListened('arielext').subscribe(function (data) { return _this.populate(data); }, function (error) { return console.log(error); });
                 };
                 HomeComponent.prototype.setDate = function (track) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
 import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -11,25 +11,42 @@ import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { RecentlyListenedService } from './../utils/recentlyListened.service';
 
+const RECENTLYLISTENEDINTERVAL = 1000 * 60;
+
 @Component({
   templateUrl: 'app/home/home.component.html',
   selector: 'home',
   styleUrls: [ 'app/home/home.component.css'],
   providers: [ RecentlyListenedService ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
 
   private core:musicdbcore;
   private recentlyListenedTracks:Array<Track> = [];
+  private counter:any;
 
   constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService) { }
 
   ngOnInit() {
+    let c = this;
     this.core = this.coreService.getCore();
+
+    this.counter = setInterval(function () {
+      c.checkRecentlyListened();
+    }, RECENTLYLISTENEDINTERVAL);
+    this.checkRecentlyListened();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.counter);
+  }
+
+  checkRecentlyListened() {
+    this.recentlyListenedTracks = [];
     this.recentlyListened.getRecentlyListened('arielext').subscribe(
-      data => this.populate(data),
-      error => console.log(error)
-    )
+        data => this.populate(data),
+        error => console.log(error)
+      )
   }
 
   setDate(track:any):Date {
