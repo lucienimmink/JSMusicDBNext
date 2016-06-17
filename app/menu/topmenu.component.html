@@ -21,7 +21,7 @@
         <li [ngClass]="{'active': page === 'Artists'}"><a href="#" title="Artists"><span class="glyph glyph-people"></span> Artists</a></li>
         <li [ngClass]="{'active': page === 'Albums'}"><a href="#" title="Albums"><span class="glyph glyph-music-album"></span> Albums</a></li>
         <li [ngClass]="{'active': page === 'Playlists'}"><a href="#" title="Playlists"><span class="glyph glyph-music-info"></span> Playlists</a></li>
-        <li [ngClass]="{'active': page === 'Now playing'}"><a href="#" title="Now playing"><span class="glyph glyph-audio"></span> Now playing</a></li>
+        <li [ngClass]="{'active': page === 'Now playing'}"><a [routerLink]="['Now playing']" title="Now playing"><span class="glyph glyph-audio"></span> Now playing</a></li>
         <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" title="Settings"><span class="glyph glyph-settings"></span> Settings</a></li>
     </ul>
 </div>
