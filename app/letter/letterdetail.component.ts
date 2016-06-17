@@ -24,7 +24,7 @@ export class LetterDetailComponent implements OnInit {
     let core:musicdbcore = this.coreService.getCore();
     let coreletter = core.letters[this.letter];
     if (coreletter) {
-      this.pathService.announcePath(null);
+      this.pathService.announcePage('JSMusicDB Next');
       this.artists = coreletter.sortAndReturnArtistsBy('name', 'asc');
     }
   }

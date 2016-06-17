@@ -14,12 +14,14 @@
     height: 50px;
     position: relative;
     top: -12px;
+    left: 10px;
 }
 .logo {
     max-width: 50px;
     min-width: 50px;
     position: relative;
-    top: -12px;
+    top: -14px;
+    left: 10px;
 }
 h1 {
     display: inline-block;
@@ -30,8 +32,9 @@ h1 {
     top: 0;
     white-space: nowrap;
     overflow: hidden;
-    max-width: calc(100% - 60px);
+    max-width: calc(100% - 70px);
     text-overflow: ellipsis;
+    margin-left: 10px;
 }
 
 
@@ -51,10 +54,14 @@ h1 {
 }
 .menu-offcanvas li {
     border-left: 3px solid transparent;
+    margin: 0;
+}
+.menu-offcanvas li:hover {
+    background: #e1e1e1;
 }
 .menu-offcanvas li a {
     color: #000;
-    padding: 10px 20px;
+    padding: 15px 20px;
 }
 .menu-offcanvas li:hover, .menu-offcanvas li.active {
     border-left: 3px solid rgba(0,120,215,1);
