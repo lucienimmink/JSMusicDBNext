@@ -77,11 +77,10 @@ export class BackgroundArtService {
         }
       });
     }
-    return image;
+    return image || NOIMAGE;
   }
 
   private handleError(error: any) {
-    let errorMessage = (error.message) ? error.message : (error.status) ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errorMessage);
+    return Observable.throw(NOIMAGE);
   }
 }

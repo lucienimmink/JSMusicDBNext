@@ -7,6 +7,7 @@ import { AlbumArt } from './../utils/albumart.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { PathService } from './../utils/path.service';
+import { PlayerService } from './../player/player.service';
 
 @Component({
   templateUrl: 'app/album/albumdetail.component.html',
@@ -16,24 +17,26 @@ import { PathService } from './../utils/path.service';
 })
 export class AlbumDetailComponent implements OnInit {
   private albumName:string = '';
+  private artistName:string = '';
   private album:any;
 
   private albumart:AlbumArt;
   
-  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService) {}
+  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService, private playerService:PlayerService) {}
 
   ngOnInit() {
     let c = this;
     this.albumName = decodeURIComponent(this.routeParams.get('album'));
+    this.artistName = decodeURIComponent(this.routeParams.get('artist'));
     let core:musicdbcore = this.coreService.getCore();
-    this.album = core.albums[this.albumName];
+    this.album = core.albums[this.artistName+'|'+this.albumName];
     if (this.album) {
       this.pathService.announcePath({artist: this.album.artist, album:this.album});
     }
   }
 
   onSelect(track:any) {
-    // setup the player
+    this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track));
   }
   navigateToArtist(artist:any) {
     this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);

@@ -1,0 +1,25 @@
+<div *ngIf="showPlayer" class="player">
+    <div class="row">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 0%;">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row row-sm">
+            <div class="col-xs-4 col-sm-3 col-lg-1">
+                <albumart [album]="playlist"></albumart>
+            </div>
+            <div class="col-xs-16 col-sm-17 col-lg-20">
+                <h3>{{track.title}}</h3>
+                <h5>
+                    <a (click)="navigateToArtist()">{{track.album.artist.name}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-lg-3">
+                <a class="btn btn-link"><span class="glyph glyph-previous"></span> </a>
+                <a class="btn btn-link"><span class="glyph glyph-pause"></span> </a>
+                <a class="btn btn-link"><span class="glyph glyph-next"></span> </a>
+            </div>
+        </div>
+    </div>
+</div>

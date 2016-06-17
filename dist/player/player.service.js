@@ -8,21 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var Subject_1 = require('rxjs/Subject');
-var PathService = (function () {
-    function PathService() {
-        this.pathAnnouncementSource = new Subject_1.Subject();
-        this.pathAnnounced$ = this.pathAnnouncementSource.asObservable();
+var PlayerService = (function () {
+    function PlayerService() {
+        this.playlistSource = new Subject_1.Subject();
+        this.playlistAnnounced$ = this.playlistSource.asObservable();
     }
-    PathService.prototype.announcePath = function (path) {
-        this.pathAnnouncementSource.next(path);
+    ;
+    PlayerService.prototype.doPlayAlbum = function (album, startIndex) {
+        this.playlistSource.next({
+            playlist: album,
+            startIndex: startIndex
+        });
     };
-    PathService = __decorate([
+    PlayerService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], PathService);
-    return PathService;
+    ], PlayerService);
+    return PlayerService;
 }());
-exports.PathService = PathService;
-//# sourceMappingURL=path.service.js.map
+exports.PlayerService = PlayerService;
+//# sourceMappingURL=player.service.js.map
