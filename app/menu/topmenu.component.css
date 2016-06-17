@@ -39,7 +39,7 @@ h1 {
     background: #efefef;
     position: absolute;
     left: 0;
-    width: 15vw;
+    width: 250px;
     bottom: 0;
     top: 50px;
     z-index: 10;
@@ -61,6 +61,7 @@ h1 {
 }
 .menu-offcanvas li:hover a, .menu-offcanvas li.active a {
     color: rgba(0,120,215,1);
+    background-color: transparent;
 }
 .menu-offcanvas li a .glyph {
     margin-right: 10px;
