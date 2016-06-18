@@ -1,4 +1,4 @@
-<div class="container-fluid" [ngClass]="{'slided': slided}" id="nowPlaying">
+<div class="container-fluid" [ngClass]="{'slided': slided}" id="nowPlaying" *ngIf="track">
     <div class="top">
         <div class="image-wrapper">
             <div class="current-album-art" [backgroundArt]="track.album"></div>

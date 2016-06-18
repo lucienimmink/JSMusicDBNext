@@ -27,9 +27,11 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router) {
     // this is for when we open the page; just wanting to know the current state of the playerService
     let playerData = this.playerService.getCurrentPlaylist();
-    this.playlist = playerData.playlist;
-    this.trackIndex = playerData.startIndex;
-    this.setTrack();
+    if (playerData) {
+      this.playlist = playerData.playlist;
+      this.trackIndex = playerData.startIndex;
+      this.setTrack();
+    }
     // this is for when a new track is announced while we are already on the page
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
