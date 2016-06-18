@@ -47,4 +47,7 @@ export class PlayerComponent implements OnDestroy {
     navigateToAlbum() {
         this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
     }
+    navigateToNowPlaying() {
+        this.router.navigate(['Now playing']);
+    }
 }
