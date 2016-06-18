@@ -16,6 +16,7 @@ import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
 import { PlayerComponent } from './player/player.component';
 import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
+import { PlaylistsComponent } from './playlists/playlists.component';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -29,6 +30,7 @@ import './rxjs-operators';
 })
 @RouteConfig([
   { path: '/home', name: 'Home', component: HomeComponent},
+  { path: '/playlisyts/:playlist', name: 'Playlists', component: PlaylistsComponent},
   { path: '/now playing', name: 'Now playing', component: NowPlayingComponent},
   { path: '/settings', name: 'Settings', component: SettingsComponent},
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
