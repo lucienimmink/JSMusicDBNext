@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { PlayerService} from "./../player/player.service";
 import { TimeFormatPipe } from './../timeformat.pipe';
 
 @Component({
@@ -10,9 +11,9 @@ import { TimeFormatPipe } from './../timeformat.pipe';
 export class TrackListComponent {
     @Input() playlist:any = {};
     
-    constructor() {}
+    constructor(private playerservice:PlayerService) {}
 
-    select() {
-        // TODO: send player event
+    select(track:any) {
+        this.playerservice.doPlayAlbum(this.playlist, this.playlist.tracks.indexOf(track));
     }
 }

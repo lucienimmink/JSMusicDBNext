@@ -1,10 +1,10 @@
 <ol class="list-items">
-    <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select()">
-        <div class="col-xs-2 col-sm-1">
-            {{track.disc}}.{{track.number}}
-        </div>
-        <div class="col-xs-18 col-sm-19 col-md-21">
-            {{track.title}}
+    <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select(track)">
+        <div class="col-xs-20 col-sm-20 col-md-22">
+            {{track.title}} <br />
+            <span class="small color-type-secondary">
+              {{track.album.artist.name}} &bull; {{track.album.name}}
+            </span>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-2 text-right">
             {{track.duration | timeFormat }}
