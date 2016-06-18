@@ -5,6 +5,9 @@
     background-color: rgba(0,120,215,1);
     color:#ffffff;
 }
+.list-group-item:hover .color-type-secondary {
+    color:#cccccc;
+}
 .disc-row {
     overflow: hidden;
     border-bottom: 1px solid rgba(0,120,215,1);
