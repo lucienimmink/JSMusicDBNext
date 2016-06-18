@@ -1,0 +1,13 @@
+<ol class="list-items">
+    <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select()">
+        <div class="col-xs-2 col-sm-1">
+            {{track.disc}}.{{track.number}}
+        </div>
+        <div class="col-xs-18 col-sm-19 col-md-21">
+            {{track.title}}
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-2 text-right">
+            {{track.duration | timeFormat }}
+        </div>
+    </li>
+</ol>

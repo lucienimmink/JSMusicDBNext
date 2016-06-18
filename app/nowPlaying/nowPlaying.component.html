@@ -1,1 +1,46 @@
-Now playing
+<div class="container-fluid" [ngClass]="{'slided': slided}" id="nowPlaying">
+    <div class="top">
+        <div class="image-wrapper">
+            <div class="current-album-art" [backgroundArt]="track.album"></div>
+        </div>
+        <div class="row controls-wrapper">
+            <div class="progress">
+                <div class="progress-bar"></div>
+                <div id="position-indicator"></div>
+            </div>
+            <div id="progress-pusher"></div>
+            <span class="time start">{{track.position | timeFormat}}</span>
+            <span class="time stop">{{track.duration | timeFormat}}</span>
+
+            <div class="col-xs-24">
+                <h4>{{track.title}}</h4>
+                <h5><a (click)="navigateToArtist()">{{track.album.artist.name}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
+            </div>
+        </div>
+        <div class="row icons">
+            <div class="col-xs-24">
+                <button class="btn btn-link"><i class="glyph glyph-previous"></i></button>
+                <button class="btn btn-link"><i class="glyph glyph-play"></i></button>
+                <button class="btn btn-link"><i class="glyph glyph-next"></i></button>
+                <button class="btn btn-link btn-love">
+                    <i class="glyph glyph-star-outline"></i>
+                </button>
+            </div>
+
+            <div class="col-xs-24">
+                <button class="btn btn-link win-h6">
+                    <i class="glyph glyph-chevron-up" id="upordown" (click)="toggleSlide()"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="bottom ">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-24">
+                    <mdb-tracklist [playlist]="playlist"></mdb-tracklist>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

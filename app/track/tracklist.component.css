@@ -1,0 +1,13 @@
+.list-group-item {
+    overflow: hidden;
+}
+.list-group-item:hover {
+    background-color: rgba(0,120,215,1);
+    color:#ffffff;
+}
+.disc-row {
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0,120,215,1);
+    border-top: none;
+    padding-left: 25px;
+}

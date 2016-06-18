@@ -1,0 +1,133 @@
+#nowPlaying {
+    background: #ffffff;
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100px;
+    bottom: 0;
+    overflow: hidden;
+}
+#nowPlaying .top, #nowPlaying .bottom {
+    transition: 0.3s ease-out;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #ffffff;
+}
+#nowPlaying .top {
+    z-index: 1;
+}
+#nowPlaying .bottom {
+    height: calc(100% - 200px);
+    overflow: auto;
+    margin-top: 200px;
+}
+
+#nowPlaying .image-wrapper {
+    position: relative;
+    height: calc(100% - 165px);
+    z-index: 0;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+    transition: -webkit-transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+}
+#nowPlaying .image-wrapper div.currentAlbumArt {
+    z-index: 0;
+}
+
+#nowPlaying .image-wrapper div.previousAlbumArt {
+    z-index: 1;
+    -webkit-transform: translateY(0%);
+    transform: translate3d(0%, 0, 0);
+    opacity: 1;
+}
+
+#nowPlaying .image-wrapper div.animate {
+    z-index: 2;
+    transition: 0.7s ease-out;
+    -webkit-transform: translateY(-150%);
+    transform: translate3d(-150%, 0, 0);
+    opacity: 1;
+}
+
+#nowPlaying .image-wrapper div.animateBack {
+    z-index: 2;
+    transition: 0.7s ease-in;
+    -webkit-transform: translateY(150%);
+    transform: translate3d(150%, 0, 0);
+    opacity: 1;
+}
+
+#nowPlaying .image-wrapper div {
+    height: calc(100% - 70px);
+    width: 100%;
+    display: block;
+    margin: 2% auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: absolute;
+    top: 0;
+}
+#nowPlaying .controls-wrapper {
+  position: relative;
+}
+#nowPlaying .controls-wrapper h4, #nowPlaying .controls-wrapper h5 {
+  padding-top: 0;
+  margin-left: 10px;
+}
+#nowPlaying .controls-wrapper h4 {
+  padding-top: 10px;
+}
+#nowPlaying .icons {
+    text-align: center;
+}
+#nowPlaying .icons button {
+    display: inline-block;
+    min-width: 45px;
+    outline: none;
+    font-size: 32px;
+    margin-top: 0;
+}
+#nowPlaying .icons .btn-love {
+    position: absolute;
+    margin: 0 0 0 30px;
+}
+
+#nowPlaying .progress {
+    width: calc(100% - 130px);
+    margin: 0 auto;
+    overflow: visible;
+}
+
+#nowPlaying .time {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+}
+
+    #nowPlaying .time.stop {
+        left: auto;
+        right: 20px;
+    }
+
+footer.hidePlayer {
+    height: 0;
+}
+
+#nowPlaying.slided .top {
+    transform: translateY(calc(-100% + 190px));
+}
+#nowPlaying #upordown {
+    transition: 0.3s ease-out 0.15s;
+    margin-left: 5px;
+}
+#nowPlaying.slided #upordown {
+    transform: rotate(180deg);
+}
