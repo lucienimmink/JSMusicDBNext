@@ -3,3 +3,6 @@ h4 {
   padding-left: 25px;
   margin-bottom: 10px;
 }
+.col-lg-fixed {
+  position: fixed;
+}
