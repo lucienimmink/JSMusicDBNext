@@ -7,32 +7,37 @@ import { TimeFormatPipe } from './../timeformat.pipe';
 import { Router } from '@angular/router-deprecated';
 import { TrackListComponent } from './../track/tracklist.component';
 import { Subscription }   from 'rxjs/Subscription';
+import { LastFMService } from './../lastfm/lastfm.service';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'app/playlists/playlists.component.html',
   pipes: [TimeFormatPipe],
   directives: [TrackListComponent],
+  providers: [ LastFMService ],
   styleUrls: ['app/playlists/playlists.component.css']
 })
 export class PlaylistsComponent implements OnInit {
 
   private subscription: Subscription;
   private playlist;
+  private currentPlaylist;
   private track;
   private trackIndex;
+  private core:musicdbcore;
 
-  constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice:LastFMService) {
     // this is for when we open the page; just wanting to know the current state of the playerService
     let playerData = this.playerService.getCurrentPlaylist();
     if (playerData) {
-      this.playlist = playerData.playlist;
+      this.currentPlaylist = playerData.playlist;
       this.trackIndex = playerData.startIndex;
       this.setTrack();
     }
     // this is for when a new track is announced while we are already on the page
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
-        this.playlist = playerData.playlist;
+        this.currentPlaylist = playerData.playlist;
         this.trackIndex = playerData.startIndex;
         this.setTrack();
       }
@@ -40,13 +45,43 @@ export class PlaylistsComponent implements OnInit {
   }
 
   setTrack() {
-    this.track = this.playlist.tracks[this.trackIndex];
+    this.track = this.currentPlaylist.tracks[this.trackIndex];
     this.track.position = 0;
   }
 
   ngOnInit() {
     this.pathService.announcePage('Playlists');
-    let core: musicdbcore = this.coreService.getCore();
-
+    this.core = this.coreService.getCore();
+  }
+  setPlaylist(name:string) {
+    if (name === "current") {
+      this.playlist = this.currentPlaylist;
+    } else if (name === 'last.fm') {
+      this.lastfmservice.getLovedTracks('arielext').subscribe(
+        data => {
+          this.playlist = this.extractTracks(data);
+        }
+      )
+    } else if (name === 'random') {
+      // get 50 random tracks from the core
+    } else {
+      console.log('unknown playlist', name);
+    }
+  }
+  extractTracks(data:Array<any>) {
+    let tmpPlaylist = {
+      name: "Loved tracks on Last.FM",
+      tracks: []
+    }
+    let c = this;
+    _.each(data, function(line) {
+      let artistName:string = line.artist.name;
+      let trackName:string = line.name;
+      let track:any = c.core.getTrackByArtistAndName(artistName, trackName);
+      if (track) {
+        tmpPlaylist.tracks.push(track);
+      }
+    });
+    return tmpPlaylist;
   }
 }

@@ -133,4 +133,19 @@ export class musicdbcore {
         // update parsing time
         this.totals.parsingTime += (new Date().getTime() - start);
     }
+    getTrackByArtistAndName(artistName:string, trackName:string):Track {
+        let artist = new Artist({name: artistName});
+        let coreArtist = this.artists[artist.sortName];
+        let ret:Track = null;
+        if (coreArtist) {
+            _.each(coreArtist.albums, function (album) {
+                _.each(album.tracks, function (track) {
+                    if (track.title.toLowerCase() === trackName.toLowerCase()) {
+                        ret = track;
+                    }
+                });
+            });
+        }
+        return ret;
+    }
 }
