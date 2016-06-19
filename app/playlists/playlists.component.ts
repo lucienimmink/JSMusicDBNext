@@ -63,12 +63,12 @@ export class PlaylistsComponent implements OnInit {
         }
       )
     } else if (name === 'random') {
-      // get 50 random tracks from the core
+      this.playlist = this.generateRandom();
     } else {
       console.log('unknown playlist', name);
     }
   }
-  extractTracks(data:Array<any>) {
+  extractTracks(data:Array<any>):any {
     let tmpPlaylist = {
       name: "Loved tracks on Last.FM",
       tracks: []
@@ -81,6 +81,19 @@ export class PlaylistsComponent implements OnInit {
       if (track) {
         tmpPlaylist.tracks.push(track);
       }
+    });
+    return tmpPlaylist;
+  }
+  generateRandom():any {
+    let coretracknames = Object.keys(this.core.tracks);
+    let randomTracks = _.shuffle(coretracknames).splice(0, 50);
+    let tmpPlaylist = {
+      name: "50 random tracks",
+      tracks: []
+    }
+    let c = this;
+    _.each(randomTracks, function (id) {
+      tmpPlaylist.tracks.push(c.core.tracks[id]);
     });
     return tmpPlaylist;
   }

@@ -16,7 +16,8 @@ h4 {
   margin-top: 6px;
 }
 .nowplaying-image {
-  width: 100%;
+  width: 30px;
+  height: 30px;
   display: inline-block;
   margin-top: 6px;
 }
