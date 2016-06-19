@@ -10,7 +10,16 @@
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist">
       <h4>{{playlist.name}} <span class="small color-type-secondary">({{playlist.tracks.length}})</span></h4>
-      <mdb-tracklist [playlist]="playlist"></mdb-tracklist>
+      <div *ngIf="loading">
+        <div class="progress-bar">
+          <div class="progress-circle"></div>
+          <div class="progress-circle"></div>
+          <div class="progress-circle"></div>
+          <div class="progress-circle"></div>
+          <div class="progress-circle"></div>
+        </div>
+      </div>
+      <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
     </div>
   </div>
 </div>

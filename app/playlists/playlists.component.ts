@@ -25,6 +25,7 @@ export class PlaylistsComponent implements OnInit {
   private track;
   private trackIndex;
   private core:musicdbcore;
+  private loading:boolean = false;
 
   constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice:LastFMService) {
     // this is for when we open the page; just wanting to know the current state of the playerService
@@ -54,16 +55,20 @@ export class PlaylistsComponent implements OnInit {
     this.core = this.coreService.getCore();
   }
   setPlaylist(name:string) {
+    this.loading = true;
     if (name === "current") {
       this.playlist = this.currentPlaylist;
+      this.loading = false;
     } else if (name === 'last.fm') {
       this.lastfmservice.getLovedTracks('arielext').subscribe(
         data => {
           this.playlist = this.extractTracks(data);
+          this.loading = false;
         }
       )
     } else if (name === 'random') {
       this.playlist = this.generateRandom();
+      this.loading = false;
     } else {
       console.log('unknown playlist', name);
     }
