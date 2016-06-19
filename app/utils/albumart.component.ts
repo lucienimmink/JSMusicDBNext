@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import Album from './../org/arielext/musicdb/models/Album';
+import Track from './../org/arielext/musicdb/models/Track';
 import { AlbumArtService } from './albumart.service';
 
 const NOIMAGE = 'global/images/no-cover.png';
@@ -11,7 +12,9 @@ const NOIMAGE = 'global/images/no-cover.png';
 })
 export class AlbumArt {
     public albumart: any = {}
-    @Input() album:Album; 
+    @Input() album:Album;
+    @Input() track:Track;
+
     constructor(private albumArtService: AlbumArtService) {
         this.albumart = {
             url: NOIMAGE,
@@ -19,10 +22,13 @@ export class AlbumArt {
         }
     }
 
-    // how to react on @input changes?
     ngOnInit() {
-        this.albumart.name = this.album.name;
-        this.albumArtService.getAlbumArt(this.album.artist.name, this.album.name)
+        if (this.album) {
+            this.albumart.name = this.album.name;
+        } else {
+            this.albumart.name = this.track.album.name;
+        }
+        this.albumArtService.getAlbumArt((this.album) ? this.album.artist.name : this.track.album.artist.name, (this.album) ? this.album.name : this.track.album.name)
             .subscribe(
                 data => this.setImage(data) ,
                 error => this.albumart.url = NOIMAGE
@@ -30,7 +36,7 @@ export class AlbumArt {
     }
     setImage(data:any) {
         if (data === 'global/images/no-cover.png' || data === '') {
-            this.albumArtService.getMediaArtFromLastFm(this.album.artist.name, this.album.name)
+            this.albumArtService.getMediaArtFromLastFm((this.album) ? this.album.artist.name : this.track.album.artist.name, (this.album) ? this.album.name : this.track.album.name)
                 .subscribe(
                     data => this.albumart.url = data,
                     error => this.albumart.url = NOIMAGE
