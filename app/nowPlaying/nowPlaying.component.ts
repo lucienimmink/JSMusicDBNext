@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -23,6 +23,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   private trackIndex;
   private previousTrack = {};
   private slided: boolean = false;
+
+  @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
   constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router) {
     // this is for when we open the page; just wanting to know the current state of the playerService
@@ -49,6 +51,10 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   }
 
   setTrack() {
+    let c = this;
+    setTimeout(function () {
+      if (c.albumart) c.albumart.ngOnInit();
+    });
     this.track = this.playlist.tracks[this.trackIndex];
     this.track.position = 0;
   }
