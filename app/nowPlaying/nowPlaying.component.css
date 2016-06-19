@@ -94,6 +94,10 @@
     outline: none;
     font-size: 32px;
     margin-top: 0;
+    transition: all 0.1s linear;
+}
+#nowPlaying .icons button:hover {
+    color: #bbbbbb;
 }
 #nowPlaying .icons .btn-love {
     position: absolute;
@@ -127,6 +131,7 @@ footer.hidePlayer {
 #nowPlaying #upordown {
     transition: 0.3s ease-out 0.15s;
     margin-left: 5px;
+    font-size: 14px;
 }
 #nowPlaying.slided #upordown {
     transform: rotate(180deg);

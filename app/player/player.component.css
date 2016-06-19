@@ -18,4 +18,8 @@
 .row .btn {
     font-size: 32px;
     min-width: 65px;
+    transition: all 0.1s linear;
+}
+.row .btn:hover {
+    color: #bbbbbb;
 }

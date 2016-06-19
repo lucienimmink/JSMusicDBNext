@@ -10,6 +10,9 @@ export class PlayerService {
     playlistAnnounced$ = this.playlistSource.asObservable();
     private currentTrack:Track;
 
+    private isPlaying:boolean = false;
+    private isPaused:boolean = false;
+
     constructor() {};
 
     doPlayAlbum(album:Album, startIndex:number) {
@@ -19,7 +22,9 @@ export class PlayerService {
         }
         this.currentPlaylist = {
             playlist: album,
-            startIndex: startIndex
+            startIndex: startIndex,
+            isPlaying: this.isPlaying = true,
+            isPaused: this.isPaused  = false
         };
         this.announce();
     }
@@ -42,11 +47,32 @@ export class PlayerService {
         this.currentPlaylist.startIndex--;
         this.announce();
     }
+    pause() {
+        this.isPlaying = false;
+        this.isPaused = true;
+        this.announce();
+    }
+    resume() {
+        this.isPlaying = true;
+        this.isPaused = false;
+        this.announce();
+    }
+    togglePlayPause() {
+        if (this.isPlaying) {
+            this.pause();
+        } else {
+            this.resume();
+        }
+    }
     announce() {
         this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
         if (this.currentTrack) {
-            this.currentTrack.isPaused = false;
-            this.currentTrack.isPlaying = true;
+            this.currentTrack.isPaused = this.isPaused;
+            this.currentTrack.isPlaying = this.isPlaying;
+
+            this.currentPlaylist.isPlaying = this.isPlaying;
+            this.currentPlaylist.isPaused = this.isPaused;
+
             this.playlistSource.next(this.currentPlaylist);
         }
     }

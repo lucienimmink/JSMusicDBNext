@@ -17,6 +17,8 @@ export class PlayerComponent implements OnDestroy {
     private trackIndex: any;
     private track: any;
     private showPlayer: boolean = false;
+    private isPlaying:boolean = false;
+    private isPaused:boolean = false;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
@@ -25,6 +27,8 @@ export class PlayerComponent implements OnDestroy {
             playerData => {
                 this.playlist = playerData.playlist;
                 this.trackIndex = playerData.startIndex;
+                this.isPaused = playerData.isPaused;
+                this.isPlaying = playerData.isPlaying;
                 this.showPlayer = true;
                 this.setTrack();
             }
@@ -61,5 +65,8 @@ export class PlayerComponent implements OnDestroy {
             this.trackIndex--;
             this.playerService.prev();
         }
+    }
+    togglePlayPause() {
+        this.playerService.togglePlayPause();
     }
 }

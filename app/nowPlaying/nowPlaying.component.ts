@@ -23,6 +23,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   private trackIndex;
   private previousTrack = {};
   private slided: boolean = false;
+  private isPlaying: boolean = false;
+  private isPaused: boolean = false;
 
   @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
@@ -32,6 +34,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
     if (playerData) {
       this.playlist = playerData.playlist;
       this.trackIndex = playerData.startIndex;
+      this.isPaused = playerData.isPaused;
+      this.isPlaying = playerData.isPlaying;
       this.setTrack();
     }
     // this is for when a new track is announced while we are already on the page
@@ -39,6 +43,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
       playerData => {
         this.playlist = playerData.playlist;
         this.trackIndex = playerData.startIndex;
+        this.isPaused = playerData.isPaused;
+        this.isPlaying = playerData.isPlaying;
         this.setTrack();
       }
     )
@@ -72,15 +78,18 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
     this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
   }
   next() {
-    if (this.trackIndex < this.playlist.tracks.length -1 ){
+    if (this.trackIndex < this.playlist.tracks.length - 1) {
       this.trackIndex++;
       this.playerService.next();
     }
   }
   prev() {
-    if (this.trackIndex > 0 ){
+    if (this.trackIndex > 0) {
       this.trackIndex--;
       this.playerService.prev();
     }
+  }
+  togglePlayPause() {
+    this.playerService.togglePlayPause();
   }
 }
