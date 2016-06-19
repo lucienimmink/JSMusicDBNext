@@ -6,21 +6,21 @@ import { Subscription }   from 'rxjs/Subscription';
 import { AlbumArt } from './../utils/albumart.component';
 
 @Component({
-  templateUrl: 'app/player/player.component.html',
-  selector: 'mdb-player',
-  directives: [ AlbumArt ],
-  styleUrls: [ 'app/player/player.component.css' ]
+    templateUrl: 'app/player/player.component.html',
+    selector: 'mdb-player',
+    directives: [AlbumArt],
+    styleUrls: ['app/player/player.component.css']
 })
 export class PlayerComponent implements OnDestroy {
-    private subscription:Subscription;
-    private playlist:any;
-    private trackIndex:any;
-    private track:any;
-    private showPlayer:boolean = false;
+    private subscription: Subscription;
+    private playlist: any;
+    private trackIndex: any;
+    private track: any;
+    private showPlayer: boolean = false;
 
-    @ViewChild(AlbumArt) albumart:AlbumArt;
+    @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private playerService:PlayerService, private router:Router) {
+    constructor(private playerService: PlayerService, private router: Router) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 this.playlist = playerData.playlist;
@@ -49,5 +49,17 @@ export class PlayerComponent implements OnDestroy {
     }
     navigateToNowPlaying() {
         this.router.navigate(['Now playing']);
+    }
+    next() {
+        if (this.trackIndex <= this.playlist.tracks.length - 1) {
+            this.trackIndex++;
+            this.playerService.doPlayAlbum(this.playlist, this.trackIndex);
+        }
+    }
+    prev() {
+        if (this.trackIndex > 0) {
+            this.trackIndex--;
+            this.playerService.doPlayAlbum(this.playlist, this.trackIndex);
+        }
     }
 }

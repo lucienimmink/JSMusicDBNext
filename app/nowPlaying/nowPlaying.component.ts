@@ -71,4 +71,16 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   navigateToAlbum() {
     this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
   }
+  next() {
+    if (this.trackIndex <= this.playlist.tracks.length -1 ){
+      this.trackIndex++;
+      this.playerService.doPlayAlbum(this.playlist, this.trackIndex);
+    }
+  }
+  prev() {
+    if (this.trackIndex > 0 ){
+      this.trackIndex--;
+      this.playerService.doPlayAlbum(this.playlist, this.trackIndex);
+    }
+  }
 }
