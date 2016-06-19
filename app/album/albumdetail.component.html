@@ -18,9 +18,10 @@
             <div class="col-xs-24">
                 <ol class="list-items" *ngFor="let disc of album.discs">
                     <li class="list-items-row disc-row" *ngIf="album.discs.length > 1">Disc {{disc[0].disc}}</li>
-                    <li class="list-group-item" *ngFor="let track of disc" (click)="onSelect(track)">
+                    <li class="list-group-item" *ngFor="let track of disc" (click)="onSelect(track)"  [ngClass]="{'active': track.isPlaying || track.isPaused}">
                         <div class="col-xs-2 col-sm-1">
-                            {{track.number}}
+                            <span *ngIf="!track.isPlaying">{{track.number}}</span>
+                            <span *ngIf="track.isPlaying"><span class="glyph glyph-play"></span> </span>
                         </div>
                         <div class="col-xs-18 col-sm-19 col-md-21">
                             {{track.title}}

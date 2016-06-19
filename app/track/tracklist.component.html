@@ -1,7 +1,7 @@
 <ol class="list-items">
-    <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select(track)">
+    <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select(track)" [ngClass]="{'active': track.isPlaying || track.isPaused}">
         <div class="col-xs-20 col-sm-20 col-md-22">
-            {{track.title}} <br />
+            <span *ngIf="track.isPlaying"><span class="glyph glyph-play"></span> </span>{{track.title}} <br />
             <span class="small color-type-secondary">
               {{track.album.artist.name}} &bull; {{track.album.name}}
             </span>

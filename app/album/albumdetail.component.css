@@ -19,6 +19,13 @@
 .list-group-item {
     overflow: hidden;
 }
+.list-group-item .glyph {
+    margin-top: 5px;
+}
+.list-group-item.active {
+    z-index: 0;
+    color: rgba(0,120,215,1);
+}
 .list-group-item:hover {
     background-color: rgba(0,120,215,1);
     color:#ffffff;

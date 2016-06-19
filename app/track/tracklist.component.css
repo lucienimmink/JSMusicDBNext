@@ -1,6 +1,10 @@
 .list-group-item {
     overflow: hidden;
 }
+.list-group-item.active {
+    color: rgba(0,120,215,1);
+    z-index: 0;
+}
 .list-group-item:hover {
     background-color: rgba(0,120,215,1);
     color:#ffffff;

@@ -12,6 +12,8 @@ export default class Track {
   title: string;
   disc: number;
   number: number;
+  isPlaying:boolean = false;
+  isPaused:boolean = false;
 
   constructor(json: any) {
     this.id = json.id;

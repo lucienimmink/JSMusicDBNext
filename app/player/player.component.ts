@@ -51,15 +51,15 @@ export class PlayerComponent implements OnDestroy {
         this.router.navigate(['Now playing']);
     }
     next() {
-        if (this.trackIndex <= this.playlist.tracks.length - 1) {
+        if (this.trackIndex < this.playlist.tracks.length - 1) {
             this.trackIndex++;
-            this.playerService.doPlayAlbum(this.playlist, this.trackIndex);
+            this.playerService.next();
         }
     }
     prev() {
         if (this.trackIndex > 0) {
             this.trackIndex--;
-            this.playerService.doPlayAlbum(this.playlist, this.trackIndex);
+            this.playerService.prev();
         }
     }
 }
