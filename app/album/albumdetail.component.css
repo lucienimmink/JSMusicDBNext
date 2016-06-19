@@ -18,6 +18,8 @@
 }
 .list-group-item {
     overflow: hidden;
+    transition: all 0.1s linear;
+    cursor: pointer;
 }
 .list-group-item .glyph {
     margin-top: 5px;

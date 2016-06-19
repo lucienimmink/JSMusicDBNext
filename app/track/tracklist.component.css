@@ -1,5 +1,7 @@
 .list-group-item {
     overflow: hidden;
+    transition: all 0.1s linear;
+    cursor: pointer;
 }
 .list-group-item.active {
     color: rgba(0,120,215,1);
