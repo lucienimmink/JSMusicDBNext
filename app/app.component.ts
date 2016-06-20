@@ -9,6 +9,7 @@ import { LetterComponent } from './letter/letter.component';
 import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistsComponent } from './artist/artists.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
+import { AlbumsComponent } from './album/albums.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
 import { TopMenuComponent } from './menu/topmenu.component';
 import { HomeComponent } from './home/home.component';
@@ -33,6 +34,7 @@ import './rxjs-operators';
 @RouteConfig([
   { path: '/home', name: 'Home', component: HomeComponent},
   { path: '/artists', name: 'Artists', component: ArtistsComponent},
+  { path: '/albums', name: 'Albums', component: AlbumsComponent},
   { path: '/playlisyts/:playlist', name: 'Playlists', component: PlaylistsComponent},
   { path: '/now playing', name: 'Now playing', component: NowPlayingComponent},
   { path: '/settings', name: 'Settings', component: SettingsComponent},

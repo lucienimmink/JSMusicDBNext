@@ -1,0 +1,28 @@
+.container-longlist ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.container-longlist li {
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  height: 50px;
+}
+.container-longlist >>> .panel-background {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  width: 50px;
+  height: 50px;
+  box-shadow: none;
+}
+.container-longlist >>> .panel-info {
+  display: none;
+}
+.container-longlist .image-wrapper {
+  float: left;
+}
+.container-longlist .text-wrapper {
+  float: left;
+}
