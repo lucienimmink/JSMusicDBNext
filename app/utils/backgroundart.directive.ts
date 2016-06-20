@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 import { BackgroundArtService } from "./backgroundart.service";
 
 import {Observable} from 'rxjs/Observable';
@@ -15,61 +15,51 @@ const NOIMAGE = 'global/images/no-cover.png';
     selector: '[backgroundArt]',
     providers: [BackgroundArtService]
 })
-export class BackgroundArtDirective implements OnInit {
+export class BackgroundArtDirective {
     private el: HTMLElement;
-    private scrollSubscription: Subscription;
-    private threshold: number = 100;
+    public loading: boolean = false;
+    public loaded: boolean = false;
+    public error: boolean = false;
+    private tagName: string;
+    private loadingClass: string = 'loading';
+    private loadedClass: string = 'loaded';
+    private errorClass: string = 'error';
 
     @Input('backgroundArt') media: any;
 
     constructor(el: ElementRef, private backgroundArtService: BackgroundArtService) {
         this.el = el.nativeElement;
     }
-    ngOnInit() {
-        /*
-        let ePos = this.getPosition();
-        if (this.isInView(ePos)) {
-            // load the inital set
-            this.loadImage();
-        }
-        if (!this.scrollSubscription) {
-            this.scrollSubscribe();
-        }
-        */
-    }
-
-    // we should create a directive for the scrollpane on which we listen for this event (now we listen on ALL possible images)
-    scrollSubscribe() {
-        let scrollStream = Observable.fromEvent(window, 'scroll').debounceTime(250);
-
-        this.scrollSubscription = scrollStream.subscribe(() => {
-            let ePos = this.getPosition();
-            if (this.isInView(ePos)) {
-                this.loadImage();
-            }
-        });
-    }
-    isInView(ePos):boolean {
-        if (ePos.bottom > 0 && (ePos.bottom >= (window.pageYOffset - this.threshold)) && (ePos.top <= ((window.pageYOffset + window.innerHeight) + this.threshold))) {
-            return true;
-        }
-        return false;
-    }
     loadImage() {
-        this.backgroundArtService.getMediaArt(this.media)
-            .subscribe(
-            data => this.setImage(data),
-            error => this.el.style.backgroundImage = `url(${NOIMAGE})`
+        if (!this.loaded && !this.loading) {
+            this.loading = true;
+            this.addClassName(this.loadingClass);
+
+            this.backgroundArtService.getMediaArt(this.media)
+                .subscribe(
+                data => this.setImage(data),
+                error => {
+                    this.el.style.backgroundImage = `url(${NOIMAGE})`
+                    this.error = true;
+                    this.loading = false;
+                    this.removeClassName(this.loadingClass);
+                    this.addClassName(this.errorClass);
+                }
             );
+        }
     }
     setImage(data: any) {
-        if (data === 'global/images/no-cover.png' || data === '') {
-            this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
-                data => this.el.style.backgroundImage = `url(${data})`,
-                error => this.el.style.backgroundImage = `url(${NOIMAGE})`
-            );
-        } else {
-            this.el.style.backgroundImage = `url(${data})`;
+        if (!this.loaded) {
+            if (data === 'global/images/no-cover.png' || data === '') {
+                this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
+                    data => this.el.style.backgroundImage = `url(${data})`,
+                    error => this.el.style.backgroundImage = `url(${NOIMAGE})`
+                );
+            } else {
+                this.el.style.backgroundImage = `url(${data})`;
+            }
+            this.loading = false;
+            this.toggleLoaded(true);
         }
     }
     getPosition() {
@@ -80,5 +70,33 @@ export class BackgroundArtDirective implements OnInit {
             left: box.left + (window.pageXOffset - document.documentElement.clientLeft),
             bottom: top + this.el.clientHeight
         };
+    }
+    getLoadingContainer() {
+        return this.el;
+    }
+    hasClassName(name: string) {
+        return new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)').test(this.getLoadingContainer().className);
+    }
+    addClassName(name: string) {
+        if (!this.hasClassName(name)) {
+            let container = this.getLoadingContainer();
+            container.className = container.className ? [container.className, name].join(' ') : name;
+        }
+    }
+    removeClassName(name: string) {
+        if (this.hasClassName(name)) {
+            let container = this.getLoadingContainer();
+            let c = container.className;
+            container.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
+        }
+    }
+    toggleLoaded(enable: boolean) {
+        this.loaded = enable;
+        if (enable) {
+            this.removeClassName(this.loadingClass);
+            this.addClassName(this.loadedClass);
+        } else {
+            this.removeClassName(this.loadedClass);
+        }
     }
 }
