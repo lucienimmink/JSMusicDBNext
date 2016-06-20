@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-24" *ngFor="let letter of letters">
+      <h4><a>{{letter.letter}}</a></h4>
+      <div class="media-container no-flex">
+        <div class="artist-panel media-panel" *ngFor="let artist of letter.artists">
+          <mdbartist [artist]="artist"></mdbartist>
+        </div>
+      </div>
+    </div>
+  </div>F
+</div>

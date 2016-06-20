@@ -18,6 +18,10 @@ a {
   display: flex;
   padding: 20px;
 }
+.no-flex {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 
 .media-panel {
   width: 11vw;

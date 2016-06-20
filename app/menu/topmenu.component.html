@@ -18,7 +18,7 @@
 <div class="menu-offcanvas" [ngClass]="{'open': menuVisible}">
     <ul class="nav nav-pills nav-stacked">
         <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']" title="Home"><span class="glyph glyph-home"></span> Home</a></li>
-        <li [ngClass]="{'active': page === 'Artists'}"><a href="#" title="Artists"><span class="glyph glyph-people"></span> Artists</a></li>
+        <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']" title="Artists"><span class="glyph glyph-people"></span> Artists</a></li>
         <li [ngClass]="{'active': page === 'Albums'}"><a href="#" title="Albums"><span class="glyph glyph-music-album"></span> Albums</a></li>
         <li [ngClass]="{'active': page === 'Playlists'}"><a [routerLink]="['Playlists', {playlist: null}]" title="Playlists"><span class="glyph glyph-music-info"></span> Playlists</a></li>
         <li [ngClass]="{'active': page === 'Now playing'}"><a [routerLink]="['Now playing']" title="Now playing"><span class="glyph glyph-audio"></span> Now playing</a></li>
