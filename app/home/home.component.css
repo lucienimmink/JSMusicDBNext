@@ -2,8 +2,8 @@ h4 {
   border-bottom: 1px solid rgba(0,120,215,1);
   padding-left: 10px;
   margin-bottom: 10px;
+  padding-top: 0;
 }
-
 .list-group-item {
     overflow: hidden;
     padding: 10px 0;
@@ -17,10 +17,9 @@ h4 {
   margin-top: 6px;
 }
 .nowplaying-image {
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   display: inline-block;
-  margin-top: 6px;
 }
 .list-group-item:nth-child(2n+1) {
   background-color: #EFEFEF;

@@ -1,6 +1,7 @@
 .jumbotron {
     margin-top: -5px;
     padding: 24px 0;
+    background-color: #EFEFEF;
 }
 .albumdetail >>> .albumart {
     display: block;
@@ -20,6 +21,7 @@
     overflow: hidden;
     transition: color .1s ease-out;
     cursor: pointer;
+    padding: 10px 10px 10px 0;
 }
 .list-group-item .glyph {
     margin-top: 5px;
