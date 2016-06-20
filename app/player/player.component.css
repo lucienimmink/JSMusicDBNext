@@ -16,9 +16,11 @@
     padding-top: 4px;
 }
 .row .btn {
-    font-size: 32px;
-    min-width: 65px;
-    transition: all 0.1s linear;
+    font-size: 16px;
+    min-width: 20px;
+    transition: color 0.25s linear;
+    padding-left: 10px;
+    padding-right: 0;
 }
 .row .btn:hover {
     color: #bbbbbb;

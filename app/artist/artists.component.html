@@ -1,12 +1,18 @@
-<div class="container" imageLazyLoadArea>
+<div class="container container-longlist" imageLazyLoadArea>
   <div class="row">
     <div class="col-xs-24" *ngFor="let letter of letters">
       <h4><a>{{letter.letter}}</a></h4>
-      <div class="media-container no-flex">
-        <div class="artist-panel media-panel" *ngFor="let artist of letter.artists">
-          <mdbartist [artist]="artist"></mdbartist>
-        </div>
-      </div>
+      <ul>
+        <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
+          <div class="image-wrapper">
+            <mdbartist [artist]="artist"></mdbartist>
+          </div>
+          <div class="text-wrapper">
+            <span>{{artist.name}}</span> <br />
+            <span class="small color-type-secondary">Albums: {{artist.albums.length}}</span>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

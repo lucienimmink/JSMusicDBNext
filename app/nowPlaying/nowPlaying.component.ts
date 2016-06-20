@@ -59,7 +59,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   setTrack() {
     let c = this;
     setTimeout(function () {
-      if (c.albumart) c.albumart.ngOnInit();
+      if (c.albumart) c.albumart.loadImage();
     });
     this.track = this.playlist.tracks[this.trackIndex];
     this.track.position = 0;

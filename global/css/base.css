@@ -1,6 +1,11 @@
 body {
-    padding-top: 105px;
+    padding-top: 55px;
     padding-bottom: 80px;
+}
+@media screen and (min-width: 480px) {
+    body {
+        padding-top: 105px;
+    }
 }
 .progress-bar{
     width: 0;
@@ -16,19 +21,28 @@ a {
   align-content: flex-start;
   align-items: stretch;
   display: flex;
-  padding: 20px;
+  padding: 0;
+}
+@media screen and (min-width: 480px) {
+    padding: 20px;
 }
 .no-flex {
     justify-content: flex-start;
     align-items: flex-start;
 }
-
 .media-panel {
-  width: 11vw;
-  height: 11vw;
-  margin: 0 1vw 1vw 0;
-  cursor: pointer;
-  background-image: url('/global/images/no-cover.png');
+    width: 39.8vw;
+    height: 39.8vw;
+    margin: 0 2vw 2vw 0;
+    cursor: pointer;
+    background-image: url('/global/images/no-cover.png');
+}
+@media screen and (min-width: 480px) {
+    .media-panel {
+        width: 11vw;
+        height: 11vw;
+        margin: 0 1vw 1vw 0;
+    }
 }
 
 .panel-background {
@@ -62,7 +76,12 @@ a {
     -o-transition: .1s ease-out;
     transition: .1s ease-out;
     overflow: hidden;
-    font-size: 16px;
+    font-size: 1em;
+}
+@media screen and (min-width: 480px) {
+    .panel-info {
+        font-size: 16px;
+    }
 }
 .panel-info span {
     display: block;

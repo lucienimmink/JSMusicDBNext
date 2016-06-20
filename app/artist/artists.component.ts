@@ -10,18 +10,21 @@ import * as _ from "lodash";
 
 @Component({
   templateUrl: 'app/artist/artists.component.html',
-  directives: [ ArtistComponent, IMAGELAZYLOAD_DIRECTIVE ],
-  styleUrls: [ 'app/artist/artists.component.css' ]
+  directives: [ArtistComponent, IMAGELAZYLOAD_DIRECTIVE],
+  styleUrls: ['app/artist/artists.component.css']
 })
 export class ArtistsComponent implements OnInit {
 
-    private letters:Array<any> = [];
+  private letters: Array<any> = [];
 
-    constructor (private coreService: CoreService, private pathService: PathService) {}
+  constructor(private coreService: CoreService, private pathService: PathService, private router: Router) { }
 
-    ngOnInit() {
-      this.pathService.announcePage("Artists");
-      let core:musicdbcore = this.coreService.getCore();
-      this.letters = core.sortedLetters;
-    }
+  ngOnInit() {
+    this.pathService.announcePage("Artists");
+    let core: musicdbcore = this.coreService.getCore();
+    this.letters = core.sortedLetters;
+  }
+  navigateToArtist(artist) {
+    this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
+  }
 }
