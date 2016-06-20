@@ -17,6 +17,8 @@ import * as _ from "lodash";
 export class AlbumsComponent implements OnInit {
 
   private items: Array<any> = [];
+  private letters: Array<any> = [];
+  private showJumpList:boolean = false;
 
   constructor(private coreService: CoreService, private pathService: PathService, private router: Router) { }
 
@@ -25,6 +27,7 @@ export class AlbumsComponent implements OnInit {
     this.pathService.announcePage("Albums");
     let core: musicdbcore = this.coreService.getCore();
     let artists = core.artists;
+    this.letters = core.sortedLetters;
     let sorted = Object.keys(artists).sort(function (a, b) {
       return (a < b) ? -1 : 1;
     });
@@ -39,5 +42,15 @@ export class AlbumsComponent implements OnInit {
   }
   getSize(item, index) {
     return (item.albums.length * 70) + 69; 
+  }
+  toggleJumpList() {
+    this.showJumpList = !this.showJumpList; 
+  }
+  jumpToLetter(letter:any) {
+    this.showJumpList = false;
+    let l = letter.letter;
+    let element = document.getElementById(`letter_${l}`);
+    element.scrollIntoView(true);
+    window.scrollBy(0, -100);
   }
 }
