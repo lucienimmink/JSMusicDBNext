@@ -1,18 +1,20 @@
 <div class="container container-longlist" imageLazyLoadArea>
   <div class="row">
-    <div class="col-xs-24" *ngFor="let artist of artists">
-      <h4><a>{{artist.name}}</a></h4>
-      <ul>
-        <li *ngFor="let album of artist.albums" (click)="navigateToAlbum(album)">
-          <div class="image-wrapper">
-            <mdbalbum [album]="album"></mdbalbum>
-          </div>
-          <div class="text-wrapper">
-            <span>{{album.name}}</span> <br />
-            <span class="small color-type-secondary">Tracks: {{album.tracks.length}}</span>
-          </div>
-        </li>
-      </ul>
+    <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'.container';">
+      <div *ngFor="let artist of _items">
+        <h4><a>{{artist.name}} <span class="small color-type-secondary">({{artist.albums.length}})</span></a></h4>
+        <ul>
+          <li *ngFor="let album of artist.albums" (click)="navigateToAlbum(album)">
+            <div class="image-wrapper">
+              <mdbalbum [album]="album"></mdbalbum>
+            </div>
+            <div class="text-wrapper">
+              <span>{{album.name}}</span> <br />
+              <span class="small color-type-secondary">Tracks: {{album.tracks.length}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ h4 {
 
 .list-group-item {
     overflow: hidden;
+    padding: 10px 0;
 }
 .now-playing {
   color: rgba(0,120,215,1);

@@ -1,18 +1,20 @@
 <div class="container container-longlist" imageLazyLoadArea>
   <div class="row">
-    <div class="col-xs-24" *ngFor="let letter of letters">
-      <h4><a>{{letter.letter}}</a></h4>
-      <ul>
-        <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
-          <div class="image-wrapper">
-            <mdbartist [artist]="artist"></mdbartist>
-          </div>
-          <div class="text-wrapper">
-            <span>{{artist.name}}</span> <br />
-            <span class="small color-type-secondary">Albums: {{artist.albums.length}}</span>
-          </div>
-        </li>
-      </ul>
+    <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'.container';">
+      <div class="col-xs-24" *ngFor="let letter of _letters">
+        <h4><a>{{letter.letter}}</a></h4>
+        <ul>
+          <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
+            <div class="image-wrapper">
+              <mdbartist [artist]="artist"></mdbartist>
+            </div>
+            <div class="text-wrapper">
+              <span>{{artist.name}}</span> <br />
+              <span class="small color-type-secondary">Albums: {{artist.albums.length}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

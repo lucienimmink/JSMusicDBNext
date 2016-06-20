@@ -4,11 +4,18 @@
   list-style: none;
 }
 .container-longlist li {
-  margin: 0 0 10px;
-  padding: 0;
+  margin: 0;
+  padding: 10px 10px;
   list-style: none;
   overflow: hidden;
-  height: 50px;
+  height: 70px;
+}
+.container-longlist li:hover {
+  background-color: rgba(0,120,215,1);
+  color: #ffffff;
+}
+.container-longlist li:hover .color-type-secondary {
+  color: #dddddd
 }
 .container-longlist >>> .panel-background {
   display: inline-block;
@@ -25,4 +32,13 @@
 }
 .container-longlist .text-wrapper {
   float: left;
+}
+.container-longlist h4 {
+  border-bottom: 1px solid rgba(0,120,215,1);
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+.container-longlist h4 a:hover {
+  text-decoration: none;
+  color: #cccccc;
 }
