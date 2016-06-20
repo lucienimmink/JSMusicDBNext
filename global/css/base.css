@@ -28,6 +28,7 @@ a {
   height: 11vw;
   margin: 0 1vw 1vw 0;
   cursor: pointer;
+  background-image: url('/global/images/no-cover.png');
 }
 
 .panel-background {
