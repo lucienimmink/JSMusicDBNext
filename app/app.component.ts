@@ -18,6 +18,7 @@ import { PlayerService } from './player/player.service';
 import { PlayerComponent } from './player/player.component';
 import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
+import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -27,7 +28,7 @@ import './rxjs-operators';
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
   providers: [CollectionService, CoreService, PathService, PlayerService ],
-  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent ]
+  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE ]
 })
 @RouteConfig([
   { path: '/home', name: 'Home', component: HomeComponent},

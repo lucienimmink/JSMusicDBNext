@@ -6,12 +6,13 @@ import { CoreService } from './../core.service';
 import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { PathService } from './../utils/path.service';
+import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 
 
 @Component({
   templateUrl: 'app/artist/artistdetail.component.html',
   styleUrls: ['app/artist/artistdetail.component.css'],
-  directives: [AlbumComponent, BackgroundArtDirective]
+  directives: [AlbumComponent, BackgroundArtDirective, IMAGELAZYLOAD_DIRECTIVE]
 })
 export class ArtistDetailComponent implements OnInit {
   private artist: any;

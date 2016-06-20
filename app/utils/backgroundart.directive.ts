@@ -26,6 +26,7 @@ export class BackgroundArtDirective implements OnInit {
         this.el = el.nativeElement;
     }
     ngOnInit() {
+        /*
         let ePos = this.getPosition();
         if (this.isInView(ePos)) {
             // load the inital set
@@ -34,6 +35,7 @@ export class BackgroundArtDirective implements OnInit {
         if (!this.scrollSubscription) {
             this.scrollSubscribe();
         }
+        */
     }
 
     // we should create a directive for the scrollpane on which we listen for this event (now we listen on ALL possible images)

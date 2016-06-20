@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ViewChild } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
@@ -10,6 +10,7 @@ import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 })
 export class ArtistComponent {
     @Input() artist:any = {};
+    @ViewChild(BackgroundArtDirective) backgroundArt:BackgroundArtDirective;
 
     constructor(private router: Router) {}
 
