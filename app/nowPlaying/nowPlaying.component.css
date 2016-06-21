@@ -91,6 +91,9 @@
 #nowPlaying .controls-wrapper h4, #nowPlaying .controls-wrapper h5 {
   padding-top: 0;
   margin-left: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 #nowPlaying .controls-wrapper h4 {
   padding-top: 10px;
