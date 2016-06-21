@@ -22,12 +22,14 @@ export class TopMenuComponent implements OnDestroy {
     this.subscription = pathService.pathAnnounced$.subscribe(
       path => {
         this.path = path;
+        this.page = null;
         this.menuVisible = false;
       }
     );
     this.subscription2 = pathService.pageAnnounced$.subscribe(
       page => {
         this.page = page;
+        this.path = null;
         this.menuVisible = false;
       }
     );

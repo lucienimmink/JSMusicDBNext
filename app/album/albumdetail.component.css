@@ -1,7 +1,14 @@
 .jumbotron {
     margin-top: -5px;
     padding: 24px 0;
-    background-color: #EFEFEF;
+    background-color: #0078D7;
+    color:#ffffff;
+}
+@media screen and (min-width: 480px) {
+    .jumbotron {
+        background-color: #EFEFEF;
+        color: #000000;
+    }
 }
 .albumdetail >>> .albumart {
     display: block;
@@ -9,13 +16,26 @@
 }
 .albumdetail h2 {
     padding-top: 0;
-    margin-top: -10px;
+    margin-top: 5px;
+    font-size: 24px;
+}
+@media screen and (min-width: 480px) {
+    .albumdetail h2 {
+        margin-top: -10px;
+        font-size: 34px;
+    }
 }
 .albumdetail h3 {
     padding-top: 5px;
 }
 .albumdetail h4 {
-    padding-top: 2px;
+    font-size: 16px;
+    padding-top: 5px;
+}
+@media screen and (min-width: 480px) {
+    .albumdetail h4 {
+        font-size: 20px;
+    }
 }
 .list-group-item {
     overflow: hidden;
@@ -38,5 +58,5 @@
     overflow: hidden;
     border-bottom: 1px solid rgba(0,120,215,1);
     border-top: none;
-    padding-left: 25px;
+    padding-left: 10px;
 }
