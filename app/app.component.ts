@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { CollectionService } from './collection.service';
 import { CoreService } from './core.service';
 import { LetterComponent } from './letter/letter.component';
+import { LettersComponent } from './letter/letters.component';
 import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistsComponent } from './artist/artists.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
@@ -33,6 +34,7 @@ import './rxjs-operators';
 })
 @RouteConfig([
   { path: '/home', name: 'Home', component: HomeComponent},
+  { path: '/letters', name: 'Letters', component: LettersComponent},
   { path: '/artists', name: 'Artists', component: ArtistsComponent},
   { path: '/albums', name: 'Albums', component: AlbumsComponent},
   { path: '/playlisyts/:playlist', name: 'Playlists', component: PlaylistsComponent},

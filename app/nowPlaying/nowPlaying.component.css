@@ -4,9 +4,14 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 100px;
+    top: 50px;
     bottom: 0;
     overflow: hidden;
+}
+@media screen and (min-width: 480px) {
+    #nowPlaying {
+        top: 100px;
+    }
 }
 #nowPlaying .top, #nowPlaying .bottom {
     transition: 0.3s ease-out;
@@ -29,13 +34,18 @@
 
 #nowPlaying .image-wrapper {
     position: relative;
-    height: calc(100% - 165px);
+    height: calc(100% - 145px);
     z-index: 0;
     margin: 0 auto;
     width: 100%;
     text-align: center;
     transition: -webkit-transform 0.3s ease-out;
     transition: transform 0.3s ease-out;
+}
+@media screen and (min-width: 480px) {
+    #nowPlaying .image-wrapper {
+        height: calc(100% - 165px);
+    }  
 }
 #nowPlaying .image-wrapper div.currentAlbumArt {
     z-index: 0;
@@ -68,7 +78,7 @@
     height: calc(100% - 70px);
     width: 100%;
     display: block;
-    margin: 2% auto;
+    margin: 20px auto;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -101,7 +111,7 @@
 }
 #nowPlaying .icons .btn-love {
     position: absolute;
-    margin: 0 0 0 30px;
+    margin: 0 0 0 10px;
 }
 
 #nowPlaying .progress {

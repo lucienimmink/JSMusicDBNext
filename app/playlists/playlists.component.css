@@ -2,7 +2,19 @@ h4 {
   border-bottom: 1px solid rgba(0,120,215,1);
   padding-left: 25px;
   margin-bottom: 10px;
+  padding-top: 10px;
 }
-.col-lg-fixed {
-  position: fixed;
+@media screen and (min-width: 480px) {
+  h4 {
+    padding-top: 25px;
+  }
+  .progress-bar {
+    margin-top: 25px;
+  }
 }
+@media screen and (min-width: 960px) {
+  .col-lg-fixed {
+    position: fixed;
+  }
+}
+

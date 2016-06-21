@@ -1,0 +1,7 @@
+<div class="jumplist visible">
+  <ol>
+    <li *ngFor="let letter of letters">
+      <a (click)="navigateToLetter(letter)">{{letter.letter}}</a>
+    </li>
+  </ol>
+</div>

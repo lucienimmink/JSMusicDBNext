@@ -1,0 +1,52 @@
+
+.jumpList {
+  position: fixed;
+  left: 0;
+  top: 50px;
+  z-index: 1000;
+  background: #ffffff;
+  right: 0;
+  bottom: 0;
+  padding: 4vh;
+  transform: scale(0);
+  transition: transform 0.25s ease-in-out;
+}
+@media screen and (min-width: 480px) {
+  .jumpList {
+    top: 100px;
+    padding: 10vh;
+  }
+}
+.jumpList.visible {
+  display: block;
+  transform: scale(1);
+}
+.jumpList ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: stretch;
+  display: flex;
+}
+.jumpList li {
+  font-size: 2em;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 8vw 4vh 0;
+  text-align: center;
+  width: 40px;
+}
+@media screen and (min-width: 480px) {
+  .jumpList li {
+    font-size: 3em;
+    margin: 0 10vw 10vh 0;
+  }
+}
+.jumpList a:hover {
+  text-decoration: none;
+  color: #dddddd;
+}

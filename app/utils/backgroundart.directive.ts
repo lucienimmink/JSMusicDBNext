@@ -31,7 +31,7 @@ export class BackgroundArtDirective {
         this.el = el.nativeElement;
     }
     loadImage() {
-        if (!this.loaded && !this.loading) {
+        if ((!this.loaded && !this.loading) || this.hasClassName('always-replace')) {
             this.loading = true;
             this.addClassName(this.loadingClass);
 
@@ -49,7 +49,7 @@ export class BackgroundArtDirective {
         }
     }
     setImage(data: any) {
-        if (!this.loaded) {
+        if (!this.loaded || this.hasClassName('always-replace')) {
             if (data === 'global/images/no-cover.png' || data === '') {
                 this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
                     data => this.el.style.backgroundImage = `url(${data})`,
