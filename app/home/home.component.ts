@@ -17,7 +17,7 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
 @Component({
   templateUrl: 'app/home/home.component.html',
   selector: 'home',
-  styleUrls: [ 'app/home/home.component.css'],
+  styleUrls: [ 'dist/home/home.component.css'],
   providers: [ RecentlyListenedService ]
 })
 export class HomeComponent implements OnInit, OnDestroy {

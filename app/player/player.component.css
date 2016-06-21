@@ -22,6 +22,11 @@
     padding-left: 10px;
     padding-right: 0;
 }
+@media screen and (min-width: 480px) {
+    .row .btn {
+        font-size: 32px;
+    }
+}
 .row .btn:hover {
     color: #bbbbbb;
 }

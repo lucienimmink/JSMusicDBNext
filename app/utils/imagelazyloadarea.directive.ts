@@ -1,4 +1,4 @@
-import {Directive, Query, QueryList, Input, ElementRef, Renderer, forwardRef, OnInit} from '@angular/core';
+import {Directive, Query, QueryList, Input, ElementRef, Renderer, forwardRef, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/fromEvent';
@@ -11,7 +11,7 @@ import {AlbumComponent} from './../album/album.component';
 @Directive({
   selector: '[imageLazyLoadArea]'
 })
-export class ImageLazyLoadAreaDirective implements OnInit {
+export class ImageLazyLoadAreaDirective implements OnInit, OnDestroy {
   @Input('imageLazyLoadArea') threshold: number;
   private items: QueryList<ArtistComponent>;
   private itemsAlbum: QueryList<AlbumComponent>;
@@ -21,11 +21,11 @@ export class ImageLazyLoadAreaDirective implements OnInit {
   private scrollSubscription: Subscription;
   private scrollSubscriptionAlbum: Subscription;
 
-  constructor(@Query(forwardRef(() => ArtistComponent), {descendants: true}) items: QueryList<ArtistComponent>, @Query(forwardRef(() => AlbumComponent), {descendants: true}) itemsAlbum: QueryList<AlbumComponent>) {
+  constructor( @Query(forwardRef(() => ArtistComponent), { descendants: true }) items: QueryList<ArtistComponent>, @Query(forwardRef(() => AlbumComponent), { descendants: true }) itemsAlbum: QueryList<AlbumComponent>) {
     this.items = items;
     this.itemsAlbum = itemsAlbum;
   }
-  loadInView(list?:Array<BackgroundArtDirective>):void {
+  loadInView(list?: Array<BackgroundArtDirective>): void {
     this.itemsToLoad = (list || this.itemsToLoad).filter((item) => !item.loaded && !item.loading);
     for (let item of this.itemsToLoad) {
       let ePos = item.backgroundArt.getPosition();
@@ -42,7 +42,7 @@ export class ImageLazyLoadAreaDirective implements OnInit {
     }
   }
 
-  loadInViewAlbum(list?:Array<BackgroundArtDirective>):void {
+  loadInViewAlbum(list?: Array<BackgroundArtDirective>): void {
     this.itemsToLoadAlbum = (list || this.itemsToLoadAlbum).filter((item) => !item.loaded && !item.loading);
     for (let item of this.itemsToLoadAlbum) {
       let ePos = item.backgroundArt.getPosition();
@@ -93,6 +93,16 @@ export class ImageLazyLoadAreaDirective implements OnInit {
       }
     });
   }
+  ngOnDestroy() {
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+      this.scrollSubscription = undefined;
+    }
+    if (this.scrollSubscriptionAlbum) {
+      this.scrollSubscriptionAlbum.unsubscribe();
+      this.scrollSubscriptionAlbum = undefined;
+    }
+  }
 }
 
-export const IMAGELAZYLOAD_DIRECTIVE:any [] = [ImageLazyLoadAreaDirective];
+export const IMAGELAZYLOAD_DIRECTIVE: any[] = [ImageLazyLoadAreaDirective];

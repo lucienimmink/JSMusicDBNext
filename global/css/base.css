@@ -7,6 +7,18 @@ body {
         padding-top: 105px;
     }
 }
+
+@media (max-width: 539px) and (min-width: 320px) {
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+.container {
+    width: 100%;
+}
+
+
 .progress-bar{
     width: 0;
 }

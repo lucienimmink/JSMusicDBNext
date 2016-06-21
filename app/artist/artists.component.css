@@ -21,6 +21,9 @@ h4 {
   padding-left: 25px;
   margin-bottom: 5px;
 }
+.container-longlist li:hover .color-type-secondary {
+  color: #dddddd
+}
 .container-longlist >>> .panel-background {
   display: inline-block;
   margin: 0 10px 0 0;
@@ -36,4 +39,65 @@ h4 {
 }
 .container-longlist .text-wrapper {
   float: left;
+}
+.container-longlist h4 {
+  border-bottom: 1px solid rgba(0,120,215,1);
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+.container-longlist h4 a:hover {
+  text-decoration: none;
+  color: #cccccc;
+}
+
+.jumpList {
+  position: fixed;
+  left: 0;
+  top: 50px;
+  z-index: 1000;
+  background: #ffffff;
+  right: 0;
+  bottom: 0;
+  padding: 4vh;
+  transform: scale(0);
+  transition: transform 0.25s ease-in-out;
+}
+@media screen and (min-width: 480px) {
+  .jumpList {
+    top: 100px;
+    padding: 10vh;
+  }
+}
+.jumpList.visible {
+  display: block;
+  transform: scale(1);
+}
+.jumpList ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: stretch;
+  display: flex;
+}
+.jumpList li {
+  font-size: 2em;
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 8vw 4vh 0;
+  text-align: center;
+  width: 40px;
+}
+@media screen and (min-width: 480px) {
+  .jumpList li {
+    font-size: 3em;
+    margin: 0 10vw 10vh 0;
+  }
+}
+.jumpList a:hover {
+  text-decoration: none;
+  color: #dddddd;
 }
