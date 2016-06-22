@@ -81,7 +81,7 @@ export class musicdbcore {
 
         let artist = new Artist(line);
         artist = this.handleArtist(letter, artist);
-        
+
         let album = new Album(line);
         album = this.handleAlbum(artist, album);
 
@@ -146,6 +146,17 @@ export class musicdbcore {
                 });
             });
         }
+        return ret;
+    }
+    artistsList():Array<Artist> {
+        let c = this;
+        let ret:Array<Artist> = [];
+        let sorted = Object.keys(this.artists).sort(function (a,b) {
+            return (a < b) ? -1 : 1;
+        });
+        sorted.forEach(function (value, index) {
+            ret.push(c.artists[value]);
+        });
         return ret;
     }
 }

@@ -8,13 +8,16 @@ import { Router } from '@angular/router-deprecated';
 import { TrackListComponent } from './../track/tracklist.component';
 import { Subscription }   from 'rxjs/Subscription';
 import { LastFMService } from './../lastfm/lastfm.service';
+import Artist from './../org/arielext/musicdb/models/Artist';
+import Album from './../org/arielext/musicdb/models/Album';
+import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'app/playlists/playlists.component.html',
   pipes: [TimeFormatPipe],
   directives: [TrackListComponent],
-  providers: [ LastFMService ],
+  providers: [LastFMService],
   styleUrls: ['app/playlists/playlists.component.css']
 })
 export class PlaylistsComponent implements OnInit {
@@ -24,10 +27,10 @@ export class PlaylistsComponent implements OnInit {
   private currentPlaylist;
   private track;
   private trackIndex;
-  private core:musicdbcore;
-  private loading:boolean = false;
+  private core: musicdbcore;
+  private loading: boolean = false;
 
-  constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice:LastFMService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice: LastFMService) {
     // this is for when we open the page; just wanting to know the current state of the playerService
     let playerData = this.playerService.getCurrentPlaylist();
     if (playerData) {
@@ -54,7 +57,7 @@ export class PlaylistsComponent implements OnInit {
     this.pathService.announcePage('Playlists');
     this.core = this.coreService.getCore();
   }
-  setPlaylist(name:string) {
+  setPlaylist(name: string) {
     this.loading = true;
     if (name === "current") {
       this.playlist = this.currentPlaylist;
@@ -69,27 +72,29 @@ export class PlaylistsComponent implements OnInit {
     } else if (name === 'random') {
       this.playlist = this.generateRandom();
       this.loading = false;
+    } else if (name === 'radio') {
+      this.playlist = this.generateRadio();
     } else {
       console.log('unknown playlist', name);
     }
   }
-  extractTracks(data:Array<any>):any {
+  extractTracks(data: Array<any>): any {
     let tmpPlaylist = {
       name: "Loved tracks on Last.FM",
       tracks: []
     }
     let c = this;
-    _.each(data, function(line) {
-      let artistName:string = line.artist.name;
-      let trackName:string = line.name;
-      let track:any = c.core.getTrackByArtistAndName(artistName, trackName);
+    _.each(data, function (line) {
+      let artistName: string = line.artist.name;
+      let trackName: string = line.name;
+      let track: any = c.core.getTrackByArtistAndName(artistName, trackName);
       if (track) {
         tmpPlaylist.tracks.push(track);
       }
     });
     return tmpPlaylist;
   }
-  generateRandom():any {
+  generateRandom(): any {
     let coretracknames = Object.keys(this.core.tracks);
     let randomTracks = _.shuffle(coretracknames).splice(0, 50);
     let tmpPlaylist = {
@@ -101,5 +106,52 @@ export class PlaylistsComponent implements OnInit {
       tmpPlaylist.tracks.push(c.core.tracks[id]);
     });
     return tmpPlaylist;
+  }
+  generateRadio(): any {
+    this.lastfmservice.getTopArtists('arielext').subscribe(
+      data => {
+        this.playlist = this.extractArtists(data);
+        this.loading = false;
+      }
+    )
+  }
+  extractArtists(data: Array<any>):any {
+    let c = this;
+    let highRotation:Array<Artist> = [];
+    let mediumRotation:Array<Artist> = [];
+    _.each(data, function (line, index) {
+      let artistName: string = line.name;
+      let artist:Artist = new Artist(line);
+      let foundArtist:Artist = c.core.artists[artist.sortName];
+      if (foundArtist && index < 10) {
+        highRotation.push(foundArtist);
+      } else {
+        mediumRotation.push(foundArtist);
+      }
+    });
+    return this.generateRadioList(highRotation, mediumRotation);
+  }
+  generateRadioList(highRotation:Array<Artist>, mediumRotation:Array<Artist>) {
+    let tmpPlaylist = {
+      name: "Random based on your preferences",
+      tracks: []
+    }
+    let c = this;
+    for (let i = 0; i < 50; i++) {
+      if (i % 3 === 0 || i % 5 === 0) {
+        tmpPlaylist.tracks.push(this.getRandomTrackFromList(highRotation));
+      } else if (i % 4 === 0 || i % 7 === 0) {
+        tmpPlaylist.tracks.push(this.getRandomTrackFromList(mediumRotation));
+      } else {
+        tmpPlaylist.tracks.push(this.getRandomTrackFromList(this.core.artistsList()));
+      }
+    }
+    return tmpPlaylist;
+  }
+  private getRandomTrackFromList(list:Array<Artist>):Track {
+    let randomArtist:Artist = _.shuffle(list)[0];
+    let randomAlbum:Album = _.shuffle(randomArtist.albums)[0];
+    let randomTrack:Track = _.shuffle(randomAlbum.tracks)[0];
+    return randomTrack;
   }
 }

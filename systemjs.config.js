@@ -2,23 +2,25 @@
  * System configuration for Angular 2 samples
  * Adjust as necessary for your application needs.
  */
-(function(global) {
+(function (global) {
   // map tells the System loader where to look for things
   var map = {
-    'app':                        'dist', // 'dist',
-    '@angular':                   'node_modules/@angular',
+    'app': 'dist', // 'dist',
+    '@angular': 'node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-    'rxjs':                       'node_modules/rxjs',
-    'musicdbcore':                'node_modules/musicdbcore',
-    'lodash':                     'node_modules/lodash'
+    'rxjs': 'node_modules/rxjs',
+    'musicdbcore': 'node_modules/musicdbcore',
+    'lodash': 'node_modules/lodash',
+    'angular2-jwt': 'node_modules/angular2-jwt'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
-    'app':                        { main: 'main.js',  defaultExtension: 'js' },
-    'rxjs':                       { defaultExtension: 'js' },
-    'lodash':                     { main: 'lodash.js', defaultExtension: 'js' },
-    'musicdbcore':                { main: 'dist/core.js', defaultExtension: 'js' },
+    'app': { main: 'main.js', defaultExtension: 'js' },
+    'rxjs': { defaultExtension: 'js' },
+    'lodash': { main: 'lodash.js', defaultExtension: 'js' },
+    'musicdbcore': { main: 'dist/core.js', defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
   };
   var meta = {
     "musicdbcore": { format: 'commonjs' }
@@ -33,14 +35,15 @@
     'router',
     'router-deprecated',
     'upgrade',
+    'forms'
   ];
   // Individual files (~300 requests):
   function packIndex(pkgName) {
-    packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
+    packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
   }
   // Bundled (~40 requests):
   function packUmd(pkgName) {
-    packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+    packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
   }
   // Most environments should use UMD; some (Karma) need the individual index files
   var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;

@@ -21,6 +21,8 @@ import { PlayerComponent } from './player/player.component';
 import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
+import { LoggedInRouterOutlet } from './LoggedInOutlet';
+import { LoginComponent } from './login/login.component';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -30,9 +32,11 @@ import './rxjs-operators';
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
   providers: [CollectionService, CoreService, PathService, PlayerService ],
-  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE ]
+  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet ]
 })
 @RouteConfig([
+  { path: '/', redirectTo: ['Home']},
+  { path: '/login', name: 'Login', component: LoginComponent},
   { path: '/home', name: 'Home', component: HomeComponent},
   { path: '/letters', name: 'Letters', component: LettersComponent},
   { path: '/artists', name: 'Artists', component: ArtistsComponent},
