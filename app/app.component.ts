@@ -72,6 +72,6 @@ export class AppComponent implements OnInit {
   }
   fillCollection(data: any): void {
     this.coreService.getCore().parseSourceJson(data);
-    this.letterComponent.ngOnInit();
+    // this.letterComponent.ngOnInit();
   }
 }

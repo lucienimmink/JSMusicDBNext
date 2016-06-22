@@ -17,13 +17,20 @@ import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive'
 export class ArtistDetailComponent implements OnInit {
   private artist: any;
   private albums: Array<any> = [];
+  private core:musicdbcore;
 
-  constructor(private coreService: CoreService, private router: Router, private routeParams: RouteParams, private pathService: PathService) { }
+  constructor(private coreService: CoreService, private router: Router, private routeParams: RouteParams, private pathService: PathService) {
+    this.core = this.coreService.getCore();
+    this.core.coreParsed$.subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    )
+  }
 
   ngOnInit() {
     let artistName = decodeURIComponent(this.routeParams.get('artist'));
-    let core: musicdbcore = this.coreService.getCore();
-    this.artist = core.artists[artistName];
+    this.artist = this.core.artists[artistName];
     if (this.artist) {
       this.pathService.announcePath({ artist: this.artist });
       this.albums = this.artist.sortAndReturnAlbumsBy('year', 'desc');

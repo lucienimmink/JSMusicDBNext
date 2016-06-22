@@ -4,6 +4,7 @@ import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class CollectionService {
+
   constructor (private http: Http) {}
 
   private collectionUrl = 'stubs/allTracks.json';

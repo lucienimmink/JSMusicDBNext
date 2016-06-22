@@ -1,9 +1,9 @@
-
 import Artist from './models/Artist';
 import Album from './models/Album';
 import Track from './models/Track';
 import Letter from './models/Letter';
 import * as _ from "lodash";
+import { Subject }    from 'rxjs/Subject';
 
 const VERSION: string = "1.0.0";
 
@@ -14,6 +14,9 @@ export class musicdbcore {
     public tracks: INameToValueMap = {};
     public letters: INameToValueMap = {};
     public sortedLetters:Array<Letter> = [];
+
+    private coreParsedSource = new Subject<any>();
+    coreParsed$ = this.coreParsedSource.asObservable();
 
     public totals: any = {
         artists: 0,
@@ -132,6 +135,7 @@ export class musicdbcore {
         this.sortedLetters = t;
         // update parsing time
         this.totals.parsingTime += (new Date().getTime() - start);
+        this.coreParsedSource.next(true);
     }
     getTrackByArtistAndName(artistName:string, trackName:string):Track {
         let artist = new Artist({name: artistName});

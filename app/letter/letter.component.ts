@@ -12,12 +12,20 @@ import { CoreService } from './../core.service';
 })
 export class LetterComponent implements OnInit {
   private letters:Array<any>;
+  private core:musicdbcore;
   
-  constructor (private coreService: CoreService, private router: Router) {}
+  constructor (private coreService: CoreService, private router: Router) {
+    this.core = this.coreService.getCore();
+    this.core.coreParsed$.subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    )
+  }
 
   ngOnInit() {
-    let core:musicdbcore = this.coreService.getCore();
-    this.letters = core.sortedLetters;
+    
+    this.letters = this.core.sortedLetters;
   }
 
   onSelect(letter:any) {

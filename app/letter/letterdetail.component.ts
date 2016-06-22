@@ -15,15 +15,22 @@ import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive'
 })
 
 export class LetterDetailComponent implements OnInit {
-  private letter:string = 'N';
+  private letter:string;
   private artists:Array<any> = [];
+  private core:musicdbcore;
 
-  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService: PathService) {}
+  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService: PathService) {
+    this.core = this.coreService.getCore();
+    this.core.coreParsed$.subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    )
+  }
 
   ngOnInit() {
     this.letter = decodeURIComponent(this.routeParams.get('letter'));
-    let core:musicdbcore = this.coreService.getCore();
-    let coreletter = core.letters[this.letter];
+    let coreletter = this.core.letters[this.letter];
     if (coreletter) {
       this.pathService.announcePage('JSMusicDB Next');
       this.artists = coreletter.sortAndReturnArtistsBy('name', 'asc');

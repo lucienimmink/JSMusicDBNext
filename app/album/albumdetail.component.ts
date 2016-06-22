@@ -19,17 +19,24 @@ export class AlbumDetailComponent implements OnInit {
   private albumName:string = '';
   private artistName:string = '';
   private album:any;
+  private core:musicdbcore;
 
   private albumart:AlbumArt;
   
-  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService, private playerService:PlayerService) {}
+  constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService, private playerService:PlayerService) {
+    this.core = this.coreService.getCore();
+    this.core.coreParsed$.subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    )
+  }
 
   ngOnInit() {
     let c = this;
     this.albumName = decodeURIComponent(this.routeParams.get('album'));
     this.artistName = decodeURIComponent(this.routeParams.get('artist'));
-    let core:musicdbcore = this.coreService.getCore();
-    this.album = core.albums[this.artistName+'|'+this.albumName];
+    this.album = this.core.albums[this.artistName+'|'+this.albumName];
     if (this.album) {
       this.pathService.announcePath({artist: this.album.artist, album:this.album});
     }
