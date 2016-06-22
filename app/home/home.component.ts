@@ -26,12 +26,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   private recentlyListenedTracks:Array<Track> = [];
   private newListenedTracks:Array<Track> = [];
   private counter:any;
+  private loading:boolean = true;
 
   constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService) { }
 
   ngOnInit() {
     let c = this;
     this.core = this.coreService.getCore();
+
 
     this.counter = setInterval(function () {
       c.checkRecentlyListened();
@@ -47,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   checkRecentlyListened() {
     // this.recentlyListenedTracks = [];
     this.newListenedTracks = [];
+    this.loading = true;
     this.recentlyListened.getRecentlyListened('arielext').subscribe(
         data => this.populate(data),
         error => console.log(error)
@@ -81,6 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.recentlyListenedTracks !== this.newListenedTracks) {
       this.recentlyListenedTracks = this.newListenedTracks;
     }
+    this.loading = false;
   }
 
   onSelect(album: any) {

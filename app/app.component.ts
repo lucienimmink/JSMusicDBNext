@@ -32,6 +32,7 @@ import './rxjs-operators';
   directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE ]
 })
 @RouteConfig([
+  { path: '/', redirectTo: ['Home']},
   { path: '/home', name: 'Home', component: HomeComponent},
   { path: '/artists', name: 'Artists', component: ArtistsComponent},
   { path: '/albums', name: 'Albums', component: AlbumsComponent},

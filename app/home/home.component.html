@@ -2,6 +2,13 @@
   <div class="row">
     <div class="col-xs-24">
       <h4>Recently listened</h4>
+      <div class="progress-bar" *ngIf="loading">
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+      </div>
       <ol class="list-items">
         <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" [ngClass]="{'now-playing': track.nowPlaying}">
           <div class="col-xs-5 col-sm-1 ">
