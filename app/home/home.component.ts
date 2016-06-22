@@ -4,6 +4,7 @@ import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
+import { AuthHttp } from 'angular2-jwt';
 import * as _ from 'lodash';
 
 import { CoreService } from './../core.service';
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private counter:any;
   private loading:boolean = true;
 
-  constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService) { }
+  constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService, public authHttp: AuthHttp) { }
 
   ngOnInit() {
     let c = this;
