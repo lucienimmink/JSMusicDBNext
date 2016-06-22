@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, RouteParams } from '@angular/router-deprecated';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
@@ -8,6 +8,7 @@ import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { PathService } from './../utils/path.service';
 import { PlayerService } from './../player/player.service';
+import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
   templateUrl: 'app/album/albumdetail.component.html',
@@ -15,17 +16,17 @@ import { PlayerService } from './../player/player.service';
   directives: [ AlbumArt, BackgroundArtDirective ],
   styleUrls: [ 'app/album/albumdetail.component.css' ]
 })
-export class AlbumDetailComponent implements OnInit {
+export class AlbumDetailComponent implements OnInit, OnDestroy {
   private albumName:string = '';
   private artistName:string = '';
   private album:any;
   private core:musicdbcore;
-
+  private subscription: Subscription;
   private albumart:AlbumArt;
   
   constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService, private playerService:PlayerService) {
     this.core = this.coreService.getCore();
-    this.core.coreParsed$.subscribe(
+    this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
@@ -40,6 +41,10 @@ export class AlbumDetailComponent implements OnInit {
     if (this.album) {
       this.pathService.announcePath({artist: this.album.artist, album:this.album});
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onSelect(track:any) {

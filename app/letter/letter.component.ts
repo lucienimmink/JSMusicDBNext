@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
 import { musicdbcore } from './../org/arielext/musicdb/core';
-
+import { Subscription }   from 'rxjs/Subscription';
 import { CoreService } from './../core.service';
 
 
@@ -10,13 +10,14 @@ import { CoreService } from './../core.service';
   templateUrl: 'app/letter/letter.component.html',
   styleUrls: [ 'app/letter/letter.component.css' ]
 })
-export class LetterComponent implements OnInit {
+export class LetterComponent implements OnInit, OnDestroy {
   private letters:Array<any>;
   private core:musicdbcore;
+  private subscription: Subscription;
   
   constructor (private coreService: CoreService, private router: Router) {
     this.core = this.coreService.getCore();
-    this.core.coreParsed$.subscribe(
+    this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
@@ -24,11 +25,14 @@ export class LetterComponent implements OnInit {
   }
 
   ngOnInit() {
-    
     this.letters = this.core.sortedLetters;
   }
 
   onSelect(letter:any) {
     this.router.navigate(['Letter', { letter: letter.escapedLetter }]);
+  }
+  
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
