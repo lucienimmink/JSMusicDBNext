@@ -23,6 +23,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { LoggedInRouterOutlet } from './LoggedInOutlet';
 import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -31,7 +32,7 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService, PlayerService ],
+  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService ],
   directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet ]
 })
 @RouteConfig([
@@ -60,7 +61,7 @@ export class AppComponent implements OnInit {
   constructor(private collectionService: CollectionService, private coreService: CoreService) { }
 
   ngOnInit() {
-    this.getCollection();
+    // this.getCollection();
   }
 
   getCollection() {

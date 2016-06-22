@@ -7,6 +7,7 @@ import Track from './../org/arielext/musicdb/models/Track';
 import { AuthHttp } from 'angular2-jwt';
 import * as _ from 'lodash';
 
+import { CollectionService } from './../collection.service';
 import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
 import { AlbumComponent } from './../album/album.component';
@@ -29,18 +30,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   private counter:any;
   private loading:boolean = true;
 
-  constructor(private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService, public authHttp: AuthHttp) { }
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService, public authHttp: AuthHttp) { }
 
   ngOnInit() {
     let c = this;
     this.core = this.coreService.getCore();
-
 
     this.counter = setInterval(function () {
       c.checkRecentlyListened();
     }, RECENTLYLISTENEDINTERVAL);
     this.checkRecentlyListened();
     this.pathService.announcePage('Home');
+    this.getCollection();
+  }
+
+  getCollection() {
+    this.collectionService.getCollection()
+      .subscribe(
+      data => this.fillCollection(data),
+      error => console.log(error)
+      );
+  }
+  fillCollection(data: any): void {
+    this.coreService.getCore().parseSourceJson(data);
   }
 
   ngOnDestroy() {

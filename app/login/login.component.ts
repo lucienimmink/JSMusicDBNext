@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
+import { Router } from "@angular/router-deprecated";
 
 @Component({
   templateUrl: 'app/login/login.component.html',
@@ -17,12 +18,11 @@ export class LoginComponent implements OnInit {
   private payLoad:any;
   private sid;
 
-  constructor(private loginService:LoginService) {
+  constructor(private loginService:LoginService, private router:Router) {
     let controls:any = {};
     controls['name'] = new FormControl('', Validators.required);
     controls['password'] = new FormControl('', Validators.required);
     controls['dsmport'] = new FormControl('', Validators.required);
-    controls['rememberme'] = new FormControl('');
     controls['lastfmname'] = new FormControl('');
     this.form = new FormGroup(controls);
   }
@@ -32,14 +32,13 @@ export class LoginComponent implements OnInit {
   }
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.value);
-    if (this.form.value.rememberme) {
-      localStorage.setItem('jwt', this.payLoad);
-    }
     this.loginService.doLogin(this.form.value).subscribe(
       data => {
-        this.sid = data.data.sid;
-        document.cookie = `id=${this.sid}; path=/`;
-        console.log('session OK; session id set to ', this.sid);
+        if (data.success) {
+          localStorage.setItem('jwt', this.payLoad); // save creds in storage
+          sessionStorage.setItem('jwt', 'true'); // set loggedin state
+          this.router.navigate(['Home']);
+        }
       },
       error => {
         console.error('session failed; bah');
