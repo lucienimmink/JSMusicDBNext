@@ -13,7 +13,7 @@ export class musicdbcore {
     public albums: INameToValueMap = {};
     public tracks: INameToValueMap = {};
     public letters: INameToValueMap = {};
-    public sortedLetters:Array<Letter> = [];
+    public sortedLetters: Array<Letter> = [];
 
     private coreParsedSource = new Subject<any>();
     coreParsed$ = this.coreParsedSource.asObservable();
@@ -54,7 +54,7 @@ export class musicdbcore {
         });
     }
     private handleAlbum(artist: Artist, album: Album): Album {
-        return this.instanceIfPresent(this, artist.sortName+'|'+album.sortName, this.albums, album, function (core: any) {
+        return this.instanceIfPresent(this, artist.sortName + '|' + album.sortName, this.albums, album, function (core: any) {
             album.artist = artist;
             artist.albums.push(album);
             core.totals.albums++;
@@ -69,12 +69,25 @@ export class musicdbcore {
             album.tracks.push(track);
             // group by discnumber
             let disc = track.disc;
-            if (!album.discs[disc-1]) {
-                album.discs[disc-1] = [];
-                album.discs[disc-1].push(track);
+            if (!album.discs[disc - 1]) {
+                album.discs[disc - 1] = [];
+                album.discs[disc - 1].push(track);
             } else {
-                album.discs[disc-1].push(track);
+                album.discs[disc - 1].push(track);
             }
+            // sort if needed
+            album.discs[disc - 1].sort(function (a, b) {
+                if (a.number < b.number) {
+                    return -1;
+                }
+                return 1;
+            })
+            album.tracks.sort(function (a, b) {
+                if (a.number < b.number) {
+                    return -1;
+                }
+                return 1;
+            });
         });
     }
 
@@ -113,7 +126,7 @@ export class musicdbcore {
         }
     };
     parseSourceJson(json: any): void {
-        let start:number = new Date().getTime();
+        let start: number = new Date().getTime();
         if (json.length) {
             // this json is flat; all lines in the json is 1 track
             for (let line of json) {
@@ -124,7 +137,7 @@ export class musicdbcore {
             this.parseTree(json.tree);
         }
         // sort letters
-        let sorted = Object.keys(this.letters).sort(function (a,b) {
+        let sorted = Object.keys(this.letters).sort(function (a, b) {
             return (a < b) ? -1 : 1;
         });
         let t = [];
@@ -137,10 +150,10 @@ export class musicdbcore {
         this.totals.parsingTime += (new Date().getTime() - start);
         this.coreParsedSource.next(true);
     }
-    getTrackByArtistAndName(artistName:string, trackName:string):Track {
-        let artist = new Artist({name: artistName});
+    getTrackByArtistAndName(artistName: string, trackName: string): Track {
+        let artist = new Artist({ name: artistName });
         let coreArtist = this.artists[artist.sortName];
-        let ret:Track = null;
+        let ret: Track = null;
         if (coreArtist) {
             _.each(coreArtist.albums, function (album) {
                 _.each(album.tracks, function (track) {
@@ -152,10 +165,10 @@ export class musicdbcore {
         }
         return ret;
     }
-    artistsList():Array<Artist> {
+    artistsList(): Array<Artist> {
         let c = this;
-        let ret:Array<Artist> = [];
-        let sorted = Object.keys(this.artists).sort(function (a,b) {
+        let ret: Array<Artist> = [];
+        let sorted = Object.keys(this.artists).sort(function (a, b) {
             return (a < b) ? -1 : 1;
         });
         sorted.forEach(function (value, index) {

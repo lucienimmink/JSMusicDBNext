@@ -5,6 +5,8 @@ import { Subscription }   from 'rxjs/Subscription';
 
 import { AlbumArt } from './../utils/albumart.component';
 
+import Track from './../org/arielext/musicdb/models/Track';
+
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
@@ -15,10 +17,11 @@ export class PlayerComponent implements OnDestroy {
     private subscription: Subscription;
     private playlist: any;
     private trackIndex: any;
-    private track: any;
+    private track: Track;
     private showPlayer: boolean = false;
     private isPlaying:boolean = false;
     private isPaused:boolean = false;
+    private mediaObject:any;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
@@ -33,6 +36,7 @@ export class PlayerComponent implements OnDestroy {
                 this.setTrack();
             }
         )
+        this.mediaObject = new Audio();
     }
     setTrack() {
         let c = this;
@@ -40,6 +44,12 @@ export class PlayerComponent implements OnDestroy {
             if (c.albumart) c.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
+        this.mediaObject.src = `http://www.arielext.org:16881/listen?path=${this.track.source.url}`;
+        if (this.isPlaying) {
+            this.mediaObject.play();
+        } else {
+            this.mediaObject.pause();
+        }
     }
 
     ngOnDestroy() {

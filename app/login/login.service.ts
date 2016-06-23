@@ -12,8 +12,10 @@ export class LoginService {
     let password = form.password;
     let dsmport = form.dsmport;
 
-    let protocol = document.location.protocol;
-    let hostname = document.location.hostname;
+    //let protocol = document.location.protocol;
+    //let hostname = document.location.hostname;
+    let protocol = 'http:';
+    let hostname = 'www.arielext.org'
 
     return this.http.post(`${protocol}//${hostname}:${dsmport}/login`, {
       account: username,
