@@ -21,9 +21,9 @@
           </div>
           <div class="col-xs-24 col-sm-4 col-md-3 text-right">
             <span *ngIf="!track.nowPlaying">
-              {{track.date | date:'mediumTime' }} <br />
+              {{track.date | date:'HH:mm' }} <br />
               <span class="color-type-secondary small">
-                <span *ngIf="!track.nowPlaying">{{track.date | date:'mediumDate' }}</span>
+                <span *ngIf="!track.nowPlaying">{{track.date | date:'dd MMM yyyy' }}</span>
             </span>
             </span>
             <span *ngIf="track.nowPlaying">

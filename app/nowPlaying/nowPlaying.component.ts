@@ -25,6 +25,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   private slided: boolean = false;
   private isPlaying: boolean = false;
   private isPaused: boolean = false;
+  private core: musicdbcore;
+  private subscription2: Subscription;
 
   @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
@@ -48,12 +50,16 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
         this.setTrack();
       }
     )
+    this.core = this.coreService.getCore();
+    this.subscription2 = this.core.coreParsed$.subscribe(
+      data => {
+        this.ngOnInit();
+      }
+    )
   }
 
   ngOnInit() {
     this.pathService.announcePage('Now playing');
-    let core: musicdbcore = this.coreService.getCore();
-
   }
 
   setTrack() {
@@ -70,6 +76,7 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe(); // prevent memory leakage
+    this.subscription2.unsubscribe();
   }
   navigateToArtist() {
     this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);

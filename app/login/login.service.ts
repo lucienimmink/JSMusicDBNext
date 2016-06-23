@@ -1,14 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Http, Response, URLSearchParams, RequestOptionsArgs } from "@angular/http";
+import { Http, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
-import { Subject }    from 'rxjs/Subject';
 
 @Injectable()
 export class LoginService {
 
   constructor(private http: Http) { }
-
-  public isLoggedIn: boolean = false;
 
   doLogin(form: any) {
     let username = form.name;
@@ -26,17 +23,16 @@ export class LoginService {
       .catch(this.handleError);
 
   }
-  autoLogin(cred) {
+  autoLogin() {
+    let cred = JSON.parse(localStorage.getItem("jwt"));
     return this.doLogin(cred);
   }
   private handleLogin(res: Response) {
     let json = res.json();
-    this.isLoggedIn = true;
     return json;
   }
 
   private handleError(error: any) {
-    this.isLoggedIn = false;
     return Observable.throw(null);
   }
 }

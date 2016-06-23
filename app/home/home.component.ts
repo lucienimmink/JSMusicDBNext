@@ -19,18 +19,18 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
 @Component({
   templateUrl: 'app/home/home.component.html',
   selector: 'home',
-  styleUrls: [ 'dist/home/home.component.css'],
-  providers: [ RecentlyListenedService ]
+  styleUrls: ['dist/home/home.component.css'],
+  providers: [RecentlyListenedService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  private core:musicdbcore;
-  private recentlyListenedTracks:Array<Track> = [];
-  private newListenedTracks:Array<Track> = [];
-  private counter:any;
-  private loading:boolean = true;
+  private core: musicdbcore;
+  private recentlyListenedTracks: Array<Track> = [];
+  private newListenedTracks: Array<Track> = [];
+  private counter: any;
+  private loading: boolean = true;
 
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened:RecentlyListenedService, private pathService:PathService, public authHttp: AuthHttp) { }
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp) { }
 
   ngOnInit() {
     let c = this;
@@ -64,32 +64,32 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.newListenedTracks = [];
     this.loading = true;
     this.recentlyListened.getRecentlyListened('arielext').subscribe(
-        data => this.populate(data),
-        error => console.log(error)
-      )
+      data => this.populate(data),
+      error => console.log(error)
+    )
   }
 
-  setDate(track:any):Date {
+  setDate(track: any): Date {
     if (track["@attr"] && track["@attr"].nowplaying) {
       return new Date();
     } else {
-      return new Date(Number(track.date.uts)*1000);
+      return new Date(Number(track.date.uts) * 1000);
     }
   }
-  setImage(track:any):String {
+  setImage(track: any): String {
     // last one is the best possible quality
     return _.last(track.image)["#text"];
   }
 
-  populate(json:any):void {
-    var c:any = this;
+  populate(json: any): void {
+    var c: any = this;
     _.each(json, function (fmtrack) {
       var track = {
         artist: fmtrack.artist["#text"],
         album: fmtrack.album["#text"],
         title: fmtrack.name,
         image: c.setImage(fmtrack),
-        nowPlaying:(fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false,
+        nowPlaying: (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false,
         date: c.setDate(fmtrack)
       }
       c.newListenedTracks.push(track);

@@ -6,7 +6,7 @@ import { Observable } from "rxjs/Observable";
 export class CollectionService {
   constructor(private http: Http) { }
 
-  private collectionUrl = 'stubs/allTracks.json';
+  private collectionUrl = 'http://localhost:2000/data/allTracks.json';
 
   getCollection(): Observable<any[]> {
     return this.http.get(this.collectionUrl)

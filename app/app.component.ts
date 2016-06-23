@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { musicdbcore } from './org/arielext/musicdb/core';
 import { Observable } from 'rxjs/Observable';
@@ -24,6 +24,7 @@ import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { LoggedInRouterOutlet } from './LoggedInOutlet';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { Subscription }   from 'rxjs/Subscription';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -32,36 +33,45 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService ],
-  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet ]
+  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService],
+  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
 })
 @RouteConfig([
-  { path: '/', redirectTo: ['Home']},
-  { path: '/login', name: 'Login', component: LoginComponent},
-  { path: '/home', name: 'Home', component: HomeComponent},
-  { path: '/letters', name: 'Letters', component: LettersComponent},
-  { path: '/artists', name: 'Artists', component: ArtistsComponent},
-  { path: '/albums', name: 'Albums', component: AlbumsComponent},
-  { path: '/playlisyts/:playlist', name: 'Playlists', component: PlaylistsComponent},
-  { path: '/now playing', name: 'Now playing', component: NowPlayingComponent},
-  { path: '/settings', name: 'Settings', component: SettingsComponent},
+  { path: '/', redirectTo: ['Home'] },
+  { path: '/login', name: 'Login', component: LoginComponent },
+  { path: '/home', name: 'Home', component: HomeComponent },
+  { path: '/letters', name: 'Letters', component: LettersComponent },
+  { path: '/artists', name: 'Artists', component: ArtistsComponent },
+  { path: '/albums', name: 'Albums', component: AlbumsComponent },
+  { path: '/playlisyts/:playlist', name: 'Playlists', component: PlaylistsComponent },
+  { path: '/now playing', name: 'Now playing', component: NowPlayingComponent },
+  { path: '/settings', name: 'Settings', component: SettingsComponent },
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
   { path: '/letter/:letter/artist/:artist', name: 'Artist', component: ArtistDetailComponent },
   { path: '/letter/:letter/artist/:artist/album/:album', name: 'Album', component: AlbumDetailComponent }
 ])
-export class AppComponent implements OnInit {
+export class AppComponent implements OnDestroy {
   private letter: string = 'N';
   private artists: Array<any>;
-
-  private path:string = "JSMusicDB Next";
+  private subscription: Subscription;
+  private path: string = "JSMusicDB Next";
 
   @ViewChild(LetterComponent)
-  private letterComponent:LetterComponent;
+  private letterComponent: LetterComponent;
 
-  constructor(private collectionService: CollectionService, private coreService: CoreService) { }
-
-  ngOnInit() {
-    // this.getCollection();
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService) {
+    if (sessionStorage.getItem('jwt')) {
+      // lets login with these credentials
+      this.loginService.autoLogin().subscribe(
+        data => {
+          console.log('login successfull');
+          this.getCollection();
+        }
+      )
+    }
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getCollection() {
@@ -73,6 +83,5 @@ export class AppComponent implements OnInit {
   }
   fillCollection(data: any): void {
     this.coreService.getCore().parseSourceJson(data);
-    // this.letterComponent.ngOnInit();
   }
 }

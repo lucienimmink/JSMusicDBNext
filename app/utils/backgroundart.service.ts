@@ -25,7 +25,7 @@ export class BackgroundArtService {
       search: urlSearchParams
     };
 
-    return this.http.get('//api.spotify.com/v1/search', query)
+    return this.http.get('https://api.spotify.com/v1/search', query)
       .map(this.extractData)
       .catch(this.handleError);
   }
