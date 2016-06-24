@@ -61,6 +61,8 @@ export class PlayerComponent implements OnDestroy {
 
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
+        this.mediaObject.removeEventListener('ended');
+        this.mediaObject.removeEventListener('timeupdate');
     }
     navigateToArtist() {
         this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);

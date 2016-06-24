@@ -44,7 +44,7 @@
     padding: 10px 10px 10px 0;
 }
 .list-group-item .glyph {
-    margin-top: 5px;
+    vertical-align: sub;
 }
 .list-group-item.active {
     z-index: 0;

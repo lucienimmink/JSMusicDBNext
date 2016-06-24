@@ -13,6 +13,7 @@ import { PathService } from './../utils/path.service';
 import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { RecentlyListenedService } from './../utils/recentlyListened.service';
+import { LastFMService } from './../lastfm/lastfm.service';
 
 const RECENTLYLISTENEDINTERVAL = 1000 * 60;
 
@@ -20,7 +21,7 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
   templateUrl: 'app/home/home.component.html',
   selector: 'home',
   styleUrls: ['dist/home/home.component.css'],
-  providers: [RecentlyListenedService]
+  providers: [RecentlyListenedService, LastFMService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private counter: any;
   private loading: boolean = true;
 
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp) { }
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp, private lastFMService:LastFMService) { }
 
   ngOnInit() {
     let c = this;
@@ -42,6 +43,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.checkRecentlyListened();
     this.pathService.announcePage('Home');
     this.getCollection();
+
+
+    // test authenticate
+    this.lastFMService.authenticate({user: '****', password: '****'}).subscribe(
+      data => {
+        console.log(data);
+      }
+    )
   }
 
   getCollection() {

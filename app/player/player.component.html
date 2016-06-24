@@ -15,7 +15,7 @@
                 <h5>
                     <a (click)="navigateToArtist()">{{track.album.artist.name}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
             </div>
-            <div class="col-xs-8 col-sm-4 col-lg-3">
+            <div class="col-xs-8 col-sm-4 col-lg-3 text-right">
                 <a class="btn btn-link" (click)="prev()"><span class="glyph glyph-previous"></span> </a>
                 <a class="btn btn-link" (click)="togglePlayPause()"><i class="glyph glyph-pause" *ngIf="isPlaying"></i><i class="glyph glyph-play" *ngIf="isPaused"></i></a>
                 <a class="btn btn-link" (click)="next()"><span class="glyph glyph-next"></span> </a>
