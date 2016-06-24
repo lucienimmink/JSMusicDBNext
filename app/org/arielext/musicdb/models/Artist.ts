@@ -11,10 +11,12 @@ export default class Artist {
   sortName: string;
 
   constructor(json: any) {
-    this.name = json.name || json.artist;
-    this.albumArtist = json.albumartist || json.albumArtist;
-    this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();
-    this.bio = json.bio;
+    if (json.album && json.title) {
+      this.name = json.name || json.artist;
+      this.albumArtist = json.albumartist || json.albumArtist;
+      this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();
+      this.bio = json.bio;
+    }
   }
 
   url() {
@@ -30,7 +32,7 @@ export default class Artist {
           return (direction === 'asc') ? 1 : -1;
         } else {
           return 0;
-        }  
+        }
       }
       if (a[sortkey] < b[sortkey]) {
         return (direction === 'asc') ? -1 : 1;

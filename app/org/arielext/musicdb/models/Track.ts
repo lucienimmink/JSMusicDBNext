@@ -16,12 +16,14 @@ export default class Track {
   isPaused:boolean = false;
 
   constructor(json: any) {
-    this.id = json.id;
-    this.duration = (json.seconds) ? json.seconds * 1000 : (json.duration && !isNaN(json.duration)) ? json.duration : 0;
-    this.title = json.title;
-    this.source = new MediaSource(json);
-    this.disc = json.disc || this.guessBySource(json);
-    this.number = json.number;
+    if (json.album && json.title) {
+      this.id = json.id;
+      this.duration = (json.seconds) ? json.seconds * 1000 : (json.duration && !isNaN(json.duration)) ? json.duration : 0;
+      this.title = json.title;
+      this.source = new MediaSource(json);
+      this.disc = json.disc || this.guessBySource(json);
+      this.number = json.number;
+    }
   }
 
   private guessBySource(json: any): number {

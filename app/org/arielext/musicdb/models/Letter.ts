@@ -8,9 +8,11 @@ export default class Letter {
   artists: Array<Artist> = [];
 
   constructor(json: any) {
-    this.letter = json.letter || this.getFirstLetterOf(json.albumArtist || json.artist);
-    if (this.letter === "1") this.letter = "#";
-    this.escapedLetter = encodeURIComponent(this.letter);
+    if (json.album && json.title) {
+      this.letter = json.letter || this.getFirstLetterOf(json.albumArtist || json.albumartist || json.artist);
+      if (this.letter === "1") this.letter = "#";
+      this.escapedLetter = encodeURIComponent(this.letter);
+    }
   };
   url() {
     return `/letter/${this.escapedLetter}/`;
