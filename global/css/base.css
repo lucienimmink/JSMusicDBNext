@@ -17,10 +17,9 @@ body {
 .container {
     width: 100%;
 }
-
-
-.progress-bar{
+.progress .progress-bar {
     width: 0;
+    transition: width 0.25s ease-in-out;
 }
 a {
     cursor: pointer;
