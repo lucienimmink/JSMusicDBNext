@@ -19,7 +19,7 @@ body {
 }
 .progress .progress-bar {
     width: 0;
-    transition: width 0.25s ease-in-out;
+    transition: width 1s linear;
 }
 a {
     cursor: pointer;

@@ -81,10 +81,19 @@ export class musicdbcore {
                     return -1;
                 }
                 return 1;
-            })
+            });
+
+            // sort all tracks firstly by disc, then by number
             album.tracks.sort(function (a, b) {
-                if (a.number < b.number) {
+                if (a.disc < b.disc) {
                     return -1;
+                }
+                if (a.disc === b.disc) {
+                    if (a.number < b.number) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
                 }
                 return 1;
             });
@@ -151,13 +160,13 @@ export class musicdbcore {
         this.coreParsedSource.next(true);
     }
     getTrackByArtistAndName(artistName: string, trackName: string): Track {
-        let artist = new Artist({ name: artistName });
+        let artist = new Artist({ name: artistName, dummy: true });
         let coreArtist = this.artists[artist.sortName];
         let ret: Track = null;
         if (coreArtist) {
             _.each(coreArtist.albums, function (album) {
                 _.each(album.tracks, function (track) {
-                    if (track.title.toLowerCase() === trackName.toLowerCase()) {
+                    if (track.title && (track.title.toLowerCase() === trackName.toLowerCase())) {
                         ret = track;
                     }
                 });

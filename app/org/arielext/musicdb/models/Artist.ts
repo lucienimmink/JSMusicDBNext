@@ -11,7 +11,8 @@ export default class Artist {
   sortName: string;
 
   constructor(json: any) {
-    if (json.album && json.title) {
+    // a dummy artist is only used to search for a core artist but is not stored in the core.
+    if ((json.album && json.title) || json.dummy) {
       this.name = json.name || json.artist;
       this.albumArtist = json.albumartist || json.albumArtist;
       this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();

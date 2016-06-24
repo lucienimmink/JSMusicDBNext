@@ -121,6 +121,7 @@ export class PlaylistsComponent implements OnInit {
     let mediumRotation:Array<Artist> = [];
     _.each(data, function (line, index) {
       let artistName: string = line.name;
+      line.dummy = true // use dummy artist for lookup;
       let artist:Artist = new Artist(line);
       let foundArtist:Artist = c.core.artists[artist.sortName];
       if (foundArtist && index < 10) {
