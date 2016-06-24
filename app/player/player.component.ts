@@ -37,6 +37,13 @@ export class PlayerComponent implements OnDestroy {
             }
         )
         this.mediaObject = new Audio();
+        let c = this;
+        this.mediaObject.addEventListener('ended', function () {
+            c.next();
+        })
+        this.mediaObject.addEventListener('timeupdate', function () {
+            c.updateTime();
+        })
     }
     setTrack() {
         let c = this;
@@ -78,5 +85,9 @@ export class PlayerComponent implements OnDestroy {
     }
     togglePlayPause() {
         this.playerService.togglePlayPause();
+    }
+
+    updateTime() {
+        this.track.position = this.mediaObject.currentTime * 1000;
     }
 }

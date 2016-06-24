@@ -14,6 +14,7 @@ export default class Track {
   number: number;
   isPlaying:boolean = false;
   isPaused:boolean = false;
+  position:number = 0;
 
   constructor(json: any) {
     if (json.album && json.title) {
