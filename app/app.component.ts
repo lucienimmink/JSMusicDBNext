@@ -60,11 +60,10 @@ export class AppComponent implements OnDestroy {
   private letterComponent: LetterComponent;
 
   constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService) {
-    if (sessionStorage.getItem('jwt')) {
+    if (localStorage.getItem('jwt')) {
       // lets login with these credentials
       this.loginService.autoLogin().subscribe(
         data => {
-          console.log('login successfull');
           this.getCollection();
         }
       )
