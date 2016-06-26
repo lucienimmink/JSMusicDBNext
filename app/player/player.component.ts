@@ -103,7 +103,7 @@ export class PlayerComponent implements OnDestroy {
                 this.hasScrobbledCurrentTrack = true;
                 this.lastFMService.scrobbleTrack(this.track).subscribe(
                     data => {
-                        console.log('track is scrobbled');
+                        //console.log('track is scrobbled');
                     }
                 )
             }
@@ -113,7 +113,7 @@ export class PlayerComponent implements OnDestroy {
     onplay() {
         this.lastFMService.announceNowPlaying(this.track).subscribe(
             data => {
-                console.log('announced now playing');
+                //console.log('announced now playing');
             }
         )
     }

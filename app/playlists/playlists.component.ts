@@ -29,6 +29,7 @@ export class PlaylistsComponent implements OnInit {
   private trackIndex;
   private core: musicdbcore;
   private loading: boolean = false;
+  private username: string = localStorage.getItem('lastfm-username');
 
   constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice: LastFMService) {
     // this is for when we open the page; just wanting to know the current state of the playerService
@@ -63,7 +64,7 @@ export class PlaylistsComponent implements OnInit {
       this.playlist = this.currentPlaylist;
       this.loading = false;
     } else if (name === 'last.fm') {
-      this.lastfmservice.getLovedTracks('arielext').subscribe(
+      this.lastfmservice.getLovedTracks(this.username).subscribe(
         data => {
           this.playlist = this.extractTracks(data);
           this.loading = false;
@@ -108,7 +109,7 @@ export class PlaylistsComponent implements OnInit {
     return tmpPlaylist;
   }
   generateRadio(): any {
-    this.lastfmservice.getTopArtists('arielext').subscribe(
+    this.lastfmservice.getTopArtists(this.username).subscribe(
       data => {
         this.playlist = this.extractArtists(data);
         this.loading = false;
