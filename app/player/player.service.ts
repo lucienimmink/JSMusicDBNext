@@ -27,7 +27,6 @@ export class PlayerService {
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused  = false
         };
-        localStorage.setItem('current-playlist', this.playlistToString());
         this.announce();
     }
     playlistToString():string {
@@ -86,6 +85,8 @@ export class PlayerService {
 
             this.currentPlaylist.isPlaying = this.isPlaying;
             this.currentPlaylist.isPaused = this.isPaused;
+
+            localStorage.setItem('current-playlist', this.playlistToString());
 
             this.playlistSource.next(this.currentPlaylist);
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -15,7 +15,7 @@ import { TrackListComponent } from './../track/tracklist.component';
   directives: [BackgroundArtDirective, TrackListComponent],
   styleUrls: ['app/nowPlaying/nowPlaying.component.css']
 })
-export class NowPlayingComponent implements OnInit, OnDestroy {
+export class NowPlayingComponent implements OnDestroy {
 
   private subscription: Subscription;
   private playlist;
@@ -26,7 +26,6 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
   private isPlaying: boolean = false;
   private isPaused: boolean = false;
   private core: musicdbcore;
-  private subscription2: Subscription;
 
   @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
@@ -50,18 +49,8 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
         this.setTrack();
       }
     )
-    this.core = this.coreService.getCore();
-    this.subscription2 = this.core.coreParsed$.subscribe(
-      data => {
-        this.ngOnInit();
-      }
-    )
-  }
-
-  ngOnInit() {
     this.pathService.announcePage('Now playing');
   }
-
   setTrack() {
     let c = this;
     setTimeout(function () {
@@ -76,7 +65,6 @@ export class NowPlayingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe(); // prevent memory leakage
-    this.subscription2.unsubscribe();
   }
   navigateToArtist() {
     this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);

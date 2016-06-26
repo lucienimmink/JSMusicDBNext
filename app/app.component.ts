@@ -44,7 +44,7 @@ import './rxjs-operators';
   { path: '/artists', name: 'Artists', component: ArtistsComponent },
   { path: '/albums', name: 'Albums', component: AlbumsComponent },
   { path: '/playlists/:playlist', name: 'Playlists', component: PlaylistsComponent },
-  { path: '/now playing', name: 'Now playing', component: NowPlayingComponent },
+  { path: '/nowPlaying', name: 'NowPlaying', component: NowPlayingComponent },
   { path: '/settings', name: 'Settings', component: SettingsComponent },
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
   { path: '/letter/:letter/artist/:artist', name: 'Artist', component: ArtistDetailComponent },

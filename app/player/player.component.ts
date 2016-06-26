@@ -82,9 +82,11 @@ export class PlayerComponent implements OnDestroy {
         this.hasScrobbledCurrentTrack = false;
         if (this.isCurrentPlaylistLoaded) {
             this.mediaObject.currentTime = localStorage.getItem('current-time') || 0;
+            /*
             this.mediaObject.pause();
             this.isPlaying = false;
             this.isPaused = true;
+            */
             this.isCurrentPlaylistLoaded = false; // ignore for all next tracks
         }
     }
