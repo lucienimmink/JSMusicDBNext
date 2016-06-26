@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Subject }    from 'rxjs/Subject';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
+import * as _ from 'lodash';
 
 @Injectable()
 export class PlayerService {
@@ -26,7 +27,20 @@ export class PlayerService {
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused  = false
         };
+        localStorage.setItem('current-playlist', this.playlistToString());
         this.announce();
+    }
+    playlistToString():string {
+        let list = [];
+        _.each(this.currentPlaylist.playlist.tracks, function (track) {
+            if (track) {
+                list.push(track.id);
+            }
+        });
+        return JSON.stringify({
+            ids: list,
+            current: this.currentPlaylist.startIndex
+        });
     }
     getCurrentPlaylist() {
         return this.currentPlaylist;

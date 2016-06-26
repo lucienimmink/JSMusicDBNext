@@ -102,16 +102,21 @@ export class musicdbcore {
 
     private parseLine(line: any): void {
         let letter: Letter = new Letter(line);
-        letter = this.handleLetter(letter);
-
+        if (letter.letter) {
+            letter = this.handleLetter(letter);
+        }
         let artist = new Artist(line);
-        artist = this.handleArtist(letter, artist);
-
+        if (artist.name) {
+            artist = this.handleArtist(letter, artist);
+        }        
         let album = new Album(line);
-        album = this.handleAlbum(artist, album);
-
+        if (album.name) {
+            album = this.handleAlbum(artist, album);
+        }
         let track = new Track(line);
-        track = this.handleTrack(artist, album, track);
+        if (track.title) {
+            track = this.handleTrack(artist, album, track);
+        }
     };
 
     private parseTree(tree: any): void {

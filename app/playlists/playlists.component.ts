@@ -51,7 +51,9 @@ export class PlaylistsComponent implements OnInit {
 
   setTrack() {
     this.track = this.currentPlaylist.tracks[this.trackIndex];
-    this.track.position = 0;
+    if (this.track) {
+      this.track.position = 0;
+    }
   }
 
   ngOnInit() {
@@ -152,8 +154,13 @@ export class PlaylistsComponent implements OnInit {
   }
   private getRandomTrackFromList(list:Array<Artist>):Track {
     let randomArtist:Artist = _.shuffle(list)[0];
-    let randomAlbum:Album = _.shuffle(randomArtist.albums)[0];
-    let randomTrack:Track = _.shuffle(randomAlbum.tracks)[0];
-    return randomTrack;
+    if (randomArtist) {
+      let randomAlbum:Album = _.shuffle(randomArtist.albums)[0];
+      let randomTrack:Track = _.shuffle(randomAlbum.tracks)[0];
+      return randomTrack;
+    } else {
+      // artist not found, get another one!
+      return this.getRandomTrackFromList(list);
+    }
   }
 }
