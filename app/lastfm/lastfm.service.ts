@@ -110,8 +110,7 @@ export class LastFMService {
     headers.append('Content-Type',
       'application/x-www-form-urlencoded');
 
-    let saveScrobble = localStorage.getItem('manual-scrobble-state') || false;
-
+    let saveScrobble = this.booleanState('manual-scrobble-state');
     if (!saveScrobble) {
       return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
         headers: headers
@@ -152,6 +151,14 @@ export class LastFMService {
     })
       .map(this.nounce)
       .catch(this.handleError);
+  }
+
+  private booleanState(key:string):boolean {
+    let raw = localStorage.getItem(key);
+    if (raw && raw === 'true') {
+      return true;
+    }
+    return false;
   }
 
   private extractAuthenticate(response: Response) {
