@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
 import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -6,6 +6,7 @@ import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { AuthHttp } from 'angular2-jwt';
 import * as _ from 'lodash';
+import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
 
 import { CollectionService } from './../collection.service';
 import { CoreService } from './../core.service';
@@ -21,6 +22,7 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
   templateUrl: 'app/home/home.component.html',
   selector: 'home',
   styleUrls: ['dist/home/home.component.css'],
+  directives: [REACTIVE_FORM_DIRECTIVES],
   providers: [RecentlyListenedService, LastFMService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -30,49 +32,57 @@ export class HomeComponent implements OnInit, OnDestroy {
   private newListenedTracks: Array<Track> = [];
   private counter: any;
   private loading: boolean = true;
+  @Input() username: string;
+  @Input() password: string;
+  private form: FormGroup;
 
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp, private lastFMService:LastFMService) { }
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp, private lastFMService: LastFMService) {
+    let controls: any = {};
+    controls['username'] = new FormControl('', Validators.required);
+    controls['password'] = new FormControl('', Validators.required);
+    this.form = new FormGroup(controls);
+  }
 
-  ngOnInit() {
-    let c = this;
-    this.core = this.coreService.getCore();
+  onSubmit() {
 
-    this.counter = setInterval(function () {
-      c.checkRecentlyListened();
-    }, RECENTLYLISTENEDINTERVAL);
-    this.checkRecentlyListened();
-    this.pathService.announcePage('Home');
-    this.getCollection();
-
-
-    // test authenticate
-    this.lastFMService.authenticate({user: '****', password: '****'}).subscribe(
+    this.lastFMService.authenticate({ user: this.form.value.username, password: this.form.value.password }).subscribe(
       data => {
-        console.log(data);
+        // save in storage
+        localStorage.setItem('lastfm-token', data);
+        localStorage.setItem('lastfm-username', this.form.value.username);
+        // set in instance
+        this.username = this.form.value.username;
+        this.startPolling();
       }
     )
   }
 
-  getCollection() {
-    this.collectionService.getCollection()
-      .subscribe(
-      data => this.fillCollection(data),
-      error => console.log(error)
-      );
-  }
-  fillCollection(data: any): void {
-    this.coreService.getCore().parseSourceJson(data);
+  ngOnInit() {
+    this.core = this.coreService.getCore();
+    if (localStorage.getItem('lastfm-username')) {
+      this.username = localStorage.getItem('lastfm-username');
+      this.startPolling();
+    }
+    this.pathService.announcePage('Home');
   }
 
   ngOnDestroy() {
     clearInterval(this.counter);
   }
 
+  startPolling() {
+    let c = this;
+    this.counter = setInterval(function () {
+      c.checkRecentlyListened();
+    }, RECENTLYLISTENEDINTERVAL);
+    this.checkRecentlyListened();
+  }
+
   checkRecentlyListened() {
     // this.recentlyListenedTracks = [];
     this.newListenedTracks = [];
     this.loading = true;
-    this.recentlyListened.getRecentlyListened('arielext').subscribe(
+    this.recentlyListened.getRecentlyListened(this.username).subscribe(
       data => this.populate(data),
       error => console.log(error)
     )
@@ -109,7 +119,4 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  onSelect(album: any) {
-    this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
-  }
 };

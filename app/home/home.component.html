@@ -1,4 +1,4 @@
-<div class="container" *ngIf="recentlyListenedTracks">
+<div class="container" *ngIf="recentlyListenedTracks && username">
   <div class="row">
     <div class="col-xs-24">
       <h4>Recently listened</h4>
@@ -35,6 +35,33 @@
           </div>
         </li>
       </ol>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!username">
+  <div class="row">
+    <div class="col-xs-24">
+      <h4>Login to last.fm</h4>
+      <form role="form" class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="form-group">
+          <label for="name" class="col-sm-8 col-lg-4 control-label">Username*</label>
+          <div class="col-sm-16 col-lg-20">
+            <input type="text" class="form-control" id="name" placeholder="e.g. JohnDoe" required [formControlName]="'username'">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password" class="col-sm-8 col-lg-4 control-label">Password*</label>
+          <div class="col-sm-16 col-lg-20">
+            <input type="password" class="form-control" id="password" placeholder="••••••••" required [formControlName]="'password'">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-8 col-lg-offset-4 col-sm-16 col-lg-20">
+            <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Login</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
