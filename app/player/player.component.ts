@@ -24,7 +24,7 @@ export class PlayerComponent implements OnDestroy {
     private isPaused:boolean = false;
     private mediaObject:any;
     private hasScrobbledCurrentTrack: boolean = false;
-    private url:string = JSON.parse(localStorage.getItem("jwt")).dsmport;
+    private url:string;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
@@ -50,6 +50,10 @@ export class PlayerComponent implements OnDestroy {
         this.mediaObject.addEventListener('play', function () {
             c.onplay();
         })
+        let dsm = JSON.parse(localStorage.getItem("jwt"));
+        if (dsm) {
+            this.url = dsm.dsmport;
+        }
     }
     setTrack() {
         let c = this;

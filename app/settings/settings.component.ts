@@ -33,14 +33,27 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pathService.announcePage('Settings');
     this.totals = this.core.totals;
-    this.lastfmusername = localStorage.getItem("lastfm-username");
+    this.lastfmusername = localStorage.getItem("lastfm-username") || '';
     let jwt = JSON.parse(localStorage.getItem("jwt"));
     if (jwt) {
       this.connectiondetails = jwt.dsmport;
-    } 
+    } else {
+      this.connectiondetails = null;
+    }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  removeLastfm() {
+    localStorage.removeItem('lastfm-username');
+    localStorage.removeItem('lastfm-token');
+    this.ngOnInit();
+  }
+  removeConnection() {
+    localStorage.removeItem("jwt");
+    sessionStorage.removeItem("jwt");
+    this.ngOnInit();
   }
 }
