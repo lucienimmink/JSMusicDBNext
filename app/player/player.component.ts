@@ -77,7 +77,7 @@ export class PlayerComponent implements OnDestroy {
             if (c.albumart) c.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
-        this.mediaObject.src = `${this.url}/listen?path=${this.track.source.url}`;
+        this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
         if (this.isPlaying) {
             this.mediaObject.play();
         } else {
