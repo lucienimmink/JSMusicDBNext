@@ -3,6 +3,8 @@ import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from "@a
 import { Observable } from "rxjs/Observable";
 import * as _ from 'lodash';
 
+import Track from './../org/arielext/musicdb/models/Track';
+
 const APIKEY: string = '956c1818ded606576d6941de5ff793a5';
 const SECRET: string = '4d183e73f7578dee78557665e9be3acc';
 
@@ -56,7 +58,7 @@ export class LastFMService {
 
     let headers = new Headers();
     headers.append('Content-Type',
-     'application/x-www-form-urlencoded');
+      'application/x-www-form-urlencoded');
 
     return this.http.post('https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession', urlSearchParams.toString(), {
       headers: headers
@@ -65,14 +67,71 @@ export class LastFMService {
       .catch(this.handleError);
   }
 
-  private extractAuthenticate(response:Response) {
+  announceNowPlaying(track: Track): Observable<any> {
+    let now = new Date();
+    let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
+    let sk = localStorage.getItem('lastfm-token');
+    let urlSearchParams: URLSearchParams = new URLSearchParams();
+    urlSearchParams.set('method', 'track.updateNowPlaying');
+    urlSearchParams.set('api_key', APIKEY);
+    urlSearchParams.set('api_sig', this.signTrack(track, timestamp, sk, 'track.updateNowPlaying'));
+    urlSearchParams.set('artist', track.album.artist.name);
+    urlSearchParams.set('album', track.album.name);
+    urlSearchParams.set('track', track.title);
+    urlSearchParams.set('timestamp', timestamp.toString());
+    urlSearchParams.set('sk', sk);
+
+    let headers = new Headers();
+    headers.append('Content-Type',
+      'application/x-www-form-urlencoded');
+
+    return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
+      headers: headers
+    })
+      .map(this.nounce)
+      .catch(this.handleError);
+  }
+
+  scrobbleTrack(track:Track):Observable<any> {
+    let now = new Date();
+    let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
+    let sk = localStorage.getItem('lastfm-token');
+    let urlSearchParams: URLSearchParams = new URLSearchParams();
+    urlSearchParams.set('method', 'track.scrobble');
+    urlSearchParams.set('api_key', APIKEY);
+    urlSearchParams.set('api_sig', this.signTrack(track, timestamp, sk, 'track.scrobble'));
+    urlSearchParams.set('artist', track.album.artist.name);
+    urlSearchParams.set('album', track.album.name);
+    urlSearchParams.set('track', track.title);
+    urlSearchParams.set('timestamp', timestamp.toString());
+    urlSearchParams.set('sk', sk);
+
+    let headers = new Headers();
+    headers.append('Content-Type',
+      'application/x-www-form-urlencoded');
+
+    return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
+      headers: headers
+    })
+      .map(this.nounce)
+      .catch(this.handleError);
+  }
+
+  private extractAuthenticate(response: Response) {
     let responseText = response.text();
     let responseXml = new DOMParser().parseFromString(responseText, 'text/xml');
     return responseXml.getElementsByTagName("key")[0].textContent;
   }
+  private nounce(response: Response) {
+    return true;
+  }
 
-  private signAuthentication(user: string, password: string) {
+  private signAuthentication(user: string, password: string): string {
     return this.hex_md5(`api_key${APIKEY}methodauth.getMobileSessionpassword${password}username${user}${SECRET}`);
+  }
+
+  private signTrack(track: Track, timestamp: number, sk: string, method: string): string {
+    return this.hex_md5(`album${track.album.name}api_key${APIKEY}artist${track.album.artist.name}method${method}sk${sk}timestamp${timestamp}track${track.title}${SECRET}`)
   }
 
   private extractLastFMLoved(res: Response): Array<any> {
@@ -99,7 +158,7 @@ export class LastFMService {
   }
 
 
-/* These functions implement a RSA encryption in JavaScript */
+  /* These functions implement a RSA encryption in JavaScript */
   private hex_md5(s) {
     return this.rstr2hex(this.rstr_md5(this.str2rstr_utf8(s)));
   }

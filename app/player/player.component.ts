@@ -4,13 +4,14 @@ import { Router } from '@angular/router-deprecated';
 import { Subscription }   from 'rxjs/Subscription';
 
 import { AlbumArt } from './../utils/albumart.component';
-
 import Track from './../org/arielext/musicdb/models/Track';
+import { LastFMService } from './../lastfm/lastfm.service';
 
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
     directives: [AlbumArt],
+    providers: [LastFMService],
     styleUrls: ['app/player/player.component.css']
 })
 export class PlayerComponent implements OnDestroy {
@@ -22,10 +23,11 @@ export class PlayerComponent implements OnDestroy {
     private isPlaying:boolean = false;
     private isPaused:boolean = false;
     private mediaObject:any;
+    private hasScrobbledCurrentTrack: boolean = false;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private playerService: PlayerService, private router: Router) {
+    constructor(private playerService: PlayerService, private router: Router, private lastFMService:LastFMService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 this.playlist = playerData.playlist;
@@ -44,6 +46,9 @@ export class PlayerComponent implements OnDestroy {
         this.mediaObject.addEventListener('timeupdate', function () {
             c.updateTime();
         })
+        this.mediaObject.addEventListener('play', function () {
+            c.onplay();
+        })
     }
     setTrack() {
         let c = this;
@@ -57,6 +62,7 @@ export class PlayerComponent implements OnDestroy {
         } else {
             this.mediaObject.pause();
         }
+        this.hasScrobbledCurrentTrack = false;
     }
 
     ngOnDestroy() {
@@ -91,5 +97,24 @@ export class PlayerComponent implements OnDestroy {
 
     updateTime() {
         this.track.position = this.mediaObject.currentTime * 1000;
+        if (!this.hasScrobbledCurrentTrack) {
+            //TODO: this must be settings; add offline/manual scrobbling
+            if (this.track.position >= 4 * 60 * 1000 || this.track.position / this.track.duration >= 0.5) {
+                this.hasScrobbledCurrentTrack = true;
+                this.lastFMService.scrobbleTrack(this.track).subscribe(
+                    data => {
+                        console.log('track is scrobbled');
+                    }
+                )
+            }
+        }
+    }
+
+    onplay() {
+        this.lastFMService.announceNowPlaying(this.track).subscribe(
+            data => {
+                console.log('announced now playing');
+            }
+        )
     }
 }
