@@ -20,6 +20,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private connectiontype:string = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
   private connectiondetails:string = "";
   private subscription: Subscription;
+  private savePlaylistState: boolean = false;
 
   constructor(private pathService: PathService, private coreService: CoreService) {
     this.core = this.coreService.getCore();
@@ -55,5 +56,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     localStorage.removeItem("jwt");
     sessionStorage.removeItem("jwt");
     this.ngOnInit();
+  }
+  toggleSavePlaylistState() {
+    this.savePlaylistState = !this.savePlaylistState;
+    localStorage.setItem('save-playlist-state', this.savePlaylistState.toString());
   }
 }

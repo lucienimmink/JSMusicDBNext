@@ -63,7 +63,11 @@ export class PlayerComponent implements OnDestroy {
         this.core = this.coreService.getCore();
         this.subscription2 = this.core.coreParsed$.subscribe(
             data => {
-                this.readCurrentPlaylist();
+                let state = localStorage.getItem("save-playlist-state");
+                if (state && state === "true") {
+                    // read the current playlist on startup
+                    this.readCurrentPlaylist();
+                }
             }
         )
     }
