@@ -1,9 +1,19 @@
 <div class="container">
   <div class="row">
-    <div class="col-xs-24"><h4>Collection Information</h4>
-    <div class="col-xs-24"><span class="color-type-secondary">Artists:</span> <span>{{totals.artists}}</span></div>
-    <div class="col-xs-24"><span class="color-type-secondary">Albums:</span> <span>{{totals.albums}}</span></div>
-    <div class="col-xs-24"><span class="color-type-secondary">Tracks:</span> <span>{{totals.tracks}}</span></div>
-    <div class="col-xs-24"><span class="color-type-secondary">Playing time:</span> <span>{{totals.playingTime | timeFormat }}</span></div>
+    <div class="col-xs-24">
+      <h4>User Information</h4>
+      <div class="col-xs-24"><span class="color-type-secondary">Logged in on last.fm:</span> <span>{{lastfmusername.length > 0}} <span class="color-type-secondary">({{lastfmusername}})</span></span>
+      </div>
+      <div class="col-xs-24"><span class="color-type-secondary">Connected to:</span> <span>{{connectiontype}} <span class="color-type-secondary">({{connectiondetails}})</span></span></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-24">
+      <h4>Collection Information</h4>
+      <div class="col-xs-24"><span class="color-type-secondary">Artists:</span> <span>{{totals.artists}}</span></div>
+      <div class="col-xs-24"><span class="color-type-secondary">Albums:</span> <span>{{totals.albums}}</span></div>
+      <div class="col-xs-24"><span class="color-type-secondary">Tracks:</span> <span>{{totals.tracks}}</span></div>
+      <div class="col-xs-24" *ngIf="totals.playingTime"><span class="color-type-secondary">Playing time:</span> <span>{{totals.playingTime | timeFormat }}</span></div>
+    </div>
   </div>
 </div>

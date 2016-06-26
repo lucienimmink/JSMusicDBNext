@@ -10,14 +10,9 @@ export class LoginService {
   doLogin(form: any) {
     let username = form.name;
     let password = form.password;
-    let dsmport = form.dsmport;
+    let streamerUrl = form.dsmport;
 
-    //let protocol = document.location.protocol;
-    //let hostname = document.location.hostname;
-    let protocol = 'http:';
-    let hostname = 'www.arielext.org'
-
-    return this.http.post(`${protocol}//${hostname}:${dsmport}/login`, {
+    return this.http.post(`${streamerUrl}/login`, {
       account: username,
       passwd: password
     })
@@ -27,7 +22,12 @@ export class LoginService {
   }
   autoLogin() {
     let cred = JSON.parse(localStorage.getItem("jwt"));
-    return this.doLogin(cred);
+    if (cred) {
+      return this.doLogin(cred);
+    } else {
+      localStorage.removeItem('jwt');
+      return Observable.throw(null);
+    }
   }
   private handleLogin(res: Response) {
     let json = res.json();

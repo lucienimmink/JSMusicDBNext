@@ -6,10 +6,15 @@ import { Observable } from "rxjs/Observable";
 export class CollectionService {
   constructor(private http: Http) { }
 
-  private collectionUrl = 'http://www.arielext.org:16881/data/node-music.json';
+  private collectionUrl = '/data/node-music.json';
 
   getCollection(): Observable<any[]> {
-    return this.http.get(this.collectionUrl)
+    let jwt = JSON.parse(localStorage.getItem('jwt'));
+    let url = this.collectionUrl;
+    if (jwt) {
+      url = jwt.dsmport + this.collectionUrl;
+    }
+    return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError);
   }

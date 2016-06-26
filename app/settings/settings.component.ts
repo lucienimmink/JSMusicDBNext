@@ -16,6 +16,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private totals: any;
   private core: musicdbcore;
+  private lastfmusername: string;
+  private connectiontype:string = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
+  private connectiondetails:string = "";
   private subscription: Subscription;
 
   constructor(private pathService: PathService, private coreService: CoreService) {
@@ -30,6 +33,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pathService.announcePage('Settings');
     this.totals = this.core.totals;
+    this.lastfmusername = localStorage.getItem("lastfm-username");
+    let jwt = JSON.parse(localStorage.getItem("jwt"));
+    if (jwt) {
+      this.connectiondetails = jwt.dsmport;
+    } 
   }
 
   ngOnDestroy() {

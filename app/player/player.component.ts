@@ -24,6 +24,7 @@ export class PlayerComponent implements OnDestroy {
     private isPaused:boolean = false;
     private mediaObject:any;
     private hasScrobbledCurrentTrack: boolean = false;
+    private url:string = JSON.parse(localStorage.getItem("jwt")).dsmport;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
@@ -56,7 +57,7 @@ export class PlayerComponent implements OnDestroy {
             if (c.albumart) c.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
-        this.mediaObject.src = `http://www.arielext.org:16881/listen?path=${this.track.source.url}`;
+        this.mediaObject.src = `${this.url}/listen?path=${this.track.source.url}`;
         if (this.isPlaying) {
             this.mediaObject.play();
         } else {
