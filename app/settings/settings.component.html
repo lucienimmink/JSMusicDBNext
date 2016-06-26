@@ -17,6 +17,21 @@
         </button>
         </div>
       </div>
+      <div class="col-xs-24">
+        <span class="color-type-secondary">Manual scrobbling:</span>
+        <div class="btn-group">
+          <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': manualScrobbling}" (click)="toggleManualScrobbling()">
+            <span class="stateLabel stateLabel-on">On</span>
+            <span class="stateLabel stateLabel-off">Off</span>
+        </button>
+        </div>
+      </div>
+      <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
+        <div class="scrobble-item" *ngFor="let item of manualScrobblingList">
+          {{item.artist}} - {{item.album}} - {{item.track}}
+        </div>
+        <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0">Scrobble now</button>
+      </div>
     </div>
   </div>
   <div class="row">

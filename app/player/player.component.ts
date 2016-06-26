@@ -156,11 +156,13 @@ export class PlayerComponent implements OnDestroy {
             //TODO: this must be settings; add offline/manual scrobbling
             if (this.track.position >= 4 * 60 * 1000 || this.track.position / this.track.duration >= 0.5) {
                 this.hasScrobbledCurrentTrack = true;
-                this.lastFMService.scrobbleTrack(this.track).subscribe(
-                    data => {
-                        //console.log('track is scrobbled');
-                    }
-                )
+                try {
+                    this.lastFMService.scrobbleTrack(this.track).subscribe(
+                        data => {
+                            //console.log('track is scrobbled');
+                        }
+                    )
+                } catch (e) {}
             }
         }
         localStorage.setItem('current-time', this.mediaObject.currentTime.toString());

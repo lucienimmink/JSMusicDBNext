@@ -74,7 +74,7 @@ export class LastFMService {
     let urlSearchParams: URLSearchParams = new URLSearchParams();
     urlSearchParams.set('method', 'track.updateNowPlaying');
     urlSearchParams.set('api_key', APIKEY);
-    urlSearchParams.set('api_sig', this.signTrack(track, timestamp, sk, 'track.updateNowPlaying'));
+    urlSearchParams.set('api_sig', this.signTrack(track.album.artist.name, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
     urlSearchParams.set('artist', track.album.artist.name);
     urlSearchParams.set('album', track.album.name);
     urlSearchParams.set('track', track.title);
@@ -92,18 +92,55 @@ export class LastFMService {
       .catch(this.handleError);
   }
 
-  scrobbleTrack(track:Track):Observable<any> {
+  scrobbleTrack(track: Track): any {
     let now = new Date();
     let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
     let sk = localStorage.getItem('lastfm-token');
     let urlSearchParams: URLSearchParams = new URLSearchParams();
     urlSearchParams.set('method', 'track.scrobble');
     urlSearchParams.set('api_key', APIKEY);
-    urlSearchParams.set('api_sig', this.signTrack(track, timestamp, sk, 'track.scrobble'));
+    urlSearchParams.set('api_sig', this.signTrack(track.album.artist.name, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
     urlSearchParams.set('artist', track.album.artist.name);
     urlSearchParams.set('album', track.album.name);
     urlSearchParams.set('track', track.title);
     urlSearchParams.set('timestamp', timestamp.toString());
+    urlSearchParams.set('sk', sk);
+
+    let headers = new Headers();
+    headers.append('Content-Type',
+      'application/x-www-form-urlencoded');
+
+    let saveScrobble = localStorage.getItem('manual-scrobble-state') || false;
+
+    if (!saveScrobble) {
+      return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
+        headers: headers
+      })
+        .map(this.nounce)
+        .catch(this.handleError);
+    } else {
+      // save details
+      let offlineCache = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
+      let cachedItem = {
+        artist: track.album.artist.name,
+        album: track.album.name,
+        track: track.title,
+        timestamp: timestamp.toString()
+      }
+      offlineCache.push(cachedItem);
+      localStorage.setItem('manual-scrobble-list', JSON.stringify(offlineCache));
+    }
+  }
+  scrobbleCachedTrack(cachedTrack: any) {
+    let sk = localStorage.getItem('lastfm-token');
+    let urlSearchParams: URLSearchParams = new URLSearchParams();
+    urlSearchParams.set('method', 'track.scrobble');
+    urlSearchParams.set('api_key', APIKEY);
+    urlSearchParams.set('api_sig', this.signTrack(cachedTrack.artist, cachedTrack.album, cachedTrack.track, cachedTrack.timestamp, sk, 'track.scrobble'));
+    urlSearchParams.set('artist', cachedTrack.artist);
+    urlSearchParams.set('album', cachedTrack.album);
+    urlSearchParams.set('track', cachedTrack.track);
+    urlSearchParams.set('timestamp', cachedTrack.timestamp);
     urlSearchParams.set('sk', sk);
 
     let headers = new Headers();
@@ -130,8 +167,8 @@ export class LastFMService {
     return this.hex_md5(`api_key${APIKEY}methodauth.getMobileSessionpassword${password}username${user}${SECRET}`);
   }
 
-  private signTrack(track: Track, timestamp: number, sk: string, method: string): string {
-    return this.hex_md5(`album${track.album.name}api_key${APIKEY}artist${track.album.artist.name}method${method}sk${sk}timestamp${timestamp}track${track.title}${SECRET}`)
+  private signTrack(artist: string, album: string, track: string, timestamp: number, sk: string, method: string): string {
+    return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}timestamp${timestamp}track${track}${SECRET}`)
   }
 
   private extractLastFMLoved(res: Response): Array<any> {

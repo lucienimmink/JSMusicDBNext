@@ -4,12 +4,16 @@ import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { TimeFormatPipe } from './../timeformat.pipe';
+import { LastFMService } from './../lastfm/lastfm.service';
 
 import { Subscription }   from 'rxjs/Subscription';
+
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'app/settings/settings.component.html',
   pipes: [TimeFormatPipe],
+  providers: [LastFMService],
   styleUrls: ['app/settings/settings.component.css']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
@@ -20,9 +24,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private connectiontype:string = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
   private connectiondetails:string = "";
   private subscription: Subscription;
-  private savePlaylistState: boolean = false;
+  private savePlaylistState: boolean = !!localStorage.getItem("save-playlist-state") || false;
+  private manualScrobbling: boolean = !!localStorage.getItem('manual-scrobble-state') || false;
+  private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
 
-  constructor(private pathService: PathService, private coreService: CoreService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService:LastFMService) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
@@ -60,5 +66,22 @@ export class SettingsComponent implements OnInit, OnDestroy {
   toggleSavePlaylistState() {
     this.savePlaylistState = !this.savePlaylistState;
     localStorage.setItem('save-playlist-state', this.savePlaylistState.toString());
+  }
+  toggleManualScrobbling() {
+    this.manualScrobbling = !this.manualScrobbling;
+    localStorage.setItem('manual-scrobble-state', this.manualScrobbling.toString());
+    this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
+  }
+  scrobbleNow() {
+    this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
+    let track = this.manualScrobblingList.pop();
+    this.lastFMService.scrobbleCachedTrack(track).subscribe(
+      data => {
+        localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
+        if (this.manualScrobblingList.length > 0) {
+          this.scrobbleNow();
+        }
+      }
+    )
   }
 }
