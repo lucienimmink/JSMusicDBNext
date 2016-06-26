@@ -24,8 +24,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private connectiontype:string = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
   private connectiondetails:string = "";
   private subscription: Subscription;
-  private savePlaylistState: boolean = !!localStorage.getItem("save-playlist-state") || false;
-  private manualScrobbling: boolean = !!localStorage.getItem('manual-scrobble-state') || false;
+  private savePlaylistState: boolean = this.booleanState("save-playlist-state");
+  private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
   private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
 
   constructor(private pathService: PathService, private coreService: CoreService, private lastFMService:LastFMService) {
@@ -35,6 +35,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.ngOnInit();
       }
     )
+  }
+
+  private booleanState(key:string):boolean {
+    let raw = localStorage.getItem(key);
+    if (raw && raw === 'true') {
+      return true;
+    }
+    return false;
   }
 
   ngOnInit() {
