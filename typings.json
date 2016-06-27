@@ -1,9 +1,7 @@
 {
   "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160317120654",
-    "node": "registry:dt/node#4.0.0+20160509154515"
-  },
-  "dependencies": {
-    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "lodash": "registry:dt/lodash#3.10.0+20160619033623",
+    "node": "registry:dt/node#6.0.0+20160621231320"
   }
 }
