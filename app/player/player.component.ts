@@ -23,6 +23,7 @@ export class PlayerComponent implements OnDestroy {
     private playlist: any;
     private trackIndex: any;
     private track: Track;
+    private currentTrack: Track;
     private showPlayer: boolean = false;
     private isPlaying: boolean = false;
     private isPaused: boolean = false;
@@ -77,7 +78,10 @@ export class PlayerComponent implements OnDestroy {
             if (c.albumart) c.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
-        this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
+        if (this.currentTrack !== this.track) {
+            this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
+            this.currentTrack = this.track;
+        }
         if (this.isPlaying) {
             this.mediaObject.play();
         } else {
