@@ -9,7 +9,7 @@
               <mdbartist [artist]="artist"></mdbartist>
             </div>
             <div class="text-wrapper">
-              <span>{{artist.name}}</span> <br />
+              <span>{{artist.albumArtist || artist.name}}</span> <br />
               <span class="small color-type-secondary">Albums: {{artist.albums.length}}</span>
             </div>
           </li>
