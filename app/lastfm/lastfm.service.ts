@@ -74,8 +74,8 @@ export class LastFMService {
     let urlSearchParams: URLSearchParams = new URLSearchParams();
     urlSearchParams.set('method', 'track.updateNowPlaying');
     urlSearchParams.set('api_key', APIKEY);
-    urlSearchParams.set('api_sig', this.signTrack(track.album.artist.name, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
-    urlSearchParams.set('artist', track.album.artist.name);
+    urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
+    urlSearchParams.set('artist', track.trackArtist);
     urlSearchParams.set('album', track.album.name);
     urlSearchParams.set('track', track.title);
     urlSearchParams.set('timestamp', timestamp.toString());
@@ -99,8 +99,8 @@ export class LastFMService {
     let urlSearchParams: URLSearchParams = new URLSearchParams();
     urlSearchParams.set('method', 'track.scrobble');
     urlSearchParams.set('api_key', APIKEY);
-    urlSearchParams.set('api_sig', this.signTrack(track.album.artist.name, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
-    urlSearchParams.set('artist', track.album.artist.name);
+    urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
+    urlSearchParams.set('artist', track.trackArtist);
     urlSearchParams.set('album', track.album.name);
     urlSearchParams.set('track', track.title);
     urlSearchParams.set('timestamp', timestamp.toString());
@@ -121,7 +121,7 @@ export class LastFMService {
       // save details
       let offlineCache = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
       let cachedItem = {
-        artist: track.album.artist.name,
+        artist: track.trackArtist,
         album: track.album.name,
         track: track.title,
         timestamp: timestamp.toString()
