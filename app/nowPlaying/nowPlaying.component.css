@@ -25,6 +25,7 @@
 }
 #nowPlaying .top {
     z-index: 1;
+    will-change: transform;
 }
 #nowPlaying .bottom {
     height: calc(100% - 200px);
@@ -40,7 +41,9 @@
     width: 100%;
     text-align: center;
     transition: -webkit-transform 0.3s ease-out;
-    transition: transform 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+    will-change: transform, opacity;
 }
 @media screen and (min-width: 480px) {
     #nowPlaying .image-wrapper {
@@ -75,10 +78,10 @@
 }
 
 #nowPlaying .image-wrapper div {
-    height: calc(100% - 70px);
-    width: 100%;
+    height: calc(100% - 30px);
+    width: calc(100% - 20px);
     display: block;
-    margin: 20px auto;
+    margin: 10px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -139,7 +142,10 @@ footer.hidePlayer {
 }
 
 #nowPlaying.slided .top {
-    transform: translateY(calc(-100% + 190px));
+    transform: translateY(calc(-100% + 185px));
+}
+#nowPlaying.slided .top .image-wrapper {
+    opacity: 0;
 }
 #nowPlaying #upordown {
     transition: 0.3s ease-out 0.15s;
