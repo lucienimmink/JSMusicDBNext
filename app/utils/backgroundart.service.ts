@@ -8,24 +8,20 @@ const NOIMAGE = 'global/images/no-cover.png';
 @Injectable()
 export class BackgroundArtService {
 
+  private albumartUrl = 'https://api.spotify.com/v1/search?q=album:{1}+artist:{0}&type=album&limit=1';
+  private artistartUrl = 'https://api.spotify.com/v1/search?q=artist:{0}&type=artist&limit=1';
+
   constructor(private http: Http) { }
 
   getMediaArt(media: any): Observable<any[]> {
-    let urlSearchParams:URLSearchParams = new URLSearchParams();
-    urlSearchParams.set('limit', '1');
-    let mediaartUrl = '';
+    let url = ''
     if (media.artist) {
-      urlSearchParams.set('q', `album:${media.name}+artist:${media.artist.name}`);
-      urlSearchParams.set('type', 'album');
+      url = this.albumartUrl.replace('{1}', media.name).replace('{0}', media.artist.name);
     } else {
-      urlSearchParams.set('q', `${media.name}`);
-      urlSearchParams.set('type', 'artist');
+      url = this.artistartUrl.replace('{0}', media.name);
     }
-    let query:RequestOptionsArgs = {
-      search: urlSearchParams
-    };
 
-    return this.http.get('https://api.spotify.com/v1/search', query)
+    return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError);
   }
