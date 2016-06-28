@@ -68,7 +68,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
   removeConnection() {
     localStorage.removeItem("jwt");
-    sessionStorage.removeItem("jwt");
     this.ngOnInit();
   }
   toggleSavePlaylistState() {

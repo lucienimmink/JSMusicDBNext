@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
       data => {
         if (data.success) {
           localStorage.setItem('jwt', this.payLoad); // save creds in storage
-          sessionStorage.setItem('jwt', 'true'); // set loggedin state
           this.router.navigate(['Home']);
         }
       },

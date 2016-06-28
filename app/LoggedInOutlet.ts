@@ -22,9 +22,6 @@ export class LoggedInRouterOutlet extends RouterOutlet {
 
   activate(instruction: ComponentInstruction) {
     let url = instruction.urlPath;
-    if (!sessionStorage.getItem('jwt')) {
-      this.parentRouter.navigateByUrl('/login');
-    }
     if (!this.publicRoutes[url] && !localStorage.getItem('jwt')) {
       this.parentRouter.navigateByUrl('/login');
     }
