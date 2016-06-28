@@ -5,14 +5,8 @@
     left: 0;
     right: 0;
 }
-.row >>> img {
-    height: 63px;
+.player albumart {
     margin-left: -10px;
-}
-@media screen and (min-width: 480px) {
-    .row >>> img {
-        height: 75px;
-    }
 }
 .row h4 {
     padding-top: 4px;

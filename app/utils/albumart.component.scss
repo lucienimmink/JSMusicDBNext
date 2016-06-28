@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  overflow: hidden;
+  text-align: left;
+}
+img {
+  height: 63px;
+}
+@media screen and (min-width: 480px) {
+  img {
+    height: 75px;
+  }
+}

@@ -11,8 +11,8 @@
     }
 }
 .albumdetail >>> .albumart {
-    display: block;
     width: 100%;
+    height: auto;
 }
 .albumdetail h2 {
     padding-top: 0;

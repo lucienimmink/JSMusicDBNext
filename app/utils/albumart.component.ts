@@ -8,12 +8,17 @@ const NOIMAGE = 'global/images/no-cover.png';
 @Component({
     selector: 'albumart',
     templateUrl: 'app/utils/albumart.component.html',
+    styleUrls: ['dist/utils/albumart.component.css'], 
     providers: [AlbumArtService]
 })
 export class AlbumArt {
     public albumart: any = {}
     @Input() album: Album;
     @Input() track: Track;
+
+    private searchArtist:string;
+    private searchAlbum:string;
+    private searchType:string = 'album';
 
     constructor(private albumArtService: AlbumArtService) {
         this.albumart = {
@@ -24,11 +29,23 @@ export class AlbumArt {
 
     ngOnInit() {
         if (this.album) {
+            // album
             this.albumart.name = this.album.name;
+            this.searchArtist = this.album.artist.albumArtist || this.album.artist.name;
+            this.searchAlbum = this.album.name;
         } else {
+            // track
             this.albumart.name = this.track.album.name;
+            this.searchArtist = this.track.trackArtist;
+            this.searchAlbum = this.track.album.name;
+            if (this.track.album.artist.isCollection) {
+                this.searchType = 'artist';
+            } else {
+                this.searchType = 'album';
+            }
         }
-        this.albumArtService.getAlbumArt((this.album) ? (this.album.artist.albumArtist || this.album.artist.name) : (this.track.album.artist.albumArtist || this.track.album.artist.name), (this.album) ? this.album.name : this.track.album.name)
+
+        this.albumArtService.getAlbumArt(this.searchArtist, this.searchAlbum, this.searchType)
             .subscribe(
             data => this.setImage(data),
             error => this.albumart.url = NOIMAGE
@@ -36,7 +53,7 @@ export class AlbumArt {
     }
     setImage(data: any) {
         if (data === 'global/images/no-cover.png' || data === '') {
-            this.albumArtService.getMediaArtFromLastFm((this.album) ? (this.album.artist.albumArtist || this.album.artist.name) : (this.track.album.artist.albumArtist || this.track.album.artist.name), (this.album) ? this.album.name : this.track.album.name)
+            this.albumArtService.getMediaArtFromLastFm(this.searchArtist, this.searchAlbum, this.searchType)
                 .subscribe(
                 data => this.albumart.url = data,
                 error => this.albumart.url = NOIMAGE

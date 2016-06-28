@@ -15,8 +15,11 @@ export class BackgroundArtService {
 
   getMediaArt(media: any): Observable<any[]> {
     let url = ''
-    if (media.artist) {
-      url = this.albumartUrl.replace('{1}', media.name).replace('{0}', media.artist.albumArtist || media.artist.name);
+    if (media.trackArtist && media.album.artist.isCollection) {
+      // show artist art for a track in a collection
+      url = this.artistartUrl.replace('{0}', media.trackArtist);
+    } else if (media.artist) {
+      url = this.albumartUrl.replace('{1}', media.name || media.album.name).replace('{0}', media.artist.albumArtist || media.artist.name);
     } else {
       url = this.artistartUrl.replace('{0}', media.albumArtist || media.name);
     }
@@ -30,14 +33,14 @@ export class BackgroundArtService {
     let urlSearchParams:URLSearchParams = new URLSearchParams();
     urlSearchParams.set('method', 'artist.getinfo');
     urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
-    urlSearchParams.set('artist', media.albumArtist || media.name);
+    urlSearchParams.set('artist', media.trackArtist || media.albumArtist || media.name);
     urlSearchParams.set('format', 'json');
     urlSearchParams.set('autoCorrect', 'true');
 
-    if (media.artist) {
+    if (media.artist && ((media.trackArtist) ? media.album.artist.isCollection : true)) {
       urlSearchParams.set('method', 'album.getinfo');
-      urlSearchParams.set('artist', media.artist.albumArtist || media.artist.name);
-      urlSearchParams.set('album', media.name);
+      urlSearchParams.set('artist', (media.trackArtist) ? media.trackArtist : (media.artist.albumArtist || media.artist.name));
+      urlSearchParams.set('album', media.name || media.album.name);
     }
     let query:RequestOptionsArgs = {
       search: urlSearchParams

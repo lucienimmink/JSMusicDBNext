@@ -11,21 +11,33 @@ export class AlbumArtService {
   constructor (private http: Http) {}
   
   private albumartUrl = 'https://api.spotify.com/v1/search?q=album:{1}+artist:{0}&type=album&limit=1';
+  private artistartUrl = 'https://api.spotify.com/v1/search?q=artist:{0}&type=artist&limit=1';
 
-  getAlbumArt(artist:string, album:string): Observable<any[]> {
-    return this.http.get(this.albumartUrl.replace('{1}', album).replace('{0}', artist))
-      .map(this.extractData)
-      .catch(this.handleError);
+  getAlbumArt(artist:string, album:string, type:string): Observable<any[]> {
+    if (type === 'album') {
+      return this.http.get(this.albumartUrl.replace('{1}', album).replace('{0}', artist))
+        .map(this.extractData)
+        .catch(this.handleError);
+    } else {
+      return this.http.get(this.artistartUrl.replace('{0}', artist))
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
   }
 
-  getMediaArtFromLastFm(artist:string, album:string): Observable<any> {
+  getMediaArtFromLastFm(artist:string, album:string, type:string): Observable<any> {
     let urlSearchParams:URLSearchParams = new URLSearchParams();
     urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
     urlSearchParams.set('artist', artist);
     urlSearchParams.set('format', 'json');
     urlSearchParams.set('autoCorrect', 'true');
-    urlSearchParams.set('method', 'album.getinfo');
-    urlSearchParams.set('album', album);
+
+    if (type === "album") {
+      urlSearchParams.set('method', 'album.getinfo');
+      urlSearchParams.set('album', album);
+    } else {
+      urlSearchParams.set('method', 'artist.getinfo');
+    }
 
     let query:RequestOptionsArgs = {
       search: urlSearchParams
