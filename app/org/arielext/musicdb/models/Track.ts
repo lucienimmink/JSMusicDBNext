@@ -8,6 +8,7 @@ export default class Track {
   source: MediaSource;
   artist: Artist;
   album: Album;
+  trackArtist: string;
   duration: number;
   title: string;
   disc: number;
@@ -24,6 +25,7 @@ export default class Track {
       this.source = new MediaSource(json);
       this.disc = json.disc || this.guessBySource(json);
       this.number = json.number;
+      this.trackArtist = json.artist;
     }
   }
 

@@ -4,7 +4,7 @@
             <span *ngIf="!track.isPlaying && track.isPaused"><span class="glyph glyph-pause"></span> </span>
             <span *ngIf="track.isPlaying && !track.isPaused"><span class="glyph glyph-play"></span> </span>{{track.title}} <br />
             <span class="small color-type-secondary">
-              {{track.album.artist.name}} &bull; {{track.album.name}}
+              {{track.trackArtist}} &bull; {{track.album.name}}
             </span>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-2 text-right">
