@@ -18,7 +18,7 @@ export default class Artist {
       this.albumArtist = json.albumartist || json.albumArtist;
       this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();
       this.bio = json.bio;
-      this.isCollection = this.name !== this.albumArtist;
+      this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false; // if albumartist doesn't exist it can't be a collection.
     }
   }
 

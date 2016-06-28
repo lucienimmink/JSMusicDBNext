@@ -19,8 +19,10 @@ export class BackgroundArtService {
       // show artist art for a track in a collection
       url = this.artistartUrl.replace('{0}', media.trackArtist);
     } else if (media.artist) {
+      // this is a track ór an album
       url = this.albumartUrl.replace('{1}', media.name || media.album.name).replace('{0}', media.artist.albumArtist || media.artist.name);
     } else {
+      // this is an artist
       url = this.artistartUrl.replace('{0}', media.albumArtist || media.name);
     }
 
@@ -37,7 +39,8 @@ export class BackgroundArtService {
     urlSearchParams.set('format', 'json');
     urlSearchParams.set('autoCorrect', 'true');
 
-    if (media.artist && ((media.trackArtist) ? media.album.artist.isCollection : true)) {
+    if (media.artist && ((media.trackArtist) ? !media.album.artist.isCollection : true)) {
+      // track/album
       urlSearchParams.set('method', 'album.getinfo');
       urlSearchParams.set('artist', (media.trackArtist) ? media.trackArtist : (media.artist.albumArtist || media.artist.name));
       urlSearchParams.set('album', media.name || media.album.name);
