@@ -23,6 +23,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { LoggedInRouterOutlet } from './LoggedInOutlet';
 import { LoginComponent } from './login/login.component';
+import { LastFMService} from './lastfm/lastfm.service';
 import { LoginService } from './login/login.service';
 import { Subscription }   from 'rxjs/Subscription';
 
@@ -33,7 +34,7 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService],
+  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService, LastFMService],
   directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
 })
 @RouteConfig([

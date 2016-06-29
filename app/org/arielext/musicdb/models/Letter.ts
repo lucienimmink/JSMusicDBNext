@@ -27,7 +27,7 @@ export default class Letter {
     if (_.startsWith(f, s)) {
       f = f.substring(4);
     }
-    return this.groupIfSpecialChar(_.split(f, '', 1)[0]);
+    return this.groupIfSpecialChar(f.substr(0,1));
   }
   private groupIfSpecialChar(c: string): string {
     if (_.indexOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '[', ']', '{', '}', '_', '-', '.'], c) !== -1) {

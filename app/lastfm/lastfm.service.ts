@@ -15,9 +15,9 @@ export class LastFMService {
   private hexcase = 0;
   private b64pad = '';
   private manualScrobbleListSource = new Subject<any>();
-  manualScrobbleList$ = this.manualScrobbleListSource.asObservable();
-  
-  constructor(private http: Http) { }
+  public manualScrobbleList$: Observable<any> = this.manualScrobbleListSource.asObservable();
+
+  constructor(private http: Http) {}
 
   getLovedTracks(user: string): Observable<any> {
     let urlSearchParams: URLSearchParams = new URLSearchParams();
@@ -157,7 +157,7 @@ export class LastFMService {
       .catch(this.handleError);
   }
 
-  private booleanState(key:string):boolean {
+  private booleanState(key: string): boolean {
     let raw = localStorage.getItem(key);
     if (raw && raw === 'true') {
       return true;

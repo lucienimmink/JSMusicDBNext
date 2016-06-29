@@ -23,7 +23,7 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
   selector: 'home',
   styleUrls: ['dist/home/home.component.css'],
   directives: [REACTIVE_FORM_DIRECTIVES],
-  providers: [RecentlyListenedService, LastFMService]
+  providers: [RecentlyListenedService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 

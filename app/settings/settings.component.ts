@@ -14,7 +14,6 @@ import * as _ from 'lodash';
 @Component({
   templateUrl: 'app/settings/settings.component.html',
   pipes: [TimeFormatPipe],
-  providers: [LastFMService],
   styleUrls: ['app/settings/settings.component.css']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
@@ -40,7 +39,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     )
     this.subscription2 = this.lastFMService.manualScrobbleList$.subscribe(
       data => {
-        console.log('list updated', data);
         this.manualScrobblingList = data;
       }
     )

@@ -14,7 +14,6 @@ import { musicdbcore} from './../org/arielext/musicdb/core';
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
     directives: [AlbumArt],
-    providers: [LastFMService],
     styleUrls: ['app/player/player.component.css']
 })
 export class PlayerComponent implements OnDestroy {

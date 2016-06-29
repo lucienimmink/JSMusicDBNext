@@ -28,6 +28,7 @@
             <span class="stateLabel stateLabel-off">Off</span>
         </button>
         </div>
+        <span class="color-type-secondary" *ngIf="manualScrobblingList.length > 0">({{manualScrobblingList.length}} item(s) in list)</span> <a (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0">Scrobble them now</a>
       </div>
       <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
         <ol class="list-items">
@@ -39,10 +40,10 @@
                     <div class="col-lg-6 color-type-secondary">
                         {{item.album}}
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                         {{item.track}}
                     </div>
-                    <div class="col-lg-5 color-type-secondary">
+                    <div class="col-lg-3 color-type-secondary">
                         {{item.timestamp*1000 | date:'dd MMM yyyy'}} {{item.timestamp*1000 | date:'HH:mm'}}
                     </div>
                     <div class="col-lg-1 text-right">

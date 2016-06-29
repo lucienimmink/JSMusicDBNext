@@ -14,6 +14,8 @@ export class PlayerService {
     private isPlaying:boolean = false;
     private isPaused:boolean = false;
 
+    private isShuffled:boolean = false;
+
     constructor() {};
 
     doPlayAlbum(album:Album, startIndex:number) {
@@ -45,6 +47,7 @@ export class PlayerService {
         return this.currentPlaylist;
     }
     shufflePlaylist(shuffled:boolean) {
+        this.isShuffled = shuffled;
         this.currentPlaylist.playlist.tracks = _.sortBy(this.currentPlaylist.playlist.tracks, ['disc', 'number']);
         if (shuffled) {
             this.currentPlaylist.playlist.tracks = _.shuffle(this.currentPlaylist.playlist.tracks);
@@ -93,6 +96,8 @@ export class PlayerService {
 
             this.currentPlaylist.isPlaying = this.isPlaying;
             this.currentPlaylist.isPaused = this.isPaused;
+
+            this.currentPlaylist.isShuffled = this.isShuffled;
 
             localStorage.setItem('current-playlist', this.playlistToString());
 

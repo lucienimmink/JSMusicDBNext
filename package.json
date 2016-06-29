@@ -5,6 +5,7 @@
     "start": "concurrent \"npm run watch\" \"npm run lite\" ",
     "clean": "rm -rf dist && mkdir dist",
     "build:sass": "node-sass -o dist/ app/",
+    "tsc": "tsc",
     "lite": "lite-server",
     "typings": "typings",
     "postinstall": "typings install",

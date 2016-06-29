@@ -17,7 +17,6 @@ import * as _ from 'lodash';
   templateUrl: 'app/playlists/playlists.component.html',
   pipes: [TimeFormatPipe],
   directives: [TrackListComponent],
-  providers: [LastFMService],
   styleUrls: ['app/playlists/playlists.component.css']
 })
 export class PlaylistsComponent implements OnInit {

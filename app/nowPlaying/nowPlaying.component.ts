@@ -25,6 +25,7 @@ export class NowPlayingComponent implements OnDestroy {
   private slided: boolean = false;
   private isPlaying: boolean = false;
   private isPaused: boolean = false;
+  private isShuffled: boolean = false;
   private core: musicdbcore;
 
   @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
@@ -37,6 +38,7 @@ export class NowPlayingComponent implements OnDestroy {
       this.trackIndex = playerData.startIndex;
       this.isPaused = playerData.isPaused;
       this.isPlaying = playerData.isPlaying;
+      this.isShuffled = playerData.isShuffled;
       this.setTrack();
     }
     // this is for when a new track is announced while we are already on the page
@@ -46,6 +48,7 @@ export class NowPlayingComponent implements OnDestroy {
         this.trackIndex = playerData.startIndex;
         this.isPaused = playerData.isPaused;
         this.isPlaying = playerData.isPlaying;
+        this.isShuffled = playerData.isShuffled;
         this.setTrack();
       }
     )
@@ -88,6 +91,7 @@ export class NowPlayingComponent implements OnDestroy {
     this.playerService.togglePlayPause();
   }
   toggleShuffle() {
-        this.playerService.shufflePlaylist();
-    }
+    this.isShuffled = !this.isShuffled;
+    this.playerService.shufflePlaylist(this.isShuffled);
+  }
 }
