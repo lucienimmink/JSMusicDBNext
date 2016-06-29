@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
+import { CollectionService } from './../collection.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { LastFMService } from './../lastfm/lastfm.service';
@@ -27,8 +28,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private savePlaylistState: boolean = this.booleanState("save-playlist-state");
   private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
   private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
+  private isReloading:boolean = false;
 
-  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService:LastFMService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService:LastFMService, private collectionService:CollectionService) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
@@ -97,5 +99,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
       let index = this.manualScrobblingList.indexOf(item);
       this.manualScrobblingList.splice(index, 1);
       localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
+  }
+  reloadCollection() {
+      this.isReloading = true;
+      this.collectionService.reload().subscribe(
+          data => {
+              this.isReloading = false;
+          }
+      )
   }
 }

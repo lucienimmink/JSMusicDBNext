@@ -9,6 +9,9 @@
         <a (click)="removeConnection()" *ngIf="connectiondetails"><i class="glyph glyph-delete"></i> disconnect</a>
       </div>
       <div class="col-xs-24">
+          <span class="color-type-secondary">Reload collection</span> <button (click)="reloadCollection()" [disabled]="isReloading" class="btn btn-text"> <i class="glyph glyph-sync"></i> now</button>
+      </div>
+      <div class="col-xs-24">
         <span class="color-type-secondary">Save playliststate:</span>
         <div class="btn-group">
           <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': savePlaylistState}" (click)="toggleSavePlaylistState()">
@@ -30,16 +33,19 @@
         <ol class="list-items">
             <li class="list-items-row" *ngFor="let item of manualScrobblingList" data-toggle="collapse">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-lg-6">
                         {{item.artist}}
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-lg-6">
                         {{item.album}}
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-lg-6">
                         {{item.track}}
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-lg-5">
+                        {{item.timestamp*1000 | date:'dd MMM yyyy'}} {{item.timestamp*1000 | date:'HH:mm'}}
+                    </div>
+                    <div class="col-lg-1 text-right">
                         <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
                     </div>
                 </div>
