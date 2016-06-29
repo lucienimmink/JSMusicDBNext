@@ -17,13 +17,13 @@ export class BackgroundArtService {
     let url = ''
     if (media.trackArtist && media.album.artist.isCollection) {
       // show artist art for a track in a collection
-      url = this.artistartUrl.replace('{0}', media.trackArtist);
+      url = this.artistartUrl.replace('{0}', encodeURIComponent(media.trackArtist));
     } else if (media.artist) {
       // this is a track ór an album
-      url = this.albumartUrl.replace('{1}', media.name || media.album.name).replace('{0}', media.artist.albumArtist || media.artist.name);
+      url = this.albumartUrl.replace('{1}', encodeURIComponent(media.name || media.album.name)).replace('{0}', encodeURIComponent(media.artist.albumArtist || media.artist.name));
     } else {
       // this is an artist
-      url = this.artistartUrl.replace('{0}', media.albumArtist || media.name);
+      url = this.artistartUrl.replace('{0}', encodeURIComponent(media.albumArtist || media.name));
     }
 
     return this.http.get(url)
