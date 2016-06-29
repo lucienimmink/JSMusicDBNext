@@ -12,7 +12,7 @@
     color:#ffffff;
 }
 .list-group-item:hover .color-type-secondary {
-    color:#cccccc;
+    color: rgba(255,255,255, 0.6);
 }
 .disc-row {
     overflow: hidden;

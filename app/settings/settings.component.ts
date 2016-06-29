@@ -55,6 +55,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     } else {
       this.connectiondetails = null;
     }
+    this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
   }
 
   ngOnDestroy() {
@@ -90,5 +91,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+  removeFromScrobbleList(item:any) {
+      this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
+      let index = this.manualScrobblingList.indexOf(item);
+      this.manualScrobblingList.splice(index, 1);
+      localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
   }
 }

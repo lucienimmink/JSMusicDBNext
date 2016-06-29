@@ -27,9 +27,24 @@
         </div>
       </div>
       <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
-        <div class="scrobble-item" *ngFor="let item of manualScrobblingList">
-          {{item.artist}} - {{item.album}} - {{item.track}}
-        </div>
+        <ol class="list-items">
+            <li class="list-items-row" *ngFor="let item of manualScrobblingList" data-toggle="collapse">
+                <div class="row">
+                    <div class="col-xs-6">
+                        {{item.artist}}
+                    </div>
+                    <div class="col-xs-8">
+                        {{item.album}}
+                    </div>
+                    <div class="col-xs-8">
+                        {{item.track}}
+                    </div>
+                    <div class="col-xs-2">
+                        <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
+                    </div>
+                </div>
+            </li>
+        </ol>
         <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0">Scrobble now</button>
       </div>
     </div>

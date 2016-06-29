@@ -22,7 +22,7 @@ h4 {
   margin-bottom: 5px;
 }
 .container-longlist li:hover .color-type-secondary {
-  color: #dddddd
+  color: rgba(255,255,255, 0.6);
 }
 .container-longlist >>> .panel-background {
   display: inline-block;
@@ -49,6 +49,10 @@ h4 {
   text-decoration: none;
   color: #cccccc;
 }
+
+
+
+
 
 .jumpList {
   position: fixed;
