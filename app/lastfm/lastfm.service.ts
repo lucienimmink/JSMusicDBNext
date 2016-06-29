@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from "@angular/http";
 import { Observable } from "rxjs/Observable";
+import { Subject }    from 'rxjs/Subject';
 import * as _ from 'lodash';
 
 import Track from './../org/arielext/musicdb/models/Track';
@@ -13,7 +14,9 @@ export class LastFMService {
 
   private hexcase = 0;
   private b64pad = '';
-
+  private manualScrobbleListSource = new Subject<any>();
+  manualScrobbleList$ = this.manualScrobbleListSource.asObservable();
+  
   constructor(private http: Http) { }
 
   getLovedTracks(user: string): Observable<any> {
@@ -88,7 +91,7 @@ export class LastFMService {
     return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
       headers: headers
     })
-      .map(this.nounce)
+      .map(this.noop)
       .catch(this.handleError);
   }
 
@@ -115,7 +118,7 @@ export class LastFMService {
       return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
         headers: headers
       })
-        .map(this.nounce)
+        .map(this.noop)
         .catch(this.handleError);
     } else {
       // save details
@@ -127,6 +130,7 @@ export class LastFMService {
         timestamp: timestamp.toString()
       }
       offlineCache.push(cachedItem);
+      this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
       localStorage.setItem('manual-scrobble-list', JSON.stringify(offlineCache));
     }
   }
@@ -149,7 +153,7 @@ export class LastFMService {
     return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
       headers: headers
     })
-      .map(this.nounce)
+      .map(this.noop)
       .catch(this.handleError);
   }
 
@@ -166,7 +170,7 @@ export class LastFMService {
     let responseXml = new DOMParser().parseFromString(responseText, 'text/xml');
     return responseXml.getElementsByTagName("key")[0].textContent;
   }
-  private nounce(response: Response) {
+  private noop(response: Response) {
     return true;
   }
 

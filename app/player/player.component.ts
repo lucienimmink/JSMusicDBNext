@@ -181,6 +181,7 @@ export class PlayerComponent implements OnDestroy {
         )
     }
     toggleShuffle() {
-        this.playerService.shufflePlaylist();
+        this.isShuffled = !this.isShuffled;
+        this.playerService.shufflePlaylist(this.isShuffled);
     }
 }

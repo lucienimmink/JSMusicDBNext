@@ -28,6 +28,10 @@ body {
 a {
     cursor: pointer;
 }
+a:hover {
+    color: rgba(0,60,108,1);
+    text-decoration: none;
+}
 
 .media-container {
   flex-direction: row;

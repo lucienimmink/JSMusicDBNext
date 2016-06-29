@@ -44,8 +44,11 @@ export class PlayerService {
     getCurrentPlaylist() {
         return this.currentPlaylist;
     }
-    shufflePlaylist() {
-        this.currentPlaylist.playlist.tracks = _.shuffle(this.currentPlaylist.playlist.tracks);
+    shufflePlaylist(shuffled:boolean) {
+        this.currentPlaylist.playlist.tracks = _.sortBy(this.currentPlaylist.playlist.tracks, ['disc', 'number']);
+        if (shuffled) {
+            this.currentPlaylist.playlist.tracks = _.shuffle(this.currentPlaylist.playlist.tracks);
+        }
         this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(this.currentTrack);
         this.announce();
     }

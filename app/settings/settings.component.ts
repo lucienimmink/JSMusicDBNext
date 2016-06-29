@@ -25,6 +25,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private connectiontype:string = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
   private connectiondetails:string = "";
   private subscription: Subscription;
+  private subscription2: Subscription;
   private savePlaylistState: boolean = this.booleanState("save-playlist-state");
   private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
   private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
@@ -35,6 +36,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
+      }
+    )
+    this.subscription2 = this.lastFMService.manualScrobbleList$.subscribe(
+      data => {
+        console.log('list updated', data);
+        this.manualScrobblingList = data;
       }
     )
   }
@@ -62,6 +69,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
   }
 
   removeLastfm() {
@@ -96,7 +104,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
   removeFromScrobbleList(item:any) {
       this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
-      let index = this.manualScrobblingList.indexOf(item);
+      let index = -1;
+      this.manualScrobblingList.forEach(function(value, i) {
+        if (_.isEqual(value, item)) {
+          index = i;
+        }
+      })
       this.manualScrobblingList.splice(index, 1);
       localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
   }
