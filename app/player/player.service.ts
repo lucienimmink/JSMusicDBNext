@@ -44,6 +44,11 @@ export class PlayerService {
     getCurrentPlaylist() {
         return this.currentPlaylist;
     }
+    shufflePlaylist() {
+        this.currentPlaylist.playlist.tracks = _.shuffle(this.currentPlaylist.playlist.tracks);
+        this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(this.currentTrack);
+        this.announce();
+    }
     next() {
         if (this.currentTrack) {
             this.currentTrack.isPaused = false;

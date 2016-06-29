@@ -32,6 +32,7 @@ export class PlayerComponent implements OnDestroy {
     private url: string;
     private core: musicdbcore;
     private isCurrentPlaylistLoaded: boolean = false;
+    private isShuffled: boolean = false;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
@@ -178,5 +179,8 @@ export class PlayerComponent implements OnDestroy {
                 //console.log('announced now playing');
             }
         )
+    }
+    toggleShuffle() {
+        this.playerService.shufflePlaylist();
     }
 }

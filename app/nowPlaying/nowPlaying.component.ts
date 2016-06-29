@@ -87,4 +87,7 @@ export class NowPlayingComponent implements OnDestroy {
   togglePlayPause() {
     this.playerService.togglePlayPause();
   }
+  toggleShuffle() {
+        this.playerService.shufflePlaylist();
+    }
 }

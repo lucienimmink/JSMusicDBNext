@@ -19,6 +19,7 @@
                 <a class="btn btn-link" (click)="prev()"><span class="glyph glyph-previous"></span> </a>
                 <a class="btn btn-link" (click)="togglePlayPause()"><i class="glyph glyph-pause" *ngIf="isPlaying"></i><i class="glyph glyph-play" *ngIf="isPaused"></i></a>
                 <a class="btn btn-link" (click)="next()"><span class="glyph glyph-next"></span> </a>
+                <a class="btn btn-link hidden-xs" (click)="toggleShuffle()"><span class="glyph glyph-shuffle"></span> </a>
             </div>
         </div>
     </div>
