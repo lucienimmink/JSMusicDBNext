@@ -2,7 +2,7 @@
   <div class="row">
     <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body';">
       <div *ngFor="let artist of _items">
-        <h4><a id="letter_{{artist.letter.letter}}" (click)="toggleJumpList()">{{artist.name}} <span class="small color-type-secondary">({{artist.albums.length}})</span></a></h4>
+        <h4><a (click)="toggleJumpList()">{{artist.name}} <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span></a></h4>
         <ul>
           <li *ngFor="let album of artist.albums" (click)="navigateToAlbum(album)">
             <div class="image-wrapper">

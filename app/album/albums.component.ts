@@ -30,7 +30,15 @@ export class AlbumsComponent implements OnInit {
         let artists = core.artists;
         this.letters = core.sortedLetters;
         let c = this;
-        this.letters.forEach(function (letter, index) {
+        let sorted = Object.keys(artists).sort(function (a, b) {
+            return (a < b) ? -1 : 1;
+        });
+        let tmp = [];
+        sorted.forEach(function (artistName) {
+            tmp.push(core.artists[artistName]);
+        });
+        this.items = tmp;
+        this.items.forEach(function (letter, index) {
             let letterLength = c.getSize(letter, index);
             if (index > 0) {
                 let prevLength = c.cummlativeLength[index - 1]
@@ -40,14 +48,6 @@ export class AlbumsComponent implements OnInit {
                 c.cummlativeLength[index] = letterLength;
             }
         });
-        let sorted = Object.keys(artists).sort(function (a, b) {
-            return (a < b) ? -1 : 1;
-        });
-        let tmp = [];
-        sorted.forEach(function (artistName) {
-            tmp.push(core.artists[artistName]);
-        });
-        this.items = tmp;
     }
     navigateToAlbum(album) {
         this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
