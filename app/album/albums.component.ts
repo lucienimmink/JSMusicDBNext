@@ -19,7 +19,7 @@ export class AlbumsComponent implements OnInit {
     private items: Array<any> = [];
     private letters: Array<any> = [];
     private showJumpList: boolean = false;
-    private cummlativeLength: Array<number> = [];
+    private cummlativeLength: Array<any> = [];
 
     constructor(private coreService: CoreService, private pathService: PathService, private router: Router) { }
 
@@ -38,14 +38,20 @@ export class AlbumsComponent implements OnInit {
             tmp.push(core.artists[artistName]);
         });
         this.items = tmp;
-        this.items.forEach(function (letter, index) {
-            let letterLength = c.getSize(letter, index);
+        this.items.forEach(function (item, index) {
+            let letterLength = c.getSize(item, index);
             if (index > 0) {
-                let prevLength = c.cummlativeLength[index - 1]
+                let prevLength = c.cummlativeLength[index - 1].l
                 let newLength = prevLength + letterLength;
-                c.cummlativeLength[index] = newLength;
+                c.cummlativeLength[index] = {
+                    l: newLength,
+                    letter: item.letter.letter
+                };
             } else {
-                c.cummlativeLength[index] = letterLength;
+                c.cummlativeLength[index] = {
+                    l: letterLength,
+                    letter: item.letter.letter
+                };
             }
         });
     }
@@ -53,14 +59,22 @@ export class AlbumsComponent implements OnInit {
         this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
     }
     getSize(item, index) {
-        return (item.albums.length * 70) + 69;
+        return (item.albums.length * 80) + 79;
     }
     toggleJumpList() {
         this.showJumpList = !this.showJumpList;
     }
     jumpToLetter(letter: any) {
         this.showJumpList = false;
-        let index = this.letters.indexOf(letter);
-        window.scrollTo(0, this.cummlativeLength[index] - 120);
+        let c = this;
+        
+        this.items.some(function (item, i) {
+            let ret = false;
+            if (item.letter.letter === letter.letter) {
+                window.scrollTo(0, c.cummlativeLength[i].l - 120);
+                ret = true;
+            }
+            return ret;
+        });
     }
 }

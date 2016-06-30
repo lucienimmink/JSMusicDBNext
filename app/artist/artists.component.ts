@@ -55,7 +55,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
     }
     getSize(item, index) {
-        return (item.artists.length * 70) + 69;
+        return (item.artists.length * 80) + 79;
     }
     toggleJumpList() {
         this.showJumpList = !this.showJumpList;
