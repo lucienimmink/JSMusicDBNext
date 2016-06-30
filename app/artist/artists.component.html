@@ -1,6 +1,6 @@
 <div class="container container-longlist" imageLazyLoadArea>
   <div class="row">
-    <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'.container';">
+    <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'body';">
       <div class="col-xs-24" *ngFor="let letter of _letters">
         <h4><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
         <ul>

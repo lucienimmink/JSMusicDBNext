@@ -125,6 +125,7 @@
 }
 #nowPlaying .icons button:hover  {
     background: #e1e1e1;
+    color: rgba(0,120,215,1);
 }
 #nowPlaying .icons .btn-updown {
     margin-top: -7px;
