@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-xs-24">
       <h4>User Information</h4>
-      <div class="col-xs-24"><span class="color-type-secondary">Connected to last.fm:</span> <span>{{lastfmusername.length > 0}} <span class="color-type-secondary">({{lastfmusername}})</span></span>
-        <a (click)="removeLastfm()" *ngIf="lastfmusername.length > 0"><i class="glyph glyph-delete"></i> disconnect</a>
+      <div class="col-xs-24"><span class="color-type-secondary">Connected to last.fm:</span> <span>{{lastfmusername && lastfmusername.length > 0}} <span class="color-type-secondary">({{lastfmusername}})</span></span>
+        <a (click)="removeLastfm()" *ngIf="lastfmusername && lastfmusername.length > 0"><i class="glyph glyph-delete"></i> disconnect</a>
       </div>
       <div class="col-xs-24"><span class="color-type-secondary">Connected to:</span> <span>{{connectiontype}} <span class="color-type-secondary">({{connectiondetails}})</span></span>
         <a (click)="removeConnection()" *ngIf="connectiondetails"><i class="glyph glyph-delete"></i> disconnect</a>
@@ -28,7 +28,7 @@
             <span class="stateLabel stateLabel-off">Off</span>
         </button>
         </div>
-        <span class="color-type-secondary" *ngIf="manualScrobblingList.length > 0">({{manualScrobblingList.length}} item(s) in list)</span> <a (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0">Scrobble them now</a>
+        <span class="color-type-secondary" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">({{manualScrobblingList.length}} item(s) in list)</span> <a (click)="scrobbleNow()" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">Scrobble them now</a>
       </div>
       <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
         <ol class="list-items">
