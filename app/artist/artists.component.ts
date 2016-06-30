@@ -21,6 +21,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     private showJumpList: boolean = false;
     private core: musicdbcore;
     private subscription: Subscription;
+    private cummlativeLength: Array<number> = [];
 
     constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
         this.core = this.coreService.getCore();
@@ -34,6 +35,18 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.pathService.announcePage("Artists");
         this.letters = this.core.sortedLetters;
+        let c = this;
+        this.letters.forEach(function (letter, index) {
+            let letterLength = c.getSize(letter, index);
+            if (index > 0) {
+                let prevLength = c.cummlativeLength[index -1]
+                let newLength = prevLength + letterLength;
+                c.cummlativeLength[index] = newLength;
+            } else {
+                c.cummlativeLength[index] = letterLength;
+            }
+        });
+
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
@@ -49,9 +62,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     }
     jumpToLetter(letter: any) {
         this.showJumpList = false;
-        let l = letter.letter;
-        let element = document.getElementById(`letter_${l}`);
-        element.scrollIntoView(true);
-        window.scrollBy(0, -100);
+        let index = this.letters.indexOf(letter);
+        window.scrollTo(0, this.cummlativeLength[index] - 120);
     }
 }
