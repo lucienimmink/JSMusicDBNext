@@ -17,12 +17,12 @@
 </div>
 <div class="menu-offcanvas" [ngClass]="{'open': menuVisible}">
     <ul class="nav nav-pills nav-stacked">
-        <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']" title="Home"><span class="glyph glyph-home"></span> Home</a></li>
-        <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a [routerLink]="['Letters']" title="Letters"><span class="glyph glyph-characters"></span> Letters</a></li>
-        <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']" title="Artists"><span class="glyph glyph-people"></span> Artists</a></li>
-        <li [ngClass]="{'active': page === 'Albums'}" style="display: none;"><a [routerLink]="['Albums']" title="Albums"><span class="glyph glyph-music-album"></span> Albums</a></li>
-        <li [ngClass]="{'active': page === 'Playlists'}"><a [routerLink]="['Playlists', {playlist: null}]" title="Playlists"><span class="glyph glyph-music-info"></span> Playlists</a></li>
-        <li [ngClass]="{'active': page === 'NowPlaying'}"><a [routerLink]="['NowPlaying']" title="Now playing"><span class="glyph glyph-audio"></span> Now playing</a></li>
-        <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" title="Settings"><span class="glyph glyph-settings"></span> Settings</a></li>
+        <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']" tooltip="Home" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-home"></span> Home</a></li>
+        <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a [routerLink]="['Letters']" tooltip="Letters" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-characters"></span> Letters</a></li>
+        <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']" tooltip="Artists" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-people"></span> Artists</a></li>
+        <li [ngClass]="{'active': page === 'Albums'}" style="display: none;"><a [routerLink]="['Albums']" tooltip="Albums" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-music-album"></span> Albums</a></li>
+        <li [ngClass]="{'active': page === 'Playlists'}"><a [routerLink]="['Playlists', {playlist: null}]" tooltip="Playlists" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-music-info"></span> Playlists</a></li>
+        <li [ngClass]="{'active': page === 'NowPlaying'}"><a [routerLink]="['NowPlaying']" tooltip="Now playing" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-audio"></span> Now playing</a></li>
+        <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" tooltip="Settings" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-settings"></span> Settings</a></li>
     </ul>
 </div>

@@ -2,12 +2,13 @@ import { Component, OnDestroy  } from "@angular/core";
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { PathService } from "./../utils/path.service";
 import { Subscription }   from 'rxjs/Subscription';
+import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
   templateUrl: 'app/menu/topmenu.component.html',
   selector: 'topmenu',
   styleUrls: ['app/menu/topmenu.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, TOOLTIP_DIRECTIVES]
 })
 
 export class TopMenuComponent implements OnDestroy {
