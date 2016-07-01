@@ -57,6 +57,7 @@ export class musicdbcore {
         return this.instanceIfPresent(this, artist.sortName + '|' + album.sortName, this.albums, album, function (core: any) {
             album.artist = artist;
             artist.albums.push(album);
+            artist.sortAndReturnAlbumsBy('year', 'asc');
             core.totals.albums++;
         });
     }
@@ -158,6 +159,7 @@ export class musicdbcore {
         let core = this;
         sorted.forEach(function (value, index) {
             t.push(core.letters[value]);
+            core.letters[value].sortAndReturnArtistsBy('name', 'asc');
         });
         this.sortedLetters = t;
         // update parsing time
