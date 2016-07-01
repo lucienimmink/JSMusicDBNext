@@ -81,6 +81,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
+        document.getElementsByTagName('body')[0].removeEventListener('mousemove', this.drag);
+        document.getElementsByTagName('body')[0].removeEventListener('mouseup', this.stopDrag);
+        document.getElementById('progress-pusher').removeEventListener('mousedown', this.startDrag);
     }
     navigateToArtist() {
         this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
