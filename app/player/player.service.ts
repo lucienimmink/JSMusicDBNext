@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Subject }    from 'rxjs/Subject';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
+import { LastFMService } from './../lastfm/lastfm.service';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -13,10 +14,11 @@ export class PlayerService {
 
     private isPlaying:boolean = false;
     private isPaused:boolean = false;
-
     private isShuffled:boolean = false;
 
-    constructor() {};
+    private lastfmUserName:string = localStorage.getItem('lastfm-username'); // should be subscriber?
+
+    constructor(private lastFMService:LastFMService) {};
 
     doPlayAlbum(album:Album, startIndex:number) {
         if (this.currentTrack) {
@@ -90,6 +92,11 @@ export class PlayerService {
     }
     announce() {
         this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
+        this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(
+            status => {
+                this.currentTrack.isLoved = status;
+            }
+        )
         if (this.currentTrack) {
             this.currentTrack.isPaused = this.isPaused;
             this.currentTrack.isPlaying = this.isPlaying;
