@@ -93,7 +93,8 @@ function nextElementSibling(el) {
         'tagName: vsForTagName',
         'vsScrollParent: vsForScrollParent',
         '__horizontal: vsForHorizontal',
-        'vsAutoresize: vsForAutoresize'
+        'vsAutoresize: vsForAutoresize',
+        'vsVisibleItems: vsForVisibleItems'
     ]
 })
 
@@ -132,6 +133,8 @@ export class VsFor {
     vsExcess: number = 2;
     vsScrollParent: string;
     vsAutoresize: boolean;
+    vsVisibleItems: number = 6;
+
     set originalCollection(value: any[]) {
         this._originalCollection = value || [];
         if (this.scrollParent) {
@@ -414,6 +417,12 @@ export class VsFor {
                 Math.ceil(__endIndex + this.vsExcess / 2),
                 this.originalLength
             );
+
+            /*
+            if (this.vsVisibleItems) {
+                __endIndex = __startIndex + this.vsVisibleItems;
+            }
+            */
         }
         else {
             __startIndex = Math.max(

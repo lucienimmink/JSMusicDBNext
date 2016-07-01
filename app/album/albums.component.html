@@ -1,6 +1,6 @@
 <div class="container container-longlist" imageLazyLoadArea>
   <div class="row">
-    <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body';">
+    <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body'; excess: 3">
       <div *ngFor="let artist of _items">
         <h4><a (click)="toggleJumpList()">{{artist.name}} <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span></a></h4>
         <ul>
@@ -10,7 +10,7 @@
             </div>
             <div class="text-wrapper">
               <span>{{album.name}}</span> <br />
-              <span class="small color-type-secondary">Tracks: {{album.tracks.length}}</span>
+              <span class="small color-type-secondary" *ngIf="album.year">Year: {{album.year}}</span>
             </div>
           </li>
         </ul>

@@ -18,6 +18,7 @@ import * as _ from "lodash";
 export class ArtistsComponent implements OnInit, OnDestroy {
 
     private letters: Array<any> = [];
+    private artists: Array<any> = [];
     private showJumpList: boolean = false;
     private core: musicdbcore;
     private subscription: Subscription;
@@ -36,6 +37,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         this.pathService.announcePage("Artists");
         this.letters = this.core.sortedLetters;
         let c = this;
+        /*
         this.letters.forEach(function (letter, index) {
             let letterLength = c.getSize(letter, index);
             if (index > 0) {
@@ -46,7 +48,12 @@ export class ArtistsComponent implements OnInit, OnDestroy {
                 c.cummlativeLength[index] = letterLength;
             }
         });
-
+        */
+        this.letters.forEach(function(letter) {
+            letter.artists.forEach(function (artist) {
+                c.artists.push(artist);
+            })
+        })
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();

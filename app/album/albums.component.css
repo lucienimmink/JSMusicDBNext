@@ -49,6 +49,9 @@ h4 {
   text-decoration: none;
   color: #cccccc;
 }
+>>> .vsFor-before, >>> .vsFor-after {
+    float: left;
+}
 
 .jumpList {
   position: fixed;
