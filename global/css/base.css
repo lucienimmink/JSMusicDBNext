@@ -1,6 +1,10 @@
 body {
     padding-top: 55px;
     padding-bottom: 80px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 @media screen and (min-width: 640px) {
     body {
@@ -23,7 +27,7 @@ body {
 .progress .progress-bar {
     width: 0;
     height: 4px;
-    transition: width 1s linear;
+    transition: width 0.1s linear;
 }
 a {
     cursor: pointer;

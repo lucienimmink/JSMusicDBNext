@@ -177,3 +177,48 @@ footer.hidePlayer {
 #nowPlaying.slided #upordown {
     transform: rotate(180deg);
 }
+
+
+
+
+
+
+
+#progress-pusher {
+    position: relative;
+    width: calc(100% - 120px);
+    height: 60px;
+    left: 60px;
+    top: -30px;
+    margin-bottom: -60px;
+}
+#position-indicator {
+    width: 18px;
+    height: 18px;
+    border-color: rgba(0,120,215,1);
+    border-width: 3px;
+    border-radius: 50%;
+    border-style: solid;
+    position: relative;
+    z-index: 10;
+    top: -7px;
+    cursor: pointer;
+    display: block;
+    transform-origin:center;
+    transition: all 0.1s linear;
+    pointer-events: none;
+    background-color: #ffffff;
+    will-change: margin;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+#position-indicator.dragging {
+    transform: scale(2);
+    border-width: 2px;
+    transition: none !important;
+}

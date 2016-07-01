@@ -16,9 +16,17 @@ export class PlayerService {
     private isPaused:boolean = false;
     private isShuffled:boolean = false;
 
+    private position:number;
+
     private lastfmUserName:string = localStorage.getItem('lastfm-username'); // should be subscriber?
 
     constructor(private lastFMService:LastFMService) {};
+
+    setPosition(position:number) {
+        this.position = position;
+        this.announce();
+        this.position = null;
+    }
 
     doPlayAlbum(album:Album, startIndex:number) {
         if (this.currentTrack) {
@@ -107,6 +115,8 @@ export class PlayerService {
             this.currentPlaylist.isPaused = this.isPaused;
 
             this.currentPlaylist.isShuffled = this.isShuffled;
+
+            this.currentPlaylist.position = this.position;
 
             localStorage.setItem('current-playlist', this.playlistToString());
 

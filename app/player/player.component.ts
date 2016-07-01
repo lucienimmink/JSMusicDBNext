@@ -43,7 +43,7 @@ export class PlayerComponent implements OnDestroy {
                 this.isPaused = playerData.isPaused;
                 this.isPlaying = playerData.isPlaying;
                 this.showPlayer = true;
-                this.setTrack();
+                this.setTrack(playerData.position);
             }
         )
         this.mediaObject = new Audio();
@@ -72,7 +72,7 @@ export class PlayerComponent implements OnDestroy {
             }
         )
     }
-    setTrack() {
+    setTrack(position:any) {
         let c = this;
         setTimeout(function () {
             if (c.albumart) c.albumart.ngOnInit();
@@ -90,12 +90,10 @@ export class PlayerComponent implements OnDestroy {
         this.hasScrobbledCurrentTrack = false;
         if (this.isCurrentPlaylistLoaded) {
             this.mediaObject.currentTime = localStorage.getItem('current-time') || 0;
-            /*
-            this.mediaObject.pause();
-            this.isPlaying = false;
-            this.isPaused = true;
-            */
             this.isCurrentPlaylistLoaded = false; // ignore for all next tracks
+        }
+        if (position) {
+            this.mediaObject.currentTime = position;
         }
     }
     readCurrentPlaylist() {

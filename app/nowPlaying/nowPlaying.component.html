@@ -6,7 +6,7 @@
         <div class="row controls-wrapper">
             <div class="progress">
                 <div class="progress-bar" [ngStyle]="{'width': ((track.position / track.duration)* 100) + '%'}"></div>
-                <div id="position-indicator"></div>
+                <div id="position-indicator" [ngStyle]="{'margin-left': ((track.position / track.duration)* 100) + '%'}" [ngClass]="{'dragging': isDragging }"></div>
             </div>
             <div id="progress-pusher"></div>
             <span class="time start">{{track.position | timeFormat}}</span>
