@@ -67,11 +67,11 @@ export class AlbumsComponent implements OnInit {
     jumpToLetter(letter: any) {
         this.showJumpList = false;
         let c = this;
-        
+
         this.items.some(function (item, i) {
             let ret = false;
             if (item.letter.letter === letter.letter) {
-                window.scrollTo(0, c.cummlativeLength[i].l - 120);
+                window.scrollTo(0, c.cummlativeLength[i].l - 300 );
                 ret = true;
             }
             return ret;

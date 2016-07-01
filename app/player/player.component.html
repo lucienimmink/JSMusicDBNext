@@ -10,16 +10,17 @@
             <div class="col-xs-4 col-sm-3 col-lg-1" (click)="navigateToNowPlaying()">
                 <albumart [track]="track"></albumart>
             </div>
-            <div class="col-xs-12 col-sm-17 col-lg-20">
+            <div class="col-xs-12 col-sm-17 col-lg-19">
                 <h4>{{track.title}}</h4>
                 <h5>
                     <a (click)="navigateToArtist()">{{track.trackArtist}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
             </div>
-            <div class="col-xs-8 col-sm-4 col-lg-3 text-right">
+            <div class="col-xs-8 col-sm-4 col-lg-4 text-right">
                 <a class="btn btn-link" (click)="prev()"><span class="glyph glyph-previous"></span> </a>
                 <a class="btn btn-link" (click)="togglePlayPause()"><i class="glyph glyph-pause" *ngIf="isPlaying"></i><i class="glyph glyph-play" *ngIf="isPaused"></i></a>
                 <a class="btn btn-link" (click)="next()"><span class="glyph glyph-next"></span> </a>
-                <a class="btn btn-link hidden-xs" (click)="toggleShuffle()" [ngClass]="{'active': isShuffled}"><span class="glyph glyph-shuffle"></span> </a>
+                <a class="btn btn-link hidden-xs btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}"><i class="glyph glyph-star-outline"></i></a>
+                <a class="btn btn-link hidden-xs btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}"><i class="glyph glyph-shuffle"></i></a>
             </div>
         </div>
     </div>

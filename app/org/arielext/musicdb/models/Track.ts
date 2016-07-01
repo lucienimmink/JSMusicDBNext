@@ -15,6 +15,7 @@ export default class Track {
   number: number;
   isPlaying:boolean = false;
   isPaused:boolean = false;
+  isLoved:boolean = false;
   position:number = 0;
 
   constructor(json: any) {

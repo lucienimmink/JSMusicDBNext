@@ -37,7 +37,6 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         this.pathService.announcePage("Artists");
         this.letters = this.core.sortedLetters;
         let c = this;
-        /*
         this.letters.forEach(function (letter, index) {
             let letterLength = c.getSize(letter, index);
             if (index > 0) {
@@ -48,12 +47,6 @@ export class ArtistsComponent implements OnInit, OnDestroy {
                 c.cummlativeLength[index] = letterLength;
             }
         });
-        */
-        this.letters.forEach(function(letter) {
-            letter.artists.forEach(function (artist) {
-                c.artists.push(artist);
-            })
-        })
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
@@ -70,6 +63,6 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     jumpToLetter(letter: any) {
         this.showJumpList = false;
         let index = this.letters.indexOf(letter);
-        window.scrollTo(0, this.cummlativeLength[index] - 120);
+        window.scrollTo(0, this.cummlativeLength[index] - 300);
     }
 }

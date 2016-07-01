@@ -183,4 +183,10 @@ export class PlayerComponent implements OnDestroy {
         this.isShuffled = !this.isShuffled;
         this.playerService.shufflePlaylist(this.isShuffled);
     }
+    toggleLoved() {
+        this.track.isLoved = !this.track.isLoved;
+        this.lastFMService.toggleLoved(this.track).subscribe(
+            data => {}
+        )
+    }
 }
