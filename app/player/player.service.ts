@@ -92,11 +92,13 @@ export class PlayerService {
     }
     announce() {
         this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
-        this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(
-            status => {
-                this.currentTrack.isLoved = status;
-            }
-        )
+        if (this.lastfmUserName) {
+            this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(
+                status => {
+                    this.currentTrack.isLoved = status;
+                }
+            )
+        }
         if (this.currentTrack) {
             this.currentTrack.isPaused = this.isPaused;
             this.currentTrack.isPlaying = this.isPlaying;
