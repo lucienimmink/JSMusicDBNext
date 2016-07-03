@@ -45,18 +45,30 @@ export class BackgroundArtDirective {
                     this.removeClassName(this.loadingClass);
                     this.addClassName(this.errorClass);
                 }
-            );
+                );
         }
     }
     setImage(data: any) {
         if (!this.loaded || this.hasClassName('always-replace')) {
             if (data === 'global/images/no-cover.png' || data === '') {
                 this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
-                    data => this.el.style.backgroundImage = `url(${data})`,
+                    data => {
+                        this.el.style.backgroundImage = `url(${data})`
+                        if (this.media.artist) {
+                            localStorage.setItem(`art-${this.media.artist.name}-${this.media.name}`, data);
+                        } else {
+                            localStorage.setItem(`art-${this.media.name}`, data);
+                        }
+                    },
                     error => this.el.style.backgroundImage = `url(${NOIMAGE})`
                 );
             } else {
                 this.el.style.backgroundImage = `url(${data})`;
+                if (this.media.artist) {
+                    localStorage.setItem(`art-${this.media.artist.name}-${this.media.name}`, data);
+                } else {
+                    localStorage.setItem(`art-${this.media.name}`, data);
+                }
             }
             this.loading = false;
             this.toggleLoaded(true);
