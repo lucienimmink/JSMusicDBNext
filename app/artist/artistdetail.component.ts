@@ -34,7 +34,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     this.artist = this.core.artists[artistName];
     if (this.artist) {
       this.pathService.announcePath({ artist: this.artist });
-      this.albums = this.artist.sortAndReturnAlbumsBy('year', 'desc');
+      this.albums = this.artist.sortAndReturnAlbumsBy('year', 'asc');
     }
   }
 

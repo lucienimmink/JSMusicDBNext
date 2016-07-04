@@ -55,10 +55,14 @@ export class AlbumArt {
         if (data === 'global/images/no-cover.png' || data === '') {
             this.albumArtService.getMediaArtFromLastFm(this.searchArtist, this.searchAlbum, this.searchType)
                 .subscribe(
-                data => this.albumart.url = data,
+                data => {
+                    this.albumart.url = data
+                    localStorage.setItem(`art-${this.searchArtist}-${this.searchAlbum}`, data);
+                },
                 error => this.albumart.url = NOIMAGE
                 )
         } else {
+            localStorage.setItem(`art-${this.searchArtist}-${this.searchAlbum}`, data);
             this.albumart.url = data
         }
     }
