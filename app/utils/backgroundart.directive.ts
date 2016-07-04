@@ -6,10 +6,14 @@ import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
 
+import * as PouchDB from 'pouchdb';
+
 // use logic from https://github.com/NathanWalker/ng2-image-lazy-load/blob/master/src/client/app/directives/image-lazy-load.directive.ts
 // implement workerlogic as well for best performance
 
 const NOIMAGE = 'global/images/no-cover.png';
+
+let arttable = new PouchDB('art');
 
 @Directive({
     selector: '[backgroundArt]',
@@ -24,6 +28,7 @@ export class BackgroundArtDirective {
     private loadingClass: string = 'loading';
     private loadedClass: string = 'loaded';
     private errorClass: string = 'error';
+    private arttable = arttable;
 
     @Input('backgroundArt') media: any;
 
@@ -35,17 +40,29 @@ export class BackgroundArtDirective {
             this.loading = true;
             this.addClassName(this.loadingClass);
 
-            this.backgroundArtService.getMediaArt(this.media)
-                .subscribe(
-                data => this.setImage(data),
-                error => {
-                    this.el.style.backgroundImage = `url(${NOIMAGE})`
-                    this.error = true;
-                    this.loading = false;
-                    this.removeClassName(this.loadingClass);
-                    this.addClassName(this.errorClass);
+            let key = `art-${this.media.name}`;
+            let c = this;
+
+            if (this.media.artist) {
+                key = `art-${this.media.artist.name}-${this.media.name}`;
+            }
+            this.arttable.get(key, function (err, data) {
+                if (data) {
+                    c.setImage(data.url);
+                } else {
+                    c.backgroundArtService.getMediaArt(c.media)
+                        .subscribe(
+                        data => c.setImage(data),
+                        error => {
+                            c.el.style.backgroundImage = `url(${NOIMAGE})`
+                            c.error = true;
+                            c.loading = false;
+                            c.removeClassName(c.loadingClass);
+                            c.addClassName(c.errorClass);
+                        }
+                        );
                 }
-                );
+            });
         }
     }
     setImage(data: any) {
@@ -53,22 +70,34 @@ export class BackgroundArtDirective {
             if (data === 'global/images/no-cover.png' || data === '') {
                 this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
                     data => {
-                        this.el.style.backgroundImage = `url(${data})`
+                        this.el.style.backgroundImage = `url(${data})`;
+
+                        let item = {
+                            _id: `art-${this.media.name}`,
+                            url: data
+                        };
                         if (this.media.artist) {
-                            localStorage.setItem(`art-${this.media.artist.name}-${this.media.name}`, data);
-                        } else {
-                            localStorage.setItem(`art-${this.media.name}`, data);
+                            item._id = `art-${this.media.artist.name}-${this.media.name}`
                         }
+                        this.arttable.put(item, function (err, response) {
+                            // boring
+                        });
                     },
                     error => this.el.style.backgroundImage = `url(${NOIMAGE})`
                 );
             } else {
                 this.el.style.backgroundImage = `url(${data})`;
+
+                let item = {
+                    _id: `art-${this.media.name}`,
+                    url: data
+                };
                 if (this.media.artist) {
-                    localStorage.setItem(`art-${this.media.artist.name}-${this.media.name}`, data);
-                } else {
-                    localStorage.setItem(`art-${this.media.name}`, data);
+                    item._id = `art-${this.media.artist.name}-${this.media.name}`
                 }
+                this.arttable.put(item, function (err, response) {
+                    // boring
+                });
             }
             this.loading = false;
             this.toggleLoaded(true);

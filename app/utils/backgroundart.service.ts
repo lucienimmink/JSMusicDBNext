@@ -29,18 +29,9 @@ export class BackgroundArtService {
       url = this.artistartUrl.replace('{0}', encodeURIComponent(media.albumArtist || media.name));
       cachekey = (media.albumArtist || media.name);
     }
-
-    if (localStorage.getItem(`art-${cachekey}`)) {
-      return new Observable(imageObserver => {
-        imageObserver.next(localStorage.getItem(`art-${cachekey}`));
-        imageObserver.complete();
-      });
-    } else {
-
-      return this.http.get(url)
+    return this.http.get(url)
         .map(this.extractData)
         .catch(this.handleError);
-    }
   }
 
   getMediaArtFromLastFm(media: any): Observable<any> {

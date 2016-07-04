@@ -15,16 +15,9 @@ export class AlbumArtService {
 
   getAlbumArt(artist:string, album:string, type:string): Observable<any[]> {
     if (type === 'album') {
-      if (localStorage.getItem(`art-${artist}-${album}`)) {
-        return new Observable(imageObserver => {
-          imageObserver.next(localStorage.getItem(`art-${artist}-${album}`));
-          imageObserver.complete();
-        });
-      } else {
-        return this.http.get(this.albumartUrl.replace('{1}', encodeURIComponent(album)).replace('{0}', encodeURIComponent(artist)))
-          .map(this.extractData)
-          .catch(this.handleError);
-      }
+      return this.http.get(this.albumartUrl.replace('{1}', encodeURIComponent(album)).replace('{0}', encodeURIComponent(artist)))
+        .map(this.extractData)
+        .catch(this.handleError);
     } else {
       return this.http.get(this.artistartUrl.replace('{0}', encodeURIComponent(artist)))
         .map(this.extractData)
