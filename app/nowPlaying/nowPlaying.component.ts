@@ -10,6 +10,7 @@ import { Router } from '@angular/router-deprecated';
 import { TrackListComponent } from './../track/tracklist.component';
 import { LastFMService } from './../lastfm/lastfm.service';
 import Track from './../org/arielext/musicdb/models/Track';
+import { AnimationService } from './../utils/animation.service';
 
 @Component({
     templateUrl: 'app/nowPlaying/nowPlaying.component.html',
@@ -22,6 +23,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private subscription: Subscription;
     private playlist;
     private track:Track;
+    private currentTrack: Track;
     private trackIndex;
     private previousTrack = {};
     private slided: boolean = false;
@@ -34,7 +36,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
-    constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router, private lastFMService:LastFMService) {
+    constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router, private lastFMService:LastFMService, private animationService:AnimationService) {
         // this is for when we open the page; just wanting to know the current state of the playerService
         let playerData = this.playerService.getCurrentPlaylist();
         if (playerData) {
@@ -64,7 +66,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     ngOnInit() {
         let c = this;
         setTimeout(function () {
-            document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
+            try {
+                document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
+            } catch (e) {}
         }, 100);
     }
     setTrack() {
@@ -73,7 +77,12 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             if (c.albumart) c.albumart.loadImage();
         });
         this.track = this.playlist.tracks[this.trackIndex];
-        this.track.position = 0;
+
+        if (this.currentTrack !== this.track) {
+            this.currentTrack = this.track;
+            this.animationService.requestAnimation('enter', document.querySelector('.controls-wrapper h4'));
+            this.animationService.requestAnimation('enter', document.querySelector('.controls-wrapper h5'));
+        }
     }
     toggleSlide() {
         this.slided = !this.slided;
@@ -83,7 +92,6 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.subscription.unsubscribe(); // prevent memory leakage
         document.getElementsByTagName('body')[0].removeEventListener('mousemove', this.drag);
         document.getElementsByTagName('body')[0].removeEventListener('mouseup', this.stopDrag);
-        // document.getElementById('progress-pusher').removeEventListener('mousedown', this.startDrag);
     }
     navigateToArtist() {
         this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
@@ -92,12 +100,22 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
     }
     next() {
+        let previousAlbumArt = document.querySelector('.previous-album-art');
+        previousAlbumArt.style.backgroundImage = document.getElementsByClassName('current-album-art')[0].style.backgroundImage;
+        previousAlbumArt.classList.remove('slideRightOut');
+        previousAlbumArt.classList.remove('slideLeftOut');
+        this.animationService.requestAnimation('slideLeftOut', previousAlbumArt, false);
         if (this.trackIndex < this.playlist.tracks.length - 1) {
             this.trackIndex++;
             this.playerService.next();
         }
     }
     prev() {
+        let previousAlbumArt = document.querySelector('.previous-album-art');
+        previousAlbumArt.style.backgroundImage = document.getElementsByClassName('current-album-art')[0].style.backgroundImage;
+        previousAlbumArt.classList.remove('slideRightOut');
+        previousAlbumArt.classList.remove('slideLeftOut');
+        this.animationService.requestAnimation('slideRightOut', previousAlbumArt, false);
         if (this.trackIndex > 0) {
             this.trackIndex--;
             this.playerService.prev();

@@ -26,6 +26,7 @@ import { LoginComponent } from './login/login.component';
 import { LastFMService} from './lastfm/lastfm.service';
 import { LoginService } from './login/login.service';
 import { Subscription }   from 'rxjs/Subscription';
+import { AnimationService } from './utils/animation.service';
 
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
@@ -34,7 +35,7 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService, LastFMService],
+  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService, LastFMService, AnimationService],
   directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
 })
 @RouteConfig([

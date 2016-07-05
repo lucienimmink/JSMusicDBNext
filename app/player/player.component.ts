@@ -10,6 +10,8 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import { CoreService} from './../core.service';
 import { musicdbcore} from './../org/arielext/musicdb/core';
 
+import { AnimationService } from './../utils/animation.service';
+
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
@@ -35,7 +37,7 @@ export class PlayerComponent implements OnDestroy {
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService) {
+    constructor(private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService:AnimationService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 this.playlist = playerData.playlist;
@@ -82,6 +84,8 @@ export class PlayerComponent implements OnDestroy {
             this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
             this.currentTrack = this.track;
             this.hasScrobbledCurrentTrack = false;
+            this.animationService.requestAnimation('enter', document.querySelector('.player h4'));
+            this.animationService.requestAnimation('enter', document.querySelector('.player h5'));
         }
         if (this.isPlaying) {
             this.mediaObject.play();

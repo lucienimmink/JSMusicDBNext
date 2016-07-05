@@ -1,28 +1,30 @@
-<div class="container container-longlist" imageLazyLoadArea>
-  <div class="row">
-    <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'body';">
-      <div class="col-xs-24" *ngFor="let letter of _letters">
-        <h4 sticky style="top: 49px;" class="visible-xs visible-sm"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
-        <h4 sticky style="top: 90px;" class="visible-md visible-lg"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
-        <ul>
-          <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
-            <div class="image-wrapper">
-              <mdbartist [artist]="artist"></mdbartist>
-            </div>
-            <div class="text-wrapper">
-              <span>{{artist.albumArtist || artist.name}}</span> <br />
-              <span class="small color-type-secondary">Albums: {{artist.albums.length}}</span>
-            </div>
-          </li>
-        </ul>
+<div class="animated-page">
+  <div class="container container-longlist" imageLazyLoadArea>
+    <div class="row">
+      <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'body';">
+        <div class="col-xs-24" *ngFor="let letter of _letters">
+          <h4 sticky style="top: 49px;" class="visible-xs visible-sm"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
+          <h4 sticky style="top: 90px;" class="visible-md visible-lg"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
+          <ul>
+            <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
+              <div class="image-wrapper">
+                <mdbartist [artist]="artist"></mdbartist>
+              </div>
+              <div class="text-wrapper">
+                <span>{{artist.albumArtist || artist.name}}</span> <br />
+                <span class="small color-type-secondary">Albums: {{artist.albums.length}}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="jumplist" [ngClass]="{'visible': showJumpList}">
-  <ol>
-    <li *ngFor="let letter of letters">
-      <a (click)="jumpToLetter(letter)">{{letter.letter}}</a>
-    </li>
-  </ol>
+  <div class="jumplist" [ngClass]="{'visible': showJumpList}">
+    <ol>
+      <li *ngFor="let letter of letters">
+        <a (click)="jumpToLetter(letter)">{{letter.letter}}</a>
+      </li>
+    </ol>
+  </div>
 </div>

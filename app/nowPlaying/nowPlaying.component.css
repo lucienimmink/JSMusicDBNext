@@ -50,31 +50,12 @@
         height: calc(100% - 165px);
     }
 }
-#nowPlaying .image-wrapper div.currentAlbumArt {
+#nowPlaying .image-wrapper div.current-album-art {
     z-index: 0;
 }
 
-#nowPlaying .image-wrapper div.previousAlbumArt {
+#nowPlaying .image-wrapper div.previous-album-art {
     z-index: 1;
-    -webkit-transform: translateY(0%);
-    transform: translate3d(0%, 0, 0);
-    opacity: 1;
-}
-
-#nowPlaying .image-wrapper div.animate {
-    z-index: 2;
-    transition: 0.7s ease-out;
-    -webkit-transform: translateY(-150%);
-    transform: translate3d(-150%, 0, 0);
-    opacity: 1;
-}
-
-#nowPlaying .image-wrapper div.animateBack {
-    z-index: 2;
-    transition: 0.7s ease-in;
-    -webkit-transform: translateY(150%);
-    transform: translate3d(150%, 0, 0);
-    opacity: 1;
 }
 
 #nowPlaying .image-wrapper div {
