@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router-deprecated';
 import { AlbumComponent } from './album.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -6,6 +6,7 @@ import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
+import { Subscription }   from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 
 import * as _ from "lodash";
@@ -15,28 +16,36 @@ import * as _ from "lodash";
     directives: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective],
     styleUrls: ['app/album/albums.component.css']
 })
-export class AlbumsComponent implements OnInit {
+export class AlbumsComponent implements OnInit, OnDestroy {
 
     private items: Array<any> = [];
     private letters: Array<any> = [];
     private showJumpList: boolean = false;
     private cummlativeLength: Array<any> = [];
+    private core:musicdbcore;
+    private subscription:Subscription;
 
-    constructor(private coreService: CoreService, private pathService: PathService, private router: Router) { }
+    constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
+        this.core = this.coreService.getCore();
+        this.subscription = this.core.coreParsed$.subscribe(
+            data => {
+                this.ngOnInit();
+            }
+        )
+     }
 
     ngOnInit() {
         let s = new Date().getTime();
         this.pathService.announcePage("Albums");
-        let core: musicdbcore = this.coreService.getCore();
-        let artists = core.artists;
-        this.letters = core.sortedLetters;
+        let artists = this.core.artists;
+        this.letters = this.core.sortedLetters;
         let c = this;
         let sorted = Object.keys(artists).sort(function (a, b) {
             return (a < b) ? -1 : 1;
         });
         let tmp = [];
         sorted.forEach(function (artistName) {
-            tmp.push(core.artists[artistName]);
+            tmp.push(c.core.artists[artistName]);
         });
         this.items = tmp;
         this.items.forEach(function (item, index) {
@@ -55,6 +64,10 @@ export class AlbumsComponent implements OnInit {
                 };
             }
         });
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
     navigateToAlbum(album) {
         this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
