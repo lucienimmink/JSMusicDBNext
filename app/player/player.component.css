@@ -8,6 +8,13 @@
 }
 .player albumart {
     margin-left: -10px;
+    cursor: pointer;
+    transition: opacity 0.1s ease-in-out;
+    opacity: 0.95;
+    will-change: opacity;
+}
+.player albumart:hover {
+    opacity: 1;
 }
 .row h4 {
     padding-top: 4px;
