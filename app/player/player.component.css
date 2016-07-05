@@ -51,6 +51,7 @@
 }
 .row .btn:hover  {
     background: #e1e1e1;
+    color: rgba(0,120,215,1);
 }
 @media screen and (min-width: 480px) {
     .row .btn {
