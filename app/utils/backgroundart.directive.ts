@@ -43,8 +43,10 @@ export class BackgroundArtDirective {
             let key = `art-${this.media.name}`;
             let c = this;
 
-            if (this.media.artist) {
+            if (this.media.artist && !this.media.trackArtist) {
                 key = `art-${this.media.artist.name}-${this.media.name}`;
+            } else if (this.media.trackArtist) {
+                key = `art-${this.media.trackArtist}-${this.media.album.name}`;
             }
             this.arttable.get(key, function (err, data) {
                 if (data) {

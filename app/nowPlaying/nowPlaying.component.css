@@ -35,7 +35,7 @@
 
 #nowPlaying .image-wrapper {
     position: relative;
-    height: calc(100% - 145px);
+    height: calc(100% - 160px);
     z-index: 0;
     margin: 0 auto;
     width: 100%;
