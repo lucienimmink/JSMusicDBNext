@@ -17,7 +17,10 @@
     top: -13px;
     left: 0;
     background: transparent;
-    border-right: 2px solid #e1e1e1;
+}
+.btn-menu:active {
+    box-shadow: none;
+    outline: none;
 }
 .logo {
     max-width: 50px;
