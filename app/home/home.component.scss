@@ -17,10 +17,21 @@ h4 {
   margin-top: 6px;
 }
 .nowplaying-image {
-  width: 45px;
-  height: 45px;
+  width: 100%;
+  height: auto;
   display: inline-block;
+}
+@media screen and (min-width: 640px) {
+    .nowplaying-image {
+        width: 45px;
+        height: 45px;
+    }
 }
 .list-group-item:nth-child(2n+1) {
   background-color: #EFEFEF;
+}
+@media screen and (min-width: 640px) {
+    .text-right span {
+        display: block;
+    }
 }

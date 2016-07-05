@@ -11,7 +11,7 @@
       </div>
       <ol class="list-items">
         <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" [ngClass]="{'now-playing': track.nowPlaying}">
-          <div class="col-xs-5 col-sm-1 ">
+          <div class="col-xs-5 col-sm-1">
             <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
             <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
           </div>
@@ -21,13 +21,13 @@
           </div>
           <div class="col-xs-24 col-sm-4 col-md-3 text-right">
             <span *ngIf="!track.nowPlaying">
-              {{track.date | date:'HH:mm' }} <br />
+              {{track.date | date:'HH:mm' }}
               <span class="color-type-secondary small">
                 <span *ngIf="!track.nowPlaying">{{track.date | date:'dd MMM yyyy' }}</span>
             </span>
             </span>
             <span *ngIf="track.nowPlaying">
-              Playing <br />
+              Playing
               <span class="color-type-secondary small">
                 right now
               </span>
