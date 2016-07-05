@@ -3,6 +3,8 @@
     padding: 24px 0;
     background-color: #0078D7;
     color:#ffffff;
+    z-index: 2;
+    position: relative;
 }
 @media screen and (min-width: 640px) {
     .jumbotron {
@@ -62,5 +64,21 @@
     overflow: hidden;
     border-bottom: 1px solid rgba(0,120,215,1);
     border-top: none;
-    padding-left: 10px;
+    padding-left: 25px;
+    margin-bottom: 5px;
+    padding-top: 45px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 1;
+}
+.disc-row:before,
+.disc-row:after {
+    content: '';
+    display: table;
+}
+
+.first-disc {
+    margin-top: -45px;
 }

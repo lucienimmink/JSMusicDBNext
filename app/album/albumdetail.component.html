@@ -17,7 +17,8 @@
         <div class="row">
             <div class="col-xs-24">
                 <ol class="list-items" *ngFor="let disc of album.discs">
-                    <li class="list-items-row disc-row" *ngIf="album.discs.length > 1">Disc {{disc[0].disc}}</li>
+                    <li class="list-items-row disc-row visible-xs visible-sm" *ngIf="album.discs.length > 1" sticky style="top: 49px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
+                    <li class="list-items-row disc-row visible-md visible-lg" *ngIf="album.discs.length > 1" sticky style="top: 90px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
                     <li class="list-group-item" *ngFor="let track of disc" (click)="onSelect(track)"  [ngClass]="{'active': track.isPlaying || track.isPaused}">
                         <div class="col-xs-2 col-sm-1">
                             <span *ngIf="!track.isPlaying && !track.isPaused && track.number !== 0">{{track.number}}</span>

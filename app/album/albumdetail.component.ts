@@ -9,11 +9,12 @@ import { TimeFormatPipe } from './../timeformat.pipe';
 import { PathService } from './../utils/path.service';
 import { PlayerService } from './../player/player.service';
 import { Subscription }   from 'rxjs/Subscription';
+import { StickyDirective } from './../utils/sticky.directive';
 
 @Component({
   templateUrl: 'app/album/albumdetail.component.html',
   pipes: [ TimeFormatPipe ],
-  directives: [ AlbumArt, BackgroundArtDirective ],
+  directives: [ AlbumArt, BackgroundArtDirective, StickyDirective ],
   styleUrls: [ 'app/album/albumdetail.component.css' ]
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
