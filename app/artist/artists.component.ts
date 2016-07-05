@@ -7,12 +7,13 @@ import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
 import { Subscription }   from 'rxjs/Subscription';
+import { StickyDirective } from './../utils/sticky.directive';
 
 import * as _ from "lodash";
 
 @Component({
     templateUrl: 'app/artist/artists.component.html',
-    directives: [ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor],
+    directives: [ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective],
     styleUrls: ['app/artist/artists.component.css']
 })
 export class ArtistsComponent implements OnInit, OnDestroy {

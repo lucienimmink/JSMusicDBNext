@@ -6,12 +6,13 @@ import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
+import { StickyDirective } from './../utils/sticky.directive';
 
 import * as _ from "lodash";
 
 @Component({
     templateUrl: 'app/album/albums.component.html',
-    directives: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor],
+    directives: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective],
     styleUrls: ['app/album/albums.component.css']
 })
 export class AlbumsComponent implements OnInit {

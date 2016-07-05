@@ -20,6 +20,19 @@ h4 {
   border-top: none;
   padding-left: 25px;
   margin-bottom: 5px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 1;
+}
+h4:before,
+h4:after {
+    content: '';
+    display: table;
+}
+h4 + div {
+    height: 69px !important;
 }
 .container-longlist li:hover .color-type-secondary {
   color: rgba(255,255,255, 0.6);
