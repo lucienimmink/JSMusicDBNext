@@ -61,6 +61,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.pathService.announcePage('Now playing');
 
         if ('ontouchstart' in document.documentElement) {
+            document.getElementsByTagName('body')[0].addEventListener('touchmove', this.drag);
+            document.getElementsByTagName('body')[0].addEventListener('touchend', this.stopDrag);
         } else {
             document.getElementsByTagName('body')[0].addEventListener('mousemove', this.drag);
             document.getElementsByTagName('body')[0].addEventListener('mouseup', this.stopDrag);
@@ -71,8 +73,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         setTimeout(function () {
             try {
                 if ('ontouchstart' in document.documentElement) {
-                    document.getElementById('progress-pusher').addEventListener('touchmove', this.drag);
-                    document.getElementById('progress-pusher').addEventListener('touchend', this.stopDrag);
+
                     document.getElementById('progress-pusher').addEventListener('touchstart', c.startDrag);
                 } else {
                     document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
@@ -100,6 +101,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
         if ('ontouchstart' in document.documentElement) {
+            document.getElementsByTagName('body')[0].removeEventListener('touchmove', this.drag);
+            document.getElementsByTagName('body')[0].removeEventListener('touchend', this.stopDrag);
         } else {
             document.getElementsByTagName('body')[0].removeEventListener('mousemove', this.drag);
             document.getElementsByTagName('body')[0].removeEventListener('mouseup', this.stopDrag);
