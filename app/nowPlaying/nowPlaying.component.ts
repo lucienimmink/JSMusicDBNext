@@ -115,8 +115,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
     }
     next() {
-        let previousAlbumArt = document.querySelector('.previous-album-art');
-        previousAlbumArt.style.backgroundImage = document.getElementsByClassName('current-album-art')[0].style.backgroundImage;
+        let previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');
+        previousAlbumArt.style.backgroundImage = (<HTMLElement>document.querySelector('.current-album-art')).style.backgroundImage;
         previousAlbumArt.classList.remove('slideRightOut');
         previousAlbumArt.classList.remove('slideLeftOut');
         this.animationService.requestAnimation('slideLeftOut', previousAlbumArt, false);
@@ -126,8 +126,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         }
     }
     prev() {
-        let previousAlbumArt = document.querySelector('.previous-album-art');
-        previousAlbumArt.style.backgroundImage = document.getElementsByClassName('current-album-art')[0].style.backgroundImage;
+        let previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');
+        previousAlbumArt.style.backgroundImage = (<HTMLElement>document.querySelector('.current-album-art')).style.backgroundImage;
         previousAlbumArt.classList.remove('slideRightOut');
         previousAlbumArt.classList.remove('slideLeftOut');
         this.animationService.requestAnimation('slideRightOut', previousAlbumArt, false);
