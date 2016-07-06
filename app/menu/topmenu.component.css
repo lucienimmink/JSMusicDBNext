@@ -70,7 +70,7 @@ h1 {
     width: 350px;
     bottom: 0;
     top: 49px;
-    z-index: 11;
+    z-index: 1001;
     transform: translateX(-100%);
     transition: transform 0.1s ease-in;
     will-change: transition;

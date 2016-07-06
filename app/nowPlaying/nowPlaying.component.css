@@ -104,7 +104,7 @@
     background: rgba(0,120,215,1);
     color: #ffffff;
 }
-#nowPlaying .icons button:hover  {
+#nowPlaying .icons button:active  {
     background: #e1e1e1;
     color: rgba(0,120,215,1);
 }
