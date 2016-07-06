@@ -60,14 +60,23 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         )
         this.pathService.announcePage('Now playing');
 
-        document.getElementsByTagName('body')[0].addEventListener('mousemove', this.drag);
-        document.getElementsByTagName('body')[0].addEventListener('mouseup', this.stopDrag);
+        if ('ontouchstart' in document.documentElement) {
+        } else {
+            document.getElementsByTagName('body')[0].addEventListener('mousemove', this.drag);
+            document.getElementsByTagName('body')[0].addEventListener('mouseup', this.stopDrag);
+        }
     }
     ngOnInit() {
         let c = this;
         setTimeout(function () {
             try {
-                document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
+                if ('ontouchstart' in document.documentElement) {
+                    document.getElementById('progress-pusher').addEventListener('touchmove', this.drag);
+                    document.getElementById('progress-pusher').addEventListener('touchend', this.stopDrag);
+                    document.getElementById('progress-pusher').addEventListener('touchstart', c.startDrag);
+                } else {
+                    document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
+                }
             } catch (e) {}
         }, 100);
     }
@@ -90,8 +99,11 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
-        document.getElementsByTagName('body')[0].removeEventListener('mousemove', this.drag);
-        document.getElementsByTagName('body')[0].removeEventListener('mouseup', this.stopDrag);
+        if ('ontouchstart' in document.documentElement) {
+        } else {
+            document.getElementsByTagName('body')[0].removeEventListener('mousemove', this.drag);
+            document.getElementsByTagName('body')[0].removeEventListener('mouseup', this.stopDrag);
+        }
     }
     navigateToArtist() {
         this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
@@ -134,12 +146,12 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             data => { }
         )
     }
-    private startDrag = (e:MouseEvent) => {
+    private startDrag = (e:any) => {
         this.isDragging = true;
     }
-    private drag = (e:MouseEvent) => {
+    private drag = (e:any) => {
         if (this.isDragging) {
-            let clientX = e.clientX;
+            let clientX = e.clientX || e.changedTouches[0].clientX;
             let left = clientX - 60, perc = (left / document.getElementById('progress-pusher').clientWidth);
             if (perc >= 0 && perc <= 1) {
                 this.setIndicatorPosition(perc);
@@ -149,10 +161,10 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     setIndicatorPosition(perc:number):void {
         document.getElementById('position-indicator').style.marginLeft = (perc * 100) + '%';
     }
-    private stopDrag = (e:MouseEvent) => {
+    private stopDrag = (e:any) => {
         if (this.isDragging) {
             this.isDragging = false;
-            let clientX = e.clientX;
+            let clientX = e.clientX || e.changedTouches[0].clientX;
             let left = clientX - 60, perc = (left / document.getElementById('progress-pusher').clientWidth);
             let pos = this.track.duration / 1000 * perc;
             this.playerService.setPosition(pos);
