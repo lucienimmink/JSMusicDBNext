@@ -35,6 +35,8 @@ export class PlayerComponent implements OnDestroy {
     private isCurrentPlaylistLoaded: boolean = false;
     private isShuffled: boolean = false;
 
+    private isMobile:boolean = false;
+
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
     constructor(private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService:AnimationService) {
@@ -73,6 +75,9 @@ export class PlayerComponent implements OnDestroy {
                 }
             }
         )
+        if (navigator.userAgent.indexOf('Mobi') !== -1) {
+            this.isMobile = true;
+        }
     }
     setTrack(position:any) {
         let c = this;
@@ -82,6 +87,9 @@ export class PlayerComponent implements OnDestroy {
         this.track = this.playlist.tracks[this.trackIndex];
         if (this.currentTrack !== this.track) {
             this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
+            if (this.isMobile) {
+                this.mediaObject.src += "&full=true";
+            }
             this.currentTrack = this.track;
             this.hasScrobbledCurrentTrack = false;
             this.animationService.requestAnimation('enter', document.querySelector('.player h4'));
