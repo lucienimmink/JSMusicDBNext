@@ -83,3 +83,24 @@ h1 {
     position: relative;
     top: -2px;
 }
+.menu-offcanvas .search-bar .form-group{
+    margin: 0;
+    padding: 10px 15px;
+}
+.menu-offcanvas .search-bar .input-group {
+    position: relative;
+    width: 100%;
+}
+.menu-offcanvas .search-bar .input-group-addon {
+    border: 0;
+    background: none;
+    position: absolute;
+    right: 36px;
+    top: 7px;
+    color: #000000;
+    z-index: 3;
+}
+.menu-offcanvas .search-bar:hover {
+    border-left-color: transparent;
+    background-color: transparent;
+}
