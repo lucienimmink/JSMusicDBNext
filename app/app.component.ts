@@ -16,6 +16,7 @@ import { TopMenuComponent } from './menu/topmenu.component';
 import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SearchComponent } from './search/search.component';
+import { ScrobbleCacheComponent } from './scrobbleCache/scrobbleCache.component';
 import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
 import { PlayerComponent } from './player/player.component';
@@ -49,6 +50,7 @@ import './rxjs-operators';
   { path: '/playlists/:playlist', name: 'Playlists', component: PlaylistsComponent },
   { path: '/nowPlaying', name: 'NowPlaying', component: NowPlayingComponent },
   { path: '/settings', name: 'Settings', component: SettingsComponent },
+  { path: '/settings/scrobble-cache', name: 'ScrobbleCache', component: ScrobbleCacheComponent },
   { path: '/search/:query', name: 'Search', component: SearchComponent },
   { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
   { path: '/letter/:letter/artist/:artist', name: 'Artist', component: ArtistDetailComponent },

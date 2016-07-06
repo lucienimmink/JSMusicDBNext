@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-
+import { Router } from '@angular/router-deprecated';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { CollectionService } from './../collection.service';
@@ -30,7 +30,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
   private isReloading:boolean = false;
 
-  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService:LastFMService, private collectionService:CollectionService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService:LastFMService, private collectionService:CollectionService, private router:Router) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
@@ -118,5 +118,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
               this.isReloading = false;
           }
       )
+  }
+  viewList() {
+      this.router.navigate(['ScrobbleCache']);
   }
 }
