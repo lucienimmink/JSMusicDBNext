@@ -22,6 +22,25 @@
     box-shadow: none;
     outline: none;
 }
+.btn-search {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: auto;
+}
+.menu-top form {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+    right: 50px;
+    display: none;
+}
+.menu-top form.visible {
+    display: block;
+}
+.menu-top form input {
+    background: #ffffff;
+}
 .logo {
     max-width: 50px;
     min-width: 50px;
@@ -99,6 +118,9 @@ h1 {
     top: 7px;
     color: #000000;
     z-index: 3;
+}
+.menu-offcanvas .search-bar .input-group-addon:focus, .menu-offcanvas .search-bar .input-group-addon:active {
+    outline: none;
 }
 .menu-offcanvas .search-bar:hover {
     border-left-color: transparent;

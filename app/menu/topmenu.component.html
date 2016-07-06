@@ -14,14 +14,23 @@
         <span *ngIf="!path && page">{{page}}</span>
         <span *ngIf="!path && !page">JSMusicDB Next</span>
     </h1>
+    <button class="btn btn-menu btn-search visible-xs visible-sm" (click)="toggleSearch()">
+        <i class="glyph glyph-magnifier" *ngIf="!topSearchVisible"></i>
+        <i class="glyph glyph-clear" *ngIf="topSearchVisible"></i>
+    </button>
+    <form role="form" (ngSubmit)="onSubmit()" [formGroup]="form" [ngClass]="{'visible': topSearchVisible}">
+        <input type="text" class="form-control" id="search" placeholder="Search for" [formControlName]="'query'">
+    </form>
 </div>
 <div class="menu-offcanvas" [ngClass]="{'open': menuVisible}">
     <ul class="nav nav-pills nav-stacked">
         <li class="hidden-xs hidden-sm search-bar">
             <div class="form-group" tooltip="Search for ..." tooltipTrigger="mouseenter" tooltipPlacement="top">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="search" placeholder="Search for">
-                    <div class="input-group-addon"><i class="glyph glyph-magnifier"></i></div>
+                    <form role="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+                        <input type="text" class="form-control" id="search" placeholder="Search for" [formControlName]="'query'">
+                        <button class="input-group-addon"><i class="glyph glyph-magnifier"></i></button>
+                    </form>
                 </div>
             </div>
         </li>

@@ -1,0 +1,32 @@
+h4 {
+    border-bottom: 1px solid rgba(0,120,215,1);
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+.list-group-item {
+    overflow: hidden;
+    transition: color .1s ease-out;
+    cursor: pointer;
+}
+.list-group-item.active {
+    color: rgba(0,120,215,1);
+    z-index: 0;
+}
+.list-group-item:hover {
+    background-color: rgba(0,120,215,1);
+    color:#ffffff;
+}
+.list-group-item:hover .color-type-secondary {
+    color: rgba(255,255,255, 0.6);
+}
+.disc-row {
+    overflow: hidden;
+    border-bottom: 1px solid rgba(0,120,215,1);
+    border-top: none;
+    padding-left: 25px;
+}
+.track-info {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

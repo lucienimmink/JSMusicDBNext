@@ -109,7 +109,7 @@ export class musicdbcore {
         let artist = new Artist(line);
         if (artist.name) {
             artist = this.handleArtist(letter, artist);
-        }        
+        }
         let album = new Album(line);
         if (album.name) {
             album = this.handleAlbum(artist, album);
@@ -189,6 +189,45 @@ export class musicdbcore {
         });
         sorted.forEach(function (value, index) {
             ret.push(c.artists[value]);
+        });
+        return ret;
+    }
+    searchArtist(query:string): Array<Artist> {
+        let ret = [];
+        let artistnames = Object.keys(this.artists);
+        artistnames = artistnames.filter(name => {
+            if (name.indexOf(query.toUpperCase()) !== -1) {
+                return true;
+            }
+        });
+        artistnames.forEach(name => {
+            ret.push(this.artists[name]);
+        });
+        return ret;
+    }
+    searchAlbum(query:string): Array<Album> {
+        let c = this;
+        let ret = [];
+        let albumnames = Object.keys(this.albums);
+        albumnames = albumnames.filter(name => {
+            name = name.substring(name.indexOf('|'));
+            if (name.indexOf(query.toUpperCase()) !== -1) {
+                return true;
+            }
+        });
+        albumnames.forEach(name => {
+            ret.push(this.albums[name]);
+        })
+        return ret;
+    }
+    searchTrack(query:string): Array<Track> {
+        let c = this;
+        let ret = [];
+
+        _.forEach(this.tracks, function (track) {
+            if (track.title.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+                ret.push(track);
+            }
         });
         return ret;
     }
