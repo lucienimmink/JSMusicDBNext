@@ -22,24 +22,31 @@
         <input type="text" class="form-control" id="search" placeholder="Search for" [formControlName]="'query'">
     </form>
 </div>
-<div class="menu-offcanvas" [ngClass]="{'open': menuVisible}">
-    <ul class="nav nav-pills nav-stacked">
-        <li class="hidden-xs hidden-sm search-bar">
-            <div class="form-group" tooltip="Search for ..." tooltipTrigger="mouseenter" tooltipPlacement="top">
-                <div class="input-group">
-                    <form role="form" (ngSubmit)="onSubmit()" [formGroup]="form">
-                        <input type="text" class="form-control" id="search" placeholder="Search for" [formControlName]="'query'">
-                        <button class="input-group-addon"><i class="glyph glyph-magnifier"></i></button>
-                    </form>
+
+<aside class="js-side-nav side-nav" [ngClass]="{'side-nav--visible': menuVisible}">
+    <nav class="js-side-nav-container side-nav__container">
+        <ul class="side-nav__content nav nav-pills nav-stacked">
+            <li class="hidden-xs hidden-sm search-bar">
+                <div class="form-group" tooltip="Search for ..." tooltipTrigger="mouseenter" tooltipPlacement="top">
+                    <div class="input-group">
+                        <form role="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+                            <input type="text" class="form-control" id="search" placeholder="Search for" [formControlName]="'query'">
+                            <button class="input-group-addon"><i class="glyph glyph-magnifier"></i></button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']" tooltip="Home" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-home"></span> Home</a></li>
-        <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a [routerLink]="['Letters']" tooltip="Letters" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-characters"></span> Letters</a></li>
-        <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']" tooltip="Artists" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-people"></span> Artists</a></li>
-        <li [ngClass]="{'active': page === 'Albums'}"><a [routerLink]="['Albums']" tooltip="Albums" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-music-album"></span> Albums</a></li>
-        <li [ngClass]="{'active': page === 'Playlists'}"><a [routerLink]="['Playlists', {playlist: null}]" tooltip="Playlists" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-music-info"></span> Playlists</a></li>
-        <li [ngClass]="{'active': page === 'Now playing'}"><a [routerLink]="['NowPlaying']" tooltip="Now playing" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-audio"></span> Now playing</a></li>
-        <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" tooltip="Settings" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-settings"></span> Settings</a></li>
-    </ul>
-</div>
+            </li>
+            <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']" tooltip="Home" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-home"></span> Home</a></li>
+            <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a [routerLink]="['Letters']" tooltip="Letters" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-characters"></span> Letters</a></li>
+            <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']" tooltip="Artists" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-people"></span> Artists</a></li>
+            <li [ngClass]="{'active': page === 'Albums'}"><a [routerLink]="['Albums']" tooltip="Albums" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-music-album"></span> Albums</a></li>
+            <li [ngClass]="{'active': page === 'Playlists'}">
+                <a [routerLink]="['Playlists', {playlist: null}]" tooltip="Playlists" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-music-info"></span> Playlists</a>
+            </li>
+            <li [ngClass]="{'active': page === 'Now playing'}">
+                <a [routerLink]="['NowPlaying']" tooltip="Now playing" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-audio"></span> Now playing</a>
+            </li>
+            <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" tooltip="Settings" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-settings"></span> Settings</a></li>
+        </ul>
+    </nav>
+</aside>
