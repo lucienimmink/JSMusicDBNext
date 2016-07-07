@@ -75,8 +75,8 @@ export class PlayerComponent implements OnDestroy {
                 }
             }
         )
-        if (navigator.userAgent.indexOf('Mobi') !== -1) {
-            this.isMobile = true;
+        if (navigator.userAgent.indexOf('Mobi') !== -1 || navigator.userAgent.indexOf('Edge/') !== -1) {
+            this.isMobile = true; // treat edge always as mobile
         }
     }
     setTrack(position:any) {
