@@ -12,11 +12,12 @@ import Artist from './../org/arielext/musicdb/models/Artist';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
+import { StickyDirective } from './../utils/sticky.directive';
 
 @Component({
   templateUrl: 'app/playlists/playlists.component.html',
   pipes: [TimeFormatPipe],
-  directives: [TrackListComponent],
+  directives: [TrackListComponent, StickyDirective],
   styleUrls: ['app/playlists/playlists.component.css']
 })
 export class PlaylistsComponent implements OnInit {
