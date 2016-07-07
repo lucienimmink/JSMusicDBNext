@@ -9,8 +9,8 @@
                 <a (click)="removeConnection()" *ngIf="connectiondetails"><i class="glyph glyph-delete"></i> disconnect</a>
             </div>
             <div class="col-xs-24">
-                <span class="color-type-secondary">Reload collection</span> <button (click)="reloadCollection()" [disabled]="isReloading"
-                    class="btn btn-text"> <i class="glyph glyph-sync"></i> now</button>
+                <span class="color-type-secondary">Reload collection</span> <button (click)="reloadCollection()" [disabled]="isReloading" *ngIf="!isReloading"
+                    class="btn btn-text"> <i class="glyph glyph-sync"></i> now</button> <span *ngIf="scanperc && isReloading">{{scanperc}} % done</span>
             </div>
             <div class="col-xs-24">
                 <span class="color-type-secondary">Save playliststate:</span>

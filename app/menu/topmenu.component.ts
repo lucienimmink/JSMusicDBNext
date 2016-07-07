@@ -79,7 +79,9 @@ export class TopMenuComponent implements OnDestroy {
     onSubmit() {
         let query = this.form.value.query;
         this.topSearchVisible = false;
-        this.menuVisible = false;
+        if (this.menuVisible) {
+            this.toggleMenu();
+        }
         this.router.navigate(['Search', { query: query }]);
     }
     toggleSearch() {

@@ -8,6 +8,7 @@ export class CollectionService {
 
     private collectionUrl = '/data/node-music.json';
     private reloadUrl = '/rescan';
+    private pollUrl = '/progress';
 
     getCollection(): Observable<any[]> {
         let jwt = JSON.parse(localStorage.getItem('jwt'));
@@ -27,6 +28,16 @@ export class CollectionService {
         }
         return this.http.get(`${url}?_ts=${new Date().getTime()}`)
             .map(this.noop)
+            .catch(this.handleError)
+    }
+    poll(): Observable<any> {
+        let jwt = JSON.parse(localStorage.getItem('jwt'));
+        let url = this.pollUrl;
+        if (jwt) {
+            url = jwt.dsmport + this.pollUrl;
+        }
+        return this.http.get(`${url}?_ts=${new Date().getTime()}`)
+            .map(this.extractData)
             .catch(this.handleError)
     }
     private extractData(res: Response) {
