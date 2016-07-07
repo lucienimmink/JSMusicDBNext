@@ -37,6 +37,7 @@ export class CollectionService {
             url = jwt.dsmport + this.pollUrl;
         }
         return this.http.get(`${url}?_ts=${new Date().getTime()}`)
+            .debounceTime(300)
             .map(this.extractData)
             .catch(this.handleError)
     }

@@ -121,12 +121,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
         )
     }
     poll() {
+        let c = this;
         this.collectionService.poll().subscribe(
             data => {
                 this.scanperc = data.progress
                 if (data.status !== 'ready') {
                     this.isReloading = true;
-                    this.poll();
+                    setTimeout(function () {
+                        c.poll();
+                    }, 300);
                 } else {
                     this.isReloading = false;
                     this.getCollection();
