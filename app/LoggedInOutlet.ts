@@ -28,6 +28,7 @@ export class LoggedInRouterOutlet extends RouterOutlet {
       this.parentRouter.navigateByUrl('/login');
     }
     return super.activate(instruction).then(function() {
+      window.scrollTo(0,0);
       c.animationService.requestAnimation('enter', document.querySelector('.animated-page'));
     })
   }
