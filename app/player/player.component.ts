@@ -46,6 +46,7 @@ export class PlayerComponent implements OnDestroy {
                 this.trackIndex = playerData.startIndex;
                 this.isPaused = playerData.isPaused;
                 this.isPlaying = playerData.isPlaying;
+                this.isShuffled = playerData.isShuffled;
                 this.showPlayer = true;
                 this.setTrack(playerData.position);
             }
@@ -128,8 +129,9 @@ export class PlayerComponent implements OnDestroy {
                 art: null,
                 url: null
             }
+            this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;
-            this.playerService.doPlayAlbum(playlist, current.current);
+            this.playerService.doPlayAlbum(playlist, current.current, current.isShuffled);
         }
     }
     ngOnDestroy() {

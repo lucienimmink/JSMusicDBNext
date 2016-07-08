@@ -28,7 +28,7 @@ export class PlayerService {
         this.position = null;
     }
 
-    doPlayAlbum(album:Album, startIndex:number) {
+    doPlayAlbum(album:Album, startIndex:number, isShuffled:boolean = false) {
         if (this.currentTrack) {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
@@ -37,7 +37,8 @@ export class PlayerService {
             playlist: album,
             startIndex: startIndex,
             isPlaying: this.isPlaying = true,
-            isPaused: this.isPaused  = false
+            isPaused: this.isPaused  = false,
+            isShuffled: this.isShuffled = isShuffled
         };
         this.announce();
     }
@@ -50,6 +51,7 @@ export class PlayerService {
         });
         return JSON.stringify({
             ids: list,
+            isShuffled: this.isShuffled,
             current: this.currentPlaylist.startIndex
         });
     }
