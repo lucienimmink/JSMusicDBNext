@@ -4,6 +4,7 @@ import { PathService } from "./../utils/path.service";
 import { Subscription }   from 'rxjs/Subscription';
 import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
+import { LastFMService } from './../lastfm/lastfm.service';
 
 @Component({
     templateUrl: 'app/menu/topmenu.component.html',
@@ -17,12 +18,14 @@ export class TopMenuComponent implements OnDestroy {
     subscription: Subscription;
     page: string;
     subscription2: Subscription;
+    subscription3: Subscription;
     menuVisible: boolean = false;
     @Input() query: string;
     private form: FormGroup;
     private topSearchVisible: boolean = false;
+    private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
 
-    constructor(private pathService: PathService, private router: Router) {
+    constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService) {
         // subscribe to a change in path; so we can display it
         this.subscription = pathService.pathAnnounced$.subscribe(
             path => {
@@ -38,6 +41,11 @@ export class TopMenuComponent implements OnDestroy {
                 this.menuVisible = false;
             }
         );
+        this.subscription3 = this.lastFMService.manualScrobbleList$.subscribe(
+            data => {
+                this.manualScrobblingList = data;
+            }
+        )
 
         let controls: any = {};
         controls['query'] = new FormControl('');

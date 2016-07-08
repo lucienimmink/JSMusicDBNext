@@ -27,7 +27,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private subscription2: Subscription;
     private savePlaylistState: boolean = this.booleanState("save-playlist-state");
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
-    private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
+    private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private isReloading: boolean = false;
     private scanperc: number = 0;
 

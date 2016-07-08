@@ -46,6 +46,7 @@
             <li [ngClass]="{'active': page === 'Now playing'}">
                 <a [routerLink]="['NowPlaying']" tooltip="Now playing" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-audio"></span> Now playing</a>
             </li>
+            <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}"><a [routerLink]="['ScrobbleCache']" tooltip="Scrobble cache" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-upload"></span> Scrobble cache</a></li>
             <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" tooltip="Settings" tooltipTrigger="mouseenter" tooltipPlacement="top"><span class="glyph glyph-settings"></span> Settings</a></li>
         </ul>
     </nav>
