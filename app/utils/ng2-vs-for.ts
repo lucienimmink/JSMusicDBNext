@@ -1,12 +1,4 @@
-import {
-    Directive,
-    ViewContainerRef,
-    TemplateRef,
-    ElementRef,
-    Renderer,
-    EmbeddedViewRef,
-    NgZone,
-} from '@angular/core';
+import { Directive, ViewContainerRef, TemplateRef, ElementRef, Renderer, EmbeddedViewRef, NgZone, OnInit, OnDestroy } from '@angular/core';
 
 const dde: any = document.documentElement,
     matchingFunction = dde.matches ? 'matches' :
@@ -98,7 +90,7 @@ function nextElementSibling(el) {
     ]
 })
 
-export class VsFor {
+export class VsFor implements OnInit, OnDestroy {
     _originalCollection = [];
     _slicedCollection = [];
     originalLength: number;
@@ -133,7 +125,6 @@ export class VsFor {
     vsExcess: number = 2;
     vsScrollParent: string;
     vsAutoresize: boolean;
-    vsVisibleItems: number = 6;
 
     set originalCollection(value: any[]) {
         this._originalCollection = value || [];
@@ -216,6 +207,7 @@ export class VsFor {
         }
     }
     ngOnInit() {
+        console.log('on init');
         // console.log(this.vsSize, this.vsOffsetBefore, this.vsOffsetAfter, this.vsExcess, this.vsScrollParent, this.vsAutoresize, this.tagName, this.__horizontal);
         this.view = this._viewContainer.createEmbeddedView(this._templateRef);
         this.parent = nextElementSibling(this._element.nativeElement);
@@ -246,9 +238,7 @@ export class VsFor {
         this.startIndex = 0;
         this.endIndex = 0;
 
-        document.addEventListener('scroll', () => {
-            this.updateInnerCollection();
-        });
+        document.addEventListener('scroll', this.updateInnerCollection);
 
         this.onWindowResize = () => {
             if (this.vsAutoresize) {
@@ -266,46 +256,15 @@ export class VsFor {
 
         window.addEventListener('resize', this.onWindowResize);
 
-        // TODO: figure out how to trigger some events here...
-
-        // $scope.$on('vsRepeatTrigger', refresh);
-
-        // $scope.$on('vsRepeatResize', function() {
-        //     autoSize = true;
-        //     setAutoSize();
-        // });
-
-        // $scope.$on('vsRenderAll', function() {//e , quantum) {
-        //     if ($$options.latch) {
-        //         setTimeout(function() {
-        //             // var __endIndex = Math.min($scope.endIndex + (quantum || 1), originalLength);
-        //             var __endIndex = originalLength;
-        //             _maxEndIndex = Math.max(__endIndex, _maxEndIndex);
-        //             $scope.endIndex = $$options.latch ? _maxEndIndex : __endIndex;
-        //             this.slicedCollection = originalCollection.slice($scope.startIndex, $scope.endIndex);
-        //             _prevEndIndex = $scope.endIndex;
-
-        //             $scope.$$postDigest(function() {
-        //                 var layoutProp = $$horizontal ? 'width' : 'height';
-        //                 $beforeContent.css(layoutProp, 0);
-        //                 $afterContent.css(layoutProp, 0);
-        //             });
-
-        //             $scope.$apply(function() {
-        //                 $scope.$emit('vsRenderAllDone');
-        //             });
-        //         });
-        //     }
-        // });
     }
     ngOnDestroy() {
-        if (this.onWindowResize) {
-            window.removeEventListener('resize', this.onWindowResize);
-        }
-
+        window.removeEventListener('resize', this.onWindowResize);
+        
         if (this.onZone) {
             this.onZone.unsubscribe();
         }
+
+        document.removeEventListener('scroll', this.updateInnerCollection);
     }
     refresh() {
         if (!this.originalCollection || this.originalCollection.length < 1) {
@@ -381,7 +340,7 @@ export class VsFor {
             }
         }
     }
-    updateInnerCollection() {
+    updateInnerCollection = () => {
         const $scrollPosition = getScrollPos(window, this.scrollPos);
         const $clientSize = getClientSize(this.scrollParent, this.clientSize);
 
@@ -417,12 +376,6 @@ export class VsFor {
                 Math.ceil(__endIndex + this.vsExcess / 2),
                 this.originalLength
             );
-
-            /*
-            if (this.vsVisibleItems) {
-                __endIndex = __startIndex + this.vsVisibleItems;
-            }
-            */
         }
         else {
             __startIndex = Math.max(
