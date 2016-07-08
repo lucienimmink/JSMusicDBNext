@@ -6,6 +6,9 @@
             <ol class="list-items">
                 <li class="list-items-row" *ngFor="let item of manualScrobblingList">
                     <div class="row">
+                        <div class="col-lg-1 text-right pull-right">
+                            <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
+                        </div>
                         <div class="col-lg-6">
                             {{item.artist}}
                         </div>
@@ -17,9 +20,6 @@
                         </div>
                         <div class="col-lg-3 color-type-secondary">
                             {{item.timestamp*1000 | date:'dd MMM yyyy'}} {{item.timestamp*1000 | date:'HH:mm'}}
-                        </div>
-                        <div class="col-lg-1 text-right">
-                            <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
                         </div>
                     </div>
                 </li>
