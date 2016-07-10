@@ -58,22 +58,26 @@ export class LastFMService {
             .catch(this.handleError);
     };
     getTrackInfo(track: Track, user:string): Observable<any> {
-        let urlSearchParams: URLSearchParams = new URLSearchParams();
-        urlSearchParams.set('method', 'track.getInfo');
-        urlSearchParams.set('artist', track.trackArtist);
-        urlSearchParams.set('album', track.album.name);
-        urlSearchParams.set('track', track.title);
-        urlSearchParams.set('api_key', APIKEY);
-        urlSearchParams.set('format', 'json');
-        urlSearchParams.set('user', user);
+        if (track) {
+            let urlSearchParams: URLSearchParams = new URLSearchParams();
+            urlSearchParams.set('method', 'track.getInfo');
+            urlSearchParams.set('artist', track.trackArtist);
+            urlSearchParams.set('album', track.album.name);
+            urlSearchParams.set('track', track.title);
+            urlSearchParams.set('api_key', APIKEY);
+            urlSearchParams.set('format', 'json');
+            urlSearchParams.set('user', user);
 
-        let query: RequestOptionsArgs = {
-            search: urlSearchParams
-        };
+            let query: RequestOptionsArgs = {
+                search: urlSearchParams
+            };
 
-        return this.http.get('//ws.audioscrobbler.com/2.0/', query)
-            .map(this.extractTrackInfo)
-            .catch(this.handleError);
+            return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+                .map(this.extractTrackInfo)
+                .catch(this.handleError);
+        } else {
+            return Observable.throw(null);
+        }
     };
     getTopArtists(user: string): Observable<any> {
         let urlSearchParams: URLSearchParams = new URLSearchParams();
