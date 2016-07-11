@@ -79,11 +79,27 @@ a:hover {
 }
 @media screen and (min-width: 640px) {
     .media-panel {
+        width: 19vw;
+        height: 19vw;
+        margin: 0 1vw 1vw 0;
+    }
+    .media-panel:nth-child(2n) {
+        margin-right: 1vw;
+    }
+    .media-panel:nth-child(5n) {
+        margin-right: 0;
+    }
+}
+@media screen and (min-width: 1100px) {
+    .media-panel {
         width: 11vw;
         height: 11vw;
         margin: 0 1vw 1vw 0;
     }
     .media-panel:nth-child(2n) {
+        margin-right: 1vw;
+    }
+    .media-panel:nth-child(5n) {
         margin-right: 1vw;
     }
 }
