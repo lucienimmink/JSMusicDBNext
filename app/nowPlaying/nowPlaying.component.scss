@@ -8,7 +8,7 @@
     bottom: 0;
     overflow: hidden;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     #nowPlaying {
         top: 100px;
     }
@@ -45,7 +45,7 @@
     opacity: 1;
     will-change: transform, opacity;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     #nowPlaying .image-wrapper {
         height: calc(100% - 165px);
     }

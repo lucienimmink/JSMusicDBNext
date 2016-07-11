@@ -6,13 +6,13 @@
     z-index: 2;
     position: relative;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     .jumbotron {
         background-color: #EFEFEF;
         color: #000000;
     }
 }
-.albumdetail >>> .albumart {
+.albumdetail /deep/ .albumart {
     width: 100%;
     height: auto;
 }
@@ -21,7 +21,7 @@
     margin-top: 5px;
     font-size: 24px;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     .albumdetail h2 {
         margin-top: -10px;
         font-size: 34px;
@@ -34,7 +34,7 @@
     font-size: 16px;
     padding-top: 5px;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     .albumdetail h4 {
         font-size: 20px;
     }

@@ -21,7 +21,7 @@ h4 {
   max-height: 87px;
   display: inline-block;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     .nowplaying-image {
         width: 45px;
         height: 45px;
@@ -30,7 +30,7 @@ h4 {
 .list-group-item:nth-child(2n+1) {
   background-color: #EFEFEF;
 }
-@media screen and (min-width: 641px) {
+@media screen and (min-width: 768px) {
     .text-right span {
         display: block;
     }

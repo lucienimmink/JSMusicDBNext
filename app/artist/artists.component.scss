@@ -37,14 +37,14 @@ h4 + div {
 .container-longlist li:hover .color-type-secondary {
   color: rgba(255,255,255, 0.6);
 }
-.container-longlist >>> .panel-background {
+.container-longlist /deep/ .panel-background {
   display: inline-block;
   margin: 0 10px 0 0;
   width: 50px;
   height: 50px;
   box-shadow: none;
 }
-.container-longlist >>> .panel-info {
+.container-longlist /deep/ .panel-info {
   display: none;
 }
 .container-longlist .image-wrapper {
@@ -63,6 +63,6 @@ h4 + div {
   color: #cccccc;
 }
 
->>> .vsFor-before, >>> .vsFor-after {
+/deep/ .vsFor-before, /deep/ .vsFor-after {
     float: left;
 }
