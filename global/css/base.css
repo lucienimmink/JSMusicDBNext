@@ -1,19 +1,17 @@
-::-webkit-scrollbar
-{
-  width: 6px;  /* for vertical scrollbars */
-  height: 6px; /* for horizontal scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    /* for vertical scrollbars */
+    height: 6px;
+    /* for horizontal scrollbars */
 }
 
-::-webkit-scrollbar-track
-{
-  background: rgba(0, 0, 0, 0.1);
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
 }
 
-::-webkit-scrollbar-thumb
-{
-  background: rgba(0, 0, 0, 0.5);
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5);
 }
-
 
 body {
     padding-top: 55px;
@@ -23,6 +21,7 @@ body {
     -webkit-user-select: none;
     user-select: none;
 }
+
 @media screen and (min-width: 768px) {
     body {
         padding-top: 110px;
@@ -35,35 +34,45 @@ body {
         margin-right: 0;
     }
 }
+
+.container {
+    width: calc(100% - 24px);
+}
+
 .progress-bar {
     height: 0;
 }
+
 .progress .progress-bar {
     width: 0;
     height: 4px;
     transition: width 0.1s linear;
 }
+
 a {
     cursor: pointer;
 }
+
 a:hover {
-    color: rgba(0,60,108,1);
+    color: rgba(0, 60, 108, 1);
     text-decoration: none;
 }
 
 .media-container {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: stretch;
-  display: flex;
-  padding: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: stretch;
+    display: flex;
+    padding: 0;
 }
+
 .no-flex {
     justify-content: flex-start;
     align-items: flex-start;
 }
+
 .media-panel {
     width: 48vw;
     height: 48vw;
@@ -71,9 +80,25 @@ a:hover {
     cursor: pointer;
     background-image: url('/global/images/no-cover.png');
 }
+
 .media-panel:nth-child(2n) {
     margin-right: 0;
 }
+
+@media screen and (min-width: 481px) {
+    .media-panel {
+        width: 24vw;
+        height: 24vw;
+        margin: 0 1vw 1vw 0;
+    }
+    .media-panel:nth-child(2n) {
+        margin-right: 1vw;
+    }
+    .media-panel:nth-child(4n) {
+        margin-right: 0;
+    }
+}
+
 @media screen and (min-width: 768px) {
     .media-panel {
         width: 19vw;
@@ -83,10 +108,14 @@ a:hover {
     .media-panel:nth-child(2n) {
         margin-right: 1vw;
     }
+    .media-panel:nth-child(4n) {
+        margin-right: 1vw;
+    }
     .media-panel:nth-child(5n) {
         margin-right: 0;
     }
 }
+
 @media screen and (min-width: 1100px) {
     .media-panel {
         width: 11vw;
@@ -94,6 +123,9 @@ a:hover {
         margin: 0 1vw 1vw 0;
     }
     .media-panel:nth-child(2n) {
+        margin-right: 1vw;
+    }
+    .media-panel:nth-child(4n) {
         margin-right: 1vw;
     }
     .media-panel:nth-child(5n) {
@@ -110,22 +142,25 @@ a:hover {
     -moz-transition: .1s ease-out;
     -o-transition: .1s ease-out;
     transition: .1s ease-out;
-    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
     background-size: cover;
     background-position: center center;
 }
-.panel-background:hover, .panel-background:active {
-    box-shadow: 0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
+
+.panel-background:hover,
+.panel-background:active {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
 }
+
 .panel-info {
     position: absolute;
     padding: 10px 15px;
     bottom: -1px;
     left: -1px;
     right: -1px;
-    background: rgba(0,0,0,0.75);
-    background: -webkit-gradient(linear,left top,left bottom,color-stop(0,transparent),color-stop(100%,rgba(0,0,0,0.75)));
-    background: linear-gradient(to bottom,rgba(0,0,0,0) 0,rgba(0,0,0,0.75), 100%);
+    background: rgba(0, 0, 0, 0.75);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(100%, rgba(0, 0, 0, 0.75)));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.75), 100%);
     margin: 0;
     line-height: 1.35;
     -webkit-transition: .1s ease-out;
@@ -135,11 +170,13 @@ a:hover {
     overflow: hidden;
     font-size: 1em;
 }
+
 @media screen and (min-width: 768px) {
     .panel-info {
         font-size: 16px;
     }
 }
+
 .panel-info span {
     display: block;
     overflow: hidden;
@@ -147,54 +184,58 @@ a:hover {
     white-space: nowrap;
 }
 
-
-
 .jumpList {
-  position: fixed;
-  left: 0;
-  top: 50px;
-  z-index: 1000;
-  background: #ffffff;
-  right: 0;
-  bottom: 0;
-  padding: 0;
-  transform: scale(0);
-  transition: transform 0.25s ease-in-out;
+    position: fixed;
+    left: 0;
+    top: 50px;
+    z-index: 1000;
+    background: #ffffff;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    transform: scale(0);
+    transition: transform 0.25s ease-in-out;
 }
+
 @media screen and (min-width: 768px) {
-  .jumpList {
-    top: 100px;
-  }
+    .jumpList {
+        top: 100px;
+    }
 }
+
 .jumpList.visible {
-  display: block;
-  transform: scale(1);
+    display: block;
+    transform: scale(1);
 }
+
 .jumpList ol {
-  list-style: none;
-  padding: 5vh 5vw;
-  margin: 0;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  align-items: stretch;
-  display: flex;
+    list-style: none;
+    padding: 5vh 5vw;
+    margin: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: stretch;
+    display: flex;
 }
+
 .jumpList li {
-  font-size: 2em;
-  font-weight: bold;
-  display: inline-block;
-  text-align: center;
-  width: 21vw;
+    font-size: 2em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    width: 21vw;
 }
+
 @media screen and (min-width: 768px) {
-  .jumpList li {
-    font-size: 3em;
-    width: 17vw;
-  }
+    .jumpList li {
+        font-size: 3em;
+        width: 17vw;
+    }
 }
+
 .jumpList a:hover {
-  text-decoration: none;
-  color: #dddddd;
+    text-decoration: none;
+    color: #dddddd;
 }
