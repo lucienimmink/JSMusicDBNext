@@ -207,7 +207,6 @@ export class VsFor implements OnInit, OnDestroy {
         }
     }
     ngOnInit() {
-        console.log('on init');
         // console.log(this.vsSize, this.vsOffsetBefore, this.vsOffsetAfter, this.vsExcess, this.vsScrollParent, this.vsAutoresize, this.tagName, this.__horizontal);
         this.view = this._viewContainer.createEmbeddedView(this._templateRef);
         this.parent = nextElementSibling(this._element.nativeElement);
