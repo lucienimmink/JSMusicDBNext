@@ -14,7 +14,7 @@ import * as _ from "lodash";
 @Component({
     templateUrl: 'app/album/albums.component.html',
     directives: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective],
-    styleUrls: ['app/album/albums.component.css']
+    styleUrls: ['dist/album/albums.component.css']
 })
 export class AlbumsComponent implements OnInit, OnDestroy {
 

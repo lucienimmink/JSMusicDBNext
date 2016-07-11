@@ -6,11 +6,11 @@ import { TimeFormatPipe } from './../timeformat.pipe';
   selector: 'mdb-tracklist',
   templateUrl: 'app/track/tracklist.component.html',
   pipes: [ TimeFormatPipe ],
-  styleUrls: [ 'app/track/tracklist.component.css' ]
+  styleUrls: [ 'dist/track/tracklist.component.css' ]
 })
 export class TrackListComponent {
     @Input() playlist:any = {};
-    
+
     constructor(private playerservice:PlayerService) {}
 
     select(track:any) {

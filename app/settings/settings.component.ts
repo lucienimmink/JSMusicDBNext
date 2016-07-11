@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 @Component({
     templateUrl: 'app/settings/settings.component.html',
     pipes: [TimeFormatPipe],
-    styleUrls: ['app/settings/settings.component.css']
+    styleUrls: ['dist/settings/settings.component.css']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 

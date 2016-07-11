@@ -8,13 +8,13 @@ import { CoreService } from './../core.service';
 @Component({
   selector: 'letters',
   templateUrl: 'app/letter/letter.component.html',
-  styleUrls: [ 'app/letter/letter.component.css' ]
+  styleUrls: [ 'dist/letter/letter.component.css' ]
 })
 export class LetterComponent implements OnInit, OnDestroy {
   private letters:Array<any>;
   private core:musicdbcore;
   private subscription: Subscription;
-  
+
   constructor (private coreService: CoreService, private router: Router) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
@@ -31,7 +31,7 @@ export class LetterComponent implements OnInit, OnDestroy {
   onSelect(letter:any) {
     this.router.navigate(['Letter', { letter: letter.escapedLetter }]);
   }
-  
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

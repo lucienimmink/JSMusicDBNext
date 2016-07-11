@@ -16,7 +16,7 @@ import { AnimationService } from './../utils/animation.service';
     templateUrl: 'app/nowPlaying/nowPlaying.component.html',
     pipes: [TimeFormatPipe],
     directives: [BackgroundArtDirective, TrackListComponent],
-    styleUrls: ['app/nowPlaying/nowPlaying.component.css']
+    styleUrls: ['dist/nowPlaying/nowPlaying.component.css']
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {
 

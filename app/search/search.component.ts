@@ -20,7 +20,7 @@ const MAXALLOWEDITEMS = 15;
     templateUrl: 'app/search/search.component.html',
     pipes: [TimeFormatPipe],
     directives: [ ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, AlbumComponent, TrackListComponent ],
-    styleUrls: ['app/search/search.component.css']
+    styleUrls: ['dist/search/search.component.css']
 })
 export class SearchComponent implements OnInit, OnDestroy {
 

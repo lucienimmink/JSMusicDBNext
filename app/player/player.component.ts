@@ -16,7 +16,7 @@ import { AnimationService } from './../utils/animation.service';
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
     directives: [AlbumArt],
-    styleUrls: ['app/player/player.component.css']
+    styleUrls: ['dist/player/player.component.css']
 })
 export class PlayerComponent implements OnDestroy {
     private subscription: Subscription;

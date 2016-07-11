@@ -11,7 +11,7 @@ import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
   templateUrl: 'app/artist/artistdetail.component.html',
-  styleUrls: ['app/artist/artistdetail.component.css'],
+  styleUrls: ['dist/artist/artistdetail.component.css'],
   directives: [AlbumComponent, BackgroundArtDirective, IMAGELAZYLOAD_DIRECTIVE]
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
@@ -38,7 +38,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-    
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

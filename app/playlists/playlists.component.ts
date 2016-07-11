@@ -18,7 +18,7 @@ import { StickyDirective } from './../utils/sticky.directive';
   templateUrl: 'app/playlists/playlists.component.html',
   pipes: [TimeFormatPipe],
   directives: [TrackListComponent, StickyDirective],
-  styleUrls: ['app/playlists/playlists.component.css']
+  styleUrls: ['dist/playlists/playlists.component.css']
 })
 export class PlaylistsComponent implements OnInit {
 

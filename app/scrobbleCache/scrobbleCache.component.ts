@@ -15,7 +15,7 @@ import * as _ from 'lodash';
     templateUrl: 'app/scrobbleCache/scrobbleCache.component.html',
     pipes: [TimeFormatPipe],
     directives: [StickyDirective],
-    styleUrls: ['app/scrobbleCache/scrobbleCache.component.css']
+    styleUrls: ['dist/scrobbleCache/scrobbleCache.component.css']
 })
 export class ScrobbleCacheComponent implements OnInit, OnDestroy {
 

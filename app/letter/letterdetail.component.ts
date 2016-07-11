@@ -12,7 +12,7 @@ import { Subscription }   from 'rxjs/Subscription';
 @Component({
   templateUrl: 'app/letter/letterdetail.component.html',
   directives: [ ArtistComponent, IMAGELAZYLOAD_DIRECTIVE ],
-  styleUrls: [ 'app/letter/letterdetail.component.css' ]
+  styleUrls: [ 'dist/letter/letterdetail.component.css' ]
 })
 
 export class LetterDetailComponent implements OnInit, OnDestroy {

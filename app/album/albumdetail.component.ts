@@ -15,7 +15,7 @@ import { StickyDirective } from './../utils/sticky.directive';
   templateUrl: 'app/album/albumdetail.component.html',
   pipes: [ TimeFormatPipe ],
   directives: [ AlbumArt, BackgroundArtDirective, StickyDirective ],
-  styleUrls: [ 'app/album/albumdetail.component.css' ]
+  styleUrls: [ 'dist/album/albumdetail.component.css' ]
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
   private albumName:string = '';
@@ -24,7 +24,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   private core:musicdbcore;
   private subscription: Subscription;
   private albumart:AlbumArt;
-  
+
   constructor (private coreService: CoreService, private router: Router, private routeParams:RouteParams, private pathService:PathService, private playerService:PlayerService) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(

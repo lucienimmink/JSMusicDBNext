@@ -9,7 +9,7 @@ import { LastFMService } from './../lastfm/lastfm.service';
 @Component({
     templateUrl: 'app/menu/topmenu.component.html',
     selector: 'topmenu',
-    styleUrls: ['app/menu/topmenu.component.css', 'app/menu/side-nav.css'],
+    styleUrls: ['dist/menu/topmenu.component.css', 'dist/menu/side-nav.css'],
     directives: [ROUTER_DIRECTIVES, TOOLTIP_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
 
