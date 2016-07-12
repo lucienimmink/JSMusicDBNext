@@ -32,11 +32,8 @@ body {
     .container {
         margin-left: 0;
         margin-right: 0;
+        width: 100%;
     }
-}
-
-.container {
-    width: calc(100% - 24px);
 }
 
 .progress-bar {
