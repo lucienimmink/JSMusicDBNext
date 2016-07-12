@@ -5,7 +5,6 @@ import { Subscription }   from 'rxjs/Subscription';
 import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
 import { LastFMService } from './../lastfm/lastfm.service';
-import { ConfigService } from './../utils/config.service';
 
 @Component({
     templateUrl: 'app/menu/topmenu.component.html',
@@ -28,7 +27,7 @@ export class TopMenuComponent implements OnDestroy {
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private theme: String;
 
-    constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService, private configService:ConfigService) {
+    constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService) {
         // subscribe to a change in path; so we can display it
         this.subscription = pathService.pathAnnounced$.subscribe(
             path => {
@@ -49,17 +48,9 @@ export class TopMenuComponent implements OnDestroy {
                 this.manualScrobblingList = data;
             }
         )
-        this.subscription4 = this.configService.theme$.subscribe(
-            data => {
-                this.theme = data;
-            }
-        )
-
         let controls: any = {};
         controls['query'] = new FormControl('');
         this.form = new FormGroup(controls);
-
-        this.theme = configService.theme;
     }
 
     ngOnDestroy() {

@@ -7,21 +7,21 @@ $primary-color: white;
 
 $secondary-color: rgba($primary-color, 0.6);
 $disabled-color: rgba($primary-color, 0.2);
+$activated-color: rgba($primary-color, 0.075);
+
+$tertiary-color: #1A1A1A;
 
 ::-webkit-input-placeholder {
-   color: $primary-color;
+   color: $primary-color !important;
 }
-
-:-moz-placeholder { /* Firefox 18- */
-   color: $primary-color;
+:-moz-placeholder {
+   color: $primary-color !important;
 }
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: $primary-color;
+::-moz-placeholder {
+   color: $primary-color !important;
 }
-
 :-ms-input-placeholder {
-   color: $primary-color;
+   color: $primary-color !important;
 }
 
 @import "mixins";

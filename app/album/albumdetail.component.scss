@@ -1,17 +1,3 @@
-.jumbotron {
-    margin-top: -5px;
-    padding: 24px 0;
-    background-color: #0078D7;
-    color:#ffffff;
-    z-index: 2;
-    position: relative;
-}
-@media screen and (min-width: 768px) {
-    .jumbotron {
-        background-color: #EFEFEF;
-        color: #000000;
-    }
-}
 .albumdetail /deep/ .albumart {
     width: 100%;
     height: auto;
@@ -61,17 +47,12 @@
     color: rgba(255,255,255, 0.6);
 }
 .disc-row {
-    overflow: hidden;
-    border-bottom: 1px solid rgba(0,120,215,1);
-    border-top: none;
     padding-left: 25px;
     margin-bottom: 5px;
     padding-top: 45px;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    background: #ffffff;
-    z-index: 1;
 }
 .disc-row:before,
 .disc-row:after {

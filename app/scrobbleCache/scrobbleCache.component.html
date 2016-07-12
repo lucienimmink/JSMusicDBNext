@@ -1,8 +1,8 @@
 <div class="container animated-page">
     <div class="row">
         <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
-            <h4 sticky style="top: 49px;" class="visible-xs visible-sm">Tracks in scrobble cache <span class="small color-type-secondary">({{manualScrobblingList.length}})</span> <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a></h4>
-            <h4 sticky style="top: 90px;" class="visible-md visible-lg">Tracks in scrobble cache <span class="small color-type-secondary">({{manualScrobblingList.length}})</span> <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a></h4>
+            <h4 sticky style="top: 49px;" class="visible-xs visible-sm header-seperator">Tracks in scrobble cache <span class="small color-type-secondary">({{manualScrobblingList.length}})</span> <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a></h4>
+            <h4 sticky style="top: 90px;" class="visible-md visible-lg header-seperator">Tracks in scrobble cache <span class="small color-type-secondary">({{manualScrobblingList.length}})</span> <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a></h4>
             <ol class="list-items">
                 <li class="list-items-row" *ngFor="let item of manualScrobblingList">
                     <div class="row">

@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist && !loading">
-      <h4 sticky>{{playlist.name}} <span class="small color-type-secondary">({{playlist.tracks.length}})</span></h4>
+      <h4 sticky class="header-seperator">{{playlist.name}} <span class="small color-type-secondary">({{playlist.tracks.length}})</span></h4>
       <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
     </div>
   </div>

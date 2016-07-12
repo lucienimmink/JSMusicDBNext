@@ -8,7 +8,7 @@ export class ConfigService {
     theme$ = this.themeSource.asObservable();
 
     constructor() {
-        this.setStyleSheet();
+        //this.setStyleSheet();
     }
 
     private setStyleSheet() {
@@ -23,6 +23,8 @@ export class ConfigService {
             document.getElementsByTagName('head')[0].removeChild(current);
         }
         document.getElementsByTagName('head')[0].appendChild(stylesheet);
+
+        localStorage.setItem('theme', this._theme);
     }
 
     get theme():string {
@@ -31,6 +33,9 @@ export class ConfigService {
     set theme(theme:string) {
         this._theme = theme;
         this.themeSource.next(theme);
+        this.setStyleSheet();
+    }
+    applyTheme() {
         this.setStyleSheet();
     }
 }

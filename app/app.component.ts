@@ -66,7 +66,7 @@ export class AppComponent implements OnDestroy {
   @ViewChild(LetterComponent)
   private letterComponent: LetterComponent;
 
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService) {
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService:ConfigService) {
     if (localStorage.getItem('jwt')) {
       // lets login with these credentials
       this.loginService.autoLogin().subscribe(
@@ -75,6 +75,7 @@ export class AppComponent implements OnDestroy {
         }
       )
     }
+    this.configService.applyTheme();
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

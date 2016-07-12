@@ -15,16 +15,11 @@
   color:#ffffff;
 }
 h4 {
-  overflow: hidden;
-  border-bottom: 1px solid rgba(0,120,215,1);
-  border-top: none;
   padding-left: 25px;
   margin-bottom: 5px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  background: #ffffff;
-  z-index: 1;
 }
 h4:before,
 h4:after {
