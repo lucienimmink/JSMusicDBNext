@@ -1,12 +1,12 @@
 //== Colors (white)
 $background-color: white !default;
 $primary-color: black !default;
-$tertiary-color: #EFEFEF;
+$tertiary-color: darken($background-color, 12.5%);
 $accent-color: #0078d7;
 
 $secondary-color: rgba($primary-color, 0.6);
 $disabled-color: rgba($primary-color, 0.2);
-$activated-color: rgba($primary-color, 0.075);
+$hover-color: rgba($primary-color, 0.05);
 
 //== Media queries breakpoints
 //

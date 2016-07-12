@@ -224,7 +224,7 @@ input.form-control:focus, textarea.form-control:focus {
         color:$primary-color;
     }
     .side-nav__content li:hover, .side-nav__content li.active {
-        background-color: $activated-color;
+        background-color: $hover-color;
     }
     .side-nav__content .search-bar input {
         color: $primary-color;
@@ -238,7 +238,7 @@ input.form-control:focus, textarea.form-control:focus {
 }
 
 .list-group-item:nth-child(2n+1) {
-  background-color: $activated-color;
+  background-color: $tertiary-color;
 }
 .player {
     background-color: $tertiary-color;
