@@ -1,3 +1,8 @@
+@charset "utf-8";
+
+@import "./../sass/variables";
+@import "./../sass/mixins";
+
 .menu-top {
     background: #EFEFEF;
     position: fixed;
@@ -6,6 +11,11 @@
     top: 0;
     z-index: 3;
     height: 50px;
+
+    &.dark {
+        background: #1A1A1A;
+        color: white;
+    }
 }
 .btn-menu {
     margin: 0;
@@ -109,4 +119,24 @@ h1 {
 .side-nav__content .search-bar:hover {
     border-left-color: transparent;
     background-color: transparent;
+}
+
+.dark .side-nav__container {
+    background-color: #1A1A1A;
+
+    .side-nav__content li a {
+        color: #fff;
+    }
+    .side-nav__content li:hover, .side-nav__content li.active {
+        background-color: rgba(255,255,255,0.1);
+    }
+    .side-nav__content .search-bar input {
+        color: #fff;
+        background: black;
+        border: 1px solid #fff;
+
+    }
+    .side-nav__content .search-bar .input-group-addon {
+        color: #fff;
+    }
 }

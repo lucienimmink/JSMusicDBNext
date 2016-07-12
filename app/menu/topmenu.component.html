@@ -1,4 +1,4 @@
-<div class="menu-top">
+<div class="menu-top" [ngClass]="{'dark': theme === 'dark'}">
     <span (click)="toggleMenu()">
         <button class="btn btn-menu hidden-md hidden-lg">
             <span class="glyph glyph-hamburger" aria-hidden="true"></span>
@@ -23,7 +23,7 @@
     </form>
 </div>
 
-<aside class="js-side-nav side-nav" [ngClass]="{'side-nav--visible': menuVisible}">
+<aside class="js-side-nav side-nav" [ngClass]="{'side-nav--visible': menuVisible, 'dark': theme === 'dark'}">
     <nav class="js-side-nav-container side-nav__container">
         <ul class="side-nav__content nav nav-pills nav-stacked">
             <li class="hidden-xs hidden-sm search-bar">
