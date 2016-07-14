@@ -70,14 +70,14 @@ export class musicdbcore {
             album.tracks.push(track);
             // group by discnumber
             let disc = track.disc;
-            if (!album.discs[disc - 1]) {
-                album.discs[disc - 1] = [];
-                album.discs[disc - 1].push(track);
+            if (!album.discs[`disc-${disc}`]) {
+                album.discs[`disc-${disc}`] = [];
+                album.discs[`disc-${disc}`].push(track);
             } else {
-                album.discs[disc - 1].push(track);
+                album.discs[`disc-${disc}`].push(track);
             }
             // sort if needed
-            album.discs[disc - 1].sort(function (a, b) {
+            album.discs[`disc-${disc}`].sort(function (a, b) {
                 if (a.number < b.number) {
                     return -1;
                 }
