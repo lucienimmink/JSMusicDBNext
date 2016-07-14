@@ -5,6 +5,7 @@ import { Subscription }   from 'rxjs/Subscription';
 import * as _ from 'lodash';
 
 import { AlbumArt } from './../utils/albumart.component';
+import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
 import { CoreService} from './../core.service';
@@ -119,7 +120,7 @@ export class PlayerComponent implements OnDestroy {
                 let track = core.tracks[id];
                 list.push(track);
             });
-            let playlist = {
+            let playlist:Album = {
                 tracks: list,
                 name: 'Current playlist',
                 sortName: 'Current playlist',
@@ -127,7 +128,8 @@ export class PlayerComponent implements OnDestroy {
                 discs: null,
                 year: null,
                 art: null,
-                url: null
+                url: null,
+                sortedDiscs: null
             }
             this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;
