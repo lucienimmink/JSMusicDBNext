@@ -15,6 +15,9 @@ import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { RecentlyListenedService } from './../utils/recentlyListened.service';
 import { LastFMService } from './../lastfm/lastfm.service';
+import { ConfigService } from './../utils/config.service';
+
+import { Subscription }   from 'rxjs/Subscription';
 
 const RECENTLYLISTENEDINTERVAL = 1000 * 60;
 
@@ -35,12 +38,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   @Input() username: string;
   @Input() password: string;
   private form: FormGroup;
+  private subscription:Subscription;
+  private theme:string;
 
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp, private lastFMService: LastFMService) {
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp, private lastFMService: LastFMService, private configService: ConfigService) {
     let controls: any = {};
     controls['username'] = new FormControl('', Validators.required);
     controls['password'] = new FormControl('', Validators.required);
     this.form = new FormGroup(controls);
+
+    this.subscription = this.configService.theme$.subscribe(
+        data => {
+            this.theme = data;
+        }
+    )
+    this.theme = configService.theme;
   }
 
   onSubmit() {
@@ -68,6 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.counter);
+    this.subscription.unsubscribe();
   }
 
   startPolling() {
