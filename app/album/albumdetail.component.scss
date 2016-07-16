@@ -47,9 +47,9 @@
     color: rgba(255,255,255, 0.6);
 }
 .disc-row {
-    padding-left: 25px;
+    padding-left: 10px;
     margin-bottom: 5px;
-    padding-top: 45px;
+    padding-top: 15px;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -58,8 +58,4 @@
 .disc-row:after {
     content: '';
     display: table;
-}
-
-.first-disc {
-    margin-top: -45px;
 }

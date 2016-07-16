@@ -4,7 +4,7 @@
       <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body'; excess: 5">
         <div *ngFor="let artist of _items">
           <h4 sticky style="top: 49px;" class="visible-xs visible-sm header-seperator"><a (click)="toggleJumpList()">{{artist.name}} <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span></a></h4>
-          <h4 sticky style="top: 90px;" class="visible-md visible-lg header-seperator"><a (click)="toggleJumpList()">{{artist.name}} <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span></a></h4>
+          <h4 sticky style="top: 99px;" class="visible-md visible-lg header-seperator"><a (click)="toggleJumpList()">{{artist.name}} <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span></a></h4>
           <ul>
             <li *ngFor="let album of artist.albums" (click)="navigateToAlbum(album)">
               <div class="image-wrapper">

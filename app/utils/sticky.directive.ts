@@ -239,7 +239,7 @@ export class StickyDirective {
         var refElement = el.node.nextSibling || el.node,
             cloneStyle = el.clone.style;
 
-        cloneStyle.height = '69px';
+        cloneStyle.height = '39px';
         cloneStyle.width = el.width + 'px';
         cloneStyle.marginTop = el.computed.marginTop;
         cloneStyle.marginBottom = el.computed.marginBottom;

@@ -4,7 +4,7 @@ body {
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
-    user-select: none;
+    -ms-user-select: none;
     background: $background-color;
     color: $primary-color;
 
@@ -249,7 +249,8 @@ input.form-control:focus, textarea.form-control:focus {
     border-top: none;
     background: $background-color;
     color: $primary-color;
-    z-index: 1;
+    z-index: 2;
+    padding-top: 6px;
 }
 .color-type-secondary, h4 .small {
     color: $secondary-color;
@@ -259,7 +260,7 @@ input.form-control:focus, textarea.form-control:focus {
     padding: 24px 0;
     background-color: #0078D7;
     color:#ffffff;
-    z-index: 2;
+    z-index: 12;
     position: relative;
 
     @include musicdb-respond-min-width(sm) {

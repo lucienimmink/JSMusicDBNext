@@ -4,7 +4,7 @@
       <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'body';">
         <div class="col-xs-24" *ngFor="let letter of _letters">
           <h4 sticky style="top: 49px;" class="visible-xs visible-sm header-seperator"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
-          <h4 sticky style="top: 90px;" class="visible-md visible-lg header-seperator"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
+          <h4 sticky style="top: 99px;" class="visible-md visible-lg header-seperator"><a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a></h4>
           <ul>
             <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
               <div class="image-wrapper">

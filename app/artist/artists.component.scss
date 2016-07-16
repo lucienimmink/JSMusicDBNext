@@ -26,9 +26,6 @@ h4:after {
     content: '';
     display: table;
 }
-h4 + div {
-    height: 69px !important;
-}
 .container-longlist li:hover .color-type-secondary {
   color: rgba(255,255,255, 0.6);
 }

@@ -73,7 +73,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
     }
     getSize(item, index) {
-        return (item.albums.length * 80) + 79;
+        return (item.albums.length * 80) + 49;
     }
     toggleJumpList() {
         this.showJumpList = !this.showJumpList;
