@@ -188,9 +188,9 @@ export class PlayerComponent implements OnDestroy {
 
     onplay() {
         this.lastFMService.announceNowPlaying(this.track).subscribe(
-            data => {
-                //console.log('announced now playing');
-            }
+            data => {},
+            error => {},
+            () => {}
         )
     }
     toggleShuffle() {

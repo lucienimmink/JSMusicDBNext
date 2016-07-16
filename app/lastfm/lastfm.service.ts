@@ -3,11 +3,16 @@ import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from "@a
 import { Observable } from "rxjs/Observable";
 import { Subject }    from 'rxjs/Subject';
 import * as _ from 'lodash';
+import * as PouchDB from 'pouchdb';
 
 import Track from './../org/arielext/musicdb/models/Track';
 
 const APIKEY: string = '956c1818ded606576d6941de5ff793a5';
 const SECRET: string = '4d183e73f7578dee78557665e9be3acc';
+const NOIMAGE = 'global/images/no-cover.png';
+
+let recentlyListenedTable = new PouchDB('recentlyListened');
+let arttable = new PouchDB('art');
 
 @Injectable()
 export class LastFMService {
@@ -16,6 +21,8 @@ export class LastFMService {
     private b64pad = '';
     private manualScrobbleListSource = new Subject<any>();
     public manualScrobbleList$: Observable<any> = this.manualScrobbleListSource.asObservable();
+    private recentlyListenedTable = recentlyListenedTable;
+    private arttable = arttable;
 
     constructor(private http: Http) { }
 
@@ -38,7 +45,7 @@ export class LastFMService {
     toggleLoved(track: Track): Observable<any> {
         let sk = localStorage.getItem('lastfm-token');
         let urlSearchParams: URLSearchParams = new URLSearchParams();
-        let method:string = (track.isLoved) ? 'track.love' : 'track.unlove';
+        let method: string = (track.isLoved) ? 'track.love' : 'track.unlove';
         urlSearchParams.set('method', method);
         urlSearchParams.set('api_key', APIKEY);
         urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, null, sk, method));
@@ -57,7 +64,7 @@ export class LastFMService {
             .map(this.noop)
             .catch(this.handleError);
     };
-    getTrackInfo(track: Track, user:string): Observable<any> {
+    getTrackInfo(track: Track, user: string): Observable<any> {
         if (track) {
             let urlSearchParams: URLSearchParams = new URLSearchParams();
             urlSearchParams.set('method', 'track.getInfo');
@@ -115,68 +122,123 @@ export class LastFMService {
     }
 
     announceNowPlaying(track: Track): Observable<any> {
-        let now = new Date();
-        let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
-        let sk = localStorage.getItem('lastfm-token');
-        let urlSearchParams: URLSearchParams = new URLSearchParams();
-        urlSearchParams.set('method', 'track.updateNowPlaying');
-        urlSearchParams.set('api_key', APIKEY);
-        urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
-        urlSearchParams.set('artist', track.trackArtist);
-        urlSearchParams.set('album', track.album.name);
-        urlSearchParams.set('track', track.title);
-        urlSearchParams.set('timestamp', timestamp.toString());
-        urlSearchParams.set('sk', sk);
+        let username = localStorage.getItem('lastfm-username');
+        if (username !== 'mdb-skipped') {
+            let now = new Date();
+            let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
+            let sk = localStorage.getItem('lastfm-token');
+            let urlSearchParams: URLSearchParams = new URLSearchParams();
+            urlSearchParams.set('method', 'track.updateNowPlaying');
+            urlSearchParams.set('api_key', APIKEY);
+            urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
+            urlSearchParams.set('artist', track.trackArtist);
+            urlSearchParams.set('album', track.album.name);
+            urlSearchParams.set('track', track.title);
+            urlSearchParams.set('timestamp', timestamp.toString());
+            urlSearchParams.set('sk', sk);
 
-        let headers = new Headers();
-        headers.append('Content-Type',
-            'application/x-www-form-urlencoded');
+            let headers = new Headers();
+            headers.append('Content-Type',
+                'application/x-www-form-urlencoded');
 
-        return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
-            headers: headers
-        })
-            .map(this.noop)
-            .catch(this.handleError);
-    }
-
-    scrobbleTrack(track: Track): any {
-        let now = new Date();
-        let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
-        let sk = localStorage.getItem('lastfm-token');
-        let urlSearchParams: URLSearchParams = new URLSearchParams();
-        urlSearchParams.set('method', 'track.scrobble');
-        urlSearchParams.set('api_key', APIKEY);
-        urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
-        urlSearchParams.set('artist', track.trackArtist);
-        urlSearchParams.set('album', track.album.name);
-        urlSearchParams.set('track', track.title);
-        urlSearchParams.set('timestamp', timestamp.toString());
-        urlSearchParams.set('sk', sk);
-
-        let headers = new Headers();
-        headers.append('Content-Type',
-            'application/x-www-form-urlencoded');
-
-        let saveScrobble = this.booleanState('manual-scrobble-state');
-        if (!saveScrobble) {
             return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
                 headers: headers
             })
                 .map(this.noop)
                 .catch(this.handleError);
         } else {
-            // save details
-            let offlineCache = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
-            let cachedItem = {
-                artist: track.trackArtist,
-                album: track.album.name,
-                track: track.title,
-                timestamp: timestamp.toString()
-            }
-            offlineCache.push(cachedItem);
-            this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
-            localStorage.setItem('manual-scrobble-list', JSON.stringify(offlineCache));
+            return Observable.throw(null);
         }
+    }
+
+    scrobbleTrack(track: Track): any {
+        let username = localStorage.getItem('lastfm-username');
+        let now = new Date();
+        let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
+        if (username !== 'mdb-skipped') {
+            let sk = localStorage.getItem('lastfm-token');
+            let urlSearchParams: URLSearchParams = new URLSearchParams();
+            urlSearchParams.set('method', 'track.scrobble');
+            urlSearchParams.set('api_key', APIKEY);
+            urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
+            urlSearchParams.set('artist', track.trackArtist);
+            urlSearchParams.set('album', track.album.name);
+            urlSearchParams.set('track', track.title);
+            urlSearchParams.set('timestamp', timestamp.toString());
+            urlSearchParams.set('sk', sk);
+
+            let headers = new Headers();
+            headers.append('Content-Type',
+                'application/x-www-form-urlencoded');
+
+            let saveScrobble = this.booleanState('manual-scrobble-state');
+            if (!saveScrobble) {
+                return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
+                    headers: headers
+                })
+                    .map(this.noop)
+                    .catch(this.handleError);
+            } else {
+                // save details
+                let offlineCache = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
+                let cachedItem = {
+                    artist: track.trackArtist,
+                    album: track.album.name,
+                    track: track.title,
+                    timestamp: timestamp.toString()
+                }
+                offlineCache.push(cachedItem);
+                this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
+                localStorage.setItem('manual-scrobble-list', JSON.stringify(offlineCache));
+            }
+        } else {
+            let key = `art-${track.trackArtist}-${track.album.name}`;
+            let c = this;
+            let imageurl = NOIMAGE;
+            this.arttable.get(key, function (err, data) {
+                if (data) {
+                    c.saveInLocal(track, timestamp, data.url);
+                } else {
+                    c.saveInLocal(track, timestamp, NOIMAGE);
+                }
+            });
+        }
+    }
+    saveInLocal(track: Track, timestamp: number, imageurl: string): void {
+        let c = this;
+        let cachedItem = {
+            artist: {
+                '#text': track.trackArtist
+            },
+            album: {
+                '#text': track.album.name
+            },
+            image: [{
+                '#text': imageurl
+            }],
+            name: track.title,
+            date: {
+                uts: timestamp
+            }
+        };
+        let tracks = [];
+        let rev = null;
+        this.recentlyListenedTable.get('recentlyListened', function (err, data) {
+            if (data) {
+                tracks = data.tracks;
+                if (tracks.length > 10) {
+                    tracks = tracks.splice(0, 10);
+                }
+                rev = data._rev;
+            }
+            tracks.unshift(cachedItem);
+            let item = {
+                _id: `recentlyListened`,
+                _rev: rev,
+                tracks: tracks
+            };
+            c.recentlyListenedTable.put(item, function (err, res) { });
+        });
     }
     scrobbleCachedTrack(cachedTrack: any) {
         let sk = localStorage.getItem('lastfm-token');
