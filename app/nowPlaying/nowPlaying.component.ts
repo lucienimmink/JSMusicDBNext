@@ -1,4 +1,5 @@
 import { Component, OnDestroy, ViewChild, OnInit } from "@angular/core";
+import { ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -15,7 +16,7 @@ import { AnimationService } from './../utils/animation.service';
 @Component({
     templateUrl: 'app/nowPlaying/nowPlaying.component.html',
     pipes: [TimeFormatPipe],
-    directives: [BackgroundArtDirective, TrackListComponent],
+    directives: [BackgroundArtDirective, TrackListComponent, ROUTER_DIRECTIVES],
     styleUrls: ['dist/nowPlaying/nowPlaying.component.css']
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {

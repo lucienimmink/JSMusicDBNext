@@ -264,8 +264,23 @@ input.form-control:focus, textarea.form-control:focus {
     position: relative;
 
     @include musicdb-respond-min-width(sm) {
-         background-color: $tertiary-color;
+        background-color: $tertiary-color;
         color: $primary-color;
+    }
+    h3 {
+        padding-top: 0;
+    }
+
+    a {
+        color: white;
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
+        @include musicdb-respond-min-width(sm) {
+            color: $accent-color;
+            text-decoration: none;
+        }
     }
 }
 
