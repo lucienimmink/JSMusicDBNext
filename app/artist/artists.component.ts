@@ -64,6 +64,6 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     jumpToLetter(letter: any) {
         this.showJumpList = false;
         let index = this.letters.indexOf(letter);
-        window.scrollTo(0, this.cummlativeLength[index] - 300);
+        window.scrollTo(0, this.cummlativeLength[index-1]);
     }
 }

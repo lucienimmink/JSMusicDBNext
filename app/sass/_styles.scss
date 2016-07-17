@@ -245,7 +245,7 @@ input.form-control:focus, textarea.form-control:focus {
 }
 .header-seperator {
     overflow: hidden;
-    border-bottom: 1px solid rgba(0,120,215,1);
+    border-bottom: 1px solid $accent-color;
     border-top: none;
     background: $background-color;
     color: $primary-color;
@@ -258,7 +258,7 @@ input.form-control:focus, textarea.form-control:focus {
 .jumbotron.theme-light {
     margin-top: -5px;
     padding: 24px 0;
-    background-color: #0078D7;
+    background-color: $accent-color;
     color:#ffffff;
     z-index: 12;
     position: relative;

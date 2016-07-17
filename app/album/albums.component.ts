@@ -85,7 +85,8 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         this.items.some(function (item, i) {
             let ret = false;
             if (item.letter.letter === letter.letter) {
-                window.scrollTo(0, c.cummlativeLength[i].l - 300 );
+                let jump = (i > 0) ? i-1 : 0;
+                window.scrollTo(0, c.cummlativeLength[jump].l);
                 ret = true;
             }
             return ret;
