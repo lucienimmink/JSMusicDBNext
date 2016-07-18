@@ -11,7 +11,11 @@
     "postinstall": "npm run clean && concurrent \"typings install\" \"npm run tsc\" \"npm run build:sass\"",
     "watch": "npm run clean && concurrent \"npm run watch:ts\" \"npm run watch:sass\"",
     "watch:ts": "tsc --watch",
-    "watch:sass": "npm run build:sass && node-sass -o dist/ -w app/"
+    "watch:sass": "npm run build:sass && node-sass -o dist/ -w app/",
+    "gulp": "gulp",
+    "rimraf": "rimraf",
+    "bundle": "gulp bundle",
+    "postbundle": "rimraf dist"
   },
   "license": "MIT",
   "dependencies": {
@@ -43,7 +47,12 @@
   },
   "devDependencies": {
     "concurrently": "^2.1.0",
+    "gulp": "^3.9.1",
+    "gulp-inline-ng2-template": "^2.0.4",
+    "gulp-typescript": "^2.13.6",
     "lite-server": "^2.2.0",
+    "rimraf": "^2.5.3",
+    "systemjs-builder": "^0.15.23",
     "typescript": "^1.8.10",
     "typings": "^1.1.0"
   },
