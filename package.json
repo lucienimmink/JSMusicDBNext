@@ -48,7 +48,9 @@
   "devDependencies": {
     "concurrently": "^2.1.0",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-inline-ng2-template": "^2.0.4",
+    "gulp-plumber": "^1.1.0",
     "gulp-typescript": "^2.13.6",
     "lite-server": "^2.2.0",
     "rimraf": "^2.5.3",
