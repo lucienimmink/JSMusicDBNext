@@ -57,7 +57,8 @@
     ngPackageNames.forEach(setPackageConfig);
     var config = {
         map: map,
-        packages: packages
+        packages: packages,
+        meta: meta
     }
     System.config(config);
 })(this);

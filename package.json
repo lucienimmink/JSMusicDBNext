@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "lite": "lite-server",
     "typings": "typings",
-    "postinstall": "npm run clean && concurrent \"typings install\" \"npm run tsc\" \"npm run build:sass\"",
+    "postinstall": "typings install",
     "watch": "npm run clean && concurrent \"npm run watch:ts\" \"npm run watch:sass\"",
     "watch:ts": "tsc --watch",
     "watch:sass": "npm run build:sass && node-sass -o dist/ -w app/",
