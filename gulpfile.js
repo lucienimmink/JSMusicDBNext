@@ -8,7 +8,8 @@ var tsProject = tsc.createProject('./tsconfig.json');
 
 gulp.task('bundle', ['bundle-app', 'bundle-dependencies'], function () { });
 gulp.task('build', ['bundle', 'copy'], function () { });
-gulp.task('copy', ['copy-css', 'copy-polyfills'], function () { });
+gulp.task('copy', ['copy-css', 'copy-polyfills', 'copy-assets'], function () { });
+gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function () { });
 
 gulp.task('inline-templates', function () {
     var tsResult = tsProject.src()
@@ -40,6 +41,23 @@ gulp.task('copy-polyfills', function () {
     return gulp.src(jsSources)
         .pipe(concat('polyfills.js'))
         .pipe(gulp.dest('./target/js/'));
+});
+
+gulp.task('copy-global', function () {
+    return gulp.src('./global/**/*')
+        .pipe(gulp.dest('./target/global/'));
+});
+gulp.task('copy-fonts', function () {
+    return gulp.src('./node_modules/winstrap/dist/fonts/**/*')
+        .pipe(gulp.dest('./target/fonts/'));
+});
+gulp.task('copy-root', function () {
+    var rootfiles = [
+        'dist-systemjs.config.js',
+        'manifest.json'
+    ];
+    return gulp.src(rootfiles)
+        .pipe(gulp.dest('./target/'));
 });
 
 gulp.task('bundle-app', ['inline-templates'], function () {
