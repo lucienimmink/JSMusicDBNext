@@ -62,8 +62,8 @@ gulp.task('copy-root', function () {
 
 gulp.task('copy-css', function () {
     var rootfiles = [
-        './dist/sass/light.js',
-        './dist/sass/dark.js'
+        './dist/sass/light.css',
+        './dist/sass/dark.css'
     ];
     return gulp.src(rootfiles)
         .pipe(gulp.dest('./target/css/'));
