@@ -12,6 +12,7 @@ gulp.task('copy', ['copy-css', 'copy-polyfills'], function () { });
 
 gulp.task('inline-templates', function () {
     var tsResult = tsProject.src()
+        .pipe(inlineNg2Template({ UseRelativePaths: true, indent: 0, removeLineBreaks: true}))
         .pipe(tsc(tsProject))
     return tsResult.js.pipe(gulp.dest('dist/app'));
 });
