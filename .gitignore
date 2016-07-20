@@ -5,3 +5,10 @@ dist
 typings
 stubs
 bundles
+
+target/css
+target/fonts
+target/global
+target/js
+target/index.html
+target/*manifest.json

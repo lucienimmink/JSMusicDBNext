@@ -3,13 +3,37 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     tsc = require('gulp-typescript'),
     Builder = require('systemjs-builder'),
+    rev = require('gulp-rev'),
+    revReplace = require('gulp-rev-replace'),
+    del = require('del'),
+    rename = require("gulp-rename"),
+    runSequence = require('run-sequence'),
     inlineNg2Template = require('gulp-inline-ng2-template');
 var tsProject = tsc.createProject('./tsconfig.json');
 
-gulp.task('bundle', ['bundle-app', 'bundle-dependencies', 'bundle-css'], function () { });
-gulp.task('build', ['bundle', 'copy'], function () { });
-gulp.task('copy', ['copy-css', 'copy-polyfills', 'copy-assets'], function () { });
-gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function () { });
+gulp.task('bundle', ['bundle-app', 'bundle-dependencies', 'bundle-css'], function (cb) { cb(); });
+gulp.task('copy', ['copy-js', 'copy-css', 'copy-polyfills', 'copy-assets'], function (cb) { cb(); });
+gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function (cb) { cb(); });
+
+gulp.task('build', function (cb) {
+    runSequence('clean', 'bundle', 'copy', 'rev', 'revreplace', 'cleanup', cb);
+});
+
+/**
+ * individual tasks
+ */
+gulp.task('clean', function (cb) {
+    del([
+        './target/css',
+        './target/fonts',
+        './target/global',
+        './target/js',
+        './target/dist-systemjs*',
+        './target/*manifest.json',
+        './target/index.html'
+    ]);
+    cb();
+});
 
 gulp.task('inline-templates', function () {
     var tsResult = tsProject.src()
@@ -18,7 +42,7 @@ gulp.task('inline-templates', function () {
     return tsResult.js.pipe(gulp.dest('dist/app'));
 });
 
-gulp.task('bundle-css', function () {
+gulp.task('bundle-css', function (cb) {
     var cssSources = [
         './node_modules/winstrap/dist/css/winstrap.css',
         './dist/sass/base.css',
@@ -30,7 +54,7 @@ gulp.task('bundle-css', function () {
         .pipe(gulp.dest('./target/css/'));
 });
 
-gulp.task('copy-polyfills', function () {
+gulp.task('copy-polyfills', function (cb) {
     var jsSources = [
         './node_modules/core-js/client/shim.min.js',
         './node_modules/zone.js/dist/zone.js',
@@ -43,24 +67,23 @@ gulp.task('copy-polyfills', function () {
         .pipe(gulp.dest('./target/js/'));
 });
 
-gulp.task('copy-global', function () {
+gulp.task('copy-global', function (cb) {
     return gulp.src('./global/**/*')
         .pipe(gulp.dest('./target/global/'));
 });
-gulp.task('copy-fonts', function () {
+gulp.task('copy-fonts', function (cb) {
     return gulp.src('./node_modules/winstrap/dist/fonts/**/*')
         .pipe(gulp.dest('./target/fonts/'));
 });
-gulp.task('copy-root', function () {
+gulp.task('copy-root', function (cb) {
     var rootfiles = [
-        'dist-systemjs.config.js',
         'manifest.json'
     ];
     return gulp.src(rootfiles)
         .pipe(gulp.dest('./target/'));
 });
 
-gulp.task('copy-css', function () {
+gulp.task('copy-css', function (cb) {
     var rootfiles = [
         './dist/sass/light.css',
         './dist/sass/dark.css'
@@ -69,34 +92,72 @@ gulp.task('copy-css', function () {
         .pipe(gulp.dest('./target/css/'));
 });
 
-gulp.task('bundle-app', ['inline-templates'], function () {
-    // optional constructor options
-    // sets the baseURL and loads the configuration file
+gulp.task('copy-js', function (cb) {
+    return gulp.src('dist-systemjs.config.js')
+        .pipe(gulp.dest('./target/js'));
+});
+
+gulp.task('cleanup', function (cb) {
+    del([
+        'target/css/dark.css',
+        'target/css/light.css',
+        'target/css/styles.css',
+        'target/css/dark.css',
+        'target/js/app.bundle.js',
+        'target/js/dependencies.bundle.js',
+        'target/js/polyfills.js',
+        'target/js/dist-systemjs.config.js'
+    ]);
+    cb();
+});
+
+gulp.task('rev', function (cb) {
+    var fs = require('fs');
+    if (fs.existsSync('target/rev-manifest.json')){
+        console.info('rev-manifest found; using current revs; if you want to rebuild; please use `gulp build` first');
+        cb();
+    } else {
+        var revFiles = [
+            './target/**/*.css',
+            './target/**/*.js'
+        ]
+        return gulp.src(revFiles)
+            .pipe(rev())
+            .pipe(gulp.dest('./target/'))
+            .pipe(rev.manifest())
+            .pipe(gulp.dest('./target/'));
+    }
+});
+
+gulp.task('revreplace', function (cb) {
+    var manifest = gulp.src('./target/rev-manifest.json');
+
+    return gulp.src('./target/_index.html')
+        .pipe(revReplace({manifest: manifest}))
+        .pipe(rename('index.html'))
+        .pipe(gulp.dest('./target'));
+});
+
+gulp.task('bundle-app', ['inline-templates'], function (cb) {
     var builder = new Builder('', 'dist-systemjs.config.js');
 
-    return builder
+    builder
         .bundle('dist/app/**/* - [@angular/**/*.js] - [rxjs/**/*.js]', 'target/js/app.bundle.js', { minify: true })
-        .then(function () {
-            console.log('Build complete');
-        })
+        .then(function() { cb() })
         .catch(function (err) {
             console.log('Build error');
-            console.log(err);
+            cb(err);
         });
 });
 
-gulp.task('bundle-dependencies', ['inline-templates'], function () {
-    // optional constructor options
-    // sets the baseURL and loads the configuration file
+gulp.task('bundle-dependencies', ['inline-templates'], function (cb) {
     var builder = new Builder('', 'dist-systemjs.config.js');
 
-    return builder
+    builder
         .bundle('dist/app/**/*.js - [dist/app/**/*.js]', 'target/js/dependencies.bundle.js', { minify: true })
-        .then(function () {
-            console.log('Build complete');
-        })
+        .then(function() { cb() })
         .catch(function (err) {
             console.log('Build error');
-            console.log(err);
+            cb(err);
         });
 });
