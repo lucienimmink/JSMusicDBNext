@@ -99,10 +99,7 @@ gulp.task('copy-js', function (cb) {
 
 gulp.task('cleanup', function (cb) {
     del([
-        'target/css/dark.css',
-        'target/css/light.css',
         'target/css/styles.css',
-        'target/css/dark.css',
         'target/js/app.bundle.js',
         'target/js/dependencies.bundle.js',
         'target/js/polyfills.js',
