@@ -35,7 +35,6 @@
     "moment": "^2.13.0",
     "musicdbcore": "git+https://git@github.com/lucienimmink/MusicDBCore.git",
     "ng2-bootstrap": "^1.0.17",
-    "ng2-vs-for": "^1.1.1",
     "node-sass": "^3.8.0",
     "pouchdb": "^5.4.5",
     "reflect-metadata": "^0.1.3",

@@ -9,7 +9,6 @@
         '@angular': 'node_modules/@angular',
         'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
         'rxjs': 'node_modules/rxjs',
-        'musicdbcore': 'node_modules/musicdbcore',
         'lodash': 'node_modules/lodash',
         'angular2-jwt': 'node_modules/angular2-jwt',
         'ng2-bootstrap': 'node_modules/ng2-bootstrap',
@@ -21,7 +20,6 @@
         'app': { main: 'main.js', defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'lodash': { main: 'lodash.js', defaultExtension: 'js' },
-        'musicdbcore': { main: 'dist/core.js', defaultExtension: 'js' },
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
         'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
         'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
@@ -29,7 +27,6 @@
         'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' }
     };
     var meta = {
-        "musicdbcore": { format: 'commonjs' },
         'pouchdb': { format: 'commonjs' }
     }
     var ngPackageNames = [

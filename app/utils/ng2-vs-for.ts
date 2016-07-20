@@ -42,7 +42,7 @@ function getWindowScroll() {
 }
 
 function getClientSize(element: Node | Window, sizeProp: string): number {
-    if (element === window) {
+    if (element === window || element === document.querySelector('body')) {
         return sizeProp === 'clientWidth' ? window.innerWidth : window.innerHeight;
     }
     else {
@@ -134,8 +134,6 @@ export class VsFor implements OnInit, OnDestroy {
         else {
             this.postDigest(this.refresh.bind(this));
         }
-        // this.slicedCollection = value.slice(1, -1);
-        // this.view.setLocal('vsCollection', this.slicedCollection);
     }
     get originalCollection() {
         return this._originalCollection;
@@ -143,7 +141,6 @@ export class VsFor implements OnInit, OnDestroy {
     set slicedCollection(value: any[]) {
         this._slicedCollection = value;
         this.view.context.vsCollection = this._slicedCollection;
-        // this.view.setLocal('vsCollection', this._slicedCollection);
     }
     get slicedCollection() {
         return this._slicedCollection;
