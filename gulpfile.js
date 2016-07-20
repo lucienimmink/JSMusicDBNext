@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     inlineNg2Template = require('gulp-inline-ng2-template');
 var tsProject = tsc.createProject('./tsconfig.json');
 
-gulp.task('bundle', ['bundle-app', 'bundle-dependencies'], function () { });
+gulp.task('bundle', ['bundle-app', 'bundle-dependencies', 'bundle-css'], function () { });
 gulp.task('build', ['bundle', 'copy'], function () { });
 gulp.task('copy', ['copy-css', 'copy-polyfills', 'copy-assets'], function () { });
 gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function () { });
@@ -18,7 +18,7 @@ gulp.task('inline-templates', function () {
     return tsResult.js.pipe(gulp.dest('dist/app'));
 });
 
-gulp.task('copy-css', function () {
+gulp.task('bundle-css', function () {
     var cssSources = [
         './node_modules/winstrap/dist/css/winstrap.css',
         './dist/sass/base.css',
@@ -58,6 +58,15 @@ gulp.task('copy-root', function () {
     ];
     return gulp.src(rootfiles)
         .pipe(gulp.dest('./target/'));
+});
+
+gulp.task('copy-css', function () {
+    var rootfiles = [
+        './dist/sass/light.js',
+        './dist/sass/dark.js'
+    ];
+    return gulp.src(rootfiles)
+        .pipe(gulp.dest('./target/css/'));
 });
 
 gulp.task('bundle-app', ['inline-templates'], function () {

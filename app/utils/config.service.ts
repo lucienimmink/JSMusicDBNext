@@ -15,7 +15,7 @@ export class ConfigService {
         let stylesheet = document.createElement("link");
         stylesheet.setAttribute('rel', 'stylesheet');
         stylesheet.setAttribute('type', 'text/css');
-        stylesheet.setAttribute('href', `/dist/sass/${this._theme}.css`);
+        stylesheet.setAttribute('href', (window['ENV'] === 'prod') ? `/css/${this._theme}.css` : `/dist/sass/${this._theme}.css`);
         stylesheet.setAttribute('id', 'customStylesheet');
 
         let current = document.getElementById('customStylesheet');
