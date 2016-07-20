@@ -47,6 +47,7 @@
     <!-- 2. Configure SystemJS -->
     <script src="dist-systemjs.config.js"></script>
     <script>
+        var ENV = 'dev';
         System.import('app/main').catch(function(err) {
             console.error(err);
         });

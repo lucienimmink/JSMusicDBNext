@@ -8,7 +8,9 @@ import { AuthConfig, AuthHttp } from 'angular2-jwt';
 
 import { AppComponent } from "./app.component";
 
-//enableProdMode();
+if (window['ENV'] && window['ENV'] === "prod") {
+    enableProdMode();
+}
 
 bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS, IMAGELAZYLOAD_DIRECTIVE, disableDeprecatedForms()
    , provideForms(), provide(AuthHttp, {
