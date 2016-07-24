@@ -14,7 +14,7 @@
     "watch:sass": "npm run build:sass && node-sass -o dist/ -w app/",
     "gulp": "gulp",
     "rimraf": "rimraf",
-    "deploy": "gulp build"
+    "deploy": "node-sass -o dist/ app/ && gulp build"
   },
   "license": "MIT",
   "dependencies": {
