@@ -69,7 +69,7 @@ export class BackgroundArtDirective {
     }
     setImage(data: any) {
         if (!this.loaded || this.hasClassName('always-replace')) {
-            if (data === 'global/images/no-cover.png' || data === '') {
+            if (data === NOIMAGE || data === '') {
                 this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
                     data => {
                         this.el.style.backgroundImage = `url(${data})`;
