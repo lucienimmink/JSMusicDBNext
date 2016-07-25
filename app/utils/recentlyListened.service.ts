@@ -19,7 +19,7 @@ export class RecentlyListenedService {
             search: urlSearchParams
         };
 
-        return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+        return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
             .map(this.extractData)
             .catch(this.handleError);
     }

@@ -38,7 +38,7 @@ export class LastFMService {
             search: urlSearchParams
         };
 
-        return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+        return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
             .map(this.extractLastFMLoved)
             .catch(this.handleError);
     }
@@ -79,7 +79,7 @@ export class LastFMService {
                 search: urlSearchParams
             };
 
-            return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+            return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
                 .map(this.extractTrackInfo)
                 .catch(this.handleError);
         } else {
@@ -99,7 +99,7 @@ export class LastFMService {
             search: urlSearchParams
         };
 
-        return this.http.get('//ws.audioscrobbler.com/2.0/', query)
+        return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
             .map(this.extractLastFMTop)
             .catch(this.handleError);
     }
