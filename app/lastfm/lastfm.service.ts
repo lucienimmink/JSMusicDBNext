@@ -130,10 +130,10 @@ export class LastFMService {
             let urlSearchParams: URLSearchParams = new URLSearchParams();
             urlSearchParams.set('method', 'track.updateNowPlaying');
             urlSearchParams.set('api_key', APIKEY);
-            urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
-            urlSearchParams.set('artist', track.trackArtist);
-            urlSearchParams.set('album', track.album.name);
-            urlSearchParams.set('track', track.title);
+            urlSearchParams.set('api_sig', this.signTrack(track.trackArtist.replace(/\+/g, '%252B'), track.album.name.replace(/\+/g, '%252B'), track.title.replace(/\+/g, '%252B'), timestamp, sk, 'track.updateNowPlaying'));
+            urlSearchParams.set('artist', track.trackArtist.replace(/\+/g, '%252B'));
+            urlSearchParams.set('album', track.album.name.replace(/\+/g, '%252B'));
+            urlSearchParams.set('track', track.title.replace(/\+/g, '%252B'));
             urlSearchParams.set('timestamp', timestamp.toString());
             urlSearchParams.set('sk', sk);
 
@@ -160,10 +160,10 @@ export class LastFMService {
             let urlSearchParams: URLSearchParams = new URLSearchParams();
             urlSearchParams.set('method', 'track.scrobble');
             urlSearchParams.set('api_key', APIKEY);
-            urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
-            urlSearchParams.set('artist', track.trackArtist);
-            urlSearchParams.set('album', track.album.name);
-            urlSearchParams.set('track', track.title);
+            urlSearchParams.set('api_sig', this.signTrack(track.trackArtist.replace(/\+/g, '%252B'), track.album.name.replace(/\+/g, '%252B'), track.title.replace(/\+/g, '%252B'), timestamp, sk, 'track.scrobble'));
+            urlSearchParams.set('artist', track.trackArtist.replace(/\+/g, '%252B'));
+            urlSearchParams.set('album', track.album.name.replace(/\+/g, '%252B'));
+            urlSearchParams.set('track', track.title.replace(/\+/g, '%252B'));
             urlSearchParams.set('timestamp', timestamp.toString());
             urlSearchParams.set('sk', sk);
 
@@ -245,10 +245,10 @@ export class LastFMService {
         let urlSearchParams: URLSearchParams = new URLSearchParams();
         urlSearchParams.set('method', 'track.scrobble');
         urlSearchParams.set('api_key', APIKEY);
-        urlSearchParams.set('api_sig', this.signTrack(cachedTrack.artist, cachedTrack.album, cachedTrack.track, cachedTrack.timestamp, sk, 'track.scrobble'));
-        urlSearchParams.set('artist', cachedTrack.artist);
-        urlSearchParams.set('album', cachedTrack.album);
-        urlSearchParams.set('track', cachedTrack.track);
+        urlSearchParams.set('api_sig', this.signTrack(cachedTrack.artist.replace(/\+/g, '%252B'), cachedTrack.album.replace(/\+/g, '%252B'), cachedTrack.track.replace(/\+/g, '%252B'), cachedTrack.timestamp, sk, 'track.scrobble'));
+        urlSearchParams.set('artist', cachedTrack.artist.replace(/\+/g, '%252B'));
+        urlSearchParams.set('album', cachedTrack.album.replace(/\+/g, '%252B'));
+        urlSearchParams.set('track', cachedTrack.track.replace(/\+/g, '%252B'));
         urlSearchParams.set('timestamp', cachedTrack.timestamp);
         urlSearchParams.set('sk', sk);
 
