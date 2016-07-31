@@ -28,7 +28,7 @@
 <!-- 3. Display the application -->
 
 <body>
-    <musicdb id="musicdb">
+    <musicdb (mdbprev)="onExternalPrev()" (mdbnext)="onExternalNext()" (mdbtoggle)="onExternalToggle()">
         <div class="progress-bar">
             <div class="progress-circle"></div>
             <div class="progress-circle"></div>

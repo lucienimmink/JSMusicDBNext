@@ -62,10 +62,6 @@ export class AppComponent implements OnDestroy {
   private artists: Array<any>;
   private subscription: Subscription;
   private path: string = "JSMusicDB Next";
-
-  @ViewChild(LetterComponent)
-  private letterComponent: LetterComponent;
-
   constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService:ConfigService) {
     if (localStorage.getItem('jwt')) {
       // lets login with these credentials
@@ -90,5 +86,9 @@ export class AppComponent implements OnDestroy {
   }
   fillCollection(data: any): void {
     this.coreService.getCore().parseSourceJson(data);
+  }
+
+  onExternalPrev(event:Event):void {
+    console.log('handling external prev');
   }
 }
