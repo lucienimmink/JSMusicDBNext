@@ -265,6 +265,7 @@ input.form-control:focus, textarea.form-control:focus {
     @include musicdb-respond-min-width(sm) {
         background-color: $tertiary-color;
         color: $primary-color;
+        padding: 24px 0;
     }
     h3 {
         padding-top: 0;
