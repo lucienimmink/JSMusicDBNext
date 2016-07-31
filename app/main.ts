@@ -24,5 +24,9 @@ bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS, IMAGELAZYLOAD_DIRECTI
     },
     deps: [Http]
   }),
-  provide(EVENT_MANAGER_PLUGINS, { multi: true, useClass: MediaEvents })
+  {
+    provide: EVENT_MANAGER_PLUGINS,
+    useClass: MediaEvents,
+    multi: true
+  }
 ]);
