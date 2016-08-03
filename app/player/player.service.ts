@@ -8,27 +8,27 @@ import * as _ from 'lodash';
 @Injectable()
 export class PlayerService {
     private playlistSource = new Subject<any>();
-    private currentPlaylist:any;
+    private currentPlaylist: any;
     playlistAnnounced$ = this.playlistSource.asObservable();
-    private currentTrack:Track;
+    private currentTrack: Track;
 
-    private isPlaying:boolean = false;
-    private isPaused:boolean = false;
-    private isShuffled:boolean = false;
+    private isPlaying: boolean = false;
+    private isPaused: boolean = false;
+    private isShuffled: boolean = false;
 
-    private position:number;
+    private position: number;
 
-    private lastfmUserName:string = localStorage.getItem('lastfm-username'); // should be subscriber?
+    private lastfmUserName: string = localStorage.getItem('lastfm-username'); // should be subscriber?
 
-    constructor(private lastFMService:LastFMService) {};
+    constructor(private lastFMService: LastFMService) { };
 
-    setPosition(position:number) {
+    setPosition(position: number) {
         this.position = position;
         this.announce();
         this.position = null;
     }
 
-    doPlayAlbum(album:Album, startIndex:number, isShuffled:boolean = false) {
+    doPlayAlbum(album: Album, startIndex: number, isShuffled: boolean = false) {
         if (this.currentTrack) {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
@@ -37,12 +37,12 @@ export class PlayerService {
             playlist: album,
             startIndex: startIndex,
             isPlaying: this.isPlaying = true,
-            isPaused: this.isPaused  = false,
+            isPaused: this.isPaused = false,
             isShuffled: this.isShuffled = isShuffled
         };
         this.announce();
     }
-    playlistToString():string {
+    playlistToString(): string {
         let list = [];
         _.each(this.currentPlaylist.playlist.tracks, function (track) {
             if (track) {
@@ -58,7 +58,7 @@ export class PlayerService {
     getCurrentPlaylist() {
         return this.currentPlaylist;
     }
-    shufflePlaylist(shuffled:boolean) {
+    shufflePlaylist(shuffled: boolean) {
         this.isShuffled = shuffled;
         this.currentPlaylist.playlist.tracks = _.sortBy(this.currentPlaylist.playlist.tracks, ['disc', 'number']);
         if (shuffled) {
@@ -72,26 +72,40 @@ export class PlayerService {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
         }
-        this.currentPlaylist.startIndex++;
-        this.announce();
+        if (this.currentPlaylist) {
+            this.currentPlaylist.startIndex++;
+            if (this.currentPlaylist.startIndex >= this.currentPlaylist.playlist.length) {
+                this.currentPlaylist.startIndex = this.currentPlaylist.playlist.length - 1;
+            }
+            this.announce();
+        }
     }
     prev() {
         if (this.currentTrack) {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
         }
-        this.currentPlaylist.startIndex--;
-        this.announce();
+        if (this.currentPlaylist) {
+            this.currentPlaylist.startIndex--;
+            if (this.currentPlaylist.startIndex <= 0) {
+                this.currentPlaylist.startIndex = 0;
+            }
+            this.announce();
+        }
     }
     pause() {
-        this.isPlaying = false;
-        this.isPaused = true;
-        this.announce();
+        if (this.currentPlaylist) {
+            this.isPlaying = false;
+            this.isPaused = true;
+            this.announce();
+        }
     }
     resume() {
-        this.isPlaying = true;
-        this.isPaused = false;
-        this.announce();
+        if (this.currentPlaylist) {
+            this.isPlaying = true;
+            this.isPaused = false;
+            this.announce();
+        }
     }
     togglePlayPause() {
         if (this.isPlaying) {

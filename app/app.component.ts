@@ -62,7 +62,7 @@ export class AppComponent implements OnDestroy {
   private artists: Array<any>;
   private subscription: Subscription;
   private path: string = "JSMusicDB Next";
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService:ConfigService, private playerService:PlayerService) {
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService) {
     if (localStorage.getItem('jwt')) {
       // lets login with these credentials
       this.loginService.autoLogin().subscribe(
@@ -88,16 +88,13 @@ export class AppComponent implements OnDestroy {
     this.coreService.getCore().parseSourceJson(data);
   }
 
-  onExternalPrev(event:Event):void {
-    console.log('handling external prev', event, this);
+  onExternalPrev(event: Event): void {
     this.playerService.prev();
   }
-  onExternalNext(event:Event):void {
-    console.log('handling external next', event, this);
+  onExternalNext(event: Event): void {
     this.playerService.next();
   }
-  onExternalToggle(event:Event):void {
-    console.log('handling external toggle', event, this);
+  onExternalToggle(event: Event): void {
     this.playerService.togglePlayPause();
   }
 }
