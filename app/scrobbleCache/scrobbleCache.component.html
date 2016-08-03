@@ -24,7 +24,7 @@
                     </div>
                 </li>
             </ol>
-            <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0">Scrobble now</button>
+            <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0 && !isBusy">Scrobble now</button>
         </div>
     </div>
 </div>

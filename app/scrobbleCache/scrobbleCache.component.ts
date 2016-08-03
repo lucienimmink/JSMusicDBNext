@@ -25,6 +25,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
     private isReloading: boolean = false;
+    private isBusy:boolean = false;
 
     constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastFMService, private collectionService: CollectionService, private router: Router) {
         this.core = this.coreService.getCore();
@@ -59,6 +60,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
     }
 
     scrobbleNow() {
+        this.isBusy = true;
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
         let track = this.manualScrobblingList.pop();
         this.lastFMService.scrobbleCachedTrack(track).subscribe(
@@ -66,6 +68,8 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
                 localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
                 if (this.manualScrobblingList.length > 0) {
                     this.scrobbleNow();
+                } else {
+                    this.isBusy = false;
                 }
             }
         )
