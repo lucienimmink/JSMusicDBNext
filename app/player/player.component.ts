@@ -63,6 +63,12 @@ export class PlayerComponent implements OnDestroy {
         this.mediaObject.addEventListener('play', function () {
             c.onplay();
         })
+        this.mediaObject.addEventListener('pause', function () {
+            c.onpause();
+        })
+        this.mediaObject.addEventListener('ended', function () {
+            c.onstop();
+        })
         let dsm = JSON.parse(localStorage.getItem("jwt"));
         if (dsm) {
             this.url = dsm.dsmport;
@@ -191,7 +197,14 @@ export class PlayerComponent implements OnDestroy {
             data => {},
             error => {},
             () => {}
-        )
+        );
+        document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbplaying', {'detail': this.track}));
+    }
+    onstop() {
+        document.querySelector('mdb-player').dispatchEvent(new Event('external.mdbstopped'));
+    }
+    onpause() {
+        document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbpaused', {'detail': this.track}));
     }
     toggleShuffle() {
         this.isShuffled = !this.isShuffled;
