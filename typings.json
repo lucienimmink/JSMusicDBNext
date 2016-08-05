@@ -1,9 +1,9 @@
 {
   "globalDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160602141332",
-    "lodash": "registry:dt/lodash#3.10.0+20160720001309",
+    "lodash": "registry:dt/lodash#4.14.0+20160802150749",
     "moment": "registry:dt/moment#2.8.0+20160316155526",
-    "node": "registry:dt/node#6.0.0+20160728152422",
+    "node": "registry:dt/node#6.0.0+20160802155038",
     "pouchdb": "registry:dt/pouchdb#5.4.4+20160724064500"
   }
 }
