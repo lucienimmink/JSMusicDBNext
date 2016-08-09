@@ -56,19 +56,22 @@ export class PlayerComponent implements OnDestroy {
         let c = this;
         this.mediaObject.addEventListener('ended', function () {
             c.next();
-        })
+        });
         this.mediaObject.addEventListener('timeupdate', function () {
             c.updateTime();
-        })
+        });
         this.mediaObject.addEventListener('play', function () {
             c.onplay();
-        })
+        });
+        this.mediaObject.addEventListener('progress', function () {
+            c.onprogress();
+        });
         this.mediaObject.addEventListener('pause', function () {
             c.onpause();
-        })
+        });
         this.mediaObject.addEventListener('ended', function () {
             c.onstop();
-        })
+        });
         let dsm = JSON.parse(localStorage.getItem("jwt"));
         if (dsm) {
             this.url = dsm.dsmport;
@@ -215,5 +218,10 @@ export class PlayerComponent implements OnDestroy {
         this.lastFMService.toggleLoved(this.track).subscribe(
             data => {}
         )
+    }
+    onprogress() {
+        let buffered = this.mediaObject.buffered;
+        this.track.buffered.start = buffered.start(0) * 1000;
+        this.track.buffered.end = buffered.end(buffered.length - 1) * 1000
     }
 }

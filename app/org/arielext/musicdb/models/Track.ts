@@ -17,6 +17,10 @@ export default class Track {
   isPaused:boolean = false;
   isLoved:boolean = false;
   position:number = 0;
+  buffered:any = {
+    start: 0,
+    end: 0
+  };
 
   constructor(json: any) {
     if (json.album && json.title) {

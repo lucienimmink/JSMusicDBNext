@@ -122,9 +122,10 @@
 }
 
 #nowPlaying .progress {
-    width: calc(100% - 130px);
+    width: calc(100% - 140px);
     margin: 0 auto;
     overflow: visible;
+    position: relative;
 }
 
 #nowPlaying .time {
@@ -165,9 +166,9 @@ footer.hidePlayer {
 
 #progress-pusher {
     position: relative;
-    width: calc(100% - 120px);
+    width: calc(100% - 140px);
     height: 60px;
-    left: 60px;
+    left: 70px;
     top: -30px;
     margin-bottom: -60px;
 }
@@ -200,4 +201,8 @@ footer.hidePlayer {
     transform: scale(2);
     border-width: 2px;
     transition: none !important;
+}
+.buffered-bar {
+    position: absolute;
+    opacity: 0.25;
 }

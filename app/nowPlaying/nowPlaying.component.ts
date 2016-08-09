@@ -80,7 +80,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
                     document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
                 }
             } catch (e) {}
-        }, 100);
+        }, 250);
     }
     setTrack() {
         let c = this;
