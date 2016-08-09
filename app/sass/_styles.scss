@@ -66,8 +66,8 @@ a {
     }
 
     @include musicdb-respond-min-width(xs) {
-        width: 24vw;
-        height: 24vw;
+        width: 23.9vw;
+        height: 23.9vw;
         margin: 0 1vw 1vw 0;
 
         &:nth-child(2n){
