@@ -3,4 +3,3 @@
 /// <reference path="globals/moment/index.d.ts" />
 /// <reference path="globals/node/index.d.ts" />
 /// <reference path="globals/pouchdb/index.d.ts" />
-/// <reference path="globals/pouchdb/pouch/index.d.ts" />
