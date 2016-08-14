@@ -16,7 +16,7 @@ gulp.task('copy', ['copy-js', 'copy-css', 'copy-polyfills', 'copy-assets'], func
 gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function (cb) { cb(); });
 
 gulp.task('build', function (cb) {
-    runSequence('clean', 'bundle', 'copy', 'rev', 'revreplace', 'cleanup', cb);
+    runSequence('clean', 'bundle', 'copy', 'rev', 'revreplace', 'revreplace-electron', 'cleanup', cb);
 });
 
 /**
@@ -130,14 +130,18 @@ gulp.task('rev', function (cb) {
 gulp.task('revreplace', function (cb) {
     var manifest = gulp.src('./target/rev-manifest.json');
 
-    gulp.src('./target/_electron.html')
-        .pipe(revReplace({ manifest: manifest }))
-        .pipe(rename('electron.html'))
-        .pipe(gulp.dest('./target'));
-
     return gulp.src('./target/_index.html')
         .pipe(revReplace({ manifest: manifest }))
         .pipe(rename('index.html'))
+        .pipe(gulp.dest('./target'));
+});
+
+gulp.task('revreplace-electron', function (cb) {
+    var manifest = gulp.src('./target/rev-manifest.json');
+
+    return gulp.src('./target/_electron.html')
+        .pipe(revReplace({ manifest: manifest }))
+        .pipe(rename('electron.html'))
         .pipe(gulp.dest('./target'));
 });
 
