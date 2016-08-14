@@ -12,3 +12,4 @@ target/global
 target/js
 target/index.html
 target/*manifest.json
+target/electron.html
