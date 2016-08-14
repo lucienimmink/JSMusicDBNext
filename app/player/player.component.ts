@@ -36,11 +36,11 @@ export class PlayerComponent implements OnDestroy {
     private isCurrentPlaylistLoaded: boolean = false;
     private isShuffled: boolean = false;
 
-    private isMobile:boolean = false;
+    private isMobile: boolean = false;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService:AnimationService) {
+    constructor(private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 this.playlist = playerData.playlist;
@@ -72,9 +72,9 @@ export class PlayerComponent implements OnDestroy {
         this.mediaObject.addEventListener('ended', function () {
             c.onstop();
         });
-        let dsm = JSON.parse(localStorage.getItem("jwt"));
+        let dsm = localStorage.getItem("dsm");
         if (dsm) {
-            this.url = dsm.dsmport;
+            this.url = dsm;
         }
         this.core = this.coreService.getCore();
         this.subscription2 = this.core.coreParsed$.subscribe(
@@ -90,13 +90,17 @@ export class PlayerComponent implements OnDestroy {
             this.isMobile = true; // treat edge always as mobile
         }
     }
-    setTrack(position:any) {
+    setTrack(position: any) {
         let c = this;
         setTimeout(function () {
             if (c.albumart) c.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
         if (this.currentTrack !== this.track) {
+            let dsm = localStorage.getItem("dsm");
+            if (dsm) {
+                this.url = dsm;
+            }
             this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
             if (this.isMobile) {
                 this.mediaObject.src += "&full=true";
@@ -129,7 +133,7 @@ export class PlayerComponent implements OnDestroy {
                 let track = core.tracks[id];
                 list.push(track);
             });
-            let playlist:Album = {
+            let playlist: Album = {
                 tracks: list,
                 name: 'Current playlist',
                 sortName: 'Current playlist',
@@ -189,7 +193,7 @@ export class PlayerComponent implements OnDestroy {
                             //console.log('track is scrobbled');
                         }
                     )
-                } catch (e) {}
+                } catch (e) { }
             }
         }
         localStorage.setItem('current-time', this.mediaObject.currentTime.toString());
@@ -197,17 +201,17 @@ export class PlayerComponent implements OnDestroy {
 
     onplay() {
         this.lastFMService.announceNowPlaying(this.track).subscribe(
-            data => {},
-            error => {},
-            () => {}
+            data => { },
+            error => { },
+            () => { }
         );
-        document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbplaying', {'detail': this.track}));
+        document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbplaying', { 'detail': this.track }));
     }
     onstop() {
         document.querySelector('mdb-player').dispatchEvent(new Event('external.mdbstopped'));
     }
     onpause() {
-        document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbpaused', {'detail': this.track}));
+        document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbpaused', { 'detail': this.track }));
     }
     toggleShuffle() {
         this.isShuffled = !this.isShuffled;
@@ -216,12 +220,12 @@ export class PlayerComponent implements OnDestroy {
     toggleLoved() {
         this.track.isLoved = !this.track.isLoved;
         this.lastFMService.toggleLoved(this.track).subscribe(
-            data => {}
+            data => { }
         )
     }
     onprogress() {
         let buffered = this.mediaObject.buffered;
-        this.track.buffered.start = buffered.start(0) * 1000;
+        this.track.buffered.start = buffered.start(buffered.length - 1) * 1000;
         this.track.buffered.end = buffered.end(buffered.length - 1) * 1000
     }
 }

@@ -30,8 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     let controls:any = {};
     controls['name'] = new FormControl('', Validators.required);
     controls['password'] = new FormControl('', Validators.required);
-    controls['dsmport'] = new FormControl(document.location.origin, Validators.required);
-    controls['lastfmname'] = new FormControl('');
+    controls['dsmport'] = new FormControl(localStorage.getItem('dsm') || document.location.origin, Validators.required);
     this.form = new FormGroup(controls);
 
     this.subscription = this.configService.theme$.subscribe(
@@ -55,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginService.doLogin(this.form.value).subscribe(
       data => {
         if (data.success) {
-          localStorage.setItem('jwt', this.payLoad); // save creds in storage
+          localStorage.setItem('jwt', this.loginService.encode(this.payLoad)); // save creds in storage
           this.getCollection();
         }
       },
