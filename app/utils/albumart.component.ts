@@ -69,11 +69,19 @@ export class AlbumArt {
 
     }
     setImage(data: any) {
+        let dsm = localStorage.getItem('dsm');
+        if (dsm) {
+            dsm = dsm + '/data/image-proxy?url=';
+        }
         if (data === 'global/images/no-cover.png' || data === '') {
             this.albumArtService.getMediaArtFromLastFm(this.searchArtist, this.searchAlbum, this.searchType)
                 .subscribe(
                 data => {
-                    this.albumart.url = data;
+                    if (data !== 'global/images/no-cover.png') {
+                        this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
+                    } else {
+                        this.albumart.url = data;
+                    }
                     let item = {
                         _id: `art-${this.searchArtist}-${this.searchAlbum}`,
                         url: data
@@ -85,7 +93,7 @@ export class AlbumArt {
                 error => this.albumart.url = NOIMAGE
                 )
         } else {
-            this.albumart.url = data;
+            this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
             let item = {
                 _id: `art-${this.searchArtist}-${this.searchAlbum}`,
                 url: data
