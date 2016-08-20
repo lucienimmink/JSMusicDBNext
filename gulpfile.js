@@ -78,7 +78,8 @@ gulp.task('copy-fonts', function (cb) {
 });
 gulp.task('copy-root', function (cb) {
     var rootfiles = [
-        'manifest.json'
+        'manifest.json',
+        'sw.js'
     ];
     return gulp.src(rootfiles)
         .pipe(gulp.dest('./target/'));
