@@ -119,7 +119,7 @@ gulp.task('rev', function (cb) {
     } else {
         var revFiles = [
             './target/**/styles.css',
-            './target/js/**/*.js'
+            './target/**/*.js'
         ]
         return gulp.src(revFiles)
             .pipe(rev())
