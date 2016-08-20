@@ -31,7 +31,8 @@ gulp.task('clean', function (cb) {
         './target/dist-systemjs*',
         './target/*manifest.json',
         './target/index.html',
-        './target/electron.html'
+        './target/electron.html',
+        './target/sw*.js'
     ]);
     cb();
 });
@@ -118,7 +119,7 @@ gulp.task('rev', function (cb) {
     } else {
         var revFiles = [
             './target/**/styles.css',
-            './target/**/*.js'
+            './target/js/**/*.js'
         ]
         return gulp.src(revFiles)
             .pipe(rev())
