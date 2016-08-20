@@ -8,6 +8,12 @@ self.addEventListener('activate', event => {
 
 const CACHE_NAME = "v1";
 
+/*
+* ignore sw for now; streaming doesn't seem to work when using fetch; need to figure out how to bypass this error.
+* the RANGE header is not set in the SW while mandatory resulting in an HTTP Error.
+*/
+
+/*
 self.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
@@ -48,3 +54,4 @@ self.addEventListener('fetch', function (event) {
             })
     );
 });
+*/
