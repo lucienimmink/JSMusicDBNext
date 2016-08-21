@@ -225,7 +225,7 @@ export class PlayerComponent implements OnDestroy {
     }
     onprogress() {
         let buffered = this.mediaObject.buffered;
-        this.track.buffered.start = buffered.start(buffered.length - 1) * 1000;
-        this.track.buffered.end = buffered.end(buffered.length - 1) * 1000
+        this.track.buffered.start = buffered.start((buffered.length !== 0) ? buffered.length - 1: 0) * 1000;
+        this.track.buffered.end = buffered.end((buffered.length !== 0) ? buffered.length - 1: 0) * 1000
     }
 }

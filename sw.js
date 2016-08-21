@@ -10,7 +10,7 @@ const CACHE_NAME = "v1";
 
 self.addEventListener('fetch', function (event) {
 	// SKIP cachecheck if it's the streaming path
-	if (event.request.url.indexOf('/listen') !== -1) {
+	if (event.request.url.indexOf('/listen') !== -1 || event.request.url.indexOf('file://') !== -1) {
 		// nothing to see here, carry on
 	} else {
 		event.respondWith(
