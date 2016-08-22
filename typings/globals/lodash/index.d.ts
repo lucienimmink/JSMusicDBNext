@@ -18923,10 +18923,7 @@ declare module _ {
 
     interface Cancelable {
         cancel(): void;
-<<<<<<< HEAD
-=======
         flush(): void;
->>>>>>> d3985f7fa2a129a8ac13658954b28e9b1913a682
     }
 }
 
