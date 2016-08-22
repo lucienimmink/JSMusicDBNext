@@ -16,7 +16,7 @@ gulp.task('copy', ['copy-js', 'copy-css', 'copy-polyfills', 'copy-assets'], func
 gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function (cb) { cb(); });
 
 gulp.task('build', function (cb) {
-    runSequence('clean', 'bundle', 'copy', 'rev', 'revreplace', 'cleanup', cb);
+    runSequence('clean', 'bundle', 'copy', 'rev', 'revreplace', 'revreplace-electron', 'cleanup', cb);
 });
 
 /**
@@ -30,14 +30,16 @@ gulp.task('clean', function (cb) {
         './target/js',
         './target/dist-systemjs*',
         './target/*manifest.json',
-        './target/index.html'
+        './target/index.html',
+        './target/electron.html',
+        './target/sw*.js'
     ]);
     cb();
 });
 
 gulp.task('inline-templates', function () {
     var tsResult = tsProject.src()
-        .pipe(inlineNg2Template({ UseRelativePaths: true, indent: 0, removeLineBreaks: true}))
+        .pipe(inlineNg2Template({ UseRelativePaths: true, indent: 0, removeLineBreaks: true }))
         .pipe(tsc(tsProject))
     return tsResult.js.pipe(gulp.dest('dist/app'));
 });
@@ -77,7 +79,8 @@ gulp.task('copy-fonts', function (cb) {
 });
 gulp.task('copy-root', function (cb) {
     var rootfiles = [
-        'manifest.json'
+        'manifest.json',
+        'sw.js'
     ];
     return gulp.src(rootfiles)
         .pipe(gulp.dest('./target/'));
@@ -110,7 +113,7 @@ gulp.task('cleanup', function (cb) {
 
 gulp.task('rev', function (cb) {
     var fs = require('fs');
-    if (fs.existsSync('target/rev-manifest.json')){
+    if (fs.existsSync('target/rev-manifest.json')) {
         console.info('rev-manifest found; using current revs; if you want to rebuild; please use `gulp build` first');
         cb();
     } else {
@@ -130,8 +133,17 @@ gulp.task('revreplace', function (cb) {
     var manifest = gulp.src('./target/rev-manifest.json');
 
     return gulp.src('./target/_index.html')
-        .pipe(revReplace({manifest: manifest}))
+        .pipe(revReplace({ manifest: manifest }))
         .pipe(rename('index.html'))
+        .pipe(gulp.dest('./target'));
+});
+
+gulp.task('revreplace-electron', function (cb) {
+    var manifest = gulp.src('./target/rev-manifest.json');
+
+    return gulp.src('./target/_electron.html')
+        .pipe(revReplace({ manifest: manifest }))
+        .pipe(rename('electron.html'))
         .pipe(gulp.dest('./target'));
 });
 
@@ -140,7 +152,7 @@ gulp.task('bundle-app', ['inline-templates'], function (cb) {
 
     builder
         .bundle('dist/app/**/* - [@angular/**/*.js] - [rxjs/**/*.js]', 'target/js/app.bundle.js', { minify: true })
-        .then(function() { cb() })
+        .then(function () { cb() })
         .catch(function (err) {
             console.log('Build error');
             cb(err);
@@ -152,7 +164,7 @@ gulp.task('bundle-dependencies', ['inline-templates'], function (cb) {
 
     builder
         .bundle('dist/app/**/*.js - [dist/app/**/*.js]', 'target/js/dependencies.bundle.js', { minify: true })
-        .then(function() { cb() })
+        .then(function () { cb() })
         .catch(function (err) {
             console.log('Build error');
             cb(err);

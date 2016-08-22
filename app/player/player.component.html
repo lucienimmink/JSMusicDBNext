@@ -1,8 +1,7 @@
 <div *ngIf="showPlayer" class="player">
     <div class="row">
         <div class="progress">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': ((track.position / track.duration)* 100) + '%'}">
-            </div>
+            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': ((track.position / track.duration)* 100) + '%'}"></div>
         </div>
     </div>
     <div class="container-fluid">

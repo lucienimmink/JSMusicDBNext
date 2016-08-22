@@ -68,11 +68,19 @@ export class BackgroundArtDirective {
         }
     }
     setImage(data: any) {
+        let dsm = localStorage.getItem('dsm');
+        if (dsm) {
+            dsm = dsm + '/data/image-proxy?url=';
+        }
         if (!this.loaded || this.hasClassName('always-replace')) {
             if (data === NOIMAGE || data === '') {
                 this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
                     data => {
-                        this.el.style.backgroundImage = `url(${data})`;
+                        if (data !== NOIMAGE) {
+                            this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`;
+                        } else {
+                            this.el.style.backgroundImage = `url(${data})`;
+                        }
 
                         let item = {
                             _id: `art-${this.media.name}`,
@@ -88,7 +96,7 @@ export class BackgroundArtDirective {
                     error => this.el.style.backgroundImage = `url(${NOIMAGE})`
                 );
             } else {
-                this.el.style.backgroundImage = `url(${data})`;
+                this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`;
 
                 let item = {
                     _id: `art-${this.media.name}`,

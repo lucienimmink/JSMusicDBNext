@@ -4,38 +4,31 @@ import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class CollectionService {
-    constructor(private http: Http) { }
+    private dsm:string;
+
+    constructor(private http: Http) {
+        this.dsm = localStorage.getItem('dsm');
+     }
 
     private collectionUrl = '/data/node-music.json';
     private reloadUrl = '/rescan';
     private pollUrl = '/progress';
 
     getCollection(): Observable<any[]> {
-        let jwt = JSON.parse(localStorage.getItem('jwt'));
-        let url = this.collectionUrl;
-        if (jwt) {
-            url = jwt.dsmport + this.collectionUrl;
-        }
+        this.dsm = localStorage.getItem('dsm');
+        let url = this.dsm + this.collectionUrl;
         return this.http.get(url)
             .map(this.extractData)
             .catch(this.handleError);
     }
     reload(): Observable<any> {
-        let jwt = JSON.parse(localStorage.getItem('jwt'));
-        let url = this.reloadUrl;
-        if (jwt) {
-            url = jwt.dsmport + this.reloadUrl;
-        }
+        let url = this.dsm + this.reloadUrl;
         return this.http.get(`${url}?_ts=${new Date().getTime()}`)
             .map(this.noop)
             .catch(this.handleError)
     }
     poll(): Observable<any> {
-        let jwt = JSON.parse(localStorage.getItem('jwt'));
-        let url = this.pollUrl;
-        if (jwt) {
-            url = jwt.dsmport + this.pollUrl;
-        }
+        let url = this.dsm + this.pollUrl;
         return this.http.get(`${url}?_ts=${new Date().getTime()}`)
             .debounceTime(300)
             .map(this.extractData)

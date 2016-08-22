@@ -12,7 +12,8 @@
         'angular2-jwt': 'node_modules/angular2-jwt',
         'ng2-bootstrap': 'node_modules/ng2-bootstrap',
         'moment': './node_modules/moment',
-        'pouchdb': './node_modules/pouchdb'
+        'pouchdb': './node_modules/pouchdb',
+        'jsrsasign': './global/js'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -23,7 +24,8 @@
         'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
         'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
         'moment': { main: 'moment.js', defaultExtension: 'js' },
-        'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' }
+        'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' },
+        'jsrsasign': { main: 'jsrsasign.js'}
     };
     var meta = {
         'pouchdb': { format: 'commonjs' }

@@ -80,12 +80,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.pathService.announcePage('Settings');
         this.totals = this.core.totals;
         this.lastfmusername = localStorage.getItem("lastfm-username") || '';
-        let jwt = JSON.parse(localStorage.getItem("jwt"));
-        if (jwt) {
-            this.connectiondetails = jwt.dsmport;
-        } else {
-            this.connectiondetails = null;
-        }
+        this.connectiondetails = localStorage.getItem('dsm');
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
     }
 
