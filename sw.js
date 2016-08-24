@@ -12,6 +12,19 @@ self.addEventListener('fetch', function (event) {
 	// SKIP cachecheck if it's the streaming path
 	if (event.request.url.indexOf('/listen') !== -1 || event.request.url.indexOf('file://') !== -1) {
 		// nothing to see here, carry on
+	} else if (event.request.url.indexOf('music.json') !== -1) {
+		// send back from the cache but always update the cache with the networks version.
+		event.respondWith(
+			caches.open(CACHE_NAME).then(function(cache) {
+				return cache.match(event.request).then(function (response) {
+					var fetchPromise = fetch(event.request).then(function(networkResponse) {
+						cache.put(event.request, networkResponse.clone());
+						return networkResponse;
+					})
+					return response || fetchPromise;
+				})
+			})
+		)
 	} else {
 		event.respondWith(
 			caches.match(event.request).then(function (response) {
