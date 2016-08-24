@@ -19,7 +19,7 @@ self.addEventListener('fetch', function (event) {
 				if (response) {
 					return response;
 				}
-				
+
 				// IMPORTANT: Clone the request. A request is a stream and
 				// can only be consumed once. Since we are consuming this
 				// once by cache and once by the browser for fetch, we need
@@ -29,13 +29,13 @@ self.addEventListener('fetch', function (event) {
 				return fetch(fetchRequest).then(
 					function (response) {
 						// Check if we received a valid response
-						if (!response || response.status !== 200 || response.type !== 'basic') {
+						if (!response) {
 							return response;
 						}
-						if (fetchRequest.url.indexOf('/data/') === -1) {
+						if (fetchRequest.url.indexOf('/data/') === -1 && fetchRequest.url.indexOf('lastfm-img2') === -1) {
 							return response;
 						}
-						
+
 						// IMPORTANT: Clone the response. A response is a stream
 						// and because we want the browser to consume the response
 						// as well as the cache consuming the response, we need
@@ -46,7 +46,7 @@ self.addEventListener('fetch', function (event) {
 							.then(function (cache) {
 								cache.put(event.request, responseToCache);
 							});
-						
+
 						return response;
 					}
 				);

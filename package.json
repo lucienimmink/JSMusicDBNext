@@ -32,7 +32,6 @@
     "core-js": "^2.4.0",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
-    "musicdbcore": "git+https://git@github.com/lucienimmink/MusicDBCore.git",
     "ng2-bootstrap": "^1.0.17",
     "node-sass": "^3.8.0",
     "pouchdb": "^5.4.5",
