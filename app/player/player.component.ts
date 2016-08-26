@@ -101,7 +101,8 @@ export class PlayerComponent implements OnDestroy {
             if (dsm) {
                 this.url = dsm;
             }
-            this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}`;
+            let jwt = localStorage.getItem("jwt");
+            this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}&jwt=${jwt}`;
             if (this.isMobile) {
                 this.mediaObject.src += "&full=true";
             }

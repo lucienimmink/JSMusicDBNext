@@ -147,8 +147,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 this.scanperc = data.progress
                 if (data.status !== 'ready') {
                     this.isReloading = true;
-                    setTimeout(function () {
-                        c.poll();
+                    setTimeout(e => {
+                        this.poll();
                     }, 300);
                 } else {
                     this.isReloading = false;
