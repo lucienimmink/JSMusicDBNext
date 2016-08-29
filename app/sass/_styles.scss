@@ -219,11 +219,12 @@ input.form-control:focus, textarea.form-control:focus {
         border: 1px solid $primary-color;
     }
 }
-.side-nav__container {
+.side-nav__container, .side-nav-xl {
     background-color: $tertiary-color;
 
     .side-nav__content li a {
         color:$primary-color;
+        outline: none;
     }
     .side-nav__content li:hover, .side-nav__content li.active {
         background-color: $hover-color;
@@ -294,4 +295,17 @@ input.form-control:focus, textarea.form-control:focus {
     #position-indicator {
         background: $background-color;
     }
+}
+
+.main-content {
+    @include musicdb-respond-min-width(lg) {
+        margin-left: 78px;
+        width: calc(100% - 78px);
+    }
+}
+
+.tooltip .tooltip-inner {
+    border-color: $secondary-color;
+    background-color: $tertiary-color;
+    color: $primary-color;
 }

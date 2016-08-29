@@ -61,6 +61,14 @@ h1 {
     margin-left: 10px;
 }
 
+.side-nav-xl {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    height: calc(100% - 100px);
+    z-index: 13;
+}
+
 .side-nav__content li {
     border-left: 5px solid transparent;
     margin: 0;
