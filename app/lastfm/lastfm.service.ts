@@ -188,7 +188,7 @@ export class LastFMService {
                     track: track.title,
                     timestamp: timestamp.toString()
                 }
-                offlineCache.push(cachedItem);
+                offlineCache.unshift(cachedItem);
                 this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
                 localStorage.setItem('manual-scrobble-list', JSON.stringify(offlineCache));
             }
