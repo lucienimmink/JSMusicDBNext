@@ -8,6 +8,7 @@ var gulp = require('gulp'),
     del = require('del'),
     rename = require("gulp-rename"),
     runSequence = require('run-sequence'),
+    autoprefixer = require('gulp-autoprefixer'),
     inlineNg2Template = require('gulp-inline-ng2-template');
 var tsProject = tsc.createProject('./tsconfig.json');
 
@@ -53,6 +54,10 @@ gulp.task('bundle-css', function (cb) {
 
     return gulp.src(cssSources)
         .pipe(concat('styles.css'))
+        .pipe(autoprefixer({
+            browsers: ['last 3 versions'],
+            cascade: false
+        }))
         .pipe(gulp.dest('./target/css/'));
 });
 
@@ -92,6 +97,10 @@ gulp.task('copy-css', function (cb) {
         './dist/sass/dark.css'
     ];
     return gulp.src(rootfiles)
+        .pipe(autoprefixer({
+            browsers: ['last 3 versions'],
+            cascade: false
+        }))
         .pipe(gulp.dest('./target/css/'));
 });
 

@@ -4,9 +4,9 @@
       <h4>Playlists</h4>
       <ul class="nav nav-pills nav-stacked">
         <li *ngIf="currentPlaylist"><a (click)="setPlaylist('current')">Current playlist</a></li>
-        <li><a (click)="setPlaylist('last.fm')" *ngIf="username">Loved tracks on last.fm</a></li>
+        <li><a (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved tracks on last.fm</a></li>
         <li><a (click)="setPlaylist('random')">50 random tracks</a></li>
-        <li><a (click)="setPlaylist('radio')" *ngIf="username">Random based on your preferences</a></li>
+        <li><a (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">Random based on your preferences</a></li>
       </ul>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="loading">
