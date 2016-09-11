@@ -13,6 +13,8 @@ import { Subscription }   from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
+const VERSION = "__dev__";
+
 @Component({
     templateUrl: 'app/settings/settings.component.html',
     pipes: [TimeFormatPipe],
@@ -36,6 +38,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private isReloading: boolean = false;
     private scanperc: number = 0;
     private form: FormGroup;
+    private version:String = VERSION;
     @Input() private theme: string;
 
     constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastFMService, private collectionService: CollectionService, private router: Router, private configService: ConfigService) {

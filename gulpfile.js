@@ -9,15 +9,25 @@ var gulp = require('gulp'),
     rename = require("gulp-rename"),
     runSequence = require('run-sequence'),
     autoprefixer = require('gulp-autoprefixer'),
+    replace = require('gulp-replace'),
     inlineNg2Template = require('gulp-inline-ng2-template');
 var tsProject = tsc.createProject('./tsconfig.json');
+
+var prefixZero = function (n) {
+    if (n < 10) {
+        return "0" + n;
+    }
+    return n;
+}
+var d = new Date();
+var VERSION = prefixZero(d.getDate()) + "" + prefixZero(d.getMonth() + 1) + d.getFullYear();
 
 gulp.task('bundle', ['bundle-app', 'bundle-dependencies', 'bundle-css'], function (cb) { cb(); });
 gulp.task('copy', ['copy-js', 'copy-css', 'copy-polyfills', 'copy-assets'], function (cb) { cb(); });
 gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function (cb) { cb(); });
 
 gulp.task('build', function (cb) {
-    runSequence('clean', 'bundle', 'copy', 'rev', 'revreplace', 'revreplace-electron', 'cleanup', cb);
+    runSequence('clean', 'bundle', 'add-version', 'copy', 'rev', 'revreplace', 'revreplace-electron', 'cleanup', cb);
 });
 
 /**
@@ -36,6 +46,15 @@ gulp.task('clean', function (cb) {
         './target/sw*.js'
     ]);
     cb();
+});
+
+gulp.task('add-version', function () {
+
+    return gulp.src('target/js/app.bundle.js')
+        .pipe(replace('__dev__', VERSION))
+        .pipe(gulp.dest(function (data) {
+            return data.base;
+        }));
 });
 
 gulp.task('inline-templates', function () {
