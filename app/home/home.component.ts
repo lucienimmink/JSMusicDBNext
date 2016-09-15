@@ -5,7 +5,6 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
-import { Validators } from '@angular/forms';
 
 import { CollectionService } from './../collection.service';
 import { CoreService } from './../core.service';

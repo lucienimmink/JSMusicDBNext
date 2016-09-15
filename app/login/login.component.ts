@@ -1,5 +1,4 @@
-import { Component, OnInit, Input ,OnDestroy, NgModule } from "@angular/core";
-import { FormGroup, ReactiveFormsModule, FormControl, Validators, FormBuilder} from '@angular/forms';
+import { Component, OnInit, Input, OnDestroy, NgModule } from "@angular/core";
 import { LoginService } from './login.service';
 import { Router } from "@angular/router";
 import { CollectionService } from './../collection.service';
@@ -9,33 +8,32 @@ import { ConfigService } from './../utils/config.service';
 
 import { Subscription }   from 'rxjs/Subscription';
 
+import { User } from "./user";
+
 @NgModule({
-  imports: [ ReactiveFormsModule, TooltipModule]
+  imports: [TooltipModule]
 })
 @Component({
   templateUrl: 'app/login/login.component.html',
-  styleUrls: [ 'dist/login/login.component.css'],
-  providers: [ LoginService ]
+  styleUrls: ['dist/login/login.component.css'],
+  providers: [LoginService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  @Input() username:string;
-  @Input() password:string;
-  @Input() dsmport:string = localStorage.getItem('dsm') || document.location.origin;
-  private form: FormGroup;
-  private payLoad:any;
-  private theme:string;
-  private subscription:Subscription;
+  private user: User;
+  private payLoad: any;
+  private theme: string;
+  private subscription: Subscription;
   private sid;
 
-  constructor(private loginService:LoginService, private router:Router, private collectionService: CollectionService, private coreService:CoreService, private configService: ConfigService, private fb: FormBuilder) {
-    this.form = this.fb.group({
-      'name': [this.username, Validators.required],
-      'password': [this.password, Validators.required],
-      'dsmport': [this.dsmport, Validators.required]
-    });
-    this.form.valueChanges.subscribe(
-      data => console.log(data)
-    );
+  constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService, private coreService: CoreService, private configService: ConfigService) {
+    this.user = new User();
+
+    this.subscription = this.configService.theme$.subscribe(
+      data => {
+        this.theme = data;
+      }
+    )
+    this.theme = configService.theme;
   }
 
   ngOnInit() {
@@ -43,11 +41,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-      this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
   onSubmit() {
-    this.payLoad = JSON.stringify(this.form.value);
-    this.loginService.doLogin(this.form.value).subscribe(
+    this.payLoad = JSON.stringify(this.user);
+    this.loginService.doLogin(this.user).subscribe(
       data => {
         if (data.success) {
           localStorage.setItem('jwt', this.loginService.encode(this.payLoad)); // save creds in storage
@@ -69,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
   fillCollection(data: any): void {
     this.coreService.getCore().parseSourceJson(data);
-    this.router.navigate(['Home']);
+    this.router.navigate(['/home']);
   }
 
 };

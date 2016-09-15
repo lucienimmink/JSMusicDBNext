@@ -29,7 +29,7 @@ const appRoutes: Routes = [
   { path: 'letter/:letter', component: LetterDetailComponent },
   { path: 'letter/:letter/artist/:artist', component: ArtistDetailComponent },
   { path: 'letter/:letter/artist/:artist/album/:album', component: AlbumDetailComponent },
-  { path: '', component: HomeComponent }
+  { path: '', component: LoginComponent }
 ];
 
 export const appRoutingProviders: any[] = [
