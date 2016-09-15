@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, Input, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, NgModule, AfterViewChecked, ViewChild } from "@angular/core";
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { CollectionService } from './../collection.service';
@@ -7,7 +8,7 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { LastFMService } from './../lastfm/lastfm.service';
 import { ConfigService } from './../utils/config.service';
-import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
+import { Settings } from './settings';
 
 import { Subscription }   from 'rxjs/Subscription';
 
@@ -16,7 +17,7 @@ import * as _ from 'lodash';
 const VERSION = "__dev__";
 
 @NgModule({
-    declarations: [TimeFormatPipe ]
+    declarations: [TimeFormatPipe]
 })
 @Component({
     templateUrl: 'app/settings/settings.component.html',
@@ -38,11 +39,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private isReloading: boolean = false;
     private scanperc: number = 0;
-    private form: FormGroup;
-    private version:String = VERSION;
-    @Input() private theme: string;
+    private version: String = VERSION;
+    private settings: Settings;
+
+    private themeForm: NgForm;
+    @ViewChild('themeForm') currentForm: NgForm;
+    private theme:string;
 
     constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastFMService, private collectionService: CollectionService, private router: Router, private configService: ConfigService) {
+        this.settings = new Settings();
         this.core = this.coreService.getCore();
         this.subscription = this.core.coreParsed$.subscribe(
             data => {
@@ -56,20 +61,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
         )
         this.subscription3 = this.configService.theme$.subscribe(
             data => {
+                this.settings.theme = data;
                 this.theme = data;
             }
         )
-        this.theme = configService.theme;
-
         // setup a form for changing stuff
-        let controls:any = {};
-        controls['theme'] = new FormControl(configService.theme);
-        this.form = new FormGroup(controls);
-
-        // subscribe to the form's change event for instant changing the settings
-        this.subscription4 = this.form.valueChanges.subscribe(
-            data => this.configService.theme = data.theme
-        );
+        this.settings.theme = this.configService.theme;
+        this.theme = this.settings.theme;
     }
 
     private booleanState(key: string): boolean {
@@ -78,6 +76,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
             return true;
         }
         return false;
+    }
+    ngAfterViewChecked() {
+        this.formChanged();
+    }
+    formChanged() {
+        if (this.currentForm === this.themeForm) { return; }
+        this.themeForm = this.currentForm;
+        if (this.themeForm) {
+            this.themeForm.valueChanges.subscribe(data => {
+                this.configService.theme = data.theme;
+                this.theme = data.theme;
+            });
+        }
     }
 
     ngOnInit() {

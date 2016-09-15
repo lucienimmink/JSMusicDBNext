@@ -42,18 +42,18 @@
     <div class="row">
         <div class="col-xs-24">
             <h4>Interface settings</h4>
-            <form [ngClass]="{'theme-alt': theme === 'dark'}">
+            <form [ngClass]="{'theme-alt': theme === 'dark'}" #themeForm="ngForm">
                 <div class="form-group">
                     <p class="form-group-label">Theme</p>
                     <div class="radio">
                         <label>
-                        <input type="radio" name='theme' value="light">
+                        <input type="radio" name='theme' value="light" [(ngModel)]="settings.theme" #name="ngModel" name="theme">
                         <span>Light</span>
                     </label>
                     </div>
                     <div class="radio">
                         <label>
-                        <input type="radio" name='theme' value="dark">
+                        <input type="radio" name='theme' value="dark" [(ngModel)]="settings.theme" #name="ngModel" name="theme">
                         <span>Dark</span>
                     </label>
                     </div>
