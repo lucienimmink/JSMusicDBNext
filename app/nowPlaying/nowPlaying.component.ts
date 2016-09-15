@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, OnInit } from "@angular/core";
-import { ROUTER_DIRECTIVES } from "@angular/router-deprecated";
+import { ROUTER_DIRECTIVES } from "@angular/router";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -7,7 +7,7 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { Subscription }   from 'rxjs/Subscription';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { TrackListComponent } from './../track/tracklist.component';
 import { LastFMService } from './../lastfm/lastfm.service';
 import Track from './../org/arielext/musicdb/models/Track';

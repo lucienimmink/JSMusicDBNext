@@ -1,7 +1,7 @@
 import { Component, OnInit, Input ,OnDestroy } from "@angular/core";
 import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
-import { Router } from "@angular/router-deprecated";
+import { Router } from "@angular/router";
 import { CollectionService } from './../collection.service';
 import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import { CoreService } from './../core.service';

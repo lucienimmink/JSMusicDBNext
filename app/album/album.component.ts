@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from "@angular/core";
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
 @Component({

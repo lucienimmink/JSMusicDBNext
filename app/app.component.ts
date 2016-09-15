@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
-import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router';
 import { musicdbcore } from './org/arielext/musicdb/core';
 import { Observable } from 'rxjs/Observable';
 

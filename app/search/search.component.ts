@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, RouteParams } from '@angular/router-deprecated';
+import { Router, RouteParams } from '@angular/router';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { CollectionService } from './../collection.service';

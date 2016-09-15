@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ViewChild  } from "@angular/core";
 import { PlayerService } from './player.service';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { Subscription }   from 'rxjs/Subscription';
 import * as _ from 'lodash';
 

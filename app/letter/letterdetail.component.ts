@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, RouteParams } from '@angular/router-deprecated';
+import { Router, RouteParams } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';

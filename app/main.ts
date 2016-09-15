@@ -2,7 +2,7 @@ import { bootstrap }    from '@angular/platform-browser-dynamic';
 import { EVENT_MANAGER_PLUGINS } from '@angular/platform-browser';
 import { enableProdMode, provide } from '@angular/core';
 import { Http, HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
+import { ROUTER_PROVIDERS } from '@angular/router';
 import { disableDeprecatedForms, provideForms} from '@angular/forms';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { AuthConfig, AuthHttp } from 'angular2-jwt';

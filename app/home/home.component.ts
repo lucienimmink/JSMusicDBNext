@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import Album from './../org/arielext/musicdb/models/Album';

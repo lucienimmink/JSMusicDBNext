@@ -1,5 +1,5 @@
 import { Component, OnDestroy, Input  } from "@angular/core";
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
 import { Subscription }   from 'rxjs/Subscription';
 import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';

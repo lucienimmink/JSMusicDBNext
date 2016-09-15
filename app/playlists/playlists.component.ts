@@ -4,7 +4,7 @@ import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { TimeFormatPipe } from './../timeformat.pipe';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 import { TrackListComponent } from './../track/tracklist.component';
 import { Subscription }   from 'rxjs/Subscription';
 import { LastFMService } from './../lastfm/lastfm.service';

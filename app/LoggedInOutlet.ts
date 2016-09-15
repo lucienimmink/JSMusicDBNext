@@ -1,5 +1,5 @@
 import {Directive, Attribute, ViewContainerRef, DynamicComponentLoader} from '@angular/core';
-import {Router, RouterOutlet, ComponentInstruction} from '@angular/router-deprecated';
+import {Router, RouterOutlet, ComponentInstruction} from '@angular/router';
 import { AnimationService } from './utils/animation.service';
 
 @Directive({
