@@ -168,7 +168,8 @@ export class PlayerComponent implements OnDestroy {
         this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName ]);
     }
     navigateToNowPlaying() {
-        this.router.navigate(['NowPlaying']);
+        // this.router.navigate(['NowPlaying']);
+        this.router.navigate(['/now-playing']);
     }
     next() {
         if (this.trackIndex < this.playlist.tracks.length - 1) {
