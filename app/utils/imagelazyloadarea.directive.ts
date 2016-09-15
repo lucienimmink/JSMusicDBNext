@@ -21,7 +21,7 @@ export class ImageLazyLoadAreaDirective implements OnInit, OnDestroy {
   private scrollSubscription: Subscription;
   private scrollSubscriptionAlbum: Subscription;
 
-  constructor( @Query(forwardRef(() => ArtistComponent), { descendants: true }) items: QueryList<ArtistComponent>, @Query(forwardRef(() => AlbumComponent), { descendants: true }) itemsAlbum: QueryList<AlbumComponent>) {
+  constructor( items: QueryList<ArtistComponent>, itemsAlbum: QueryList<AlbumComponent>) {
     this.items = items;
     this.itemsAlbum = itemsAlbum;
   }

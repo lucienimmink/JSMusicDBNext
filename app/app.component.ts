@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy, NgModule } from "@angular/core";
 import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router';
 import { musicdbcore } from './org/arielext/musicdb/core';
 import { Observable } from 'rxjs/Observable';
@@ -34,12 +34,13 @@ import { ConfigService } from './utils/config.service';
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
 
-
+@NgModule({
+  declarations: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
+})
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService, LastFMService, AnimationService, ConfigService],
-  directives: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
+  providers: [CollectionService, CoreService, PathService, PlayerService, LoginService, LastFMService, AnimationService, ConfigService]
 })
 @RouteConfig([
   { path: '/', redirectTo: ['Home'] },
