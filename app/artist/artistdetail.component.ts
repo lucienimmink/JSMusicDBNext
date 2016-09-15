@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
@@ -17,12 +17,14 @@ import { Subscription }   from 'rxjs/Subscription';
   styleUrls: ['dist/artist/artistdetail.component.css']
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
+  private artistName: string;
   private artist: any;
   private albums: Array<any> = [];
   private core:musicdbcore;
   private subscription: Subscription;
 
-  constructor(private coreService: CoreService, private router: Router, private pathService: PathService) {
+  constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
+    this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
@@ -32,9 +34,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    //let artistName = decodeURIComponent(this.routeParams.get('artist'));
-    let artistName = "MUSE";
-    this.artist = this.core.artists[artistName];
+    this.artist = this.core.artists[this.artistName];
     if (this.artist) {
       this.pathService.announcePath({ artist: this.artist });
       this.albums = this.artist.sortAndReturnAlbumsBy('year', 'asc');

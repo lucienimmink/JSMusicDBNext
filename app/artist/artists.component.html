@@ -8,7 +8,7 @@
           <ul>
             <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
               <div class="image-wrapper">
-                <mdbartist [artist]="artist"></mdbartist>
+                <mdb-artist [artist]="artist"></mdb-artist>
               </div>
               <div class="text-wrapper">
                 <span>{{artist.albumArtist || artist.name}}</span> <br />

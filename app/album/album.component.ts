@@ -1,11 +1,13 @@
-import { Component, Input, ViewChild } from "@angular/core";
+import { Component, Input, ViewChild, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
+@NgModule({
+    declarations: [ BackgroundArtDirective ]
+})
 @Component({
   selector: 'mdbalbum',
   templateUrl: 'app/album/album.component.html',
-  directives: [ BackgroundArtDirective ],
   styleUrls: [ 'dist/album/album.component.css' ]
 })
 export class AlbumComponent {
@@ -15,6 +17,6 @@ export class AlbumComponent {
     constructor(private router:Router) {}
 
     select() {
-        this.router.navigate(['Album', { letter: this.album.artist.letter.escapedLetter, artist: this.album.artist.sortName, album: this.album.sortName }]);
+        this.router.navigate(['letter', this.album.artist.letter.escapedLetter, 'artist', this.album.artist.sortName, 'album', this.album.sortName]);
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
@@ -26,21 +26,19 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private albumart: AlbumArt;
 
-    constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService) {
+    constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute) {
         this.core = this.coreService.getCore();
         this.subscription = this.core.coreParsed$.subscribe(
             data => {
                 this.ngOnInit();
             }
         )
+        this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
+        this.albumName = decodeURIComponent(this.route.snapshot.params['album']);
     }
 
     ngOnInit() {
         let c = this;
-        //this.albumName = decodeURIComponent(this.routeParams.get('album'));
-        //this.artistName = decodeURIComponent(this.routeParams.get('artist'));
-        this.albumName = "asbsolution",
-        this.artistName = "MUSE";
         this.album = this.core.albums[this.artistName + '|' + this.albumName];
         if (this.album) {
             this.album.sortedDiscs = []; // reset

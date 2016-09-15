@@ -29,7 +29,7 @@ export class LetterComponent implements OnInit, OnDestroy {
   }
 
   onSelect(letter:any) {
-    this.router.navigate(['Letter', { letter: letter.escapedLetter }]);
+    this.router.navigate(['letter', letter.escapedLetter]);
   }
 
   ngOnDestroy() {
