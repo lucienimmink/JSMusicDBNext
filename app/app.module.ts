@@ -3,6 +3,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 
 import { routing, appRoutingProviders }  from './app.routing';
+import { HttpModule } from '@angular/http';
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -22,6 +23,14 @@ import { LetterComponent } from './letter/letter.component';
 import { TopMenuComponent } from './menu/topmenu.component';
 import { PlayerComponent } from './player/player.component';
 
+import { AlbumComponent } from './album/album.component';
+import { ArtistComponent } from './artist/artist.component';
+import { VsFor } from './utils/ng2-vs-for';
+import { AlbumArt } from './utils/albumart.component';
+import { BackgroundArtDirective } from './utils/backgroundart.directive';
+import { TimeFormatPipe } from './timeformat.pipe';
+import { TrackListComponent } from './track/tracklist.component';
+
 @NgModule({
     declarations: [AppComponent, 
         LoginComponent, 
@@ -39,9 +48,16 @@ import { PlayerComponent } from './player/player.component';
         SearchComponent, 
         TopMenuComponent, 
         LetterComponent, 
-        PlayerComponent
+        PlayerComponent,
+        AlbumComponent,
+        ArtistComponent,
+        VsFor,
+        AlbumArt,
+        TimeFormatPipe,
+        TrackListComponent,
+        BackgroundArtDirective
     ],
-    imports: [BrowserModule, routing],
+    imports: [BrowserModule, routing, HttpModule],
     providers: [
         appRoutingProviders
     ],

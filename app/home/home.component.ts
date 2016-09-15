@@ -4,9 +4,8 @@ import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
-import { AuthHttp } from 'angular2-jwt';
 import * as _ from 'lodash';
-import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CollectionService } from './../collection.service';
 import { CoreService } from './../core.service';
@@ -29,7 +28,6 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
     templateUrl: 'app/home/home.component.html',
     selector: 'home',
     styleUrls: ['dist/home/home.component.css'],
-    directives: [REACTIVE_FORM_DIRECTIVES],
     providers: [RecentlyListenedService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -46,7 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private theme: string;
     private recentlyListenedTable = recentlyListenedTable;
 
-    constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, public authHttp: AuthHttp, private lastFMService: LastFMService, private configService: ConfigService) {
+    constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
         let controls: any = {};
         controls['username'] = new FormControl('', Validators.required);
         controls['password'] = new FormControl('', Validators.required);
