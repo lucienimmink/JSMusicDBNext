@@ -33,7 +33,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private subscription2: Subscription;
     private subscription3: Subscription;
-    private subscription4: Subscription;
     private savePlaylistState: boolean = this.booleanState("save-playlist-state");
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
@@ -103,7 +102,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
         this.subscription3.unsubscribe();
-        this.subscription4.unsubscribe();
     }
 
     removeLastfm() {
