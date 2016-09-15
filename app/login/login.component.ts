@@ -1,45 +1,41 @@
-import { Component, OnInit, Input ,OnDestroy } from "@angular/core";
-import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input ,OnDestroy, NgModule } from "@angular/core";
+import { FormGroup, ReactiveFormsModule, FormControl, Validators, FormBuilder} from '@angular/forms';
 import { LoginService } from './login.service';
 import { Router } from "@angular/router";
 import { CollectionService } from './../collection.service';
-import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { CoreService } from './../core.service';
 import { ConfigService } from './../utils/config.service';
 
 import { Subscription }   from 'rxjs/Subscription';
 
+@NgModule({
+  imports: [ ReactiveFormsModule, TooltipModule]
+})
 @Component({
   templateUrl: 'app/login/login.component.html',
   styleUrls: [ 'dist/login/login.component.css'],
-  directives: [ REACTIVE_FORM_DIRECTIVES, TOOLTIP_DIRECTIVES ],
   providers: [ LoginService ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   @Input() username:string;
   @Input() password:string;
-  @Input() lastfmname:string;
-  @Input() dsmport:string;
+  @Input() dsmport:string = localStorage.getItem('dsm') || document.location.origin;
   private form: FormGroup;
   private payLoad:any;
   private theme:string;
   private subscription:Subscription;
   private sid;
 
-  constructor(private loginService:LoginService, private router:Router, private collectionService: CollectionService, private coreService:CoreService, private configService: ConfigService) {
-    let controls:any = {};
-    controls['name'] = new FormControl('', Validators.required);
-    controls['password'] = new FormControl('', Validators.required);
-    controls['dsmport'] = new FormControl(localStorage.getItem('dsm') || document.location.origin, Validators.required);
-    this.form = new FormGroup(controls);
-
-    this.subscription = this.configService.theme$.subscribe(
-        data => {
-            this.theme = data;
-        }
-    )
-    this.theme = configService.theme;
-
+  constructor(private loginService:LoginService, private router:Router, private collectionService: CollectionService, private coreService:CoreService, private configService: ConfigService, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      'name': [this.username, Validators.required],
+      'password': [this.password, Validators.required],
+      'dsmport': [this.dsmport, Validators.required]
+    });
+    this.form.valueChanges.subscribe(
+      data => console.log(data)
+    );
   }
 
   ngOnInit() {

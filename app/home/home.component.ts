@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 import { CollectionService } from './../collection.service';
 import { CoreService } from './../core.service';
@@ -17,6 +17,8 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import { ConfigService } from './../utils/config.service';
 
 import { Subscription }   from 'rxjs/Subscription';
+
+import { User } from "./user"; 
 
 import * as PouchDB from 'pouchdb';
 
@@ -37,18 +39,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     private newListenedTracks: Array<Track> = [];
     private counter: any;
     private loading: boolean = true;
-    @Input() username: string;
-    @Input() password: string;
-    private form: FormGroup;
     private subscription: Subscription;
     private theme: string;
     private recentlyListenedTable = recentlyListenedTable;
+    private user:User;
+    private username:string;
 
     constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
-        let controls: any = {};
-        controls['username'] = new FormControl('', Validators.required);
-        controls['password'] = new FormControl('', Validators.required);
-        this.form = new FormGroup(controls);
+        this.user = new User();
 
         this.subscription = this.configService.theme$.subscribe(
             data => {
@@ -60,13 +58,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     onSubmit() {
 
-        this.lastFMService.authenticate({ user: this.form.value.username, password: this.form.value.password }).subscribe(
+        this.lastFMService.authenticate({ user: this.user.name, password: this.user.password }).subscribe(
             data => {
                 // save in storage
                 localStorage.setItem('lastfm-token', data);
-                localStorage.setItem('lastfm-username', this.form.value.username);
+                localStorage.setItem('lastfm-username', this.user.name);
                 // set in instance
-                this.username = this.form.value.username;
+                this.username = this.user.name;
                 this.startPolling();
             }
         )
