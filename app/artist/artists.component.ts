@@ -53,7 +53,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
     navigateToArtist(artist) {
-        this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
+        this.router.navigate(['/letter', artist.letter.escapedLetter, 'artist', artist.sortName])
     }
     getSize(item, index) {
         return (item.artists.length * 80) + 49;

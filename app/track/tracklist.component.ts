@@ -1,11 +1,13 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, NgModule } from "@angular/core";
 import { PlayerService} from "./../player/player.service";
 import { TimeFormatPipe } from './../timeformat.pipe';
 
+@NgModule({
+    declarations: [ TimeFormatPipe ]
+})
 @Component({
   selector: 'mdb-tracklist',
   templateUrl: 'app/track/tracklist.component.html',
-  pipes: [ TimeFormatPipe ],
   styleUrls: [ 'dist/track/tracklist.component.css' ]
 })
 export class TrackListComponent {

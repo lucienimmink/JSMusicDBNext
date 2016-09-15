@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
@@ -22,18 +22,17 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   private core:musicdbcore;
   private subscription: Subscription;
 
-  constructor (private coreService: CoreService, private router: Router, private pathService: PathService) {
+  constructor (private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
     )
+    this.letter = this.route.snapshot.params['letter'];
   }
 
   ngOnInit() {
-    // this.letter = decodeURIComponent(this.routeParams.get('letter'));
-    this.letter = "A";
     let coreletter = this.core.letters[this.letter];
     if (coreletter) {
       this.pathService.announcePage('JSMusicDB Next');

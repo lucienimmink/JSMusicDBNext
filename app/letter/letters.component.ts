@@ -34,6 +34,6 @@ export class LettersComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
     navigateToLetter(letter) {
-        this.router.navigate(['Letter', { letter: letter.escapedLetter }]);
+        this.router.navigate(['/letter', letter.escapedLetter]);
     }
 }

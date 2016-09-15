@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild  } from "@angular/core";
+import { Component, OnDestroy, ViewChild, NgModule  } from "@angular/core";
 import { PlayerService } from './player.service';
 import { Router } from '@angular/router';
 import { Subscription }   from 'rxjs/Subscription';
@@ -13,10 +13,12 @@ import { musicdbcore} from './../org/arielext/musicdb/core';
 
 import { AnimationService } from './../utils/animation.service';
 
+@NgModule({
+    declarations: [AlbumArt] 
+})
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
-    directives: [AlbumArt],
     styleUrls: ['dist/player/player.component.css']
 })
 export class PlayerComponent implements OnDestroy {
@@ -158,10 +160,12 @@ export class PlayerComponent implements OnDestroy {
         this.mediaObject.removeEventListener('play');
     }
     navigateToArtist() {
-        this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
+        //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
+        this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName ]);
     }
     navigateToAlbum() {
-        this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
+        //this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
+        this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName ]);
     }
     navigateToNowPlaying() {
         this.router.navigate(['NowPlaying']);

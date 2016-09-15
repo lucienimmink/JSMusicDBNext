@@ -1,5 +1,4 @@
-import { Component, OnDestroy, ViewChild, OnInit } from "@angular/core";
-import { ROUTER_DIRECTIVES } from "@angular/router";
+import { Component, OnDestroy, ViewChild, OnInit, NgModule } from "@angular/core";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -13,10 +12,11 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import Track from './../org/arielext/musicdb/models/Track';
 import { AnimationService } from './../utils/animation.service';
 
+@NgModule({
+    declarations: [TimeFormatPipe, BackgroundArtDirective, TrackListComponent]
+})
 @Component({
     templateUrl: 'app/nowPlaying/nowPlaying.component.html',
-    pipes: [TimeFormatPipe],
-    directives: [BackgroundArtDirective, TrackListComponent, ROUTER_DIRECTIVES],
     styleUrls: ['dist/nowPlaying/nowPlaying.component.css']
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {
@@ -110,10 +110,12 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         }
     }
     navigateToArtist() {
-        this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
+        //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
+        this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName ]);
     }
     navigateToAlbum() {
-        this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
+        // this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
+        this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName ]);
     }
     next() {
         let previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');

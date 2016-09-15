@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { AlbumComponent } from './album.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -11,9 +11,11 @@ import { StickyDirective } from './../utils/sticky.directive';
 
 import * as _ from "lodash";
 
+@NgModule({
+    declarations: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective]
+})
 @Component({
     templateUrl: 'app/album/albums.component.html',
-    directives: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective],
     styleUrls: ['dist/album/albums.component.css']
 })
 export class AlbumsComponent implements OnInit, OnDestroy {
@@ -22,8 +24,8 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     private letters: Array<any> = [];
     private showJumpList: boolean = false;
     private cummlativeLength: Array<any> = [];
-    private core:musicdbcore;
-    private subscription:Subscription;
+    private core: musicdbcore;
+    private subscription: Subscription;
 
     constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
         this.core = this.coreService.getCore();
@@ -32,7 +34,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
                 this.ngOnInit();
             }
         )
-     }
+    }
 
     ngOnInit() {
         let s = new Date().getTime();
@@ -70,7 +72,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
     navigateToAlbum(album) {
-        this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
+        this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName])
     }
     getSize(item, index) {
         return (item.albums.length * 80) + 49;
@@ -85,7 +87,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         this.items.some(function (item, i) {
             let ret = false;
             if (item.letter.letter === letter.letter) {
-                let jump = (i > 0) ? i-1 : 0;
+                let jump = (i > 0) ? i - 1 : 0;
                 window.scrollTo(0, c.cummlativeLength[jump].l - 25);
                 ret = true;
             }

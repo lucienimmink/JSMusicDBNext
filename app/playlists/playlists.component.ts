@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, NgModule } from "@angular/core";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -14,10 +14,11 @@ import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
 import { StickyDirective } from './../utils/sticky.directive';
 
+@NgModule({
+  declarations: [TimeFormatPipe, TrackListComponent, StickyDirective]
+})
 @Component({
   templateUrl: 'app/playlists/playlists.component.html',
-  pipes: [TimeFormatPipe],
-  directives: [TrackListComponent, StickyDirective],
   styleUrls: ['dist/playlists/playlists.component.css']
 })
 export class PlaylistsComponent implements OnInit {

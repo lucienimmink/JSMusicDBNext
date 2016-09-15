@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -15,10 +15,11 @@ import * as _ from 'lodash';
 
 const VERSION = "__dev__";
 
+@NgModule({
+    declarations: [TimeFormatPipe ]
+})
 @Component({
     templateUrl: 'app/settings/settings.component.html',
-    pipes: [TimeFormatPipe],
-    directives: [REACTIVE_FORM_DIRECTIVES],
     styleUrls: ['dist/settings/settings.component.css']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
@@ -173,6 +174,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     viewList() {
-        this.router.navigate(['ScrobbleCache']);
+        this.router.navigate(['/scrobble-cache']);
     }
 }

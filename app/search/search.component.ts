@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { CollectionService } from './../collection.service';
@@ -30,24 +30,24 @@ export class SearchComponent implements OnInit, OnDestroy {
     private artists:any;
     private albums:any;
     private tracks:any;
+    private query:string;
 
-    constructor(private pathService: PathService, private coreService: CoreService, private router:Router) {
+    constructor(private pathService: PathService, private coreService: CoreService, private router:Router, private route:ActivatedRoute) {
         this.core = this.coreService.getCore();
         this.subscription = this.core.coreParsed$.subscribe(
             data => {
                 this.ngOnInit();
             }
         )
+        this.query = decodeURIComponent(this.route.snapshot.params['query']);
     }
 
     ngOnInit() {
-        //let query = decodeURIComponent(this.routeParams.get('query'));
-        let query = 'hardcoded; need to fix';
-        this.pathService.announcePage(`Results for "${query}"`);
+        this.pathService.announcePage(`Results for "${this.query}"`);
 
-        this.artists = this.spliceList(this.core.searchArtist(query), MAXALLOWEDITEMS);
-        this.albums = this.spliceList(this.core.searchAlbum(query), MAXALLOWEDITEMS);
-        this.tracks = this.spliceList(this.core.searchTrack(query), MAXALLOWEDITEMS);
+        this.artists = this.spliceList(this.core.searchArtist(this.query), MAXALLOWEDITEMS);
+        this.albums = this.spliceList(this.core.searchAlbum(this.query), MAXALLOWEDITEMS);
+        this.tracks = this.spliceList(this.core.searchTrack(this.query), MAXALLOWEDITEMS);
 
     }
 
@@ -69,6 +69,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     select(track) {
-        this.router.navigate(['Album', { letter: track.album.artist.letter.escapedLetter, artist: track.album.artist.sortName, album: track.album.sortName }]);
+        this.router.navigate(['/letter', track.album.artist.letter.escapedLetter, 'artist', track.album.artist.sortName, 'album', track.album.sortName]);
     }
 }
