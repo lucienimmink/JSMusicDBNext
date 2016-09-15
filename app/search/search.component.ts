@@ -40,6 +40,10 @@ export class SearchComponent implements OnInit, OnDestroy {
             }
         )
         this.query = decodeURIComponent(this.route.snapshot.params['query']);
+        this.route.params.subscribe(data => {
+            this.query = data['query'];
+            this.ngOnInit();
+        });
     }
 
     ngOnInit() {

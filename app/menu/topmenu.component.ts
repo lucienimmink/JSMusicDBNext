@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
 import { Subscription }   from 'rxjs/Subscription';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LastFMService } from './../lastfm/lastfm.service';
+
+import { Search } from './search';
+
 
 @NgModule({
     declarations: [ TooltipModule ]
@@ -22,11 +24,10 @@ export class TopMenuComponent implements OnDestroy {
     subscription3: Subscription;
     subscription4: Subscription;
     menuVisible: boolean = false;
-    @Input() query: string;
-    private form: FormGroup;
     private topSearchVisible: boolean = false;
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private theme: String;
+    private search:Search;
 
     constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService) {
         // subscribe to a change in path; so we can display it
@@ -49,9 +50,7 @@ export class TopMenuComponent implements OnDestroy {
                 this.manualScrobblingList = data;
             }
         )
-        let controls: any = {};
-        controls['query'] = new FormControl('');
-        this.form = new FormGroup(controls);
+        this.search = new Search();
     }
 
     ngOnDestroy() {
@@ -87,12 +86,11 @@ export class TopMenuComponent implements OnDestroy {
         sideNavEl.removeEventListener('transitionend', this.onTransitionEnd);
     }
     onSubmit() {
-        let query = this.form.value.query;
         this.topSearchVisible = false;
         if (this.menuVisible) {
             this.toggleMenu();
         }
-        this.router.navigate(['Search', { query: query }]);
+        this.router.navigate(['/search', this.search.query]);
     }
     toggleSearch() {
         this.topSearchVisible = !this.topSearchVisible;
