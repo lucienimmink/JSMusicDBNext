@@ -36,35 +36,35 @@
                     </div>
                 </div>
             </li>
-            <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']"><span class="glyph glyph-home"></span> Home</a></li>
-            <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a [routerLink]="['Letters']"><span class="glyph glyph-characters"></span> Letters</a></li>
-            <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']"><span class="glyph glyph-people"></span> Artists</a></li>
-            <li [ngClass]="{'active': page === 'Albums'}"><a [routerLink]="['Albums']"><span class="glyph glyph-music-album"></span> Albums</a></li>
+            <li [ngClass]="{'active': page === 'Home'}"><a routerLink="/home"><span class="glyph glyph-home"></span> Home</a></li>
+            <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a routerLink="/letters"><span class="glyph glyph-characters"></span> Letters</a></li>
+            <li [ngClass]="{'active': page === 'Artists'}"><a routerLink="/artists"><span class="glyph glyph-people"></span> Artists</a></li>
+            <li [ngClass]="{'active': page === 'Albums'}"><a routerLink="/albums"><span class="glyph glyph-music-album"></span> Albums</a></li>
             <li [ngClass]="{'active': page === 'Playlists'}">
-                <a [routerLink]="['Playlists', {playlist: null}]"><span class="glyph glyph-music-info"></span> Playlists</a>
+                <a routerLink="/playlists"><span class="glyph glyph-music-info"></span> Playlists</a>
             </li>
             <li [ngClass]="{'active': page === 'Now playing'}">
-                <a [routerLink]="['NowPlaying']"><span class="glyph glyph-audio"></span> Now playing</a>
+                <a routerLink="/now-playing"><span class="glyph glyph-audio"></span> Now playing</a>
             </li>
-            <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}"><a [routerLink]="['ScrobbleCache']"><span class="glyph glyph-upload"></span> Scrobble cache</a></li>
-            <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']"><span class="glyph glyph-settings"></span> Settings</a></li>
+            <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}"><a routerLink="/scrobble-cache"><span class="glyph glyph-upload"></span> Scrobble cache</a></li>
+            <li [ngClass]="{'active': page === 'Settings'}"><a routerLink="/settings"><span class="glyph glyph-settings"></span> Settings</a></li>
         </ul>
     </nav>
 </aside>
 
 <aside class="visible-lg visible-xl side-nav-xl">
     <ul class="side-nav__content nav nav-pills nav-stacked">
-        <li [ngClass]="{'active': page === 'Home'}"><a [routerLink]="['Home']" tooltip="Home" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-home"></span></a></li>
-        <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a [routerLink]="['Letters']" tooltip="Letters" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-characters"></span></a></li>
-        <li [ngClass]="{'active': page === 'Artists'}"><a [routerLink]="['Artists']" tooltip="Artists" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-people"></span></a></li>
-        <li [ngClass]="{'active': page === 'Albums'}"><a [routerLink]="['Albums']" tooltip="Albums" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-music-album"></span></a></li>
+        <li [ngClass]="{'active': page === 'Home'}"><a routerLink="/home" tooltip="Home" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-home"></span></a></li>
+        <li [ngClass]="{'active': page === 'Letters'}" class="visible-xs"><a routerLink="/letters" tooltip="Letters" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-characters"></span></a></li>
+        <li [ngClass]="{'active': page === 'Artists'}"><a routerLink="/artists" tooltip="Artists" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-people"></span></a></li>
+        <li [ngClass]="{'active': page === 'Albums'}"><a routerLink="/albums" tooltip="Albums" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-music-album"></span></a></li>
         <li [ngClass]="{'active': page === 'Playlists'}">
-            <a [routerLink]="['Playlists', {playlist: null}]" tooltip="Playlists" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-music-info"></span></a>
+            <a routerLink="/playlists" tooltip="Playlists" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-music-info"></span></a>
         </li>
         <li [ngClass]="{'active': page === 'Now playing'}">
-            <a [routerLink]="['NowPlaying']" tooltip="Now Playing" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-audio"></span></a>
+            <a routerLink="/now-playing" tooltip="Now Playing" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-audio"></span></a>
         </li>
-        <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}"><a [routerLink]="['ScrobbleCache']" tooltip="Scrobble cache" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-upload"></span></a></li>
-        <li [ngClass]="{'active': page === 'Settings'}"><a [routerLink]="['Settings']" tooltip="Settings" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-settings"></span></a></li>
+        <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}"><a routerLink="/scrobble-cache" tooltip="Scrobble cache" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-upload"></span></a></li>
+        <li [ngClass]="{'active': page === 'Settings'}"><a routerLink="/settings" tooltip="Settings" tooltipTrigger="mouseenter" tooltipPlacement="right"><span class="glyph glyph-settings"></span></a></li>
     </ul>
 </aside>
