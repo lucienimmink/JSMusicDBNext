@@ -6,6 +6,8 @@ import { FormsModule }   from '@angular/forms';
 import { routing, appRoutingProviders }  from './app.routing';
 import { HttpModule } from '@angular/http';
 
+import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
+
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { LettersComponent } from './letter/letters.component';

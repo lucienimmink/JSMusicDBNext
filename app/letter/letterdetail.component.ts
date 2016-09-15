@@ -29,7 +29,11 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
         this.ngOnInit();
       }
     )
-    this.letter = this.route.snapshot.params['letter'];
+    this.letter = decodeURIComponent(this.route.snapshot.params['letter']);
+    this.route.params.subscribe(data => {
+      this.letter = decodeURIComponent(data["letter"]);
+      this.ngOnInit();
+    });
   }
 
   ngOnInit() {
