@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, RouteParams } from '@angular/router';
+import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Router } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { CoreService } from './../core.service';
@@ -11,10 +11,11 @@ import { PlayerService } from './../player/player.service';
 import { Subscription }   from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 
+@NgModule({
+    declarations: [ TimeFormatPipe, AlbumArt, BackgroundArtDirective, StickyDirective ]
+})
 @Component({
     templateUrl: 'app/album/albumdetail.component.html',
-    pipes: [TimeFormatPipe],
-    directives: [AlbumArt, BackgroundArtDirective, StickyDirective],
     styleUrls: ['dist/album/albumdetail.component.css']
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
@@ -25,7 +26,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private albumart: AlbumArt;
 
-    constructor(private coreService: CoreService, private router: Router, private routeParams: RouteParams, private pathService: PathService, private playerService: PlayerService) {
+    constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService) {
         this.core = this.coreService.getCore();
         this.subscription = this.core.coreParsed$.subscribe(
             data => {
@@ -36,8 +37,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         let c = this;
-        this.albumName = decodeURIComponent(this.routeParams.get('album'));
-        this.artistName = decodeURIComponent(this.routeParams.get('artist'));
+        //this.albumName = decodeURIComponent(this.routeParams.get('album'));
+        //this.artistName = decodeURIComponent(this.routeParams.get('artist'));
+        this.albumName = "asbsolution",
+        this.artistName = "MUSE";
         this.album = this.core.albums[this.artistName + '|' + this.albumName];
         if (this.album) {
             this.album.sortedDiscs = []; // reset

@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, RouteParams } from '@angular/router';
+import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Router } from '@angular/router';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
 import { CollectionService } from './../collection.service';
@@ -16,10 +16,11 @@ import { Subscription }   from 'rxjs/Subscription';
 
 const MAXALLOWEDITEMS = 15;
 
+@NgModule({
+    declarations: [TimeFormatPipe, ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, AlbumComponent, TrackListComponent]
+})
 @Component({
     templateUrl: 'app/search/search.component.html',
-    pipes: [TimeFormatPipe],
-    directives: [ ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, AlbumComponent, TrackListComponent ],
     styleUrls: ['dist/search/search.component.css']
 })
 export class SearchComponent implements OnInit, OnDestroy {
@@ -30,7 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private albums:any;
     private tracks:any;
 
-    constructor(private pathService: PathService, private coreService: CoreService, private routeParams: RouteParams, private router:Router) {
+    constructor(private pathService: PathService, private coreService: CoreService, private router:Router) {
         this.core = this.coreService.getCore();
         this.subscription = this.core.coreParsed$.subscribe(
             data => {
@@ -40,7 +41,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let query = decodeURIComponent(this.routeParams.get('query'));
+        //let query = decodeURIComponent(this.routeParams.get('query'));
+        let query = 'hardcoded; need to fix';
         this.pathService.announcePage(`Results for "${query}"`);
 
         this.artists = this.spliceList(this.core.searchArtist(query), MAXALLOWEDITEMS);

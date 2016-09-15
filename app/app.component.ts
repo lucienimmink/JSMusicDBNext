@@ -1,30 +1,16 @@
 import { Component, OnInit, ViewChild, OnDestroy, NgModule } from "@angular/core";
-import { RouteConfig, ROUTER_DIRECTIVES } from '@angular/router';
 import { musicdbcore } from './org/arielext/musicdb/core';
 import { Observable } from 'rxjs/Observable';
 
 import { CollectionService } from './collection.service';
 import { CoreService } from './core.service';
 import { LetterComponent } from './letter/letter.component';
-import { LettersComponent } from './letter/letters.component';
-import { LetterDetailComponent } from './letter/letterdetail.component';
-import { ArtistsComponent } from './artist/artists.component';
-import { ArtistDetailComponent } from './artist/artistdetail.component';
-import { AlbumsComponent } from './album/albums.component';
-import { AlbumDetailComponent } from './album/albumdetail.component';
 import { TopMenuComponent } from './menu/topmenu.component';
-import { HomeComponent } from './home/home.component';
-import { SettingsComponent } from './settings/settings.component';
-import { SearchComponent } from './search/search.component';
-import { ScrobbleCacheComponent } from './scrobbleCache/scrobbleCache.component';
 import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
 import { PlayerComponent } from './player/player.component';
-import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
-import { PlaylistsComponent } from './playlists/playlists.component';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { LoggedInRouterOutlet } from './LoggedInOutlet';
-import { LoginComponent } from './login/login.component';
 import { LastFMService} from './lastfm/lastfm.service';
 import { LoginService } from './login/login.service';
 import { Subscription }   from 'rxjs/Subscription';
@@ -35,29 +21,14 @@ import { ConfigService } from './utils/config.service';
 import './rxjs-operators';
 
 @NgModule({
-  declarations: [LetterComponent, ROUTER_DIRECTIVES, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
+  declarations: [LetterComponent, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
 })
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
   providers: [CollectionService, CoreService, PathService, PlayerService, LoginService, LastFMService, AnimationService, ConfigService]
 })
-@RouteConfig([
-  { path: '/', redirectTo: ['Home'] },
-  { path: '/login', name: 'Login', component: LoginComponent },
-  { path: '/home', name: 'Home', component: HomeComponent },
-  { path: '/letters', name: 'Letters', component: LettersComponent },
-  { path: '/artists', name: 'Artists', component: ArtistsComponent },
-  { path: '/albums', name: 'Albums', component: AlbumsComponent },
-  { path: '/playlists/:playlist', name: 'Playlists', component: PlaylistsComponent },
-  { path: '/nowPlaying', name: 'NowPlaying', component: NowPlayingComponent },
-  { path: '/settings', name: 'Settings', component: SettingsComponent },
-  { path: '/settings/scrobble-cache', name: 'ScrobbleCache', component: ScrobbleCacheComponent },
-  { path: '/search/:query', name: 'Search', component: SearchComponent },
-  { path: '/letter/:letter', name: 'Letter', component: LetterDetailComponent },
-  { path: '/letter/:letter/artist/:artist', name: 'Artist', component: ArtistDetailComponent },
-  { path: '/letter/:letter/artist/:artist/album/:album', name: 'Album', component: AlbumDetailComponent }
-])
+
 export class AppComponent implements OnDestroy {
   private letter: string = 'N';
   private artists: Array<any>;

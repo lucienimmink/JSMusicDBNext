@@ -2,9 +2,42 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 
+import { routing, appRoutingProviders }  from './app.routing';
+
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { LettersComponent } from './letter/letters.component';
+import { ArtistsComponent } from './artist/artists.component';
+import { AlbumsComponent } from './album/albums.component';
+import { PlaylistsComponent } from './playlists/playlists.component';
+import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ScrobbleCacheComponent } from './scrobbleCache/scrobbleCache.component';
+import { SearchComponent } from './search/search.component';
+import { LetterDetailComponent } from './letter/letterdetail.component';
+import { ArtistDetailComponent } from './artist/artistdetail.component';
+import { AlbumDetailComponent } from './album/albumdetail.component';
+
 @NgModule({
-    declarations: [AppComponent],
-    imports: [BrowserModule],
+    declarations: [AppComponent, 
+        LoginComponent, 
+        HomeComponent, 
+        LettersComponent, 
+        LetterDetailComponent, 
+        ArtistsComponent, 
+        ArtistDetailComponent, 
+        AlbumsComponent, 
+        AlbumDetailComponent, 
+        PlaylistsComponent,
+        NowPlayingComponent,
+        SettingsComponent,
+        ScrobbleCacheComponent,
+        SearchComponent
+    ],
+    imports: [BrowserModule, routing],
+    providers: [
+        appRoutingProviders
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
