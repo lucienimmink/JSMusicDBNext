@@ -1,18 +1,19 @@
-import { Component, OnDestroy, Input  } from "@angular/core";
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Component, OnDestroy, Input, NgModule } from "@angular/core";
+import { Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
 import { Subscription }   from 'rxjs/Subscription';
-import { TOOLTIP_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
-import { FormGroup, REACTIVE_FORM_DIRECTIVES, FormControl, Validators } from '@angular/forms';
+import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LastFMService } from './../lastfm/lastfm.service';
 
+@NgModule({
+    declarations: [ TooltipModule ]
+})
 @Component({
     templateUrl: 'app/menu/topmenu.component.html',
     selector: 'topmenu',
-    styleUrls: ['dist/menu/topmenu.component.css', 'dist/menu/side-nav.css'],
-    directives: [ROUTER_DIRECTIVES, TOOLTIP_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
+    styleUrls: ['dist/menu/topmenu.component.css', 'dist/menu/side-nav.css']
 })
-
 export class TopMenuComponent implements OnDestroy {
     path: string;
     subscription: Subscription;

@@ -18,6 +18,10 @@ import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
 
+import { LetterComponent } from './letter/letter.component';
+import { TopMenuComponent } from './menu/topmenu.component';
+import { PlayerComponent } from './player/player.component';
+
 @NgModule({
     declarations: [AppComponent, 
         LoginComponent, 
@@ -32,7 +36,10 @@ import { AlbumDetailComponent } from './album/albumdetail.component';
         NowPlayingComponent,
         SettingsComponent,
         ScrobbleCacheComponent,
-        SearchComponent
+        SearchComponent, 
+        TopMenuComponent, 
+        LetterComponent, 
+        PlayerComponent
     ],
     imports: [BrowserModule, routing],
     providers: [

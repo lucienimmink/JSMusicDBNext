@@ -4,11 +4,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { CollectionService } from './collection.service';
 import { CoreService } from './core.service';
-import { LetterComponent } from './letter/letter.component';
-import { TopMenuComponent } from './menu/topmenu.component';
 import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
-import { PlayerComponent } from './player/player.component';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { LoggedInRouterOutlet } from './LoggedInOutlet';
 import { LastFMService} from './lastfm/lastfm.service';
@@ -21,7 +18,7 @@ import { ConfigService } from './utils/config.service';
 import './rxjs-operators';
 
 @NgModule({
-  declarations: [LetterComponent, TopMenuComponent, PlayerComponent, IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet]
+  declarations: [ IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet ]
 })
 @Component({
   selector: 'musicdb',
