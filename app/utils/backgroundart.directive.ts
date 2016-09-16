@@ -34,6 +34,10 @@ export class BackgroundArtDirective {
 
     constructor(el: ElementRef, private backgroundArtService: BackgroundArtService) {
         this.el = el.nativeElement;
+        // this.loadImage(); // always load image
+        setTimeout(()=> {
+            this.loadImage();
+        }, 100);
     }
     loadImage() {
         if ((!this.loaded && !this.loading) || this.hasClassName('always-replace')) {
