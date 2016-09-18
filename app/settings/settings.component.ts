@@ -84,8 +84,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.themeForm = this.currentForm;
         if (this.themeForm) {
             this.themeForm.valueChanges.subscribe(data => {
-                this.configService.theme = data.theme || 'light';
-                this.theme = data.theme || 'light';
+                if (data && data.theme) {
+                    this.configService.theme = data.theme;
+                    this.theme = data.theme;
+                }
             });
         }
     }

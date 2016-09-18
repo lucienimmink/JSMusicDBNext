@@ -31,9 +31,11 @@ export class ConfigService {
         return this._theme;
     }
     set theme(theme:string) {
-        this._theme = theme;
-        this.themeSource.next(theme);
-        this.setStyleSheet();
+        if (this._theme !== theme) {
+            this._theme = theme;
+            this.themeSource.next(theme);
+            this.setStyleSheet();
+        }
     }
     applyTheme() {
         this.setStyleSheet();
