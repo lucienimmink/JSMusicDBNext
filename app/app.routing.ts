@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   { path: 'playlists', component: PlaylistsComponent },
   { path: 'now-playing', component: NowPlayingComponent },
   { path: 'settings', component: SettingsComponent },
-  { path: 'settings/scrobble-cache', component: ScrobbleCacheComponent },
+  { path: 'scrobble-cache', component: ScrobbleCacheComponent },
   { path: 'search/:query', component: SearchComponent },
   { path: 'letter/:letter', component: LetterDetailComponent },
   { path: 'letter/:letter/artist/:artist', component: ArtistDetailComponent },
