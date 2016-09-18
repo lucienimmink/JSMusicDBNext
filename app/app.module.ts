@@ -34,6 +34,8 @@ import { BackgroundArtDirective } from './utils/backgroundart.directive';
 import { TimeFormatPipe } from './timeformat.pipe';
 import { TrackListComponent } from './track/tracklist.component';
 
+import { StickyDirective } from './utils/sticky.directive';
+
 @NgModule({
     declarations: [AppComponent, 
         LoginComponent, 
@@ -58,7 +60,8 @@ import { TrackListComponent } from './track/tracklist.component';
         AlbumArt,
         TimeFormatPipe,
         TrackListComponent,
-        BackgroundArtDirective
+        BackgroundArtDirective,
+        StickyDirective
     ],
     imports: [BrowserModule, routing, HttpModule, FormsModule],
     providers: [
