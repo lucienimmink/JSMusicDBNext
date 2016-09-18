@@ -1,12 +1,10 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, enableProdMode } from "@angular/core";
+import { BrowserModule, EVENT_MANAGER_PLUGINS } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { FormsModule }   from '@angular/forms';
 
 import { routing, appRoutingProviders }  from './app.routing';
 import { HttpModule } from '@angular/http';
-
-import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -35,6 +33,7 @@ import { TimeFormatPipe } from './timeformat.pipe';
 import { TrackListComponent } from './track/tracklist.component';
 
 import { StickyDirective } from './utils/sticky.directive';
+import { MediaEvents } from './utils/MediaEvents';
 
 @NgModule({
     declarations: [AppComponent, 
@@ -65,7 +64,8 @@ import { StickyDirective } from './utils/sticky.directive';
     ],
     imports: [BrowserModule, routing, HttpModule, FormsModule],
     providers: [
-        appRoutingProviders
+        appRoutingProviders,
+        {provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true}
     ],
     bootstrap: [AppComponent]
 })
@@ -82,4 +82,8 @@ export class AppModule {
                 });
         }
     }
+}
+
+if (window['ENV'] && window['ENV'] === "prod") {
+  enableProdMode();
 }
