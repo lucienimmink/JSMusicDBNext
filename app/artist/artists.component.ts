@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { ArtistComponent } from './artist.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -10,10 +10,11 @@ import { Subscription }   from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 
 import * as _ from "lodash";
-
+@NgModule({
+    declarations: [ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective]
+})
 @Component({
     templateUrl: 'app/artist/artists.component.html',
-    directives: [ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective],
     styleUrls: ['dist/artist/artists.component.css']
 })
 export class ArtistsComponent implements OnInit, OnDestroy {

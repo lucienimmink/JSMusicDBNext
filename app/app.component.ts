@@ -7,7 +7,6 @@ import { CoreService } from './core.service';
 import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
-import { LoggedInRouterOutlet } from './LoggedInOutlet';
 import { LastFMService} from './lastfm/lastfm.service';
 import { LoginService } from './login/login.service';
 import { Subscription }   from 'rxjs/Subscription';
@@ -18,7 +17,7 @@ import { ConfigService } from './utils/config.service';
 import './rxjs-operators';
 
 @NgModule({
-  declarations: [ IMAGELAZYLOAD_DIRECTIVE, LoggedInRouterOutlet ]
+  declarations: [ IMAGELAZYLOAD_DIRECTIVE ]
 })
 @Component({
   selector: 'musicdb',

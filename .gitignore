@@ -5,6 +5,7 @@ dist
 typings
 stubs
 bundles
+aot
 
 target/css
 target/fonts
