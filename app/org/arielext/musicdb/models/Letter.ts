@@ -49,7 +49,7 @@ export default class Letter {
       }
       if (a[sortkey].toUpperCase() < b[sortkey].toUpperCase()) {
         return (direction === 'asc') ? -1 : 1;
-      } else if (a[sortkey] > b[sortkey]) {
+      } else if (a[sortkey].toUpperCase() > b[sortkey].toUpperCase()) {
         return (direction === 'asc') ? 1 : -1;
       }
       return 0;
