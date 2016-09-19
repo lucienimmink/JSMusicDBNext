@@ -11,7 +11,7 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     replace = require('gulp-replace'),
     inlineNg2Template = require('gulp-inline-ng2-template');
-var tsProject = tsc.createProject('./tsconfig.json');
+var tsProject = tsc.createProject('./dist-tsconfig.json');
 
 var prefixZero = function (n) {
     if (n < 10) {
@@ -20,9 +20,9 @@ var prefixZero = function (n) {
     return n;
 }
 var d = new Date();
-var VERSION = prefixZero(d.getDate()) + "" + prefixZero(d.getMonth() + 1) + d.getFullYear();
+var VERSION = prefixZero(d.getDate()) + "-" + prefixZero(d.getMonth() + 1) + "-" + d.getFullYear() + " " + prefixZero(d.getHours()) + ":" + prefixZero(d.getMinutes());
 
-gulp.task('bundle', ['bundle-app', 'bundle-dependencies', 'bundle-css'], function (cb) { cb(); });
+gulp.task('bundle', ['bundle-app', 'bundle-css'], function (cb) { cb(); });
 gulp.task('copy', ['copy-js', 'copy-css', 'copy-polyfills', 'copy-assets'], function (cb) { cb(); });
 gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function (cb) { cb(); });
 
@@ -179,19 +179,7 @@ gulp.task('bundle-app', ['inline-templates'], function (cb) {
     var builder = new Builder('', 'dist-systemjs.config.js');
 
     builder
-        .bundle('dist/app/**/* - [@angular/**/*.js] - [rxjs/**/*.js]', 'target/js/app.bundle.js', { minify: true })
-        .then(function () { cb() })
-        .catch(function (err) {
-            console.log('Build error');
-            cb(err);
-        });
-});
-
-gulp.task('bundle-dependencies', ['inline-templates'], function (cb) {
-    var builder = new Builder('', 'dist-systemjs.config.js');
-
-    builder
-        .bundle('dist/app/**/*.js - [dist/app/**/*.js]', 'target/js/dependencies.bundle.js', { minify: true })
+        .bundle('dist/app/**/*', 'target/js/app.bundle.js', { minify: true })
         .then(function () { cb() })
         .catch(function (err) {
             console.log('Build error');
