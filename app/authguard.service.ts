@@ -8,6 +8,7 @@ export class AuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         let url: string = state.url;
+        window.scrollTo(0,0); // scroll to top on every change;
         return this.checkLogin(url);
     }
 
