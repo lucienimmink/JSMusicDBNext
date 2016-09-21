@@ -12,6 +12,7 @@
             </div>
             <div class="col-xs-24"><span class="color-type-secondary">Connected to:</span> <span>{{connectiontype}} <span class="color-type-secondary">({{connectiondetails}})</span></span>
                 <a (click)="removeConnection()" *ngIf="connectiondetails"><i class="glyph glyph-delete"></i> remove token</a>
+                <a routerLink="/login" *ngIf="!connectiondetails"><i class="glyph glyph-admin"></i> login</a>
             </div>
             <div class="col-xs-24">
                 <span class="color-type-secondary">Reload collection</span> <button (click)="reloadCollection()" [disabled]="isReloading" *ngIf="!isReloading" class="btn btn-primary"> <i class="glyph glyph-sync"></i> now</button> <span *ngIf="scanperc && isReloading">{{scanperc}} % done</span>

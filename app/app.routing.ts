@@ -15,25 +15,28 @@ import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
 
+import { AuthGuard } from './authguard.service';
+import { LoginService } from './login/login.service';
+
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'letters', component: LettersComponent },
-  { path: 'artists', component: ArtistsComponent },
-  { path: 'albums', component: AlbumsComponent },
-  { path: 'playlists', component: PlaylistsComponent },
-  { path: 'now-playing', component: NowPlayingComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'scrobble-cache', component: ScrobbleCacheComponent },
-  { path: 'search/:query', component: SearchComponent },
-  { path: 'letter/:letter', component: LetterDetailComponent },
-  { path: 'letter/:letter/artist/:artist', component: ArtistDetailComponent },
-  { path: 'letter/:letter/artist/:artist/album/:album', component: AlbumDetailComponent },
-  { path: '', component: LoginComponent }
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'letters', component: LettersComponent, canActivate: [AuthGuard] },
+  { path: 'artists', component: ArtistsComponent, canActivate: [AuthGuard] },
+  { path: 'albums', component: AlbumsComponent, canActivate: [AuthGuard] },
+  { path: 'playlists', component: PlaylistsComponent, canActivate: [AuthGuard] },
+  { path: 'now-playing', component: NowPlayingComponent, canActivate: [AuthGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'scrobble-cache', component: ScrobbleCacheComponent, canActivate: [AuthGuard] },
+  { path: 'search/:query', component: SearchComponent, canActivate: [AuthGuard] },
+  { path: 'letter/:letter', component: LetterDetailComponent, canActivate: [AuthGuard] },
+  { path: 'letter/:letter/artist/:artist', component: ArtistDetailComponent, canActivate: [AuthGuard] },
+  { path: 'letter/:letter/artist/:artist/album/:album', component: AlbumDetailComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] }
 ];
 
 export const appRoutingProviders: any[] = [
-
+  AuthGuard, LoginService
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

@@ -6,7 +6,13 @@ import { KJUR } from "jsrsasign";
 @Injectable()
 export class LoginService {
 
-  constructor(private http: Http) { }
+  public hasToken:boolean = false;
+
+  constructor(private http: Http) {
+    if (localStorage.getItem("jwt")) {
+      this.hasToken = true;
+    }
+   }
 
   doLogin(form: any, encoded:boolean = false) {
     let username = form.name;

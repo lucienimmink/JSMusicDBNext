@@ -30,8 +30,8 @@
     "angular2-jwt": "^0.1.23",
     "bootstrap": "^3.3.6",
     "core-js": "^2.4.0",
-    "lodash": "^4.13.1",
-    "moment": "^2.15.0",
+    "lodash": "^4.16.1",
+    "moment": "^2.15.1",
     "ng2-bootstrap": "^1.1.5",
     "node-sass": "^3.10.0",
     "pouchdb": "^6.0.5",
@@ -40,7 +40,7 @@
     "systemjs": "^0.19.38",
     "tslint": "^3.13.0",
     "winstrap": "^0.5.10",
-    "zone.js": "^0.6.23"
+    "zone.js": "^0.6.25"
   },
   "devDependencies": {
     "concurrently": "^2.1.0",
