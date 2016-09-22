@@ -22,13 +22,16 @@ body {
     width: 320px;
     margin: 0 auto;
     text-align: center;
-    
+
     .progress-bar {
         height: 0;
         width: 180px;
         margin: 0 auto;
         float: none;
     }
+}
+.progress-bar {
+    height: 0;
 }
 .progress {
     background-color: $disabled-color;
