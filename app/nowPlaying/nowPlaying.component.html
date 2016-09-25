@@ -1,8 +1,8 @@
 <div class="container-fluid animated-page" [ngClass]="{'slided': slided}" id="nowPlaying" *ngIf="track">
     <div class="top">
         <div class="image-wrapper">
-            <div class="current-album-art always-replace" [backgroundArt]="track"></div>
-            <div class="previous-album-art"></div>
+            <div class="current-album-art always-replace" [backgroundArt]="track" (swipeleft)="next()" (swiperight)="prev()"></div>
+            <div class="previous-album-art" (swipeleft)="next()" (swiperight)="prev()"></div>
         </div>
         <div class="row controls-wrapper">
             <div class="progress">
