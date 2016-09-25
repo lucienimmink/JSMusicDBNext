@@ -1,14 +1,14 @@
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
     /* for vertical scrollbars */
-    height: 6px;
+    height: 4px;
     /* for horizontal scrollbars */
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.2); 
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.5);
+    background-color: $accent-color;
 }
