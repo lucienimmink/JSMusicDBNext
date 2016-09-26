@@ -54,7 +54,10 @@
                 <div class="col-xs-24">
                     <h3>Nothing is playing</h3>
                     <p>This is where you'll see the song you're playing and songs that are coming up.</p>
-                    <p>Find an <a [routerLink]="['Artists']"><span class="glyph glyph-people"></span> artist</a> or <a [routerLink]="['Albums']"><span class="glyph glyph-music-album"></span> album</a> that you want to play; or setup a <a [routerLink]="['Playlists', {playlist: null}]"><span class="glyph glyph-music-info"></span> playlist</a></p>
+                    <p>Find an <a routerLink="/artists"><span class="glyph glyph-people"></span> artist</a> or
+                        <a routerLink="/albums"><span class="glyph glyph-music-album"></span> album</a> that you want to play; or setup a
+                        <a routerLink="/playlists"><span class="glyph glyph-music-info"></span> playlist</a>
+                    </p>
                 </div>
             </div>
         </div>
