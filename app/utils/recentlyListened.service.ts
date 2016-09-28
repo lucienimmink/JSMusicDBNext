@@ -13,7 +13,7 @@ export class RecentlyListenedService {
         urlSearchParams.set('method', 'user.getrecenttracks');
         urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
         urlSearchParams.set('format', 'json');
-        urlSearchParams.set('limit', '9');
+        urlSearchParams.set('limit', '15');
 
         let query: RequestOptionsArgs = {
             search: urlSearchParams
