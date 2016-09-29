@@ -39,6 +39,7 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let coreletter = this.core.letters[this.letter];
     if (coreletter) {
+      coreletter.active = true;
       this.pathService.announcePage('JSMusicDB Next');
       this.artists = coreletter.sortAndReturnArtistsBy('name', 'asc');
     }

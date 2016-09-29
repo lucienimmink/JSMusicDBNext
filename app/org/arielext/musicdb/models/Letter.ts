@@ -6,6 +6,7 @@ export default class Letter {
   letter: string;
   escapedLetter: string;
   artists: Array<Artist> = [];
+  active: boolean = false;
 
   constructor(json: any) {
     if (json.album && json.title) {

@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="visible-md visible-lg">
       <ul class="nav navbar-nav">
-        <li *ngFor="let letter of letters">
+        <li *ngFor="let letter of letters" [ngClass]="{'active': letter.active}">
           <a class="color-type-secondary" (click)="onSelect(letter)">{{letter.letter}}</a>
         </li>
       </ul>
