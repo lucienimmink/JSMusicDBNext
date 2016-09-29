@@ -41,7 +41,12 @@ body {
         transition: width 0.1s linear;
     }
 }
-
+.loading-fixed {
+    left: calc(50% - 160px);
+    position: fixed;
+    top: 100px;
+    z-index: 1000;
+}
 a {
     cursor: pointer;
     &:hover {

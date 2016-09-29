@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private theme: string;
   private subscription: Subscription;
   private sid;
+  private isLoading:boolean = false;
 
   constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService, private coreService: CoreService, private configService: ConfigService) {
     this.user = new User();
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   getCollection() {
+    this.isLoading = true;
     this.collectionService.getCollection()
       .subscribe(
       data => this.fillCollection(data),
