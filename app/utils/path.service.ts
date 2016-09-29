@@ -12,7 +12,10 @@ export class PathService {
     announcePath(path:any) {
         this.pathAnnouncementSource.next(path);
     }
-    announcePage(page:any) {
-        this.pageAnnouncementSource.next(page);
+    announcePage(page:any, letter:any = null) {
+        this.pageAnnouncementSource.next({
+            page: page,
+            letter: letter
+        });
     }
 }

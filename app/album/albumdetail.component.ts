@@ -61,7 +61,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             discnrs.forEach(disc => {
                 this.album.sortedDiscs.push(this.album.discs[disc.id]);
             });
-            this.pathService.announcePath({ artist: this.album.artist, album: this.album });
+            this.pathService.announcePath({ artist: this.album.artist, album: this.album, letter: this.album.artist.letter });
         }
     }
 

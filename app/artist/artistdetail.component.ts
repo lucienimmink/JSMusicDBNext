@@ -36,7 +36,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.artist = this.core.artists[this.artistName];
     if (this.artist) {
-      this.pathService.announcePath({ artist: this.artist });
+      this.pathService.announcePath({ artist: this.artist, letter: this.artist.letter });
       this.albums = this.artist.sortAndReturnAlbumsBy('year', 'asc');
     }
   }

@@ -1,15 +1,18 @@
 import { Component, OnDestroy, Input, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { LastFMService } from './../lastfm/lastfm.service';
+
+import { musicdbcore } from './../org/arielext/musicdb/core';
+import { CoreService } from './../core.service';
 
 import { Search } from './search';
 
 
 @NgModule({
-    declarations: [ TooltipModule ]
+    declarations: [TooltipModule]
 })
 @Component({
     templateUrl: 'app/menu/topmenu.component.html',
@@ -27,22 +30,29 @@ export class TopMenuComponent implements OnDestroy {
     private topSearchVisible: boolean = false;
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private theme: String;
-    private search:Search;
+    private search: Search;
+    private core: musicdbcore;
+    private letters:Array<any>;
 
-    constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService) {
+    constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService) {
+        this.core = this.coreService.getCore();
         // subscribe to a change in path; so we can display it
         this.subscription = pathService.pathAnnounced$.subscribe(
             path => {
                 this.path = path;
                 this.page = null;
                 this.menuVisible = false;
+                this.disableActiveLetter();
+                this.activateLetter(path.letter);
             }
         );
         this.subscription2 = pathService.pageAnnounced$.subscribe(
             page => {
-                this.page = page;
+                this.page = page.page;
                 this.path = null;
                 this.menuVisible = false;
+                this.disableActiveLetter();
+                this.activateLetter(page.letter);
             }
         );
         this.subscription3 = this.lastFMService.manualScrobbleList$.subscribe(
@@ -50,7 +60,29 @@ export class TopMenuComponent implements OnDestroy {
                 this.manualScrobblingList = data;
             }
         )
+        this.subscription4 = this.core.coreParsed$.subscribe(
+            data => {
+                this.ngOnInit();
+            }
+        )
         this.search = new Search();
+    }
+
+    ngOnInit() {
+        this.letters = this.core.sortedLetters;
+    }
+
+    disableActiveLetter() {
+        this.letters.forEach(letter => {
+            if (letter.active) {
+                letter.active = false;
+            }
+        })
+    }
+    activateLetter(letter:any) {
+        if (letter) {
+            letter.active = true;
+        }
     }
 
     ngOnDestroy() {
@@ -95,7 +127,7 @@ export class TopMenuComponent implements OnDestroy {
     toggleSearch() {
         this.topSearchVisible = !this.topSearchVisible;
     }
-    private onDocumentClick = (e:Event) => {
+    private onDocumentClick = (e: Event) => {
         let target = <HTMLElement>e.target;
         if (target.classList.contains("side-nav--visible")) {
             this.toggleMenu();
