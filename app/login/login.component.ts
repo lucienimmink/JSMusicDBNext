@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { LoginService } from './login.service';
 import { Router } from "@angular/router";
 import { CollectionService } from './../collection.service';
-import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { CoreService } from './../core.service';
 import { ConfigService } from './../utils/config.service';
 
@@ -10,9 +9,6 @@ import { Subscription }   from 'rxjs/Subscription';
 
 import { User } from "./user";
 
-@NgModule({
-  imports: [TooltipModule]
-})
 @Component({
   templateUrl: 'app/login/login.component.html',
   styleUrls: ['dist/login/login.component.css']
