@@ -13,15 +13,3 @@
 
 <!-- the player -->
 <mdb-player (mdbprev)="onExternalPrev($event)" (mdbnext)="onExternalNext()" (mdbtoggle)="onExternalToggle()"></mdb-player>
-
-<div class="loading loading-fixed" *ngIf="isLoading">
-    <div class="preloader">
-        <div class="progress-bar">
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
-        </div>
-    </div>
-</div>
