@@ -8,7 +8,7 @@ body {
     transition: color 0.15s ease-in, background-color 0.15s ease-in;
 
     @include musicdb-respond-min-width(sm) {
-        padding-top: 110px;
+        padding-top: 105px;
     }
 }
 @include musicdb-respond-max-width(xs) {
