@@ -60,7 +60,7 @@ gulp.task('add-version', function () {
 gulp.task('inline-templates', function () {
     var tsResult = tsProject.src()
         .pipe(inlineNg2Template({ UseRelativePaths: true, indent: 0, removeLineBreaks: true }))
-        .pipe(tsc(tsProject))
+        .pipe(tsProject())
     return tsResult.js.pipe(gulp.dest('dist/app'));
 });
 

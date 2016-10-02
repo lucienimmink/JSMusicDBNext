@@ -45,8 +45,12 @@ body {
 .loading-fixed {
     left: calc(50% - 160px);
     position: fixed;
-    top: 100px;
+    top: 50px;
     z-index: 1000;
+
+    @include musicdb-respond-min-width(sm) {
+        top: 100px;
+    }
 }
 a {
     cursor: pointer;
