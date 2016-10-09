@@ -8,11 +8,11 @@ import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { PathService } from './../utils/path.service';
 import { PlayerService } from './../player/player.service';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 
 @NgModule({
-    declarations: [ TimeFormatPipe, AlbumArt, BackgroundArtDirective, StickyDirective ]
+    declarations: [TimeFormatPipe, AlbumArt, BackgroundArtDirective, StickyDirective]
 })
 @Component({
     templateUrl: 'app/album/albumdetail.component.html',
@@ -35,6 +35,12 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         )
         this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
         this.albumName = decodeURIComponent(this.route.snapshot.params['album']);
+        
+        this.route.params.subscribe(data => {
+            this.artistName = decodeURIComponent(data["artist"]);
+            this.albumName = decodeURIComponent(data["album"]);
+            this.ngOnInit();
+        });
     }
 
     ngOnInit() {

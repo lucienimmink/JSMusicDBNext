@@ -7,7 +7,7 @@ import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 @NgModule({
   declarations: [AlbumComponent, BackgroundArtDirective, IMAGELAZYLOAD_DIRECTIVE]
@@ -20,7 +20,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   private artistName: string;
   private artist: any;
   private albums: Array<any> = [];
-  private core:musicdbcore;
+  private core: musicdbcore;
   private subscription: Subscription;
 
   constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
@@ -30,7 +30,11 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
+    this.route.params.subscribe(data => {
+      this.artistName = decodeURIComponent(data["artist"]);
+      this.ngOnInit();
+    });
   }
 
   ngOnInit() {
