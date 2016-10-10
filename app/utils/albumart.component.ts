@@ -29,6 +29,7 @@ export class AlbumArt {
             url: NOIMAGE,
             name: 'unknown album'
         }
+        // TODO: add listener for when we switch between 2 pages while both pages are album detail pages.
     }
 
     ngOnInit() {

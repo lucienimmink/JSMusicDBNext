@@ -11,12 +11,14 @@ export default class Album {
   sortedDiscs:Array<any> = [];
   year:number;
   art:string;
+  modified:number = 0;
 
   constructor (json:any){
     if (json.album && json.title) {
       this.name = json.album;
       this.sortName = this.name.toUpperCase();
       this.year = json.year;
+      this.modified = json.modified;
     }
   }
   url() {

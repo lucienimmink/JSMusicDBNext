@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, NgModule } from "@angular/core";
+import { Component, OnDestroy, Input, NgModule } from "@angular/core";
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -31,7 +31,7 @@ const RECENTLYLISTENEDINTERVAL = 1000 * 60;
     styleUrls: ['dist/home/home.component.css'],
     providers: [RecentlyListenedService]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnDestroy {
 
     private core: musicdbcore;
     private recentlyListenedTracks: Array<Track> = [];
@@ -39,10 +39,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     private counter: any;
     private loading: boolean = true;
     private subscription: Subscription;
+    private subscription2: Subscription;
     private theme: string;
     private recentlyListenedTable = recentlyListenedTable;
     private user:User;
     private username:string;
+    private recentlyAdded: Array<Album> = [];
 
     constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
         this.user = new User();
@@ -52,7 +54,19 @@ export class HomeComponent implements OnInit, OnDestroy {
                 this.theme = data;
             }
         )
+        this.core = this.coreService.getCore();
+        this.subscription2 = this.core.coreParsed$.subscribe(
+            data => {
+                this.init();
+            }
+        )
         this.theme = configService.theme;
+        this.pathService.announcePage('Home');
+
+        if (localStorage.getItem('lastfm-username')) {
+            this.username = localStorage.getItem('lastfm-username');
+        }
+        this.init();
     }
 
     onSubmit() {
@@ -69,26 +83,27 @@ export class HomeComponent implements OnInit, OnDestroy {
         )
     }
 
-    ngOnInit() {
-        this.core = this.coreService.getCore();
+    init() {
         if (localStorage.getItem('lastfm-username')) {
-            this.username = localStorage.getItem('lastfm-username');
             this.startPolling();
         }
-        this.pathService.announcePage('Home');
+        this.recentlyAdded = this.core.getLatestAdditions();
     }
 
     ngOnDestroy() {
         clearInterval(this.counter);
         this.subscription.unsubscribe();
+        this.subscription2.unsubscribe();
     }
 
     startPolling() {
         let c = this;
-        this.counter = setInterval(function () {
-            c.checkRecentlyListened();
-        }, RECENTLYLISTENEDINTERVAL);
-        this.checkRecentlyListened();
+        if (!this.counter) {
+            this.counter = setInterval(function () {
+                c.checkRecentlyListened();
+            }, RECENTLYLISTENEDINTERVAL);
+            this.checkRecentlyListened();
+        }
     }
 
     checkRecentlyListened() {

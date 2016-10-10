@@ -44,3 +44,25 @@ h4[sticky] {
         display: block;
     }
 }
+.media-header {
+  margin-left: -10px;
+  margin-right: -10px;
+
+  padding-left: 20px;
+}
+.media-container {
+  margin: 0 -10px;
+
+  @media screen and (min-width: 768px) {
+    /deep/ .media-panel {
+      width: 17vw;
+      height: 17vw;
+    } 
+  }
+  @media screen and (min-width: 992px) {
+    /deep/ .media-panel {
+      width: 11vw;
+      height: 11vw;
+    } 
+  }
+}

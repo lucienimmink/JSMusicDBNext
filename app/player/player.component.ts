@@ -145,7 +145,8 @@ export class PlayerComponent implements OnDestroy {
                 year: null,
                 art: null,
                 url: null,
-                sortedDiscs: null
+                sortedDiscs: null,
+                modified: 0
             }
             this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;

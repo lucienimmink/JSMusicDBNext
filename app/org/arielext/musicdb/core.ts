@@ -14,6 +14,7 @@ export class musicdbcore {
     public tracks: INameToValueMap = {};
     public letters: INameToValueMap = {};
     public sortedLetters: Array<Letter> = [];
+    public sortedAlbums: Array<Album> = [];
 
     private coreParsedSource = new Subject<any>();
     coreParsed$ = this.coreParsedSource.asObservable();
@@ -25,6 +26,8 @@ export class musicdbcore {
         playingTime: 0,
         parsingTime: 0
     }
+
+    private _latestAdditions: Array<Album> = [];
 
     constructor() {
         console.log(`Core init ${VERSION}`);
@@ -58,6 +61,7 @@ export class musicdbcore {
             album.artist = artist;
             artist.albums.push(album);
             artist.sortAndReturnAlbumsBy('year', 'asc');
+            core.sortedAlbums.push(album);
             core.totals.albums++;
         });
     }
@@ -230,5 +234,22 @@ export class musicdbcore {
             }
         });
         return ret;
+    }
+    getLatestAdditions(amount:number = 10): Array<Album> {
+        let c = this;
+        if (this._latestAdditions.length !== 0) {
+            return this._latestAdditions;
+        }
+        this.sortedAlbums.sort((a,b) => {
+            if (a.modified > b.modified) {
+                return -1;
+            } else if (a.modified < b.modified) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        this._latestAdditions = this.sortedAlbums.splice(0, amount);
+        return this._latestAdditions;
     }
 }

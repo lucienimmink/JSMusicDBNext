@@ -2,7 +2,6 @@
   <div class="container" *ngIf="recentlyListenedTracks && username">
     <div class="row">
       <div class="col-xs-24">
-        <h4 sticky class="header-seperator">Recently listened</h4>
         <div class="progress-bar" *ngIf="loading">
           <div class="progress-circle"></div>
           <div class="progress-circle"></div>
@@ -10,32 +9,43 @@
           <div class="progress-circle"></div>
           <div class="progress-circle"></div>
         </div>
-        <ol class="list-items">
-          <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" [ngClass]="{'now-playing': track.nowPlaying}">
-            <div class="col-xs-5 col-sm-2 col-lg-1">
-              <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
-              <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
+        <div *ngIf="recentlyListenedTracks.length > 0">
+          <h4 sticky class="header-seperator">Recently listened</h4>
+          <ol class="list-items">
+            <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" [ngClass]="{'now-playing': track.nowPlaying}">
+              <div class="col-xs-5 col-sm-2 col-lg-1">
+                <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
+                <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
+              </div>
+              <div class="col-xs-19 col-sm-18 col-md-19">
+                {{track.artist}} &bull; {{track.title}} <br />
+                <span class="color-type-secondary small">{{track.album}} </span>
+              </div>
+              <div class="col-xs-24 col-sm-4 col-md-3 text-right">
+                <span *ngIf="!track.nowPlaying">
+                {{track.date | date:'HH:mm' }}
+                <span class="color-type-secondary small">
+                  <span *ngIf="!track.nowPlaying">{{track.date | date:'dd MMM yyyy' }}</span>
+                </span>
+                </span>
+                <span *ngIf="track.nowPlaying">
+                Playing
+                <span class="color-type-secondary small">
+                  right now
+                </span>
+                </span>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div *ngIf="recentlyAdded.length > 0">
+          <h4 sticky class="header-seperator media-header">Recently added / modified</h4>
+          <div class="media-container">
+            <div class="album-panel media-panel" *ngFor="let album of recentlyAdded">
+              <mdbalbum [album]="album"></mdbalbum>
             </div>
-            <div class="col-xs-19 col-sm-18 col-md-19">
-              {{track.artist}} &bull; {{track.title}} <br />
-              <span class="color-type-secondary small">{{track.album}} </span>
-            </div>
-            <div class="col-xs-24 col-sm-4 col-md-3 text-right">
-              <span *ngIf="!track.nowPlaying">
-              {{track.date | date:'HH:mm' }}
-              <span class="color-type-secondary small">
-                <span *ngIf="!track.nowPlaying">{{track.date | date:'dd MMM yyyy' }}</span>
-              </span>
-              </span>
-              <span *ngIf="track.nowPlaying">
-              Playing
-              <span class="color-type-secondary small">
-                right now
-              </span>
-              </span>
-            </div>
-          </li>
-        </ol>
+          </div>
+        </div>
       </div>
     </div>
   </div>
