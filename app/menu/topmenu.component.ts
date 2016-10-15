@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Input, NgModule } from "@angular/core";
+import { Component, OnDestroy, Input, NgModule, ViewChild } from "@angular/core";
 import { Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
 import { Subscription } from 'rxjs/Subscription';
@@ -126,6 +126,11 @@ export class TopMenuComponent implements OnDestroy {
     }
     toggleSearch() {
         this.topSearchVisible = !this.topSearchVisible;
+        if (this.topSearchVisible === true) {
+            setTimeout(function () {
+                document.getElementById('mobileSearch').focus();
+            }, 100);
+        }
     }
     private onDocumentClick = (e: Event) => {
         let target = <HTMLElement>e.target;

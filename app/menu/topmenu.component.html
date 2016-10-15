@@ -19,7 +19,7 @@
         <i class="glyph glyph-clear" *ngIf="topSearchVisible"></i>
     </button>
     <form role="form" (ngSubmit)="onSubmit()" [ngClass]="{'visible': topSearchVisible}" #searchForm="ngForm">
-        <input type="text" class="form-control" id="search" placeholder="Search for" [(ngModel)]="search.query" #name="ngModel" name="search">
+        <input type="text" class="form-control" id="mobileSearch" placeholder="Search for" [(ngModel)]="search.query" #name="ngModel" name="search">
     </form>
 </div>
 
