@@ -19,6 +19,7 @@ import { SearchComponent } from './search/search.component';
 import { LetterDetailComponent } from './letter/letterdetail.component';
 import { ArtistDetailComponent } from './artist/artistdetail.component';
 import { AlbumDetailComponent } from './album/albumdetail.component';
+import { SortComponent } from './utils/sort.component';
 
 import { LetterComponent } from './letter/letter.component';
 import { TopMenuComponent } from './menu/topmenu.component';
@@ -36,6 +37,8 @@ import { StickyDirective } from './utils/sticky.directive';
 import { MediaEvents } from './utils/MediaEvents';
 import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
+
+
 @NgModule({
     declarations: [AppComponent, 
         LoginComponent, 
@@ -45,7 +48,8 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
         ArtistsComponent, 
         ArtistDetailComponent, 
         AlbumsComponent, 
-        AlbumDetailComponent, 
+        AlbumDetailComponent,
+        SortComponent,
         PlaylistsComponent,
         NowPlayingComponent,
         SettingsComponent,
