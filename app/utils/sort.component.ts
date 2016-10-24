@@ -1,4 +1,8 @@
-import { Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from "@angular/core";
+
+import { ConfigService } from './../utils/config.service';
+import { Subscription } from 'rxjs/Subscription';
+
 import { Sort } from './sort';
 
 @Component({
@@ -10,13 +14,26 @@ export class SortComponent implements OnInit {
     @Input() sorting: Array<string>;
     @Output() onSortChange = new EventEmitter<string>();
     private sort: Sort;
+    private theme: string;
+    private subscription: Subscription;
 
-    constructor() {
+    constructor(private configService: ConfigService) {
         this.sort = new Sort();
+
+        this.subscription = this.configService.theme$.subscribe(
+            data => {
+                this.theme = data;
+            }
+        )
+        this.theme = configService.theme;
     }
 
     ngOnInit() {
         this.sort.sort = this.sorting[0];
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     onChange() {
