@@ -22,7 +22,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   private albums: Array<any> = [];
   private core: musicdbcore;
   private subscription: Subscription;
-  private sorting:Array<string> = ['release date', 'name'];
+  private sorting:Array<string> = ['year', 'name'];
 
   constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
     this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
@@ -53,5 +53,9 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
 
   onSelect(album: any) {
     this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
+  }
+
+  onSortChange(sort:string) {
+    this.albums = this.artist.sortAndReturnAlbumsBy(sort, 'asc');
   }
 }

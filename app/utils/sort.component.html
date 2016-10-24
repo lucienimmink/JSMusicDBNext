@@ -5,9 +5,11 @@
 				<label class="control-label col-xs-12 text-right" style="margin-top: 8px;">Sort by: </label>
 				<div class="col-xs-12">
 					<div class="combobox">
-						<select class="form-control">
-                            <option *ngFor="let sort of sorting">{{sort}}</option>
-                        </select>
+						<form role="form" #sortForm="ngForm">
+							<select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="sort.sort" (ngModelChange)="onChange($event)">
+                            	<option *ngFor="let sort of sorting">{{sort}}</option>
+                        	</select>
+						</form>
 					</div>
 				</div>
 			</div>

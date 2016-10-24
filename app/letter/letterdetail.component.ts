@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
+import Letter from './../org/arielext/musicdb/models/Letter';
 
 import { CoreService } from './../core.service';
 import { ArtistComponent } from './../artist/artist.component';
@@ -18,6 +19,7 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   private core:musicdbcore;
   private subscription: Subscription;
   private sorting:Array<string> = ['name', 'albums'];
+  private coreletter:Letter;
 
   constructor (private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
     this.core = this.coreService.getCore();
@@ -34,10 +36,10 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let coreletter = this.core.letters[this.letter];
-    if (coreletter) {
-      this.pathService.announcePage('JSMusicDB Next', coreletter);
-      this.artists = coreletter.sortAndReturnArtistsBy('name', 'asc');
+    this.coreletter = this.core.letters[this.letter];
+    if (this.coreletter) {
+      this.pathService.announcePage('JSMusicDB Next', this.coreletter);
+      this.artists = this.coreletter.sortAndReturnArtistsBy('name', 'asc');
     }
   }
   onSelect(artist:any) {
@@ -45,5 +47,8 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  onSortChange(sort:string) {
+    this.artists = this.coreletter.sortAndReturnArtistsBy(sort, 'asc');
   }
 }

@@ -1,6 +1,5 @@
 <div class="animated-page">
   <div class="container container-longlist" imageLazyLoadArea>
-    <sort [sorting]="sorting"></sort>
     <div class="row">
       <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body'; excess: 5">
         <div *ngFor="let artist of _items">
