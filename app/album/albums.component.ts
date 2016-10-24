@@ -26,6 +26,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     private cummlativeLength: Array<any> = [];
     private core: musicdbcore;
     private subscription: Subscription;
+    private sorting:Array<string> = ['artist', 'release year'];
 
     constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
         this.core = this.coreService.getCore();

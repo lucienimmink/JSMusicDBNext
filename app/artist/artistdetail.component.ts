@@ -22,6 +22,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   private albums: Array<any> = [];
   private core: musicdbcore;
   private subscription: Subscription;
+  private sorting:Array<string> = ['release date', 'name'];
 
   constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
     this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
