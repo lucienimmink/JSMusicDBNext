@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { LettersComponent } from './letter/letters.component';
 import { ArtistsComponent } from './artist/artists.component';
 import { AlbumsComponent } from './album/albums.component';
+import { YearsComponent } from './years/years.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -48,6 +49,7 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
         ArtistsComponent, 
         ArtistDetailComponent, 
         AlbumsComponent, 
+        YearsComponent,
         AlbumDetailComponent,
         SortComponent,
         PlaylistsComponent,

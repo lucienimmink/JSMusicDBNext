@@ -219,7 +219,13 @@ a {
         transform: scale(1);
     }
 }
-
+.jumpList-years li {
+    font-size: 1.4em;
+    width: 17vw;
+    @include musicdb-respond-min-width(sm) {
+        font-size: 1.5em;
+    }
+}
 .btn.focus, .btn:focus, .btn:hover {
     color: $primary-color;
     outline: none;

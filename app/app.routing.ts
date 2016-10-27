@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { LettersComponent } from './letter/letters.component';
 import { ArtistsComponent } from './artist/artists.component';
 import { AlbumsComponent } from './album/albums.component';
+import { YearsComponent } from './years/years.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { NowPlayingComponent } from './nowPlaying/nowPlaying.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'letters', component: LettersComponent, canActivate: [AuthGuard] },
   { path: 'artists', component: ArtistsComponent, canActivate: [AuthGuard] },
   { path: 'albums', component: AlbumsComponent, canActivate: [AuthGuard] },
+  { path: 'years', component: YearsComponent, canActivate: [AuthGuard] },
   { path: 'playlists', component: PlaylistsComponent, canActivate: [AuthGuard] },
   { path: 'now-playing', component: NowPlayingComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
