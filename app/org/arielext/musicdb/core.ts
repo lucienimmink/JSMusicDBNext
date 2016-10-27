@@ -197,6 +197,11 @@ export class musicdbcore {
         }
         return ret;
     }
+    getArtistByName(artistName:string): Artist {
+        let artist = new Artist({ name: artistName, dummy: true });
+        let coreArtist = this.artists[artist.sortName];
+        return coreArtist;
+    }
     artistsList(): Array<Artist> {
         let c = this;
         let ret: Array<Artist> = [];

@@ -7,6 +7,7 @@
         <li><a (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved tracks on last.fm</a></li>
         <li><a (click)="setPlaylist('random')">50 random tracks</a></li>
         <li><a (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">Random based on your preferences</a></li>
+        <li><a (click)="setPlaylist('artist')">Artist radio</a></li>
       </ul>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="loading">
@@ -18,9 +19,23 @@
         <div class="progress-circle"></div>
       </div>
     </div>
-    <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist && !loading">
+    <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist && !loading && !showStartingArtist">
       <h4 sticky class="header-seperator">{{playlist.name}} <span class="small color-type-secondary">({{playlist.tracks.length}})</span></h4>
       <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
+    </div>
+    <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="showStartingArtist && !loading && !playlist">
+      <h4 sticky class="header-seperator">Select an artist as starting point</h4>
+      <form role="form" #sortForm="ngForm" [ngClass]="{'theme-alt': theme === 'dark'}" class="form-inline">
+        <div class="form-group">
+          <label for="sort">Select an artist</label>
+  			  <div class="combobox">
+
+            <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName" (ngModelChange)="onChange($event)">
+              <option *ngFor="let artist of artists">{{artist.name}}</option>
+            </select>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

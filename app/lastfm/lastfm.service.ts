@@ -3,6 +3,7 @@ import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from "@a
 import { Observable } from "rxjs/Observable";
 import { Subject }    from 'rxjs/Subject';
 import { MyQueryEncoder } from './../utils/queryEncoder';
+import Artist from './../org/arielext/musicdb/models/Artist';
 import * as _ from 'lodash';
 import * as PouchDB from 'pouchdb';
 
@@ -102,6 +103,23 @@ export class LastFMService {
 
         return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
             .map(this.extractLastFMTop)
+            .catch(this.handleError);
+    }
+    getSimilairArtists(artist:Artist):Observable<any> {
+        let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+        urlSearchParams.set('api_key', APIKEY);
+        urlSearchParams.set('format', 'json');
+        urlSearchParams.set('limit', '20');
+        urlSearchParams.set('autocorrect', '1');
+        urlSearchParams.set('method', 'artist.getSimilar');
+        urlSearchParams.set('artist', artist.name);
+
+        let query: RequestOptionsArgs = {
+            search: urlSearchParams
+        };
+
+        return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
+            .map(this.extractLastFMSimilair)
             .catch(this.handleError);
     }
     authenticate(user): Observable<any> {
@@ -316,6 +334,16 @@ export class LastFMService {
 
         if (json.topartists) {
             return json.topartists.artist;
+        } else {
+            return [];
+        }
+    }
+
+    private extractLastFMSimilair(res: Response): Array<any> {
+        let json = res.json();
+
+        if (json.similarartists) {
+            return json.similarartists.artist;
         } else {
             return [];
         }
