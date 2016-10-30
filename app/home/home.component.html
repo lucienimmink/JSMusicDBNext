@@ -12,7 +12,7 @@
         <div *ngIf="recentlyListenedTracks.length > 0">
           <h4 sticky class="header-seperator">Recently listened</h4>
           <ol class="list-items">
-            <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" [ngClass]="{'now-playing': track.nowPlaying}">
+            <li class="list-group-item" *ngFor="let track of recentlyListenedTracks">
               <div class="col-xs-5 col-sm-2 col-lg-1">
                 <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
                 <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
@@ -21,7 +21,7 @@
                 {{track.artist}} &bull; {{track.title}} <br />
                 <span class="color-type-secondary small">{{track.album}} </span>
               </div>
-              <div class="col-xs-24 col-sm-4 col-md-3 text-right">
+              <div class="col-xs-24 col-sm-4 col-md-3 text-right" [ngClass]="{'now-playing': track.nowPlaying}">
                 <span *ngIf="!track.nowPlaying">
                 {{track.date | date:'HH:mm' }}
                 <span class="color-type-secondary small">

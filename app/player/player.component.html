@@ -9,7 +9,7 @@
             <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2" (click)="navigateToNowPlaying()">
                 <albumart [track]="track"></albumart>
             </div>
-            <div class="col-xs-11 col-sm-13 col-md-15 col-lg-16">
+            <div class="col-xs-11 col-sm-13 col-md-15 col-lg-16 col-player-special">
                 <h4>{{track.title}}</h4>
                 <h5>
                     <a (click)="navigateToArtist()">{{track.trackArtist}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
