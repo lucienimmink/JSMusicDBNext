@@ -274,13 +274,6 @@ input.form-control:focus, textarea.form-control:focus {
     background-color: $tertiary-color;
 
     .col-player-special {
-        width: calc(100% - 33% - 85px);
-        @include musicdb-respond-min-width(sm) {
-            width: calc(100% - 37% - 85px);
-        }
-        @include musicdb-respond-min-width(md) {
-            width: calc(100% - 30% - 85px);
-        }
         @include musicdb-respond-min-width(lg) {
             width: calc(100% - 25% - 85px);
         } 
