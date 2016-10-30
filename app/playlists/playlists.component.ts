@@ -214,7 +214,7 @@ export class PlaylistsComponent implements OnInit {
                 _.each(data, function (lastfmartist) {
                     let name = lastfmartist.name;
                     let coreArtist = c.core.getArtistByName(name)
-                    if (coreArtist && foundSimilair.length < 5) {
+                    if (coreArtist) {
                         foundSimilair.push(coreArtist);
                     }
                 });
