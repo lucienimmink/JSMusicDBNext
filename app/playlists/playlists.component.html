@@ -17,7 +17,10 @@
         <div class="progress-circle"></div>
         <div class="progress-circle"></div>
         <div class="progress-circle"></div>
-      </div>
+      </div> <br />
+      <p class="small" *ngIf="playlist && playlist.tracks && playlist.tracks.length > 0">
+        Tracks found: {{ playlist.tracks.length}}
+      </p>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist && !loading && !showStartingArtist">
       <h4 sticky class="header-seperator">{{playlist.name}} <span class="small color-type-secondary">({{playlist.tracks.length}})</span></h4>
@@ -26,15 +29,18 @@
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="showStartingArtist && !loading && !playlist">
       <h4 sticky class="header-seperator">Select an artist as starting point</h4>
       <form role="form" #sortForm="ngForm" [ngClass]="{'theme-alt': theme === 'dark'}" class="form-inline">
-        <div class="form-group">
-          <label for="sort">Select an artist</label>
-  			  <div class="combobox">
-
-            <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName" (ngModelChange)="onChange($event)">
-              <option *ngFor="let artist of artists">{{artist.name}}</option>
-            </select>
-          </div>
-        </div>
+        <ol class="list-items">
+          <li class="list-group-item list-group-special">    
+            <div class="form-group">
+              <label for="sort"><span class="small color-type-secondary">Select an artist</span></label>
+              <div class="combobox">
+                <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName" (ngModelChange)="onChange($event)">
+                  <option *ngFor="let artist of artists">{{artist.name}}</option>
+                </select>
+              </div>
+            </div>
+          </li>
+        </ol>
       </form>
     </div>
   </div>

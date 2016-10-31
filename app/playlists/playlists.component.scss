@@ -10,6 +10,9 @@ h4[sticky] {
   position: sticky;
   top: 50px;
 }
+.list-group-special {
+  padding: 10px 15px;
+} 
 @media screen and (min-width: 768px) {
   .progress-bar {
     margin-top: 36px;

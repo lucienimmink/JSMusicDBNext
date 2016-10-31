@@ -225,17 +225,27 @@ export class PlaylistsComponent implements OnInit {
                 });
                 // the next similair artist is ...
                 if (foundSimilair.length > 0) {
-                    let nextArtist = foundSimilair[Math.floor(Math.random() * foundSimilair.length)];
-                    // but use a random for adding it to the list; to keep it .. moar random!
-                    playlist.tracks.push(this.getRandomTrackFromList(foundSimilair));
-
-                    if (playlist.tracks.length < 50) {
-                        this.getNextSimilairArtist(nextArtist, playlist);
+                    let nextTrack = this.getNextTrackForPlaylist(foundSimilair, playlist);
+                    if (nextTrack && playlist.tracks.length < 50) {
+                        playlist.tracks.push(nextTrack);
+                        this.getNextSimilairArtist(nextTrack.artist, playlist);
                     }
                 }
                 // if no new similair artists are found this is the end of the line.
             }
         )
     }
-    
+    getNextTrackForPlaylist(foundSimilair:Array<Artist>, playlist:any):Track {
+        let nextTrack = this.getRandomTrackFromList(foundSimilair);
+        if (nextTrack) {
+            let nextArtist = nextTrack.artist;
+            // if the last added track is a track by the same artist we'd like a different artist (if we can!)
+            if (playlist.tracks.length > 1 && (playlist.tracks[playlist.tracks.length -1].artist === nextArtist) && foundSimilair.length > 1) {
+                // do stuff again with foundSimilair
+                return this.getNextTrackForPlaylist(foundSimilair, playlist);
+            }
+            return nextTrack;
+        }
+        return null;
+    }
 }
