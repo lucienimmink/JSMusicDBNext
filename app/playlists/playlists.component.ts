@@ -178,7 +178,12 @@ export class PlaylistsComponent implements OnInit {
         if (randomArtist) {
             let randomAlbum: Album = _.shuffle(randomArtist.albums)[0];
             let randomTrack: Track = _.shuffle(randomAlbum.tracks)[0];
-            return randomTrack;
+            if (randomTrack.duration <= 1000 * 60 * 10) {
+                // only use 'small' tracks to prevent boredom or concerts
+                return randomTrack;
+            } else {
+                return this.getRandomTrackFromList(list);    
+            }
         } else {
             // artist not found, get another one!
             return this.getRandomTrackFromList(list);
