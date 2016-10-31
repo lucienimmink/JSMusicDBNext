@@ -12,6 +12,9 @@ h4[sticky] {
 }
 .list-group-special {
   padding: 10px 15px;
+  .form-group {
+    max-width: 360px;
+  }
 } 
 @media screen and (min-width: 768px) {
   .progress-bar {
