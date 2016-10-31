@@ -120,6 +120,10 @@ a {
     }
 }
 
+.nav>li>a {
+    padding: 0 15px;
+}
+
 .panel-background {
     position: relative;
     width: 100%;
@@ -265,6 +269,9 @@ input.form-control:focus, textarea.form-control:focus {
     .side-nav__content .search-bar .input-group-addon {
         color: $primary-color;
     }
+}
+.list-group-item {
+    padding: 10px 5px;
 }
 .list-group-item:nth-child(2n+1) {
   background-color: $tertiary-color;
