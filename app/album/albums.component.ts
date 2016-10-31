@@ -76,7 +76,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName])
     }
     getSize(item, index) {
-        return (item.albums.length * 80) + 49;
+        return (item.albums.length * 90) + 49;
     }
     toggleJumpList() {
         this.showJumpList = !this.showJumpList;
@@ -89,7 +89,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
             let ret = false;
             if (item.letter.letter === letter.letter) {
                 let jump = (i > 0) ? i - 1 : 0;
-                window.scrollTo(0, c.cummlativeLength[jump].l - 25);
+                window.scrollTo(0, c.cummlativeLength[jump].l);
                 ret = true;
             }
             return ret;
