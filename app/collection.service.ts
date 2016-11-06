@@ -23,13 +23,15 @@ export class CollectionService {
     }
     reload(): Observable<any> {
         let url = this.dsm + this.reloadUrl;
-        return this.http.get(`${url}?_ts=${new Date().getTime()}`)
+        let jwt = localStorage.getItem("jwt");
+        return this.http.get(`${url}?_ts=${new Date().getTime()}&jwt=${jwt}`)
             .map(this.noop)
             .catch(this.handleError)
     }
     poll(): Observable<any> {
         let url = this.dsm + this.pollUrl;
-        return this.http.get(`${url}?_ts=${new Date().getTime()}`)
+        let jwt = localStorage.getItem("jwt");
+        return this.http.get(`${url}?_ts=${new Date().getTime()}&jwt=${jwt}`)
             .debounceTime(300)
             .map(this.extractData)
             .catch(this.handleError)
