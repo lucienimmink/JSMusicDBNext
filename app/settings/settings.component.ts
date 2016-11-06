@@ -67,6 +67,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
         // setup a form for changing stuff
         this.settings.theme = this.configService.theme;
         this.theme = this.settings.theme;
+
+        // check if the collection is in reloading state
+        this.poll();
     }
 
     private booleanState(key: string): boolean {
