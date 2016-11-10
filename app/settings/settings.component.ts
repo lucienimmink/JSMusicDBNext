@@ -155,7 +155,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.isReloading = true;
         this.collectionService.reload().subscribe(
             data => {
-                this.poll();
+                setTimeout(e => {
+                    this.poll();    
+                }, 300);
             }
         )
     }
