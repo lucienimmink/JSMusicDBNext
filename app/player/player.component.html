@@ -6,15 +6,15 @@
     </div>
     <div class="container-fluid">
         <div class="row row-sm">
-            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2" (click)="navigateToNowPlaying()">
+            <div class="col-xs-4 col-player-art" (click)="navigateToNowPlaying()">
                 <albumart [track]="track"></albumart>
             </div>
-            <div class="col-xs-11 col-sm-13 col-md-15 col-lg-16 col-player-special">
+            <div class="col-xs-11 col-player-special">
                 <h4>{{track.title}}</h4>
                 <h5>
                     <a (click)="navigateToArtist()">{{track.trackArtist}}</a><span class="hidden-xs color-type-secondary"> &bull; <a (click)="navigateToAlbum()">{{track.album.name}}</a></span></h5>
             </div>
-            <div class="col-xs-9 col-sm-8 col-md-7 col-lg-6 text-right">
+            <div class="col-xs-9 text-right col-player-controls">
                 <a class="btn btn-link" (click)="prev()"><span class="glyph glyph-previous"></span> </a>
                 <a class="btn btn-link" (click)="togglePlayPause()"><i class="glyph glyph-pause" *ngIf="isPlaying"></i><i class="glyph glyph-play" *ngIf="isPaused"></i></a>
                 <a class="btn btn-link" (click)="next()"><span class="glyph glyph-next"></span> </a>
