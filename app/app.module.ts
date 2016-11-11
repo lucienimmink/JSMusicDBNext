@@ -1,9 +1,9 @@
 import { NgModule, enableProdMode } from "@angular/core";
 import { BrowserModule, EVENT_MANAGER_PLUGINS } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
-import { routing, appRoutingProviders }  from './app.routing';
+import { routing, appRoutingProviders } from './app.routing';
 import { HttpModule } from '@angular/http';
 
 import { LoginComponent } from './login/login.component';
@@ -41,14 +41,14 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 @NgModule({
-    declarations: [AppComponent, 
-        LoginComponent, 
-        HomeComponent, 
-        LettersComponent, 
-        LetterDetailComponent, 
-        ArtistsComponent, 
-        ArtistDetailComponent, 
-        AlbumsComponent, 
+    declarations: [AppComponent,
+        LoginComponent,
+        HomeComponent,
+        LettersComponent,
+        LetterDetailComponent,
+        ArtistsComponent,
+        ArtistDetailComponent,
+        AlbumsComponent,
         YearsComponent,
         AlbumDetailComponent,
         SortComponent,
@@ -56,9 +56,9 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
         NowPlayingComponent,
         SettingsComponent,
         ScrobbleCacheComponent,
-        SearchComponent, 
-        TopMenuComponent, 
-        LetterComponent, 
+        SearchComponent,
+        TopMenuComponent,
+        LetterComponent,
         PlayerComponent,
         AlbumComponent,
         ArtistComponent,
@@ -72,7 +72,7 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
     imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule],
     providers: [
         appRoutingProviders,
-        {provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true}
+        { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true }
     ],
     bootstrap: [AppComponent]
 })
@@ -92,5 +92,5 @@ export class AppModule {
 }
 
 if (window['ENV'] && window['ENV'] === "prod") {
-  enableProdMode();
+    enableProdMode();
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, Input, NgModule, ViewChild } from "@angular/core";
+import { Component, OnDestroy, Input, ViewChild } from "@angular/core";
 import { Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
 import { Subscription } from 'rxjs/Subscription';
@@ -10,10 +10,6 @@ import { CoreService } from './../core.service';
 
 import { Search } from './search';
 
-
-@NgModule({
-    declarations: [TooltipModule]
-})
 @Component({
     templateUrl: 'app/menu/topmenu.component.html',
     selector: 'topmenu',
@@ -32,7 +28,7 @@ export class TopMenuComponent implements OnDestroy {
     private theme: String;
     private search: Search;
     private core: musicdbcore;
-    private letters:Array<any>;
+    private letters: Array<any>;
 
     constructor(private pathService: PathService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService) {
         this.core = this.coreService.getCore();
@@ -79,7 +75,7 @@ export class TopMenuComponent implements OnDestroy {
             }
         })
     }
-    activateLetter(letter:any) {
+    activateLetter(letter: any) {
         if (letter) {
             letter.active = true;
         }
@@ -112,7 +108,7 @@ export class TopMenuComponent implements OnDestroy {
         //this.detabinator.inert = true;
         sideNavEl.addEventListener('transitionend', this.onTransitionEnd);
     }
-    onTransitionEnd(evt) {
+    onTransitionEnd(evt:Event) {
         let sideNavEl = document.querySelector('.js-side-nav');
         sideNavEl.classList.remove('side-nav--animatable');
         sideNavEl.removeEventListener('transitionend', this.onTransitionEnd);

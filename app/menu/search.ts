@@ -1,3 +1,3 @@
 export class Search {
-    public query:string;
+    public query: string;
 }

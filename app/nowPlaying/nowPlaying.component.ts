@@ -22,10 +22,10 @@ import { AnimationService } from './../utils/animation.service';
 export class NowPlayingComponent implements OnDestroy, OnInit {
 
     private subscription: Subscription;
-    private playlist;
+    private playlist:any;
     private track:Track;
     private currentTrack: Track;
-    private trackIndex;
+    private trackIndex:number;
     private previousTrack = {};
     private slided: boolean = false;
     private isPlaying: boolean = false;

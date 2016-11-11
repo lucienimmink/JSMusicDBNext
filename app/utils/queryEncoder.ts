@@ -1,4 +1,4 @@
-import {URLSearchParams, QueryEncoder} from '@angular/http';
+import { URLSearchParams, QueryEncoder } from '@angular/http';
 
 export class MyQueryEncoder extends QueryEncoder {
   encodeKey(k: string): string {

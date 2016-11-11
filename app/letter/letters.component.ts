@@ -4,7 +4,9 @@ import { LetterComponent } from './letter.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
+
+import Letter from './../org/arielext/musicdb/models/letter';
 
 @Component({
     templateUrl: 'app/letter/letters.component.html',
@@ -23,7 +25,7 @@ export class LettersComponent implements OnInit, OnDestroy {
                 this.ngOnInit();
             }
         )
-     }
+    }
 
     ngOnInit() {
         this.pathService.announcePage("Letters");
@@ -33,7 +35,7 @@ export class LettersComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-    navigateToLetter(letter) {
+    navigateToLetter(letter: Letter) {
         this.router.navigate(['/letter', letter.escapedLetter]);
     }
 }

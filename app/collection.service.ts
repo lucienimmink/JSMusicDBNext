@@ -4,11 +4,11 @@ import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class CollectionService {
-    private dsm:string;
+    private dsm: string;
 
     constructor(private http: Http) {
         this.dsm = localStorage.getItem('dsm');
-     }
+    }
 
     private collectionUrl = '/data/node-music.json';
     private reloadUrl = '/rescan';

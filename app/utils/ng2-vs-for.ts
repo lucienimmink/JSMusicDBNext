@@ -31,7 +31,7 @@ function getWindowScroll() {
         };
     }
     else {
-        var sx, sy, d = document, r = d.documentElement, b = d.body;
+        var sx:number, sy:number, d = document, r = d.documentElement, b = d.body;
         sx = r.scrollLeft || b.scrollLeft || 0;
         sy = r.scrollTop || b.scrollTop || 0;
         return {
@@ -54,7 +54,7 @@ function getScrollPos(element: Node | Window, scrollProp: string): number {
     return element === window ? getWindowScroll()[scrollProp] : element[scrollProp];
 }
 
-function getScrollOffset(vsElement: HTMLElement, scrollElement: HTMLElement | Window, isHorizontal): number {
+function getScrollOffset(vsElement: HTMLElement, scrollElement: HTMLElement | Window, isHorizontal:boolean): number {
     var vsPos = vsElement.getBoundingClientRect()[isHorizontal ? 'left' : 'top'];
     var scrollPos = scrollElement === window ? 0 : (<HTMLElement>scrollElement).getBoundingClientRect()[isHorizontal ? 'left' : 'top'];
     var correction = vsPos - scrollPos +
@@ -62,7 +62,7 @@ function getScrollOffset(vsElement: HTMLElement, scrollElement: HTMLElement | Wi
     return correction;
 }
 
-function nextElementSibling(el) {
+function nextElementSibling(el:any) {
     if (el.nextElementSibling) {
         return el.nextElementSibling;
     }
@@ -91,8 +91,8 @@ function nextElementSibling(el) {
 })
 
 export class VsFor implements OnInit, OnDestroy {
-    _originalCollection = [];
-    _slicedCollection = [];
+    _originalCollection:Array<any> = [];
+    _slicedCollection:Array<any> = [];
     originalLength: number;
     before: HTMLElement;
     after: HTMLElement;
@@ -152,7 +152,7 @@ export class VsFor implements OnInit, OnDestroy {
         private _renderer: Renderer,
         private _ngZone: NgZone
     ) {
-        let _prevClientSize;
+        let _prevClientSize:number;
         const reinitOnClientHeightChange = () => {
             if (!this.scrollParent) {
                 return;
@@ -180,7 +180,7 @@ export class VsFor implements OnInit, OnDestroy {
             this.postDigest(this.refresh.bind(this));
         }
     }
-    postDigest(fn) {
+    postDigest(fn:Function) {
         const subscription: any = this._ngZone.onStable.subscribe(() => {
             fn();
             subscription.unsubscribe();
@@ -255,7 +255,7 @@ export class VsFor implements OnInit, OnDestroy {
     }
     ngOnDestroy() {
         window.removeEventListener('resize', this.onWindowResize);
-        
+
         if (this.onZone) {
             this.onZone.unsubscribe();
         }

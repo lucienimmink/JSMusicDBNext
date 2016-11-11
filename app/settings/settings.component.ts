@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, NgModule, AfterViewChecked, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild } from "@angular/core";
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { PathService } from './../utils/path.service';
@@ -10,15 +10,12 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import { ConfigService } from './../utils/config.service';
 import { Settings } from './settings';
 
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
 const VERSION = "__dev__";
 
-@NgModule({
-    declarations: [TimeFormatPipe]
-})
 @Component({
     templateUrl: 'app/settings/settings.component.html',
     styleUrls: ['dist/settings/settings.component.css']
@@ -43,7 +40,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     private themeForm: NgForm;
     @ViewChild('themeForm') currentForm: NgForm;
-    private theme:string;
+    private theme: string;
 
     constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastFMService, private collectionService: CollectionService, private router: Router, private configService: ConfigService) {
         this.settings = new Settings();
@@ -156,7 +153,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.collectionService.reload().subscribe(
             data => {
                 setTimeout(e => {
-                    this.poll();    
+                    this.poll();
                 }, 300);
             }
         )

@@ -52,7 +52,7 @@ export class BackgroundArtDirective {
             } else if (this.media.trackArtist) {
                 key = `art-${this.media.trackArtist}-${this.media.album.name}`;
             }
-            this.arttable.get(key, function (err, data) {
+            this.arttable.get(key, function (err:any, data:any) {
                 if (data) {
                     c.setImage(data.url);
                 } else {
@@ -93,7 +93,7 @@ export class BackgroundArtDirective {
                         if (this.media.artist) {
                             item._id = `art-${this.media.artist.name}-${this.media.name}`
                         }
-                        this.arttable.put(item, function (err, response) {
+                        this.arttable.put(item, function (err:any, response:any) {
                             // boring
                         });
                     },
@@ -109,7 +109,7 @@ export class BackgroundArtDirective {
                 if (this.media.artist) {
                     item._id = `art-${this.media.artist.name}-${this.media.name}`
                 }
-                this.arttable.put(item, function (err, response) {
+                this.arttable.put(item, function (err:any, respons:any) {
                     // boring
                 });
             }

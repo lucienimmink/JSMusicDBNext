@@ -1,5 +1,5 @@
-import {Directive} from "@angular/core";
-import {ElementRef} from "@angular/core";
+import { Directive } from "@angular/core";
+import { ElementRef } from "@angular/core";
 
 /**
  * Directive used to wrap https://github.com/wilddeer/stickyfill
@@ -12,7 +12,7 @@ import {ElementRef} from "@angular/core";
 })
 export class StickyDirective {
 
-    constructor(private ref:ElementRef) {}
+    constructor(private ref: ElementRef) { }
 
     ngAfterContentInit() {
         Stickyfill.add(this.ref.nativeElement);
@@ -30,13 +30,13 @@ export class StickyDirective {
  *
  * MIT License
  */
-(function(doc, win) {
-    var watchArray = [],
-        scroll,
+(function (doc, win) {
+    var watchArray:Array<any> = [],
+        scroll:any,
         initialized = false,
         html = doc.documentElement,
-        noop = function() {},
-        checkTimer,
+        noop = function () { },
+        checkTimer:any,
 
         //visibility API strings
         hiddenPropertyName = 'hidden',
@@ -61,7 +61,7 @@ export class StickyDirective {
         try {
             block.style.position = prefixes[i] + 'sticky';
         }
-        catch(e) {}
+        catch (e) { }
         if (block.style.position != '') {
             seppuku();
         }
@@ -74,7 +74,7 @@ export class StickyDirective {
         // init = add = rebuild = pause = stop = kill = noop;
     }
 
-    function mergeObjects(targetObj, sourceObject) {
+    function mergeObjects(targetObj:any, sourceObject:any) {
         for (var key in sourceObject) {
             if (sourceObject.hasOwnProperty(key)) {
                 targetObj[key] = sourceObject[key];
@@ -82,7 +82,7 @@ export class StickyDirective {
         }
     }
 
-    function parseNumeric(val) {
+    function parseNumeric(val:any) {
         return parseFloat(val) || 0;
     }
 
@@ -107,8 +107,8 @@ export class StickyDirective {
     }
 
     //fixes flickering
-    function onWheel(event) {
-        setTimeout(function() {
+    function onWheel(event:Event) {
+        setTimeout(function () {
             if (win.pageYOffset != scroll.top) {
                 scroll.top = win.pageYOffset;
                 recalcAllPos();
@@ -122,10 +122,10 @@ export class StickyDirective {
         }
     }
 
-    function recalcElementPos(el) {
+    function recalcElementPos(el:any) {
         if (!el.inited) return;
 
-        var currentMode = (scroll.top <= el.limit.start? 0: scroll.top >= el.limit.end? 2: 1);
+        var currentMode = (scroll.top <= el.limit.start ? 0 : scroll.top >= el.limit.end ? 2 : 1);
 
         if (el.mode != currentMode) {
             switchElementMode(el, currentMode);
@@ -145,7 +145,7 @@ export class StickyDirective {
         return true;
     }
 
-    function initElement(el) {
+    function initElement(el:any) {
         if (isNaN(parseFloat(el.computed.top)) || el.isCell || el.computed.display == 'none') return;
 
         el.inited = true;
@@ -160,7 +160,7 @@ export class StickyDirective {
         el.docOffsetTop = getDocOffsetTop(el.clone);
     }
 
-    function deinitElement(el) {
+    function deinitElement(el:any) {
         var deinitParent = true;
 
         el.clone && killClone(el);
@@ -190,7 +190,7 @@ export class StickyDirective {
         }
     }
 
-    function switchElementMode(el, mode) {
+    function switchElementMode(el:any, mode:any) {
         var nodeStyle = el.node.style;
 
         switch (mode) {
@@ -233,7 +233,7 @@ export class StickyDirective {
         el.mode = mode;
     }
 
-    function clone(el) {
+    function clone(el:any) {
         el.clone = document.createElement('div');
 
         var refElement = el.node.nextSibling || el.node,
@@ -253,12 +253,12 @@ export class StickyDirective {
         el.node.parentNode.insertBefore(el.clone, refElement);
     }
 
-    function killClone(el) {
+    function killClone(el:any) {
         el.clone.parentNode.removeChild(el.clone);
         el.clone = undefined;
     }
 
-    function getElementParams(node) {
+    function getElementParams(node:any) {
         var computedStyle = getComputedStyle(node),
             parentNode = node.parentNode,
             parentComputedStyle = getComputedStyle(parentNode),
@@ -267,14 +267,14 @@ export class StickyDirective {
         node.style.position = 'relative';
 
         var computed = {
-                top: computedStyle.top,
-                marginTop: computedStyle.marginTop,
-                marginBottom: computedStyle.marginBottom,
-                marginLeft: computedStyle.marginLeft,
-                marginRight: computedStyle.marginRight,
-                cssFloat: computedStyle.cssFloat,
-                display: computedStyle.display
-            },
+            top: computedStyle.top,
+            marginTop: computedStyle.marginTop,
+            marginBottom: computedStyle.marginBottom,
+            marginLeft: computedStyle.marginLeft,
+            marginRight: computedStyle.marginRight,
+            cssFloat: computedStyle.cssFloat,
+            display: computedStyle.display
+        },
             numeric = {
                 top: parseNumeric(computedStyle.top),
                 marginBottom: parseNumeric(computedStyle.marginBottom),
@@ -287,16 +287,16 @@ export class StickyDirective {
         node.style.position = cachedPosition;
 
         var css = {
-                position: node.style.position,
-                top: node.style.top,
-                bottom: node.style.bottom,
-                left: node.style.left,
-                right: node.style.right,
-                width: node.style.width,
-                marginTop: node.style.marginTop,
-                marginLeft: node.style.marginLeft,
-                marginRight: node.style.marginRight
-            },
+            position: node.style.position,
+            top: node.style.top,
+            bottom: node.style.bottom,
+            left: node.style.left,
+            right: node.style.right,
+            width: node.style.width,
+            marginTop: node.style.marginTop,
+            marginLeft: node.style.marginLeft,
+            marginRight: node.style.marginRight
+        },
             nodeOffset = getElementOffset(node),
             parentOffset = getElementOffset(parentNode),
 
@@ -339,14 +339,14 @@ export class StickyDirective {
                 limit: {
                     start: nodeOffset.doc.top - numeric.top,
                     end: parentOffset.doc.top + parentNode.offsetHeight - parent.numeric.borderBottomWidth -
-                        node.offsetHeight - numeric.top - numeric.marginBottom
+                    node.offsetHeight - numeric.top - numeric.marginBottom
                 }
             };
 
         return el;
     }
 
-    function getDocOffsetTop(node) {
+    function getDocOffsetTop(node:any) {
         var docOffsetTop = 0;
 
         while (node) {
@@ -357,20 +357,20 @@ export class StickyDirective {
         return docOffsetTop;
     }
 
-    function getElementOffset(node) {
+    function getElementOffset(node:any) {
         var box = node.getBoundingClientRect();
 
-            return {
-                doc: {
-                    top: box.top + win.pageYOffset,
-                    left: box.left + win.pageXOffset
-                },
-                win: box
-            };
+        return {
+            doc: {
+                top: box.top + win.pageYOffset,
+                left: box.left + win.pageXOffset
+            },
+            win: box
+        };
     }
 
     function startFastCheckTimer() {
-        checkTimer = setInterval(function() {
+        checkTimer = setInterval(function () {
             !fastCheck() && rebuild();
         }, 500);
     }
@@ -450,7 +450,7 @@ export class StickyDirective {
         }
     }
 
-    function add(node) {
+    function add(node:any) {
         //check if Stickyfill is already applied to the node
         for (var i = watchArray.length - 1; i >= 0; i--) {
             if (watchArray[i].node === node) return;
@@ -468,7 +468,7 @@ export class StickyDirective {
         }
     }
 
-    function remove(node) {
+    function remove(node:any) {
         for (var i = watchArray.length - 1; i >= 0; i--) {
             if (watchArray[i].node === node) {
                 deinitElement(watchArray[i]);

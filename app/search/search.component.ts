@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -13,12 +13,10 @@ import { TrackListComponent } from './../track/tracklist.component';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 
 import { Subscription }   from 'rxjs/Subscription';
+import Track from './../org/arielext/musicdb/models/track';
 
 const MAXALLOWEDITEMS = 15;
 
-@NgModule({
-    declarations: [TimeFormatPipe, ArtistComponent, IMAGELAZYLOAD_DIRECTIVE, AlbumComponent, TrackListComponent]
-})
 @Component({
     templateUrl: 'app/search/search.component.html',
     styleUrls: ['dist/search/search.component.css']
@@ -55,7 +53,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     }
 
-    spliceList(results, count) {
+    spliceList(results:Array<any>, count:number) {
         let ret = false;
         let view = results;
         if (results.length > count) {
@@ -72,7 +70,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    select(track) {
+    select(track:Track) {
         this.router.navigate(['/letter', track.album.artist.letter.escapedLetter, 'artist', track.album.artist.sortName, 'album', track.album.sortName]);
     }
 }

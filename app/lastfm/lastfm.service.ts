@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from "@angular/http";
 import { Observable } from "rxjs/Observable";
-import { Subject }    from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import { MyQueryEncoder } from './../utils/queryEncoder';
 import Artist from './../org/arielext/musicdb/models/Artist';
 import * as _ from 'lodash';
@@ -105,7 +105,7 @@ export class LastFMService {
             .map(this.extractLastFMTop)
             .catch(this.handleError);
     }
-    getSimilairArtists(artist:Artist):Observable<any> {
+    getSimilairArtists(artist: Artist): Observable<any> {
         let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
         urlSearchParams.set('api_key', APIKEY);
         urlSearchParams.set('format', 'json');
@@ -122,7 +122,7 @@ export class LastFMService {
             .map(this.extractLastFMSimilair)
             .catch(this.handleError);
     }
-    authenticate(user): Observable<any> {
+    authenticate(user:any): Observable<any> {
         let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
         urlSearchParams.set('api_key', APIKEY);
         urlSearchParams.set('api_sig', this.signAuthentication(user.user, user.password));
@@ -214,7 +214,7 @@ export class LastFMService {
             let key = `art-${track.trackArtist}-${track.album.name}`;
             let c = this;
             let imageurl = NOIMAGE;
-            this.arttable.get(key, function (err, data) {
+            this.arttable.get(key, function (err:any, data:any) {
                 if (data) {
                     c.saveInLocal(track, timestamp, data.url);
                 } else {
@@ -240,9 +240,9 @@ export class LastFMService {
                 uts: timestamp
             }
         };
-        let tracks = [];
-        let rev = null;
-        this.recentlyListenedTable.get('recentlyListened', function (err, data) {
+        let tracks:Array<any> = [];
+        let rev:string = null;
+        this.recentlyListenedTable.get('recentlyListened', function (err:any, data:any) {
             if (data) {
                 tracks = data.tracks;
                 if (tracks.length > 10) {
@@ -256,7 +256,7 @@ export class LastFMService {
                 _rev: rev,
                 tracks: tracks
             };
-            c.recentlyListenedTable.put(item, function (err, res) { });
+            c.recentlyListenedTable.put(item, function (err:any, res:any) { });
         });
     }
     scrobbleCachedTrack(cachedTrack: any) {
@@ -355,10 +355,10 @@ export class LastFMService {
 
 
     /* These functions implement a RSA encryption in JavaScript */
-    private hex_md5(s) {
+    private hex_md5(s:string) {
         return this.rstr2hex(this.rstr_md5(this.str2rstr_utf8(s)));
     }
-    private rstr2hex(input) {
+    private rstr2hex(input:string) {
         try {
             this.hexcase
         } catch (e) {
@@ -366,20 +366,20 @@ export class LastFMService {
         }
         var hex_tab = this.hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
         var output = "";
-        var x;
+        var x:number;
         for (var i = 0; i < input.length; i++) {
             x = input.charCodeAt(i);
             output += hex_tab.charAt((x >>> 4) & 0x0F) + hex_tab.charAt(x & 0x0F);
         }
         return output;
     }
-    private rstr_md5(s) {
+    private rstr_md5(s:string) {
         return this.binl2rstr(this.binl_md5(this.rstr2binl(s), s.length * 8));
     }
-    private str2rstr_utf8(input) {
+    private str2rstr_utf8(input:string) {
         var output = "";
         var i = -1;
-        var x, y;
+        var x:number, y:number;
 
         while (++i < input.length) {
             /* Decode utf-16 surrogate pairs */
@@ -402,13 +402,13 @@ export class LastFMService {
         }
         return output;
     }
-    private binl2rstr(input) {
+    private binl2rstr(input:any) {
         var output = "";
         for (var i = 0; i < input.length * 32; i += 8)
             output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xFF);
         return output;
     }
-    private binl_md5(x, len) {
+    private binl_md5(x:any, len:number) {
         /* append padding */
         x[len >> 5] |= 0x80 << ((len) % 32);
         x[(((len + 64) >>> 9) << 4) + 14] = len;
@@ -499,7 +499,7 @@ export class LastFMService {
         }
         return Array(a, b, c, d);
     }
-    private rstr2binl(input) {
+    private rstr2binl(input:string) {
         var output = Array(input.length >> 2);
         for (var i = 0; i < output.length; i++)
             output[i] = 0;
@@ -508,29 +508,29 @@ export class LastFMService {
         return output;
     }
 
-    private md5_cmn(q, a, b, x, s, t) {
+    private md5_cmn(q:any, a:any, b:any, x:any, s:any, t:any) {
         return this.safe_add(this.bit_rol(this.safe_add(this.safe_add(a, q), this.safe_add(x, t)), s), b);
     }
-    private md5_ff(a, b, c, d, x, s, t) {
+    private md5_ff(a:any, b:any, c:any, d:any, x:any, s:any, t:any) {
         return this.md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
     }
-    private md5_gg(a, b, c, d, x, s, t) {
+    private md5_gg(a:any, b:any, c:any, d:any, x:any, s:any, t:any) {
         return this.md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
     }
 
-    private md5_hh(a, b, c, d, x, s, t) {
+    private md5_hh(a:any, b:any, c:any, d:any, x:any, s:any, t:any) {
         return this.md5_cmn(b ^ c ^ d, a, b, x, s, t);
     }
 
-    private md5_ii(a, b, c, d, x, s, t) {
+    private md5_ii(a:any, b:any, c:any, d:any, x:any, s:any, t:any) {
         return this.md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
     }
-    private safe_add(x, y) {
+    private safe_add(x:any, y:any) {
         var lsw = (x & 0xFFFF) + (y & 0xFFFF);
         var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
         return (msw << 16) | (lsw & 0xFFFF);
     }
-    private bit_rol(num, cnt) {
+    private bit_rol(num:number, cnt:number) {
         return (num << cnt) | (num >>> (32 - cnt));
     }
 }

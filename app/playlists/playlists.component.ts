@@ -14,6 +14,7 @@ import Track from './../org/arielext/musicdb/models/Track';
 import * as _ from 'lodash';
 import { StickyDirective } from './../utils/sticky.directive';
 import { ConfigService } from './../utils/config.service';
+import { Playlist } from './Playlist';
 
 @NgModule({
     declarations: [TimeFormatPipe, TrackListComponent, StickyDirective]
@@ -26,10 +27,10 @@ export class PlaylistsComponent implements OnInit {
 
     private subscription: Subscription;
     private subscription2: Subscription;
-    private playlist;
-    private currentPlaylist;
-    private track;
-    private trackIndex;
+    private playlist: Playlist;
+    private currentPlaylist: any;
+    private track: Track;
+    private trackIndex: number;
     private core: musicdbcore;
     private loading: boolean = false;
     private username: string = localStorage.getItem('lastfm-username');
@@ -103,10 +104,8 @@ export class PlaylistsComponent implements OnInit {
         }
     }
     extractTracks(data: Array<any>): any {
-        let tmpPlaylist = {
-            name: "Loved tracks on Last.FM",
-            tracks: []
-        }
+        let tmpPlaylist: Playlist = new Playlist();
+        tmpPlaylist.name = "Loved tracks on Last.FM";
         let c = this;
         _.each(data, function (line) {
             let artistName: string = line.artist.name;
@@ -121,10 +120,8 @@ export class PlaylistsComponent implements OnInit {
     generateRandom(): any {
         let coretracknames = Object.keys(this.core.tracks);
         let randomTracks = _.shuffle(coretracknames).splice(0, 50);
-        let tmpPlaylist = {
-            name: "50 random tracks",
-            tracks: []
-        }
+        let tmpPlaylist: Playlist = new Playlist();
+        tmpPlaylist.name = "50 random tracks";
         let c = this;
         _.each(randomTracks, function (id) {
             tmpPlaylist.tracks.push(c.core.tracks[id]);
@@ -157,10 +154,9 @@ export class PlaylistsComponent implements OnInit {
         return this.generateRadioList(highRotation, mediumRotation);
     }
     generateRadioList(highRotation: Array<Artist>, mediumRotation: Array<Artist>) {
-        let tmpPlaylist = {
-            name: "Random based on your preferences",
-            tracks: []
-        }
+        let tmpPlaylist: Playlist = new Playlist();
+        tmpPlaylist.name = "Random based on your preferences";
+        
         let c = this;
         for (let i = 0; i < 50; i++) {
             if (i % 3 === 0 || i % 5 === 0) {
@@ -182,7 +178,7 @@ export class PlaylistsComponent implements OnInit {
                 // only use 'small' tracks to prevent boredom or concerts
                 return randomTrack;
             } else {
-                return this.getRandomTrackFromList(list);    
+                return this.getRandomTrackFromList(list);
             }
         } else {
             // artist not found, get another one!
@@ -196,26 +192,24 @@ export class PlaylistsComponent implements OnInit {
     }
     onChange() {
         let startArtist = this.core.getArtistByName(this.startingArtistName);
-        let tmpPlaylist = {
-            name: `Artist radio for ${startArtist.name}`,
-            tracks: [
-                this.getRandomTrackFromList([startArtist])
-            ]
-        }
+        let tmpPlaylist: Playlist = new Playlist();
+        tmpPlaylist.name = `Artist radio for ${startArtist.name}`;
+        tmpPlaylist.tracks = [this.getRandomTrackFromList([startArtist])];
+
         this.showStartingArtist = false;
         this.playlist = tmpPlaylist;
 
         this.getNextSimilairArtist(startArtist, this.playlist);
 
     }
-    getNextSimilairArtist(artist:Artist, playlist:any):void {
+    getNextSimilairArtist(artist: Artist, playlist: any): void {
         // get a similair artist from last.fm
         this.loading = true;
         this.lastfmservice.getSimilairArtists(artist).subscribe(
             data => {
                 this.loading = false;
                 let c = this;
-                let foundSimilair:Array<Artist> = [];
+                let foundSimilair: Array<Artist> = [];
                 _.each(data, function (lastfmartist) {
                     let name = lastfmartist.name;
                     let coreArtist = c.core.getArtistByName(name)
@@ -235,12 +229,12 @@ export class PlaylistsComponent implements OnInit {
             }
         )
     }
-    getNextTrackForPlaylist(foundSimilair:Array<Artist>, playlist:any):Track {
+    getNextTrackForPlaylist(foundSimilair: Array<Artist>, playlist: any): Track {
         let nextTrack = this.getRandomTrackFromList(foundSimilair);
         if (nextTrack) {
             let nextArtist = nextTrack.artist;
             // if the last added track is a track by the same artist we'd like a different artist (if we can!)
-            if (playlist.tracks.length > 1 && (playlist.tracks[playlist.tracks.length -1].artist === nextArtist) && foundSimilair.length > 1) {
+            if (playlist.tracks.length > 1 && (playlist.tracks[playlist.tracks.length - 1].artist === nextArtist) && foundSimilair.length > 1) {
                 // do stuff again with foundSimilair
                 return this.getNextTrackForPlaylist(foundSimilair, playlist);
             }

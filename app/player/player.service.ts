@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject }    from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 export class PlayerService {
     private playlistSource = new Subject<any>();
     private currentPlaylist: any;
-    playlistAnnounced$ = this.playlistSource.asObservable();
+    private playlistAnnounced$ = this.playlistSource.asObservable();
     private currentTrack: Track;
 
     private isPlaying: boolean = false;
@@ -43,8 +43,8 @@ export class PlayerService {
         this.announce();
     }
     playlistToString(): string {
-        let list = [];
-        _.each(this.currentPlaylist.playlist.tracks, function (track) {
+        let list: Array<string> = [];
+        _.each(this.currentPlaylist.playlist.tracks, function (track: Track) {
             if (track) {
                 list.push(track.id);
             }

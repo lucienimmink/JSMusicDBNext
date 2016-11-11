@@ -30,7 +30,7 @@ export class AppComponent implements OnDestroy {
   private artists: Array<any>;
   private subscription: Subscription;
   private path: string = "JSMusicDB Next";
-  private isLoading:boolean = false;
+  private isLoading: boolean = false;
   constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService) {
 
     if (this.loginService.hasToken) {

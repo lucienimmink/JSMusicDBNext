@@ -116,7 +116,7 @@ export class HomeComponent implements OnDestroy {
             )
         } else {
             let c = this;
-            this.recentlyListenedTable.get('recentlyListened', function (err, data) {
+            this.recentlyListenedTable.get('recentlyListened', function (err:any, data:any) {
                 if (data) {
                     c.populate(data.tracks);
                 }

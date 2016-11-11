@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -7,13 +7,10 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { LastFMService } from './../lastfm/lastfm.service';
 import { StickyDirective } from './../utils/sticky.directive';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 import * as _ from 'lodash';
 
-@NgModule({
-    declarations: [TimeFormatPipe, StickyDirective]
-})
 @Component({
     templateUrl: 'app/scrobbleCache/scrobbleCache.component.html',
     styleUrls: ['dist/scrobbleCache/scrobbleCache.component.css']
@@ -26,7 +23,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
     private isReloading: boolean = false;
-    private isBusy:boolean = false;
+    private isBusy: boolean = false;
 
     constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastFMService, private collectionService: CollectionService, private router: Router) {
         this.core = this.coreService.getCore();

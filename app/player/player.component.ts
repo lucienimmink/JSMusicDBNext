@@ -1,21 +1,18 @@
-import { Component, OnDestroy, ViewChild, NgModule  } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { PlayerService } from './player.service';
 import { Router } from '@angular/router';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import * as _ from 'lodash';
 
 import { AlbumArt } from './../utils/albumart.component';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
-import { CoreService} from './../core.service';
-import { musicdbcore} from './../org/arielext/musicdb/core';
+import { CoreService } from './../core.service';
+import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { AnimationService } from './../utils/animation.service';
 
-@NgModule({
-    declarations: [AlbumArt] 
-})
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
@@ -131,7 +128,7 @@ export class PlayerComponent implements OnDestroy {
         if (current) {
             let c = this;
             let core = this.coreService.getCore();
-            let list = [];
+            let list:Array<Track> = [];
             _.each(current.ids, function (id) {
                 let track = core.tracks[id];
                 list.push(track);
@@ -162,11 +159,11 @@ export class PlayerComponent implements OnDestroy {
     }
     navigateToArtist() {
         //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
-        this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName ]);
+        this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName]);
     }
     navigateToAlbum() {
         //this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
-        this.router.navigate(['/letter',this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName ]);
+        this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName]);
     }
     navigateToNowPlaying() {
         // this.router.navigate(['NowPlaying']);
@@ -196,7 +193,7 @@ export class PlayerComponent implements OnDestroy {
                 this.hasScrobbledCurrentTrack = true;
                 try {
                     this.lastFMService.scrobbleTrack(this.track).subscribe(
-                        data => {
+                        () => {
                             //console.log('track is scrobbled');
                         }
                     )
@@ -233,8 +230,8 @@ export class PlayerComponent implements OnDestroy {
     onprogress() {
         let buffered = this.mediaObject.buffered;
         if ((buffered.length !== 0)) {
-            this.track.buffered.start = buffered.start((buffered.length !== 0) ? buffered.length - 1: 0) * 1000;
-            this.track.buffered.end = buffered.end((buffered.length !== 0) ? buffered.length - 1: 0) * 1000
+            this.track.buffered.start = buffered.start((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000;
+            this.track.buffered.end = buffered.end((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000
         }
     }
 }

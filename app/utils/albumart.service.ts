@@ -8,12 +8,12 @@ const NOIMAGE = 'global/images/no-cover.png';
 @Injectable()
 export class AlbumArtService {
 
-  constructor (private http: Http) {}
+  constructor(private http: Http) { }
 
   private albumartUrl = 'https://api.spotify.com/v1/search?q=album:{1}+artist:{0}&type=album&limit=1';
   private artistartUrl = 'https://api.spotify.com/v1/search?q=artist:{0}&type=artist&limit=1';
 
-  getAlbumArt(artist:string, album:string, type:string): Observable<any[]> {
+  getAlbumArt(artist: string, album: string, type: string): Observable<any[]> {
     if (type === 'album') {
       return this.http.get(this.albumartUrl.replace('{1}', encodeURIComponent(album)).replace('{0}', encodeURIComponent(artist)))
         .map(this.extractData)
@@ -25,8 +25,8 @@ export class AlbumArtService {
     }
   }
 
-  getMediaArtFromLastFm(artist:string, album:string, type:string): Observable<any> {
-    let urlSearchParams:URLSearchParams = new URLSearchParams();
+  getMediaArtFromLastFm(artist: string, album: string, type: string): Observable<any> {
+    let urlSearchParams: URLSearchParams = new URLSearchParams();
     urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
     urlSearchParams.set('artist', artist);
     urlSearchParams.set('format', 'json');
@@ -39,7 +39,7 @@ export class AlbumArtService {
       urlSearchParams.set('method', 'artist.getinfo');
     }
 
-    let query:RequestOptionsArgs = {
+    let query: RequestOptionsArgs = {
       search: urlSearchParams
     };
 
@@ -49,12 +49,12 @@ export class AlbumArtService {
   }
 
 
-  private extractData(res: Response):string {
+  private extractData(res: Response): string {
     let json = res.json();
     if (json && json.albums && json.albums.items && json.albums.items.length > 0 && json.albums.items[0].images[0]) {
-        return (json.albums.items[0].images[0].url || NOIMAGE);
+      return (json.albums.items[0].images[0].url || NOIMAGE);
     } else if (json && json.artists && json.artists.items && json.artists.items.length > 0 && json.artists.items[0].images[0]) {
-        return (json.artists.items[0].images[0].url || NOIMAGE);
+      return (json.artists.items[0].images[0].url || NOIMAGE);
     }
     return NOIMAGE;
   }

@@ -6,8 +6,10 @@ import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
+
+import Album from './../org/arielext/musicdb/models/album';
 
 import * as _ from "lodash";
 
@@ -40,7 +42,7 @@ export class YearsComponent implements OnInit, OnDestroy {
         let sorted = Object.keys(yearsobject).sort(function (a, b) {
             return (parseInt(a) < parseInt(b)) ? 1 : -1;
         });
-        let tmp = [];
+        let tmp:Array<any> = [];
         sorted.forEach(function (year) {
             if (year !== 'undefined') {
                 tmp.push(c.core.years[year]);
@@ -69,10 +71,10 @@ export class YearsComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-    navigateToAlbum(album) {
+    navigateToAlbum(album:Album) {
         this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName])
     }
-    getSize(item, index) {
+    getSize(item:any, index:number) {
         return (item.albums.length * 90) + 39;
     }
     toggleJumpList() {
@@ -87,7 +89,7 @@ export class YearsComponent implements OnInit, OnDestroy {
             if (item.year === parseInt(year)) {
                 let jump = (i > 0) ? i - 1 : 0;
                 if (jump === 0) {
-                    window.scrollTo(0,0);
+                    window.scrollTo(0, 0);
                 } else {
                     window.scrollTo(0, c.cummlativeLength[jump].l);
                 }

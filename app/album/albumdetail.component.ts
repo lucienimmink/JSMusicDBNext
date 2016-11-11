@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
@@ -11,9 +11,6 @@ import { PlayerService } from './../player/player.service';
 import { Subscription } from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 
-@NgModule({
-    declarations: [TimeFormatPipe, AlbumArt, BackgroundArtDirective, StickyDirective]
-})
 @Component({
     templateUrl: 'app/album/albumdetail.component.html',
     styleUrls: ['dist/album/albumdetail.component.css']
@@ -35,7 +32,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         )
         this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
         this.albumName = decodeURIComponent(this.route.snapshot.params['album']);
-        
+
         this.route.params.subscribe(data => {
             this.artistName = decodeURIComponent(data["artist"]);
             this.albumName = decodeURIComponent(data["album"]);
@@ -50,7 +47,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             this.album.sortedDiscs = []; // reset
 
             let namedDiscs = Object.keys(this.album.discs);
-            let discnrs = [];
+            let discnrs: Array<any> = [];
             namedDiscs.forEach(name => {
                 let discnr = name.substring(5);
                 discnrs.push({

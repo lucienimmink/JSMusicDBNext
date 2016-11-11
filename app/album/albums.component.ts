@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from '@angular/router';
 import { AlbumComponent } from './album.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
@@ -6,14 +6,14 @@ import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
+
+import Artist from './../org/arielext/musicdb/models/artist';
+import Album from './../org/arielext/musicdb/models/album';
 
 import * as _ from "lodash";
 
-@NgModule({
-    declarations: [AlbumComponent, IMAGELAZYLOAD_DIRECTIVE, VsFor, StickyDirective]
-})
 @Component({
     templateUrl: 'app/album/albums.component.html',
     styleUrls: ['dist/album/albums.component.css']
@@ -26,7 +26,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     private cummlativeLength: Array<any> = [];
     private core: musicdbcore;
     private subscription: Subscription;
-    private sorting:Array<string> = ['artist', 'year'];
+    private sorting: Array<string> = ['artist', 'year'];
 
     constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
         this.core = this.coreService.getCore();
@@ -46,7 +46,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
         let sorted = Object.keys(artists).sort(function (a, b) {
             return (a < b) ? -1 : 1;
         });
-        let tmp = [];
+        let tmp: Array<Artist> = [];
         sorted.forEach(function (artistName) {
             tmp.push(c.core.artists[artistName]);
         });
@@ -72,10 +72,10 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscription.unsubscribe();
     }
-    navigateToAlbum(album) {
+    navigateToAlbum(album: Album) {
         this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName])
     }
-    getSize(item, index) {
+    getSize(item: any, index: number) {
         return (item.albums.length * 90) + 49;
     }
     toggleJumpList() {

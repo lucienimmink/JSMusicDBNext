@@ -55,7 +55,7 @@ export class AlbumArt {
         }
 
         let c = this;
-        this.arttable.get(key, function (err, data) {
+        this.arttable.get(key, function (err:any, data:any) {
             if (data) {
                 c.setImage(data.url);
             } else {
@@ -87,7 +87,7 @@ export class AlbumArt {
                         _id: `art-${this.searchArtist}-${this.searchAlbum}`,
                         url: data
                     };
-                    this.arttable.put(item, function (err, response) {
+                    this.arttable.put(item, function (err:any, response:any) {
                         // boring
                     });
                 },
@@ -99,7 +99,7 @@ export class AlbumArt {
                 _id: `art-${this.searchArtist}-${this.searchAlbum}`,
                 url: data
             };
-            this.arttable.put(item, function (err, response) {
+            this.arttable.put(item, function (err:any, response:any) {
                 // boring
             });
         }

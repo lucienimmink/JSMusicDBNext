@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private payLoad: any;
   private theme: string;
   private subscription: Subscription;
-  private sid;
+  private sid:string;
   private isLoading:boolean = false;
 
   constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService, private coreService: CoreService, private configService: ConfigService) {
