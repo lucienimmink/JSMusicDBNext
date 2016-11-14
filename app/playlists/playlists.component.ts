@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, OnDestroy } from "@angular/core";
+import { Component, OnInit, NgModule, OnDestroy, ViewChild } from "@angular/core";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -241,5 +241,9 @@ export class PlaylistsComponent implements OnInit {
             return nextTrack;
         }
         return null;
+    }
+
+    addPlaylist(): void {
+
     }
 }

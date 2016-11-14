@@ -36,7 +36,7 @@ import { TrackListComponent } from './track/tracklist.component';
 
 import { StickyDirective } from './utils/sticky.directive';
 import { MediaEvents } from './utils/MediaEvents';
-import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 
@@ -69,7 +69,7 @@ import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
         BackgroundArtDirective,
         StickyDirective
     ],
-    imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule],
+    imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule, ModalModule],
     providers: [
         appRoutingProviders,
         { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true }
