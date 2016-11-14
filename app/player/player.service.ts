@@ -9,7 +9,7 @@ import * as _ from 'lodash';
 export class PlayerService {
     private playlistSource = new Subject<any>();
     private currentPlaylist: any;
-    private playlistAnnounced$ = this.playlistSource.asObservable();
+    public playlistAnnounced$ = this.playlistSource.asObservable();
     private currentTrack: Track;
 
     private isPlaying: boolean = false;
