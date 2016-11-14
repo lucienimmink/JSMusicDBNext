@@ -19,24 +19,49 @@
                 <ol class="list-items" *ngFor="let disc of album.sortedDiscs">
                     <li class="list-items-row disc-row visible-xs visible-sm header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 49px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
                     <li class="list-items-row disc-row visible-md visible-lg header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 99px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
-                    <li class="list-group-item" *ngFor="let track of disc" (click)="onSelect(track)"  [ngClass]="{'active': track.isPlaying || track.isPaused}">
-                        <div class="col-xs-2 col-sm-1">
-                            <span *ngIf="!track.isPlaying && !track.isPaused && track.number !== 0">{{track.number}}</span>
-                            <span *ngIf="!track.isPlaying && track.isPaused"><span class="glyph glyph-pause"></span> </span>
-                            <span *ngIf="track.isPlaying && !track.isPaused"><span class="glyph glyph-play"></span> </span>
+                    <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions}"  (swipeleft)="swipe(track, true, $event); false" (swiperight)="swipe(track, false, $event); false">
+                        <div class="details" (click)="onSelect(track)">
+                            <div class="col-xs-2 col-sm-1">
+                                <span *ngIf="!track.isPlaying && !track.isPaused && track.number !== 0">{{track.number}}</span>
+                                <span *ngIf="!track.isPlaying && track.isPaused"><span class="glyph glyph-pause"></span> </span>
+                                <span *ngIf="track.isPlaying && !track.isPaused"><span class="glyph glyph-play"></span> </span>
+                            </div>
+                            <div class="col-xs-18 col-sm-19 col-md-21">
+                                {{track.title}}<br />
+                                <span class="small color-type-secondary">
+                                    {{track.trackArtist}}
+                                </span>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-2 text-right">
+                                {{track.duration | timeFormat }}
+                            </div>
                         </div>
-                        <div class="col-xs-18 col-sm-19 col-md-21">
-                            {{track.title}} <br />
-                            <span class="small color-type-secondary">
-                                {{track.trackArtist}}
-                            </span>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-2 text-right">
-                            {{track.duration | timeFormat }}
+                        <div class="actions">
+                            <a class="btn" (click)="selectPlaylistToAddTo(track)">
+                                <span class="glyph glyph-add"></span>
+                            </a>
                         </div>
                     </li>
                 </ol>
             </div>
         </div>
     </div>
+</div>
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add track to playlist</h4>
+      </div>
+      <div class="modal-body">
+        <p>Select the playlist you wish to add this track to<p>
+        <ul>
+            <li *ngFor="let playlist of ownPlaylists">
+                <a (click)="addToPlaylist(playlist)">{{playlist.name}} ({{playlist.tracks.length}})</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

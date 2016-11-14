@@ -78,6 +78,27 @@ export class PlaylistsComponent implements OnInit {
     ngOnInit() {
         this.pathService.announcePage('Playlists');
         this.artists = this.core.artistsList();
+        this.ownPlaylists = [];
+
+        // TODO this should a call from the backend
+        if (localStorage.getItem('customlisttest')) {
+            let list:Array<any> = JSON.parse(localStorage.getItem('customlisttest'));
+            if (list) {
+                list.forEach(item => {
+                    let playlist = new Playlist();
+                    playlist.name = item.name;
+                    //playlist.tracks =
+                    item.tracks.forEach(id => {
+                        let track:Track = this.core.getTrackById(id);
+                        if (track && track.title) {
+                            playlist.tracks.push(track)
+                        }
+                    });
+
+                    this.ownPlaylists.push(playlist);
+                });
+            }
+        }
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
@@ -264,6 +285,10 @@ export class PlaylistsComponent implements OnInit {
         this.playlist.name = this.newPlaylist.name;
         this.playlist.isOwn = true; // set to true so we can alter the name
         this.ownPlaylists.push(this.playlist);
+        this.showStartingArtist = false;
+
+        // TODO: this should be a call to the backend
+        localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
     }
 
     updatePlaylist(playlist:Playlist):void {
@@ -271,17 +296,24 @@ export class PlaylistsComponent implements OnInit {
         this.newPlaylist.name = playlist.name;
         this.newPlaylist.tracks = playlist.tracks;
         this.newPlaylist.isOwn = true;
+        
         this.editModal.show();
     }
 
     doUpdatePlaylist(): void {
         this.editModal.hide();
         this.playlist.name = this.newPlaylist.name;
+
+        // TODO: this should be a call to the backend
+        localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
     }
 
     removePlaylist(playlist:Playlist): void {
         let index = this.ownPlaylists.indexOf(playlist);
         this.ownPlaylists.splice(index,1);
         this.playlist = null;
+
+        // TODO: this should be a call to the backend
+        localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
     }
 }

@@ -21,6 +21,7 @@ export default class Track {
     start: 0,
     end: 0
   };
+  showActions: boolean = false;
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -47,5 +48,9 @@ export default class Track {
 
   url() {
     return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.album.name)}/track/${encodeURIComponent(this.title)}`;
+  }
+
+  toJSON() {
+    return this.id;
   }
 }

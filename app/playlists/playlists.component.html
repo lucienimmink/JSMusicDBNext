@@ -39,19 +39,13 @@
         <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
       </div>
       <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length === 0">
-        <div class="jumbotron theme-light">
-            <div class="container">
-                <div class="row albumdetail">
-                    <div class="col-xs-24">
-                        <h3>Let's play!</h3>
-                        <p>Unfortunately this playlist is empty :( Add some tracks from an 
-                            <a routerLink="/artists"><span class="glyph glyph-people"></span> artist</a> or
-                            <a routerLink="/albums"><span class="glyph glyph-music-album"></span> album</a>.
-                        </p>
-                        <p>Tap the <span class="glyph glyph-add"></span> on the active track to add it to a playlist (for example {{playlist.name}}).</p>
-                    </div>
-                </div>
-            </div>
+        <div class="col-xs-24">
+            <h3>Let's play!</h3>
+            <p>Unfortunately this playlist is empty :( Add some tracks from an 
+                <a routerLink="/artists"><span class="glyph glyph-people"></span> artist</a> or
+                <a routerLink="/albums"><span class="glyph glyph-music-album"></span> album</a>.
+            </p>
+            <p>Tap the <span class="glyph glyph-add"></span> on the active track to add it to a playlist (for example {{playlist.name}}).</p>
         </div>
       </div>
     </div>

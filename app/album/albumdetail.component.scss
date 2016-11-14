@@ -28,6 +28,7 @@
     overflow: hidden;
     transition: color .1s ease-out;
     cursor: pointer;
+    height: 70px;
 }
 .list-group-item .glyph {
     vertical-align: baseline;
@@ -57,4 +58,39 @@
 .disc-row:after {
     content: '';
     display: table;
+}
+.details, .actions {
+    transition: transform 0.15s ease-in;
+}
+.details {
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+
+    .showActions & {
+        transform: translateX(-100px);
+    }
+}
+.actions {
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    bottom: -10px;
+
+    .showActions & {
+        transform: translateX(-100px);
+    }
+
+    .btn {
+        left: 0;
+        bottom: 0;
+        top: 0;
+        right: 0;
+        min-width: 0;
+        width: 100px;
+        font-size: 40px;
+    }
 }

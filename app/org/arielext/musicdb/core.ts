@@ -197,6 +197,17 @@ export class musicdbcore {
         }
         return ret;
     }
+    getTrackById(id:string): Track {
+        let c= this;
+        let ret = new Track({});
+        _.forEach(this.tracks, function (track) {
+            if (track.id === id) {
+                ret = track;
+            }
+        });
+        console.log(`search for track with id ${id} yieled: `, ret);
+        return ret;
+    }
     getArtistByName(artistName:string): Artist {
         let artist = new Artist({ name: artistName, dummy: true });
         let coreArtist = this.artists[artist.sortName];
