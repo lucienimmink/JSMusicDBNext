@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
 import { CoreService } from './../core.service';
@@ -15,10 +15,8 @@ import * as _ from 'lodash';
 import { StickyDirective } from './../utils/sticky.directive';
 import { ConfigService } from './../utils/config.service';
 import { Playlist } from './Playlist';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
-@NgModule({
-    declarations: [TimeFormatPipe, TrackListComponent, StickyDirective]
-})
 @Component({
     templateUrl: 'app/playlists/playlists.component.html',
     styleUrls: ['dist/playlists/playlists.component.css']
@@ -29,6 +27,7 @@ export class PlaylistsComponent implements OnInit {
     private subscription2: Subscription;
     private playlist: Playlist;
     private currentPlaylist: any;
+    private newPlaylist: Playlist;
     private track: Track;
     private trackIndex: number;
     private core: musicdbcore;
@@ -38,6 +37,9 @@ export class PlaylistsComponent implements OnInit {
     private artists: Array<Artist> = [];
     private startingArtistName: string;
     private theme: string;
+    @ViewChild('addModal') private addModal:ModalDirective;
+    @ViewChild('editModal') private editModal:ModalDirective;
+    private ownPlaylists:Array<Playlist> = [];
 
     constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice: LastFMService, private configService: ConfigService) {
         // this is for when we open the page; just wanting to know the current state of the playerService
@@ -62,6 +64,8 @@ export class PlaylistsComponent implements OnInit {
             }
         )
         this.theme = configService.theme;
+
+        this.newPlaylist = new Playlist();
     }
 
     setTrack() {
@@ -79,7 +83,7 @@ export class PlaylistsComponent implements OnInit {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
     }
-    setPlaylist(name: string) {
+    setPlaylist(name: any) {
         this.loading = true;
         this.showStartingArtist = false;
         if (name === "current") {
@@ -99,6 +103,9 @@ export class PlaylistsComponent implements OnInit {
             this.playlist = this.generateRadio();
         } else if (name === 'artist') {
             this.askForStartingArtist();
+        } else if (name instanceof Playlist) {
+            this.playlist = name;
+            this.loading = false;
         } else {
             console.log('unknown playlist', name);
         }
@@ -243,7 +250,38 @@ export class PlaylistsComponent implements OnInit {
         return null;
     }
 
-    addPlaylist(): void {
 
+
+    addPlaylist(): void {
+        this.addModal.show();
+        this.newPlaylist = new Playlist();
+    }
+
+    doAddPlaylist(): void {
+        this.addModal.hide();
+        // this.playlist = this.newPlaylist;
+        this.playlist = new Playlist();
+        this.playlist.name = this.newPlaylist.name;
+        this.playlist.isOwn = true; // set to true so we can alter the name
+        this.ownPlaylists.push(this.playlist);
+    }
+
+    updatePlaylist(playlist:Playlist):void {
+        this.newPlaylist = new Playlist();
+        this.newPlaylist.name = playlist.name;
+        this.newPlaylist.tracks = playlist.tracks;
+        this.newPlaylist.isOwn = true;
+        this.editModal.show();
+    }
+
+    doUpdatePlaylist(): void {
+        this.editModal.hide();
+        this.playlist.name = this.newPlaylist.name;
+    }
+
+    removePlaylist(playlist:Playlist): void {
+        let index = this.ownPlaylists.indexOf(playlist);
+        this.ownPlaylists.splice(index,1);
+        this.playlist = null;
     }
 }

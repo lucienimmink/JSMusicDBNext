@@ -8,8 +8,13 @@
         <li><a (click)="setPlaylist('random')">50 random tracks</a></li>
         <li><a (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">Random based on your preferences</a></li>
         <li><a (click)="setPlaylist('artist')">Artist radio</a></li>
+        <li *ngFor="let playlist of ownPlaylists">
+          <a (click)="setPlaylist(playlist)">{{playlist.name}}
+            <a (click)="removePlaylist(playlist)"><span class="glyph glyph-delete"></span></a>
+          </a>
+        </li>
       </ul>
-      <button class="btn btn-inline btn-link" tooltip="Create a new playlist" tooltipTrigger="mouseenter" tooltipPlacement="right" (click)="lgModal.show()"><i class="glyph glyph-add"></i></button>
+      <button class="btn btn-inline btn-link" tooltip="Create a new playlist" tooltipTrigger="mouseenter" tooltipPlacement="right" (click)="addPlaylist()"><i class="glyph glyph-add"></i></button>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="loading">
       <div class="progress-bar">
@@ -24,8 +29,31 @@
       </p>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist && !loading && !showStartingArtist">
-      <h4 sticky class="header-seperator">{{playlist.name}} <span class="small color-type-secondary">({{playlist.tracks.length}})</span></h4>
-      <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
+      <h4 sticky class="header-seperator">
+        {{playlist.name}} 
+        <span class="small color-type-secondary">({{playlist.tracks.length}})</span>
+        &nbsp;<a (click)="updatePlaylist(playlist)" *ngIf="playlist.isOwn"><span class="glyph glyph-edit small"></span></a>
+        &nbsp;<a (click)="removePlaylist(playlist)" *ngIf="playlist.isOwn"><span class="glyph glyph-delete small"></span></a>
+      </h4>
+      <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length !== 0">
+        <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
+      </div>
+      <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length === 0">
+        <div class="jumbotron theme-light">
+            <div class="container">
+                <div class="row albumdetail">
+                    <div class="col-xs-24">
+                        <h3>Let's play!</h3>
+                        <p>Unfortunately this playlist is empty :( Add some tracks from an 
+                            <a routerLink="/artists"><span class="glyph glyph-people"></span> artist</a> or
+                            <a routerLink="/albums"><span class="glyph glyph-music-album"></span> album</a>.
+                        </p>
+                        <p>Tap the <span class="glyph glyph-add"></span> on the active track to add it to a playlist (for example {{playlist.name}}).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
     </div>
     <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="showStartingArtist && !loading && !playlist">
       <h4 sticky class="header-seperator">Select an artist as starting point</h4>
@@ -47,17 +75,51 @@
   </div>
 </div>
 
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  [ngClass]="{'theme-alt': theme === 'dark'}">
-  <div class="modal-dialog modal-lg">
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" (click)="lgModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Large modal</h4>
+        <h4 class="modal-title">Add new playlist</h4>
       </div>
       <div class="modal-body">
-        ...
+        <form role="form" class="form-horizontal" (ngSubmit)="doAddPlaylist()" [ngClass]="{'theme-alt': theme === 'dark'}" #addPlaylistForm="ngForm">
+          <div class="form-group">
+            <label for="name" class="col-sm-8 col-lg-4 control-label">Name</label>
+            <div class="col-sm-16 col-lg-20">
+              <input type="text" class="form-control" id="name" placeholder="e.g. My own playlist" required [(ngModel)]="newPlaylist.name" #name="ngModel" name="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-24">
+              <button class="btn btn-primary" type="submit" [disabled]="!addPlaylistForm.form.valid">Add playlist</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Rename playlist</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" class="form-horizontal" (ngSubmit)="doUpdatePlaylist()" [ngClass]="{'theme-alt': theme === 'dark'}" #editPlaylistForm="ngForm">
+          <div class="form-group">
+            <label for="name" class="col-sm-8 col-lg-4 control-label">Name</label>
+            <div class="col-sm-16 col-lg-20">
+              <input type="text" class="form-control" id="name" placeholder="e.g. My own playlist" required [(ngModel)]="newPlaylist.name" #name="ngModel" name="name">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-24">
+              <button class="btn btn-primary" type="submit" [disabled]="!editPlaylistForm.form.valid">Save playlist</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
