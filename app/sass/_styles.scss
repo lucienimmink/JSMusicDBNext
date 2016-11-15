@@ -14,8 +14,8 @@ body {
 }
 @include musicdb-respond-max-width(xs) {
     .container {
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
         width: 100%;
     }
 }
