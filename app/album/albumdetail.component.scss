@@ -67,6 +67,8 @@
     top: 0;
     z-index: 1;
     touch-action: initial !important;
+    user-select: initial !important;
+    -webkit-user-drag: initial !important;
 
     .showActions & {
         transform: translateX(-100px);
