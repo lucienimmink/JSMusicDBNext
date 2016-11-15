@@ -14,6 +14,8 @@ import { StickyDirective } from './../utils/sticky.directive';
 import { Playlist } from './../playlists/Playlist';
 import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
+import { ConfigService } from './../utils/config.service';
+
 @Component({
     templateUrl: 'app/album/albumdetail.component.html',
     styleUrls: ['dist/album/albumdetail.component.css']
@@ -28,9 +30,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private ownPlaylists: Array<Playlist> = [];
     private selectedTrack: Track = null;
     private isSwiping: boolean = false;
+    private theme:string;
     @ViewChild('editModal') private editModal: ModalDirective;
 
-    constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute) {
+    constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute, private configService: ConfigService) {
         this.core = this.coreService.getCore();
         this.subscription = this.core.coreParsed$.subscribe(
             data => {
@@ -45,6 +48,8 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             this.albumName = decodeURIComponent(data["album"]);
             this.ngOnInit();
         });
+
+        this.theme = configService.theme;
     }
 
     ngOnInit() {
