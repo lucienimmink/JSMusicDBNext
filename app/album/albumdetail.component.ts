@@ -25,9 +25,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private core: musicdbcore;
     private subscription: Subscription;
     private albumart: AlbumArt;
-    private ownPlaylists:Array<Playlist> = [];
-    private selectedTrack:Track = null;
-    @ViewChild('editModal') private editModal:ModalDirective;
+    private ownPlaylists: Array<Playlist> = [];
+    private selectedTrack: Track = null;
+    private isSwiping: boolean = false;
+    @ViewChild('editModal') private editModal: ModalDirective;
 
     constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute) {
         this.core = this.coreService.getCore();
@@ -76,7 +77,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         // TODO this should a call from the backend
         this.ownPlaylists = [];
         if (localStorage.getItem('customlisttest')) {
-            let list:Array<Playlist> = JSON.parse(localStorage.getItem('customlisttest'));
+            let list: Array<Playlist> = JSON.parse(localStorage.getItem('customlisttest'));
             if (list) {
                 list.forEach(item => {
                     let playlist = new Playlist();
@@ -93,21 +94,27 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    onSelect(track: any) {
-        this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track));
+    onSelect(track: any, event: Event) {
+        if (!this.isSwiping) {
+            this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track));
+        }
     }
     navigateToArtist(artist: any) {
         this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
     }
-    swipe(track:Track, state:boolean, event:Event): void {
+    swipe(track: Track, state: boolean, event: Event): void {
         event.preventDefault();
+        this.isSwiping = true;
+        setTimeout(() => {
+            this.isSwiping = false;
+        }, 5);
         track.showActions = state;
     }
-    selectPlaylistToAddTo(track:Track):void {
+    selectPlaylistToAddTo(track: Track): void {
         this.editModal.show();
         this.selectedTrack = track;
     }
-    addToPlaylist(playlist:Playlist):void {
+    addToPlaylist(playlist: Playlist): void {
         playlist.tracks.push(this.selectedTrack);
         this.selectedTrack.showActions = false;
         this.selectedTrack = null;

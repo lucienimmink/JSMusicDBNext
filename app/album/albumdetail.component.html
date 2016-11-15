@@ -19,8 +19,8 @@
                 <ol class="list-items" *ngFor="let disc of album.sortedDiscs">
                     <li class="list-items-row disc-row visible-xs visible-sm header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 49px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
                     <li class="list-items-row disc-row visible-md visible-lg header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 99px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
-                    <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions}"  (swipeleft)="swipe(track, true, $event); false" (swiperight)="swipe(track, false, $event); false">
-                        <div class="details" (click)="onSelect(track)">
+                    <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions}">
+                        <div class="details">
                             <div class="col-xs-2 col-sm-1">
                                 <span *ngIf="!track.isPlaying && !track.isPaused && track.number !== 0">{{track.number}}</span>
                                 <span *ngIf="!track.isPlaying && track.isPaused"><span class="glyph glyph-pause"></span> </span>
@@ -40,6 +40,9 @@
                             <a class="btn" (click)="selectPlaylistToAddTo(track)">
                                 <span class="glyph glyph-add"></span>
                             </a>
+                        </div>
+                        <div class="swipeArea" (swipeleft)="swipe(track, true, $event); false" (swiperight)="swipe(track, false, $event); false" (click)="onSelect(track, $event); false">
+                            &nbsp;
                         </div>
                     </li>
                 </ol>

@@ -59,8 +59,19 @@
     content: '';
     display: table;
 }
+.swipeArea {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    .showActions & {
+        transform: translateX(-100px);
+    }
+}
 .details, .actions {
-    transition: transform 0.15s ease-in;
+    transition: transform 0.1s ease-in;
 }
 .details {
     overflow: hidden;

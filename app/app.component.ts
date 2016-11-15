@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, NgModule, ViewContainerRef  } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef  } from "@angular/core";
 import { musicdbcore } from './org/arielext/musicdb/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,9 +16,6 @@ import { ConfigService } from './utils/config.service';
 // Add the RxJS Observable operators we need in this app.
 import './rxjs-operators';
 
-@NgModule({
-  declarations: [IMAGELAZYLOAD_DIRECTIVE]
-})
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
