@@ -53,11 +53,18 @@ h4[sticky] {
 .media-container {
   margin: 0 -10px;
 
+  /deep/ .media-panel::nth-child(10n) {
+    display: none;
+  }
+
   @media screen and (min-width: 768px) {
     /deep/ .media-panel {
       width: 17vw;
       height: 17vw;
-    } 
+    }
+    /deep/ .media-panel::nth-child(10n) {
+      display: block;
+    }
   }
   @media screen and (min-width: 992px) {
     /deep/ .media-panel {
