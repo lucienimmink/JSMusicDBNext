@@ -117,6 +117,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     }
     selectPlaylistToAddTo(track: Track): void {
         this.editModal.show();
+        this.isSwiping = true;
+        setTimeout(() => {
+            this.isSwiping = false;
+        }, 5);
         this.selectedTrack = track;
     }
     addToPlaylist(playlist: Playlist): void {

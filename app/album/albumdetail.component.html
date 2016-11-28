@@ -20,29 +20,24 @@
                     <li class="list-items-row disc-row visible-xs visible-sm header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 49px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
                     <li class="list-items-row disc-row visible-md visible-lg header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 99px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
                     <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions}">
-                        <div class="details">
+                        <div class="details" (click)="onSelect(track, $event)">
                             <div class="col-xs-2 col-sm-1">
                                 <span *ngIf="!track.isPlaying && !track.isPaused && track.number !== 0">{{track.number}}</span>
                                 <span *ngIf="!track.isPlaying && track.isPaused"><span class="glyph glyph-pause"></span> </span>
                                 <span *ngIf="track.isPlaying && !track.isPaused"><span class="glyph glyph-play"></span> </span>
                             </div>
                             <div class="col-xs-18 col-sm-19 col-md-21">
-                                {{track.title}}<br />
-                                <span class="small color-type-secondary">
+                                {{track.title}}
+                                <a class="btn" (click)="selectPlaylistToAddTo(track)">
+                                    <span class="glyph glyph-add"></span>
+                                </a>
+                                <br /> <span class="small color-type-secondary">
                                     {{track.trackArtist}}
                                 </span>
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-2 text-right">
                                 {{track.duration | timeFormat }}
                             </div>
-                        </div>
-                        <div class="actions">
-                            <a class="btn" (click)="selectPlaylistToAddTo(track)">
-                                <span class="glyph glyph-add"></span>
-                            </a>
-                        </div>
-                        <div class="swipeArea" (swipeleft)="swipe(track, true, $event)" (swiperight)="swipe(track, false, $event)" (click)="onSelect(track, $event)">
-                            &nbsp;
                         </div>
                     </li>
                 </ol>

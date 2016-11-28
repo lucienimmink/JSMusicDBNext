@@ -11,10 +11,19 @@ import Track from './../org/arielext/musicdb/models/track';
 })
 export class TrackListComponent {
     @Input() playlist: any = {};
+    private isBusy:boolean = false;
 
     constructor(private playerservice: PlayerService) { }
 
     select(track: Track) {
-        this.playerservice.doPlayAlbum(this.playlist, this.playlist.tracks.indexOf(track));
+        if (!this.isBusy) {
+            this.playerservice.doPlayAlbum(this.playlist, this.playlist.tracks.indexOf(track));
+        }
+    }
+    removeFromPlaylist(track: Track) {
+        this.isBusy = true;
+        setTimeout(() => {
+            this.isBusy = false;
+        }, 5);
     }
 }

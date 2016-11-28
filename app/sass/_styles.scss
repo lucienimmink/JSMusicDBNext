@@ -230,9 +230,10 @@ a {
         font-size: 1.5em;
     }
 }
-.btn.focus, .btn:focus, .btn:hover {
+.btn.focus, .btn:focus, .btn:hover, .btn:active {
     color: $primary-color;
     outline: none;
+    box-shadow: none;
 }
 input.form-control:focus, textarea.form-control:focus {
     color: $primary-color;
@@ -276,7 +277,13 @@ input.form-control:focus, textarea.form-control:focus {
 .list-group-item:nth-child(2n+1) {
   background-color: $tertiary-color;
 }
-
+.list-group-item:hover {
+    background-color: $forth-color;
+}
+.list-group-item .glyph {
+    vertical-align: top;
+    margin-top: 5px;
+}
 .player {
     background-color: $tertiary-color;
 

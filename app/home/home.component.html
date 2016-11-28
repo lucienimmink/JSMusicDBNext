@@ -17,11 +17,11 @@
                 <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
                 <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
               </div>
-              <div class="col-xs-19 col-sm-18 col-md-19">
+              <div class="col-xs-19 col-sm-18 col-md-19 pull-up">
                 {{track.artist}} &bull; {{track.title}} <br />
                 <span class="color-type-secondary small">{{track.album}} </span>
               </div>
-              <div class="col-xs-24 col-sm-4 col-md-3 text-right" [ngClass]="{'now-playing': track.nowPlaying}">
+              <div class="col-xs-24 col-sm-4 col-md-3 text-right pull-up" [ngClass]="{'now-playing': track.nowPlaying}">
                 <span *ngIf="!track.nowPlaying">
                 {{track.date | date:'HH:mm' }}
                 <span class="color-type-secondary small">
