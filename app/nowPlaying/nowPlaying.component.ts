@@ -22,6 +22,7 @@ import { AnimationService } from './../utils/animation.service';
 export class NowPlayingComponent implements OnDestroy, OnInit {
 
     private subscription: Subscription;
+    private subscription2: Subscription;
     private playlist:any;
     private track:Track;
     private currentTrack: Track;
@@ -35,6 +36,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private isDragging:boolean = false;
     private c:any = this;
 
+    private showVolumeWindow: boolean = false;
+    private volume:number = 100;
+
     @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
     constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router, private lastFMService:LastFMService, private animationService:AnimationService) {
@@ -46,8 +50,10 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             this.isPaused = playerData.isPaused;
             this.isPlaying = playerData.isPlaying;
             this.isShuffled = playerData.isShuffled;
+            this.volume = this.playerService.getVolume();
             this.setTrack();
         }
+        
         // this is for when a new track is announced while we are already on the page
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
@@ -59,6 +65,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
                 this.setTrack();
             }
         )
+        this.subscription2 = this.playerService.volumeAnnounced.subscribe(volume => {
+            this.volume = volume;
+        })
         this.pathService.announcePage('Now playing');
 
         if ('ontouchstart' in document.documentElement) {
@@ -101,6 +110,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
+        this.subscription2.unsubscribe();
         if ('ontouchstart' in document.documentElement) {
             document.getElementsByTagName('body')[0].removeEventListener('touchmove', this.drag);
             document.getElementsByTagName('body')[0].removeEventListener('touchend', this.stopDrag);
@@ -175,5 +185,12 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             let pos = this.track.duration / 1000 * perc;
             this.playerService.setPosition(pos);
         }
+    }
+    toggleVolumeWindow() {
+        this.showVolumeWindow = !this.showVolumeWindow;
+    }
+    setVolume() {
+        //this.mediaObject.volume = this.volume / 100;
+        this.playerService.setVolume(this.volume);
     }
 }

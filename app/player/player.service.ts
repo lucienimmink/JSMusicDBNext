@@ -16,6 +16,10 @@ export class PlayerService {
     private isPaused: boolean = false;
     private isShuffled: boolean = false;
 
+    private volume:number = 100;
+    private volumeSource = new Subject<any>();
+    public volumeAnnounced = this.volumeSource.asObservable();
+
     private position: number;
 
     private lastfmUserName: string = localStorage.getItem('lastfm-username'); // should be subscriber?
@@ -138,5 +142,12 @@ export class PlayerService {
 
             this.playlistSource.next(this.currentPlaylist);
         }
+    }
+    getVolume():number {
+        return this.volume;
+    }
+    setVolume(volume:number):void {
+        this.volume = volume;
+        this.volumeSource.next(this.volume);
     }
 }

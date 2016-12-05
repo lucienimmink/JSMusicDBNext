@@ -116,9 +116,14 @@
     right: 10px;
 }
 
-#nowPlaying .icons .btn-shuffle {
+#nowPlaying .icons .btn-volume {
     position: absolute;
     right: 90px;
+}
+
+#nowPlaying .icons .btn-shuffle {
+    position: absolute;
+    right: 170px;
 }
 
 #nowPlaying .progress {
@@ -159,9 +164,14 @@ footer.hidePlayer {
 }
 
 
-
-
-
+#nowPlaying .volume-control {
+    position: absolute;
+    z-index: 1000;
+    width: 270px;
+    right: 6px;
+    bottom: 80px;
+    padding: 10px;
+}
 
 
 #progress-pusher {

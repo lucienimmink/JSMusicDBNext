@@ -12,6 +12,7 @@ import { CoreService } from './../core.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { AnimationService } from './../utils/animation.service';
+import { PathService } from './../utils/path.service';
 
 @Component({
     templateUrl: 'app/player/player.component.html',
@@ -21,6 +22,8 @@ import { AnimationService } from './../utils/animation.service';
 export class PlayerComponent implements OnDestroy {
     private subscription: Subscription;
     private subscription2: Subscription;
+    private subscription3: Subscription;
+    private subscription4: Subscription;
     private playlist: any;
     private trackIndex: any;
     private track: Track;
@@ -37,9 +40,12 @@ export class PlayerComponent implements OnDestroy {
 
     private isMobile: boolean = false;
 
+    private showVolumeWindow: boolean = false;
+    private volume:number = 100;
+
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
+    constructor(private pathService:PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 this.playlist = playerData.playlist;
@@ -85,6 +91,19 @@ export class PlayerComponent implements OnDestroy {
                 }
             }
         )
+        this.subscription3 = this.playerService.volumeAnnounced.subscribe(volume => {
+            this.volume = volume;
+            this.mediaObject.volume = this.volume / 100;
+        })
+        this.subscription4 = pathService.pageAnnounced$.subscribe(
+            page => {
+                if (page.page === 'Now playing') {
+                    this.showVolumeWindow = false;
+                }
+            }
+        );
+
+
         if (navigator.userAgent.indexOf('Mobi') !== -1 || navigator.userAgent.indexOf('Edge/') !== -1) {
             this.isMobile = true; // treat edge always as mobile
         }
@@ -153,9 +172,11 @@ export class PlayerComponent implements OnDestroy {
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
         this.subscription2.unsubscribe(); // prevent memory leakage
+        this.subscription3.unsubscribe(); // prevent memory leakage
         this.mediaObject.removeEventListener('ended');
         this.mediaObject.removeEventListener('timeupdate');
         this.mediaObject.removeEventListener('play');
+        this.showVolumeWindow = false;
     }
     navigateToArtist() {
         //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
@@ -227,11 +248,18 @@ export class PlayerComponent implements OnDestroy {
             data => { }
         )
     }
+    toggleVolumeWindow() {
+        this.showVolumeWindow = !this.showVolumeWindow;
+    }
     onprogress() {
         let buffered = this.mediaObject.buffered;
         if ((buffered.length !== 0)) {
             this.track.buffered.start = buffered.start((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000;
             this.track.buffered.end = buffered.end((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000
         }
+    }
+    setVolume() {
+        this.mediaObject.volume = this.volume / 100;
+        this.playerService.setVolume(this.volume) // update the shared volume property
     }
 }
