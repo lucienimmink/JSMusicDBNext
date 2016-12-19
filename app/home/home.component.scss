@@ -18,7 +18,7 @@ h4[sticky] {
 .list-group-item {
     overflow: hidden;
     margin: 0;
-    pointer-events: none;
+    cursor: pointer;
 }
 .now-playing {
   color: rgba(0,120,215,1);

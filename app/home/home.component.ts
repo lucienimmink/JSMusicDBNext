@@ -14,6 +14,7 @@ import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { RecentlyListenedService } from './../utils/recentlyListened.service';
 import { LastFMService } from './../lastfm/lastfm.service';
 import { ConfigService } from './../utils/config.service';
+import { PlayerService } from './../player/player.service';
 
 import { Subscription }   from 'rxjs/Subscription';
 
@@ -46,7 +47,7 @@ export class HomeComponent implements OnDestroy {
     private username:string;
     private recentlyAdded: Array<Album> = [];
 
-    constructor(private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
+    constructor(private playerService: PlayerService, private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
         this.user = new User();
 
         this.subscription = this.configService.theme$.subscribe(
@@ -164,6 +165,30 @@ export class HomeComponent implements OnDestroy {
         localStorage.setItem('lastfm-username', username);
         this.username = username;
         this.startPolling();
+    }
+    playTrack(track:any): void {
+        // get the track from the core;
+        let artist = this.core.getArtistByName(track.artist);
+        if (artist) {
+            let album = this.core.getAlbumByArtistAndName(artist, track.album);
+            if (album) {
+                let coretrack = this.core.getTrackByAlbumAndName(album, track.title);
+                if (coretrack) {
+                    this.playerService.doPlayTrack(coretrack);
+                    setTimeout(() => {
+                        this.checkRecentlyListened();
+                    }, 500);
+                    
+                } else {
+                    console.warn('track not found', track);
+                }
+            } else {
+                console.warn('album not found', track);
+            }
+        } else {
+            console.warn('artist not found', track);
+        }
+        
     }
 
 };

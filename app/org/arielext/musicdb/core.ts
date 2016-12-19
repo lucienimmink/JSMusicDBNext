@@ -213,6 +213,25 @@ export class musicdbcore {
         let coreArtist = this.artists[artist.sortName];
         return coreArtist;
     }
+    getAlbumByArtistAndName(artist:Artist, albumName:string): Album {
+        let ret = null;
+        artist.albums.forEach((album) => {
+            //console.log(album.name, albumName);
+            if (album.name.toLowerCase() === albumName.toLowerCase()) {
+                ret = album;
+            }
+        });
+        return ret;
+    }
+    getTrackByAlbumAndName(album:Album, trackName:string): Track {
+        let ret = null;
+        album.tracks.forEach((track) => {
+            if (track.title.toLowerCase() === trackName.toLowerCase()) {
+                ret = track;
+            }
+        });
+        return ret;
+    }
     artistsList(): Array<Artist> {
         let c = this;
         let ret: Array<Artist> = [];

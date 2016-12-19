@@ -4,6 +4,7 @@ import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
 import * as _ from 'lodash';
+import { Playlist } from './../playlists/Playlist';
 
 @Injectable()
 export class PlayerService {
@@ -43,6 +44,25 @@ export class PlayerService {
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused = false,
             isShuffled: this.isShuffled = isShuffled
+        };
+        this.announce();
+    }
+
+    doPlayTrack(track:Track) {
+        if (this.currentTrack) {
+            this.currentTrack.isPaused = false;
+            this.currentTrack.isPlaying = false;
+        }
+        let playlist = new Playlist();
+        playlist.isOwn = true;
+        playlist.name = track.title;
+        playlist.tracks.push(track);
+        this.currentPlaylist = {
+            playlist: playlist,
+            startIndex: 0,
+            isPlaying: this.isPlaying = true,
+            isPaused: this.isPaused = false,
+            isShuffled: false
         };
         this.announce();
     }
