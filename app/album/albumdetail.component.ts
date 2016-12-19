@@ -101,7 +101,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
 
     onSelect(track: any, event: Event) {
         if (!this.isSwiping) {
-            this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track));
+            this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track), true);
         }
     }
     navigateToArtist(artist: any) {

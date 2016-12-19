@@ -17,7 +17,7 @@ export class TrackListComponent {
 
     select(track: Track) {
         if (!this.isBusy) {
-            this.playerservice.doPlayAlbum(this.playlist, this.playlist.tracks.indexOf(track));
+            this.playerservice.doPlayAlbum(this.playlist, this.playlist.tracks.indexOf(track), true);
         }
     }
     removeFromPlaylist(track: Track) {

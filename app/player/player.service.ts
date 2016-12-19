@@ -16,6 +16,7 @@ export class PlayerService {
     private isPlaying: boolean = false;
     private isPaused: boolean = false;
     private isShuffled: boolean = false;
+    private forceRestart: boolean = false;
 
     private volume:number = 100;
     private volumeSource = new Subject<any>();
@@ -33,7 +34,7 @@ export class PlayerService {
         this.position = null;
     }
 
-    doPlayAlbum(album: Album, startIndex: number, isShuffled: boolean = false) {
+    doPlayAlbum(album: Album, startIndex: number, forceRestart:boolean = false, isShuffled: boolean = false) {
         if (this.currentTrack) {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
@@ -43,7 +44,8 @@ export class PlayerService {
             startIndex: startIndex,
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused = false,
-            isShuffled: this.isShuffled = isShuffled
+            isShuffled: this.isShuffled = isShuffled,
+            forceRestart: this.forceRestart = forceRestart
         };
         this.announce();
     }
@@ -62,7 +64,8 @@ export class PlayerService {
             startIndex: 0,
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused = false,
-            isShuffled: false
+            isShuffled: false,
+            forceRestart: this.forceRestart = true
         };
         this.announce();
     }
@@ -89,6 +92,7 @@ export class PlayerService {
             this.currentPlaylist.playlist.tracks = _.shuffle(this.currentPlaylist.playlist.tracks);
         }
         this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(this.currentTrack);
+        this.currentPlaylist.forceRestart = false;
         this.announce();
     }
     next() {
@@ -101,6 +105,7 @@ export class PlayerService {
             if (this.currentPlaylist.startIndex >= this.currentPlaylist.playlist.length) {
                 this.currentPlaylist.startIndex = this.currentPlaylist.playlist.length - 1;
             }
+            this.currentPlaylist.forceRestart = false;
             this.announce();
         }
     }
@@ -114,6 +119,7 @@ export class PlayerService {
             if (this.currentPlaylist.startIndex <= 0) {
                 this.currentPlaylist.startIndex = 0;
             }
+            this.currentPlaylist.forceRestart = false;
             this.announce();
         }
     }
@@ -121,6 +127,7 @@ export class PlayerService {
         if (this.currentPlaylist) {
             this.isPlaying = false;
             this.isPaused = true;
+            this.currentPlaylist.forceRestart = false;
             this.announce();
         }
     }
@@ -128,6 +135,7 @@ export class PlayerService {
         if (this.currentPlaylist) {
             this.isPlaying = true;
             this.isPaused = false;
+            this.currentPlaylist.forceRestart = false;
             this.announce();
         }
     }
@@ -159,7 +167,6 @@ export class PlayerService {
             this.currentPlaylist.position = this.position;
 
             localStorage.setItem('current-playlist', this.playlistToString());
-
             this.playlistSource.next(this.currentPlaylist);
         }
     }

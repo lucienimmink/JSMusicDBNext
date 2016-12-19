@@ -37,6 +37,7 @@ export class PlayerComponent implements OnDestroy {
     private core: musicdbcore;
     private isCurrentPlaylistLoaded: boolean = false;
     private isShuffled: boolean = false;
+    private forceRestart: boolean = false;
 
     private isMobile: boolean = false;
 
@@ -53,6 +54,7 @@ export class PlayerComponent implements OnDestroy {
                 this.isPaused = playerData.isPaused;
                 this.isPlaying = playerData.isPlaying;
                 this.isShuffled = playerData.isShuffled;
+                this.forceRestart = playerData.forceRestart;
                 this.showPlayer = true;
                 this.setTrack(playerData.position);
             }
@@ -114,7 +116,7 @@ export class PlayerComponent implements OnDestroy {
             if (c.albumart) c.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
-        if (this.currentTrack !== this.track) {
+        if ((this.currentTrack !== this.track) || this.forceRestart) {
             let dsm = localStorage.getItem("dsm");
             if (dsm) {
                 this.url = dsm;
@@ -166,7 +168,7 @@ export class PlayerComponent implements OnDestroy {
             }
             this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;
-            this.playerService.doPlayAlbum(playlist, current.current, current.isShuffled);
+            this.playerService.doPlayAlbum(playlist, current.current, false, current.isShuffled);
         }
     }
     ngOnDestroy() {
