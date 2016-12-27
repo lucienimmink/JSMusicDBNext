@@ -37,6 +37,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private scanperc: number = 0;
     private version: String = VERSION;
     private settings: Settings;
+    private hasBeenReloading: boolean = false;
 
     private themeForm: NgForm;
     @ViewChild('themeForm') currentForm: NgForm;
@@ -159,7 +160,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         )
     }
     poll() {
-        let c = this;
         this.collectionService.poll().subscribe(
             data => {
                 this.scanperc = data.progress
@@ -168,9 +168,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
                     setTimeout(e => {
                         this.poll();
                     }, 300);
+                    this.hasBeenReloading = true;
                 } else {
                     this.isReloading = false;
-                    this.getCollection();
+                    if (this.hasBeenReloading) {
+                        this.getCollection();
+                    }
                 }
             }
         )
@@ -184,6 +187,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
             );
     }
     fillCollection(data: any): void {
+        this.hasBeenReloading = false;
         this.coreService.getCore().parseSourceJson(data);
     }
 
