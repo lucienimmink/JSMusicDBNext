@@ -1,10 +1,12 @@
 {
   "globalDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160914114559",
-    "lodash": "registry:dt/lodash#4.14.0+20160830145422",
-    "moment": "registry:dt/moment#2.11.1+20160829143156",
-    "node": "registry:dt/node#6.0.0+20160919063032",
-    "pouchdb": "registry:dt/pouchdb#5.4.4+20160724064500",
-    "service_worker_api": "registry:dt/service_worker_api#0.0.0+20160803024618"
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
+    "node": "registry:dt/node#6.0.0+20161227094133",
+    "pouchdb": "registry:dt/pouchdb#5.4.4+20160916155957",
+    "service_worker_api": "registry:dt/service_worker_api#0.0.0+20161212190028"
+  },
+  "dependencies": {
+    "lodash": "registry:dt/lodash#4.14.0+20161220120806"
   }
 }

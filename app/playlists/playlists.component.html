@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}">
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}" [config]="{backdrop: false}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,7 +97,7 @@
     </div>
 </div>
 
-<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}">
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}" [config]="{backdrop: false}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
