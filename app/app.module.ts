@@ -1,4 +1,4 @@
-import { NgModule, enableProdMode } from "@angular/core";
+import { NgModule, enableProdMode, LOCALE_ID } from "@angular/core";
 import { BrowserModule, EVENT_MANAGER_PLUGINS } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { FormsModule } from '@angular/forms';
@@ -72,7 +72,8 @@ import { TooltipModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
     imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule, ModalModule],
     providers: [
         appRoutingProviders,
-        { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true }
+        { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true },
+        { provide: LOCALE_ID, useValue: "en-GB" }
     ],
     bootstrap: [AppComponent]
 })
