@@ -26,6 +26,8 @@
         </div>
     </musicdb>
 
+    <script src="/js/polyfills.js" async></script>
+
     <script src="js/app.bundle.js"></script>
 
     <script src="js/dist-systemjs.config.js"></script>
@@ -34,28 +36,6 @@
         System.import('app/main').catch(function(err) {
             console.error(err);
         });
-    </script>
-
-    <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-
-            i.addEventListener('error', function (e) {
-                i[r]('send', 'event', 'Errors', 'JavaScriptError', e.message + '\n' + e.filename + ': ' + e.lineno)
-            }, false);
-
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-41619288-1', 'auto');
-        ga('send', 'pageview');
     </script>
 </body>
 
