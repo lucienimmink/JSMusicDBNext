@@ -5,15 +5,15 @@
 (function (global) {
     // map tells the System loader where to look for things
     var map = {
-        'app': 'dist/', // 'dist',
+        'app': 'dist', // 'dist',
         '@angular': 'node_modules/@angular',
         'rxjs': 'node_modules/rxjs',
         'lodash': 'node_modules/lodash',
         'angular2-jwt': 'node_modules/angular2-jwt',
         'ng2-bootstrap': 'node_modules/ng2-bootstrap',
-        'moment': './node_modules/moment',
-        'pouchdb': './node_modules/pouchdb',
-        'jsrsasign': './node_modules/jsrsasign'
+        'moment': 'node_modules/moment',
+        'pouchdb': 'node_modules/pouchdb',
+        'jsrsasign': 'node_modules/jsrsasign'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -22,7 +22,7 @@
         'lodash': { main: 'lodash.js', defaultExtension: 'js' },
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
         'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
-        'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
+        'ng2-bootstrap': { main: 'bundles/ng2-bootstrap.umd.js', defaultExtension: 'js' },
         'moment': { main: 'moment.js', defaultExtension: 'js' },
         'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' },
         'jsrsasign': { main: 'lib/jsrsasign.js', defaultExtension: 'js' }
@@ -47,7 +47,7 @@
     }
     // Bundled (~40 requests):
     function packUmd(pkgName) {
-        packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+        packages['@angular/' + pkgName] = { main: 'bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
     }
     // Most environments should use UMD; some (Karma) need the individual index files
     var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;

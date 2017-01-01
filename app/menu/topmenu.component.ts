@@ -2,7 +2,7 @@ import { Component, OnDestroy, Input, ViewChild } from "@angular/core";
 import { Router } from '@angular/router';
 import { PathService } from "./../utils/path.service";
 import { Subscription } from 'rxjs/Subscription';
-import { TooltipModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { TooltipModule } from 'ng2-bootstrap';
 import { LastFMService } from './../lastfm/lastfm.service';
 
 import { musicdbcore } from './../org/arielext/musicdb/core';

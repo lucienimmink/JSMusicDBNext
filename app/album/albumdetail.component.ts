@@ -12,7 +12,7 @@ import { PlayerService } from './../player/player.service';
 import { Subscription } from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 import { Playlist } from './../playlists/Playlist';
-import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap';
 
 import { ConfigService } from './../utils/config.service';
 

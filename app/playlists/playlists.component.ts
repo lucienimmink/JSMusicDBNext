@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 import { StickyDirective } from './../utils/sticky.directive';
 import { ConfigService } from './../utils/config.service';
 import { Playlist } from './Playlist';
-import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
+import { ModalDirective } from 'ng2-bootstrap';
 
 @Component({
     templateUrl: 'app/playlists/playlists.component.html',
