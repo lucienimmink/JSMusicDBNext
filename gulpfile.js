@@ -183,7 +183,6 @@ gulp.task('bundle-app', ['inline-templates'], function (cb) {
         .bundle('dist/app/**/*', 'target/js/app.bundle.js', { minify: true })
         .then(function () { cb() })
         .catch(function (err) {
-            console.log('Build error');
             cb(err);
         });
 });

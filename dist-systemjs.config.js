@@ -22,13 +22,14 @@
         'lodash': { main: 'lodash.js', defaultExtension: 'js' },
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
         'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
-        'ng2-bootstrap': { main: 'index.js', defaultExtension: 'js' },
+        'ng2-bootstrap': { main: 'bundles/ng2-bootstrap.umd.min.js', defaultExtension: 'js' },
         'moment': { main: 'moment.js', defaultExtension: 'js' },
         'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' },
         'jsrsasign': { main: 'lib/jsrsasign.js', defaultExtension: 'js' }
     };
     var meta = {
-        'pouchdb': { format: 'cjs' }
+        'pouchdb': { format: 'cjs' },
+        'ng2-bootstrap': { format: 'amd' }
     }
     var ngPackageNames = [
         'common',
