@@ -193,4 +193,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         //this.mediaObject.volume = this.volume / 100;
         this.playerService.setVolume(this.volume);
     }
+    round(nr:number) {
+        return Math.floor(nr);
+    }
 }
