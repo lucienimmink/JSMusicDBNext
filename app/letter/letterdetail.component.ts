@@ -39,7 +39,7 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
     this.coreletter = this.core.letters[this.letter];
     if (this.coreletter) {
       this.pathService.announcePage('JSMusicDB Next', this.coreletter);
-      this.artists = this.coreletter.sortAndReturnArtistsBy('name', 'asc');
+      this.artists = this.coreletter.sortAndReturnArtistsBy('sortName', 'asc');
     }
   }
   onSelect(artist: any) {

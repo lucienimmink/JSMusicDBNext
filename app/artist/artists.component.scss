@@ -44,6 +44,14 @@ h4:after {
 }
 .container-longlist .text-wrapper {
   float: left;
+  width: calc(100% - 70px);
+
+  .text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 .container-longlist h4 {
   border-bottom: 1px solid rgba(0,120,215,1);

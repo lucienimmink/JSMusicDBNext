@@ -48,6 +48,8 @@ export class ArtistsComponent implements OnInit, OnDestroy {
             } else {
                 c.cummlativeLength[index] = letterLength;
             }
+            // sort artists by sortName
+            letter.sortArtistsBy('sortName', 'asc');
         });
     }
     ngOnDestroy() {

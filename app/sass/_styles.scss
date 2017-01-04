@@ -190,11 +190,11 @@ a {
 
     ol {
         list-style: none;
-        padding: 5vh 5vw;
+        padding: 3vh 3vw;
         margin: 0;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-content: flex-start;
         align-items: stretch;
         display: flex;
@@ -225,7 +225,8 @@ a {
 }
 .jumpList-years li {
     font-size: 1.4em;
-    width: 17vw;
+    width: 18vw;
+    margin: 5px 0 0 0;
     @include musicdb-respond-min-width(sm) {
         font-size: 1.5em;
     }

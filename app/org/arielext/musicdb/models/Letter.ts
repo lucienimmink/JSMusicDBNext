@@ -26,7 +26,7 @@ export default class Letter {
     var f = name.toUpperCase();
     f = _.trim(f);
     if (_.startsWith(f, s)) {
-      f = f.substring(4);
+      f = f.substring(s.length);
     }
     return this.groupIfSpecialChar(f.substr(0, 1));
   }
@@ -36,7 +36,7 @@ export default class Letter {
     }
     return c;
   }
-  sortArtistsBy(sortkey: string = 'name', direction: string = 'asc'): void {
+  sortArtistsBy(sortkey: string = 'sortName', direction: string = 'asc'): void {
     if (sortkey === 'albums') {
       this.artists.sort((a,b) => {
         	if (a.albums.length > b.albums.length) {

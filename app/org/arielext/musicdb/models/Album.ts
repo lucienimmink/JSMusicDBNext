@@ -9,7 +9,7 @@ export default class Album {
   tracks:Array<Track> = [];
   discs:Array<any> = [];
   sortedDiscs:Array<any> = [];
-  year:number;
+  year:any;
   art:string;
   modified:number = 0;
 
@@ -19,6 +19,11 @@ export default class Album {
       this.sortName = this.name.toUpperCase();
       this.year = json.year;
       this.modified = json.modified;
+
+      // strip month/day from universal date strings
+      if (this.year && this.year.indexOf('-') !== -1) {
+        this.year = this.year.split('-')[0];
+      }
     }
   }
   url() {

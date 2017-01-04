@@ -27,7 +27,7 @@ export default class Artist {
     var f = name.toUpperCase();
     f = _.trim(f);
     if (_.startsWith(f, s)) {
-      f = f.substring(4);
+      f = f.substring(s.length);
     }
     return f;
   }
