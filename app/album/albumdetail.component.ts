@@ -86,6 +86,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             if (list) {
                 list.forEach(item => {
                     let playlist = new Playlist();
+                    playlist.isOwn = true;
                     playlist.name = item.name;
                     playlist.tracks = item.tracks;
 

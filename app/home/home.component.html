@@ -2,13 +2,6 @@
   <div class="container" *ngIf="recentlyListenedTracks && username">
     <div class="row">
       <div class="col-xs-24">
-        <div class="progress-bar" *ngIf="loading">
-          <div class="progress-circle"></div>
-          <div class="progress-circle"></div>
-          <div class="progress-circle"></div>
-          <div class="progress-circle"></div>
-          <div class="progress-circle"></div>
-        </div>
         <div *ngIf="recentlyListenedTracks.length > 0">
           <h4 sticky class="header-seperator">Recently listened</h4>
           <ol class="list-items">

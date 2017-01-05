@@ -89,6 +89,10 @@ export class HomeComponent implements OnDestroy {
             this.startPolling();
         }
         this.recentlyAdded = this.core.getLatestAdditions();
+        let cachedlist = localStorage.getItem('cached-recently-listened');
+        if (cachedlist) {
+            this.recentlyListenedTracks = JSON.parse(cachedlist);
+        }
     }
 
     ngOnDestroy() {
@@ -157,6 +161,8 @@ export class HomeComponent implements OnDestroy {
         });
         if (this.recentlyListenedTracks !== this.newListenedTracks) {
             this.recentlyListenedTracks = this.newListenedTracks;
+            let cachedlist = JSON.stringify(this.newListenedTracks);
+            localStorage.setItem('cached-recently-listened', cachedlist);
         }
         this.loading = false;
     }

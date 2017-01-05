@@ -87,7 +87,7 @@ export class PlaylistsComponent implements OnInit {
                 list.forEach(item => {
                     let playlist = new Playlist();
                     playlist.name = item.name;
-                    //playlist.tracks =
+                    playlist.isOwn = true;
                     item.tracks.forEach(id => {
                         let track:Track = this.core.getTrackById(id);
                         if (track && track.title) {

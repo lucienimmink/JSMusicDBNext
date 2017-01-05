@@ -205,7 +205,7 @@ export class musicdbcore {
                 ret = track;
             }
         });
-        console.log(`search for track with id ${id} yieled: `, ret);
+        //console.log(`search for track with id ${id} yieled: `, ret);
         return ret;
     }
     getArtistByName(artistName:string): Artist {
