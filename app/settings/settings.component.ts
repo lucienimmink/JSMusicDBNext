@@ -39,6 +39,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private settings: Settings;
     private hasBeenReloading: boolean = false;
 
+    private visualisation: boolean = this.booleanState('visualisation-state');
+
     private themeForm: NgForm;
     @ViewChild('themeForm') currentForm: NgForm;
     private theme: string;
@@ -125,6 +127,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.manualScrobbling = !this.manualScrobbling;
         localStorage.setItem('manual-scrobble-state', this.manualScrobbling.toString());
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
+    }
+    toggleVisualisation() {
+        this.visualisation = !this.visualisation;
+        localStorage.setItem('visualisation-state', this.visualisation.toString());
     }
     scrobbleNow() {
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));

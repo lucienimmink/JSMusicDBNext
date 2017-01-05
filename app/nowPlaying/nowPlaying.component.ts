@@ -39,6 +39,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private showVolumeWindow: boolean = false;
     private volume:number = 100;
 
+    private showVisualisation: boolean = this.booleanState('visualisation-state');
+
     @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
     constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router, private lastFMService:LastFMService, private animationService:AnimationService) {
@@ -77,6 +79,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             document.getElementsByTagName('body')[0].addEventListener('mousemove', this.drag);
             document.getElementsByTagName('body')[0].addEventListener('mouseup', this.stopDrag);
         }
+        
     }
     ngOnInit() {
         let c = this;
@@ -91,6 +94,15 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             } catch (e) {}
         }, 250);
     }
+
+    private booleanState(key: string): boolean {
+        let raw = localStorage.getItem(key);
+        if (raw && raw === 'true') {
+            return true;
+        }
+        return false;
+    }
+
     setTrack() {
         let c = this;
         setTimeout(function () {

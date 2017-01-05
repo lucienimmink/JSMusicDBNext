@@ -42,10 +42,23 @@
     transition: all 0.3s ease-out;
     opacity: 1;
     will-change: transform, opacity;
+
+    canvas {
+        display: none;
+    }
 }
 @media screen and (min-width: 768px) {
     #nowPlaying .image-wrapper {
         height: calc(100% - 165px);
+
+        canvas {
+            display: inline-block;
+            position: absolute;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 30px);
+            bottom: 20px;
+        }
     }
 }
 #nowPlaying .image-wrapper div.current-album-art {

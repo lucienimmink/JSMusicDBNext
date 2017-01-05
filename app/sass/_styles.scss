@@ -361,3 +361,8 @@ input.form-control:focus, textarea.form-control:focus {
     background-color: $background-color;
     
 }
+
+canvas {
+    width: 900px;
+    display: none;
+}

@@ -42,11 +42,11 @@ export class PlayerComponent implements OnDestroy {
     private isMobile: boolean = false;
 
     private showVolumeWindow: boolean = false;
-    private volume:number = 100;
+    private volume: number = 100;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private pathService:PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
+    constructor(private pathService: PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 this.playlist = playerData.playlist;
@@ -59,8 +59,9 @@ export class PlayerComponent implements OnDestroy {
                 this.setTrack(playerData.position);
             }
         )
-        this.mediaObject = new Audio();
+        this.mediaObject = document.querySelector('audio');
         let c = this;
+        this.mediaObject.crossOrigin = "anonymous";
         this.mediaObject.addEventListener('ended', function () {
             c.next();
         });
@@ -109,7 +110,49 @@ export class PlayerComponent implements OnDestroy {
         if (navigator.userAgent.indexOf('Mobi') !== -1 || navigator.userAgent.indexOf('Edge/') !== -1) {
             this.isMobile = true; // treat edge always as mobile
         }
+
+        if (!this.isMobile) {
+            // lets only handle these calculations on desktop grade devices.
+            var ctx = document.querySelector('canvas').getContext("2d");
+
+            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            var javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
+            javascriptNode.connect(audioCtx.destination);
+
+            var analyser = audioCtx.createAnalyser();
+            var source = audioCtx.createMediaElementSource(this.mediaObject);
+
+            var analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+            var bufferLength = analyser.frequencyBinCount;
+            source.connect(analyser);
+            analyser.connect(javascriptNode);
+
+            source.connect(audioCtx.destination);
+
+            const WIDTH = 300;
+            const HEIGHT = 150;
+
+            javascriptNode.onaudioprocess = function () {
+                var ctx = document.querySelector('canvas').getContext("2d");
+                var dataArray = new Uint8Array(bufferLength);
+                analyser.getByteFrequencyData(dataArray);
+                ctx.clearRect(0, 0, WIDTH, HEIGHT);
+                var barWidth = Math.floor((WIDTH / bufferLength) * 2.5);
+                var barHeight;
+                var x = 0;
+
+                for (var i = 0; i < bufferLength; i++) {
+                    barHeight = dataArray[i] * 1.17;
+                    ctx.fillStyle = `rgb(0,${Math.floor(barHeight * 0.47)}, ${Math.floor(barHeight * 0.84)})`
+                    ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
+                    x += barWidth + 1;
+                }
+            };
+        }
     }
+
+
     setTrack(position: any) {
         let c = this;
         setTimeout(function () {
@@ -149,7 +192,7 @@ export class PlayerComponent implements OnDestroy {
         if (current) {
             let c = this;
             let core = this.coreService.getCore();
-            let list:Array<Track> = [];
+            let list: Array<Track> = [];
             _.each(current.ids, function (id) {
                 let track = core.tracks[id];
                 list.push(track);
