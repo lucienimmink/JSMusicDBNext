@@ -113,7 +113,15 @@ export class PlayerComponent implements OnDestroy {
 
         if (!this.isMobile) {
             // lets only handle these calculations on desktop grade devices.
-            var ctx = document.querySelector('canvas').getContext("2d");
+            let canvas = document.querySelector('canvas');
+            let WIDTH = canvas.offsetWidth;
+            let HEIGHT = canvas.offsetHeight;
+
+            // set canvas defaults
+            
+            canvas.width = WIDTH;
+            canvas.height = HEIGHT;
+            var ctx = canvas.getContext("2d");
 
             var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             var javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
@@ -130,21 +138,24 @@ export class PlayerComponent implements OnDestroy {
 
             source.connect(audioCtx.destination);
 
-            const WIDTH = 300;
-            const HEIGHT = 150;
-
             javascriptNode.onaudioprocess = function () {
-                var ctx = document.querySelector('canvas').getContext("2d");
+                let canvas = document.querySelector('canvas');
+                WIDTH = canvas.offsetWidth;
+                HEIGHT = canvas.offsetHeight;
+                canvas.width = WIDTH;
+                canvas.height = HEIGHT;
+                var ctx = canvas.getContext("2d");
                 var dataArray = new Uint8Array(bufferLength);
                 analyser.getByteFrequencyData(dataArray);
                 ctx.clearRect(0, 0, WIDTH, HEIGHT);
                 var barWidth = Math.floor((WIDTH / bufferLength) * 2.5);
                 var barHeight;
                 var x = 0;
+                var y = (HEIGHT / 150) * 1.17;
 
                 for (var i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] * 1.17;
-                    ctx.fillStyle = `rgb(0,${Math.floor(barHeight * 0.47)}, ${Math.floor(barHeight * 0.84)})`
+                    barHeight = dataArray[i] * y;
+                    ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
                     ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
                     x += barWidth + 1;
                 }
