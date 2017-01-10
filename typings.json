@@ -2,11 +2,11 @@
   "globalDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160914114559",
     "moment": "registry:dt/moment#2.11.1+20161010105546",
-    "node": "registry:dt/node#6.0.0+20170106143713",
+    "node": "registry:dt/node#6.0.0+20170109183608",
     "pouchdb": "registry:dt/pouchdb#5.4.4+20160916155957",
     "service_worker_api": "registry:dt/service_worker_api#0.0.0+20170102221807"
   },
   "dependencies": {
-    "lodash": "registry:dt/lodash#4.14.0+20170106153921"
+    "lodash": "registry:dt/lodash#4.14.0+20170109180102"
   }
 }

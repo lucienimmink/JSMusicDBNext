@@ -7,11 +7,7 @@
     bottom: 0;
     overflow: hidden;
 }
-@media screen and (min-width: 768px) {
-    #nowPlaying {
-        top: 100px;
-    }
-}
+
 #nowPlaying .top, #nowPlaying .bottom {
     transition: 0.3s ease-out;
     position: absolute;
@@ -49,7 +45,7 @@
 }
 @media screen and (min-width: 768px) {
     #nowPlaying .image-wrapper {
-        height: calc(100% - 165px);
+        height: calc(100% - 175px);
 
         canvas {
             display: inline-block;
@@ -59,6 +55,11 @@
             height: calc(100% - 30px);
             bottom: 20px;
         }
+    }
+}
+@media screen and (min-width: 1200px) {
+    #nowPlaying .image-wrapper {
+        height: calc(100% - 115px);
     }
 }
 #nowPlaying .image-wrapper div.current-album-art {
@@ -95,6 +96,17 @@
 }
 #nowPlaying .icons {
     text-align: center;
+}
+@media screen and (min-width: 1200px) {
+    #nowPlaying .icons {
+        top: -60px;
+        position: relative;
+        pointer-events: none;
+
+        > div {
+            pointer-events: all;
+        }
+    }
 }
 #nowPlaying .icons button {
     display: inline-block;
@@ -163,6 +175,11 @@ footer.hidePlayer {
 
 #nowPlaying.slided .top {
     transform: translateY(calc(-100% + 185px));
+}
+@media screen and (min-width: 1200px) {
+    #nowPlaying.slided .top {
+        transform: translateY(calc(-100% + 125px));
+    }
 }
 #nowPlaying.slided .top .image-wrapper {
     opacity: 0;
