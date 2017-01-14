@@ -98,6 +98,12 @@ gulp.task('copy-global', function (cb) {
     return gulp.src('./global/**/*')
         .pipe(gulp.dest('./target/global/'));
 });
+
+gulp.task('copy-global-dev', function (cb) {
+    return gulp.src('./global/**/*')
+        .pipe(gulp.dest('./dist/global/'));
+});
+
 gulp.task('copy-fonts', function (cb) {
     return gulp.src('./node_modules/winstrap/dist/fonts/**/*')
         .pipe(gulp.dest('./target/fonts/'));
