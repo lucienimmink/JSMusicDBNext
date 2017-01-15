@@ -134,11 +134,10 @@ export class PlaylistsComponent implements OnInit {
     extractTracks(data: Array<any>): any {
         let tmpPlaylist: Playlist = new Playlist();
         tmpPlaylist.name = "Loved tracks on Last.FM";
-        let c = this;
-        _.each(data, function (line) {
+        data.map((line) => {
             let artistName: string = line.artist.name;
             let trackName: string = line.name;
-            let track: any = c.core.getTrackByArtistAndName(artistName, trackName);
+            let track: any = this.core.getTrackByArtistAndName(artistName, trackName);
             if (track) {
                 tmpPlaylist.tracks.push(track);
             }

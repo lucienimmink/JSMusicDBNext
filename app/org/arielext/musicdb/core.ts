@@ -187,10 +187,13 @@ export class musicdbcore {
         let coreArtist = this.artists[artist.sortName];
         let ret: Track = null;
         if (coreArtist) {
-            _.each(coreArtist.albums, function (album) {
-                _.each(album.tracks, function (track) {
+            coreArtist.albums.some((album) => {
+                album.tracks.some((track) => {
                     if (track.title && (track.title.toLowerCase() === trackName.toLowerCase())) {
-                        ret = track;
+                        if (!ret) {
+                            ret = track;
+                        }
+                        return true; // break out of the some itterator
                     }
                 });
             });
