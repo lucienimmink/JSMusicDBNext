@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { AlbumArtService } from './albumart.service';
+import { AlbumArtObject } from './AlbumArt';
 import * as PouchDB from 'pouchdb';
 
 const NOIMAGE = 'global/images/no-cover.png';
@@ -15,7 +16,7 @@ let arttable = new PouchDB('art');
     providers: [AlbumArtService]
 })
 export class AlbumArt {
-    public albumart: any = {}
+    public albumart: AlbumArtObject = new AlbumArtObject();
     @Input() album: Album;
     @Input() track: Track;
 
@@ -25,10 +26,10 @@ export class AlbumArt {
     private arttable = arttable;
 
     constructor(private albumArtService: AlbumArtService) {
-        this.albumart = {
-            url: NOIMAGE,
-            name: 'unknown album'
-        }
+        const art = new AlbumArtObject();
+        art.name = 'unknown album';
+        art.url = NOIMAGE;
+        this.albumart = art;
         // TODO: add listener for when we switch between 2 pages while both pages are album detail pages.
     }
 

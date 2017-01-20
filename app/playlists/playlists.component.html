@@ -14,8 +14,16 @@
                     </a>
                 </li>
             </ul>
-            <button class="btn btn-inline btn-link" tooltip="Create a new playlist" triggers="hover" placement="right"
-                (click)="addPlaylist()"><i class="glyph glyph-add"></i></button>
+            <div class="entity-list entity-list-add-item-button" [ngClass]="{'theme-alt': theme === 'dark'}">
+                <a class="entity-list-item" (click)="addPlaylist()">
+                    <div class="item-icon">
+                        <span class="glyph glyph-add"></span>
+                    </div>
+                    <div class="item-content-primary">
+                        <div class="content-text-primary">Create playlist</div>
+                    </div>
+                </a>
+            </div>
         </div>
         <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="loading">
             <div class="progress-bar">
@@ -47,7 +55,8 @@
                         <a routerLink="/albums"><span class="glyph glyph-music-album"></span> album</a>.
                     </p>
                     <p>Tap the <span class="glyph glyph-add"></span> on the active track to add it to a playlist (for example
-                        {{playlist.name}}).</p>
+                        {{playlist.name}}).
+                    </p>
                 </div>
             </div>
         </div>
@@ -71,7 +80,8 @@
     </div>
 </div>
 
-<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}" [config]="{backdrop: false}">
+<div bsModal #addModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}"
+    [config]="{backdrop: false}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -97,7 +107,8 @@
     </div>
 </div>
 
-<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}" [config]="{backdrop: false}">
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'theme-alt': theme === 'dark'}"
+    [config]="{backdrop: false}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

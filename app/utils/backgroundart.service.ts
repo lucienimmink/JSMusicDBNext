@@ -1,91 +1,49 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, RequestOptionsArgs, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Observable";
-import * as _ from 'lodash';
 
-const NOIMAGE = 'global/images/no-cover.png';
+import { LastFMImageRetriever } from './art/LastFMImageRetriever';
+import { SpotifyImageRetriever } from './art/SpotifyImageRetriever';
 
 @Injectable()
 export class BackgroundArtService {
 
-  private albumartUrl = 'https://api.spotify.com/v1/search?q=album:{1}+artist:{0}&type=album&limit=1';
-  private artistartUrl = 'https://api.spotify.com/v1/search?q=artist:{0}&type=artist&limit=1';
+  private lastFMImageRetriever: LastFMImageRetriever;
+  private spotifyImageRetriever: SpotifyImageRetriever;
 
-  constructor(private http: Http) { }
+  constructor(http: Http) {
+    this.lastFMImageRetriever = new LastFMImageRetriever(http);
+    this.spotifyImageRetriever = new SpotifyImageRetriever(http);
+  }
+
+  private extractInfo(media:any): any {
+    let artist = '';
+    let album = ''
+    let type = 'artist';
+    if (media.trackArtist && media.album.artist.isCollection) {
+      artist = media.trackArtist;
+    } else if (media.artist) {
+      artist = media.artist.albumArtist || media.artist.name;
+      album = media.name || media.album.name;
+      type = 'album';
+    } else {
+      artist = media.albumArtist || media.name;
+    }
+    return {
+      artist,
+      album,
+      type
+    }
+  }
 
   getMediaArt(media: any): Observable<any[]> {
-    let url = '';
-    let cachekey: string = '';
-    if (media.trackArtist && media.album.artist.isCollection) {
-      // show artist art for a track in a collection
-      url = this.artistartUrl.replace('{0}', encodeURIComponent(media.trackArtist));
-      cachekey = media.trackArtist;
-    } else if (media.artist) {
-      // this is a track ór an album
-      url = this.albumartUrl.replace('{1}', encodeURIComponent(media.name || media.album.name)).replace('{0}', encodeURIComponent(media.artist.albumArtist || media.artist.name));
-      cachekey = (media.artist.albumArtist || media.artist.name) + '-' + (media.name || media.album.name);
-    } else {
-      // this is an artist
-      url = this.artistartUrl.replace('{0}', encodeURIComponent(media.albumArtist || media.name));
-      cachekey = (media.albumArtist || media.name);
-    }
-    return this.http.get(url)
-        .map(this.extractData)
-        .catch(this.handleError);
+    let info = this.extractInfo(media);
+    //return this.spotifyImageRetriever.getMediaArt(info.artist, info.album, info.type);
+    return this.lastFMImageRetriever.getMediaArt(info.artist, info.album, info.type);
   }
 
   getMediaArtFromLastFm(media: any): Observable<any> {
-    let urlSearchParams: URLSearchParams = new URLSearchParams();
-    urlSearchParams.set('method', 'artist.getinfo');
-    urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
-    urlSearchParams.set('artist', media.trackArtist || media.albumArtist || media.name);
-    urlSearchParams.set('format', 'json');
-    urlSearchParams.set('autoCorrect', 'true');
-
-    if (media.artist && ((media.trackArtist) ? !media.album.artist.isCollection : true)) {
-      // track/album
-      urlSearchParams.set('method', 'album.getinfo');
-      urlSearchParams.set('artist', (media.trackArtist) ? media.trackArtist : (media.artist.albumArtist || media.artist.name));
-      urlSearchParams.set('album', media.name || media.album.name);
-    }
-    let query: RequestOptionsArgs = {
-      search: urlSearchParams
-    };
-
-    return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
-      .map(this.extractLastFM)
-      .catch(this.handleError);
-  }
-
-  private extractData(res: Response): string {
-    let json = res.json();
-    if (json && json.albums && json.albums.items && json.albums.items.length > 0 && json.albums.items[0].images[0]) {
-      return (json.albums.items[0].images[0].url || NOIMAGE);
-    } else if (json && json.artists && json.artists.items && json.artists.items.length > 0 && json.artists.items[0].images[0]) {
-      return (json.artists.items[0].images[0].url || NOIMAGE);
-    }
-    return NOIMAGE;
-  }
-  private extractLastFM(res: Response): string {
-    let json = res.json();
-    let image = NOIMAGE;
-    if (json && json.album) {
-      _.each(json.album.image, function (e) {
-        if (e.size === "mega") {
-          image = e["#text"];
-        }
-      });
-    } else if (json && json.artist) {
-      _.each(json.artist.image, function (e) {
-        if (e.size === "mega") {
-          image = e["#text"];
-        }
-      });
-    }
-    return image || NOIMAGE;
-  }
-
-  private handleError(error: any) {
-    return Observable.throw(NOIMAGE);
+    let info = this.extractInfo(media);
+    return this.lastFMImageRetriever.getMediaArt(info.artist, info.album, info.type);
   }
 }

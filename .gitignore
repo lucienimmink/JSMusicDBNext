@@ -5,6 +5,7 @@ typings
 stubs
 bundles
 aot
+debug.log
 
 target/css
 target/fonts
