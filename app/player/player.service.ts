@@ -26,6 +26,9 @@ export class PlayerService {
 
     private lastfmUserName: string = localStorage.getItem('lastfm-username'); // should be subscriber?
 
+    private hideVolumeWindowAsSource = new Subject<any>();
+    public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
+
     constructor(private lastFMService: LastFMService) { };
 
     setPosition(position: number) {
@@ -176,5 +179,8 @@ export class PlayerService {
     setVolume(volume:number):void {
         this.volume = volume;
         this.volumeSource.next(this.volume);
+    }
+    hideVolumeControl():void {
+        this.hideVolumeWindowAsSource.next(true);
     }
 }

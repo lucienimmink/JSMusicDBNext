@@ -24,6 +24,7 @@ export class PlayerComponent implements OnDestroy {
     private subscription2: Subscription;
     private subscription3: Subscription;
     private subscription4: Subscription;
+    private subscription5: Subscription;
     private playlist: any;
     private trackIndex: any;
     private track: Track;
@@ -59,6 +60,9 @@ export class PlayerComponent implements OnDestroy {
                 this.setTrack(playerData.position);
             }
         )
+        this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
+            this.showVolumeWindow = false;
+        });
         this.mediaObject = document.querySelector('audio');
         let c = this;
         this.mediaObject.crossOrigin = "anonymous";
@@ -304,7 +308,10 @@ export class PlayerComponent implements OnDestroy {
             data => { }
         )
     }
-    toggleVolumeWindow() {
+    toggleVolumeWindow(e:Event) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        e.preventDefault();
         this.showVolumeWindow = !this.showVolumeWindow;
     }
     onprogress() {

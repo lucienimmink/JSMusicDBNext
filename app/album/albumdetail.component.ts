@@ -77,9 +77,6 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
                 this.album.sortedDiscs.push(this.album.discs[disc.id]);
             });
             this.pathService.announcePath({ artist: this.album.artist, album: this.album, letter: this.album.artist.letter });
-        } else {
-            console.warn(`Album not found for '${this.artistName}|${this.albumName}', ${this.core.albums[this.artistName + '|' + this.albumName]}`);
-            console.info(this.core.albums);
         }
 
         // TODO this should a call from the backend

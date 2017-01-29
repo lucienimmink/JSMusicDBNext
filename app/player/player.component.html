@@ -18,7 +18,7 @@
                 <a class="btn btn-link" (click)="prev()"><span class="glyph glyph-previous"></span> </a>
                 <a class="btn btn-link" (click)="togglePlayPause()"><i class="glyph glyph-pause" *ngIf="isPlaying"></i><i class="glyph glyph-play" *ngIf="isPaused"></i></a>
                 <a class="btn btn-link" (click)="next()"><span class="glyph glyph-next"></span> </a>
-                <a class="btn btn-link hidden-xs hidden-sm" (click)="toggleVolumeWindow()"><span class="glyph" [ngClass]="{'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span></a>
+                <a class="btn btn-link hidden-xs hidden-sm" (click)="toggleVolumeWindow($event)"><span class="glyph" [ngClass]="{'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span></a>
                 <a class="btn btn-link hidden-xs hidden-sm btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}"><i class="glyph glyph-star-outline"></i></a>
                 <a class="btn btn-link hidden-xs hidden-sm btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}"><i class="glyph glyph-shuffle"></i></a>
             </div>

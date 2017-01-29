@@ -53,6 +53,9 @@ export class AppComponent implements OnDestroy {
     this.coreService.getCore().parseSourceJson(data);
     this.isLoading = false;
   }
+  hideVolumeWindow(): void {
+    this.playerService.hideVolumeControl();
+  }
 
   onExternalPrev(event: Event): void {
     this.playerService.prev();
