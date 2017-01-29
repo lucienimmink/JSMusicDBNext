@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
+import Album from './../org/arielext/musicdb/models/album';
 import Track from './../org/arielext/musicdb/models/track';
 
 import { CoreService } from './../core.service';
@@ -23,7 +24,7 @@ import { ConfigService } from './../utils/config.service';
 export class AlbumDetailComponent implements OnInit, OnDestroy {
     private albumName: string = '';
     private artistName: string = '';
-    private album: any;
+    private album: Album;
     private core: musicdbcore;
     private subscription: Subscription;
     private albumart: AlbumArt;
@@ -131,5 +132,12 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         // TODO: this should be a call to the backend
         localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
         this.editModal.hide();
+    }
+    totalRunningTime(): number {
+        let total = 0;
+        this.album.tracks.forEach((track) => {
+            total += track.duration;
+        });
+        return total;
     }
 }
