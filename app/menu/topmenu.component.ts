@@ -134,4 +134,10 @@ export class TopMenuComponent implements OnDestroy {
             this.toggleMenu();
         }
     }
+    selectArtist(path:any): void {
+        this.router.navigate(['letter', path.artist.letter.escapedLetter, 'artist', path.artist.sortName]);
+    }
+    selectAlbum(path:any): void {
+        this.router.navigate(['letter', path.album.artist.letter.escapedLetter, 'artist', path.album.artist.sortName, 'album', path.album.sortName]);
+    }
 }
