@@ -1,8 +1,8 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { BackgroundArtService } from "./backgroundart.service";
 
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
 
@@ -35,7 +35,7 @@ export class BackgroundArtDirective {
     constructor(el: ElementRef, private backgroundArtService: BackgroundArtService) {
         this.el = el.nativeElement;
         // this.loadImage(); // always load image
-        setTimeout(()=> {
+        setTimeout(() => {
             this.loadImage();
         }, 100);
     }
@@ -52,7 +52,7 @@ export class BackgroundArtDirective {
             } else if (this.media.trackArtist) {
                 key = `art-${this.media.trackArtist}-${this.media.album.name}`;
             }
-            this.arttable.get(key, function (err:any, data:any) {
+            this.arttable.get(key, function (err: any, data: any) {
                 if (data) {
                     c.setImage(data.url);
                 } else {
@@ -77,12 +77,15 @@ export class BackgroundArtDirective {
             dsm = dsm + '/data/image-proxy?url=';
         }
         if (!this.loaded || this.hasClassName('always-replace')) {
-            if (data === NOIMAGE || data === '') {
+            if (data === NOIMAGE || data === '' || !data) {
                 this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
                     data => {
-                        if (data !== NOIMAGE) {
+                        if (data && data !== NOIMAGE) {
                             this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`;
                         } else {
+                            if (!data) {
+                                data = NOIMAGE;
+                            }
                             this.el.style.backgroundImage = `url(${data})`;
                         }
 
@@ -93,7 +96,7 @@ export class BackgroundArtDirective {
                         if (this.media.artist) {
                             item._id = `art-${this.media.artist.name}-${this.media.name}`
                         }
-                        this.arttable.put(item, function (err:any, response:any) {
+                        this.arttable.put(item, function (err: any, response: any) {
                             // boring
                         });
                     },
@@ -109,7 +112,7 @@ export class BackgroundArtDirective {
                 if (this.media.artist) {
                     item._id = `art-${this.media.artist.name}-${this.media.name}`
                 }
-                this.arttable.put(item, function (err:any, respons:any) {
+                this.arttable.put(item, function (err: any, respons: any) {
                     // boring
                 });
             }

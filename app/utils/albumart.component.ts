@@ -75,13 +75,16 @@ export class AlbumArt {
         if (dsm) {
             dsm = dsm + '/data/image-proxy?url=';
         }
-        if (data === 'global/images/no-cover.png' || data === '') {
+        if (data === 'global/images/no-cover.png' || data === '' || !data) {
             this.albumArtService.getMediaArtFromLastFm(this.searchArtist, this.searchAlbum, this.searchType)
                 .subscribe(
                 data => {
-                    if (data !== 'global/images/no-cover.png') {
+                    if (data && data !== 'global/images/no-cover.png') {
                         this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
                     } else {
+                        if (!data) {
+                            data = NOIMAGE;
+                        }
                         this.albumart.url = data;
                     }
                     let item = {
