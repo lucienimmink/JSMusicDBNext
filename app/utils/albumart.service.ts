@@ -17,8 +17,8 @@ export class AlbumArtService {
   }
 
   getAlbumArt(artist: string, album: string, type: string): Observable<any[]> {
-    //return this.spotifyImageRetriever.getAlbumArt(artist, album, type);
-    return this.lastFMImageRetriever.getMediaArt(artist, album, type);
+    return this.spotifyImageRetriever.getAlbumArt(artist, album, type);
+    //return this.lastFMImageRetriever.getMediaArt(artist, album, type);
   }
 
   getMediaArtFromLastFm(artist: string, album: string, type: string): Observable<any> {
