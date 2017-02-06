@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef  } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef } from "@angular/core";
 import { musicdbcore } from './org/arielext/musicdb/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,7 +29,7 @@ export class AppComponent implements OnDestroy {
   private path: string = "JSMusicDB Next";
   private isLoading: boolean = false;
   private viewContainerRef: ViewContainerRef;
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService, viewContainerRef:ViewContainerRef) {
+  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService, viewContainerRef: ViewContainerRef) {
 
     if (this.loginService.hasToken) {
       this.isLoading = true;
@@ -37,6 +37,21 @@ export class AppComponent implements OnDestroy {
     }
     this.configService.applyTheme();
     this.viewContainerRef = viewContainerRef;
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.onmessage = (evt) => {
+        var message = JSON.parse(evt.data);
+        if (message.type === 'refresh') {
+          window.caches.open('v1').then((cache) => {
+            return cache.match(message.url);
+          }).then((response) => {
+            return response.json();
+          }).then((data) => {
+            this.fillCollection(data);
+          })
+        }
+      };
+    }
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

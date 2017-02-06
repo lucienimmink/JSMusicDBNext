@@ -88,6 +88,20 @@ export class AppModule {
                     // registration failed
                     console.log('Registration failed with ' + error);
                 });
+            navigator.serviceWorker.onmessage = (evt) => {
+                var message = JSON.parse(evt.data);
+                if (message.type === 'refresh') {
+                    //this.getCollection();
+                    console.log('collection has been updated in cache');
+                    caches.open('v1').then(function (cache) {
+                        return cache.match(message.url);
+                    }).then(function (response) {
+                        return response.json();
+                    }).then(function (data) {
+                        console.log(data);
+                    })
+                }
+            };
         }
     }
 }
