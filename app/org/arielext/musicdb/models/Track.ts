@@ -13,6 +13,7 @@ export default class Track {
   title: string;
   disc: number;
   number: number;
+  type: string;
   isPlaying:boolean = false;
   isPaused:boolean = false;
   isLoved:boolean = false;
@@ -32,6 +33,7 @@ export default class Track {
       this.disc = json.disc || this.guessBySource(json);
       this.number = json.number;
       this.trackArtist = json.artist;
+      this.type = json.type || 'mp3';
     }
   }
 

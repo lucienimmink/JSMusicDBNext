@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private version: String = VERSION;
     private settings: Settings;
     private hasBeenReloading: boolean = false;
+    private lastParsed: number = Number(localStorage.getItem('lastParsed'));
 
     private visualisation: boolean = this.booleanState('visualisation-state');
 
@@ -101,6 +102,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.lastfmusername = localStorage.getItem("lastfm-username") || '';
         this.connectiondetails = localStorage.getItem('dsm');
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
+        this.lastParsed = Number(localStorage.getItem('lastParsed'));
     }
 
     ngOnDestroy() {

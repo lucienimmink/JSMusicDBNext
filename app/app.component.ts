@@ -47,6 +47,7 @@ export class AppComponent implements OnDestroy {
           }).then((response) => {
             return response.json();
           }).then((data) => {
+            console.log('cache updated');
             this.fillCollection(data);
           })
         }
@@ -65,6 +66,7 @@ export class AppComponent implements OnDestroy {
       );
   }
   fillCollection(data: any): void {
+    localStorage.setItem('lastParsed', new Date().getTime().toString());
     this.coreService.getCore().parseSourceJson(data);
     this.isLoading = false;
   }
