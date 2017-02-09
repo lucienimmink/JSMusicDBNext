@@ -384,3 +384,28 @@ canvas {
     width: 900px;
     display: none;
 }
+
+.icon-stack {
+    position: relative;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    font-size: 1em;
+    vertical-align: top;
+    .stack-text {
+        font-size: .6em;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        top: 1em;
+    }
+    .glyph {
+        font-size: 2em;
+        position: absolute;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+}

@@ -12,6 +12,7 @@ export default class Album {
   year:any;
   art:string;
   modified:number = 0;
+  type:string;
 
   constructor (json:any){
     if (json.album && json.title) {

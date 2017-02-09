@@ -95,6 +95,11 @@ export class musicdbcore {
                 }
                 return 1;
             });
+            if (album.type && album.type !== track.type) {
+                album.type = 'mixed';
+            } else {
+                album.type = track.type;
+            }
 
             // sort all tracks firstly by disc, then by number
             album.tracks.sort(function (a, b) {

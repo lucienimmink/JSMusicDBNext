@@ -1,15 +1,20 @@
 <ol class="list-items">
     <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select(track)" [ngClass]="{'active': track.isPlaying || track.isPaused}">
-        <div class="col-xs-20 col-sm-20 col-md-22 track-info">
+        <div class="col-xs-20 track-info">
             <span *ngIf="!track.isPlaying && track.isPaused"><span class="glyph glyph-pause"></span> </span>
-            <span *ngIf="track.isPlaying && !track.isPaused"><span class="glyph glyph-play"></span> </span>{{track.title}} <a class="btn" (click)="removeFromPlaylist(playlist, track)" *ngIf="playlist.isOwn">
+            <span *ngIf="track.isPlaying && !track.isPaused"><span class="glyph glyph-play"></span> </span>{{track.title}}
+            <a class="btn" (click)="removeFromPlaylist(playlist, track)" *ngIf="playlist.isOwn">
                 <span class="glyph glyph-remove"></span>
             </a><br />
             <span class="small color-type-secondary">
               {{track.trackArtist}} &bull; {{track.album.name}}
             </span>
         </div>
-        <div class="col-xs-4 col-sm-4 col-md-2 text-right">
+        <div class="col-xs-4 text-right">
+            <span class="icon-stack">
+                                        <span class="stack-text">{{track.type}}</span>
+            <i class="glyph glyph-page-outline"></i>
+            </span>
             {{track.duration | timeFormat }}
         </div>
     </li>
