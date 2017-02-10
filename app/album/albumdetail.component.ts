@@ -31,7 +31,8 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private ownPlaylists: Array<Playlist> = [];
     private selectedTrack: Track = null;
     private isSwiping: boolean = false;
-    private theme:string;
+    private theme: string;
+    private isShrunk:boolean = false;
     @ViewChild('editModal') private editModal: ModalDirective;
 
     constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute, private configService: ConfigService) {
@@ -138,5 +139,12 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             total += track.duration;
         });
         return total;
+    }
+    onScroll(event) {
+        if(document.body.scrollTop < 10) {
+            this.isShrunk = false;
+        } else {
+            this.isShrunk = true;
+        }
     }
 }
