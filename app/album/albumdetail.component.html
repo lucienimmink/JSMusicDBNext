@@ -37,12 +37,8 @@
                                 </span>
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-2 text-right">
-                                <span *ngIf="album.type === 'mixed'">
-                                    <span class="icon-stack">
-                                        <span class="stack-text">{{track.type}}</span>
-                                <i class="glyph glyph-page-outline"></i>
-                                </span>
-                                </span> {{track.duration | timeFormat }}
+                                {{track.duration | timeFormat }}
+                                <span *ngIf="album.type === 'mixed'"><br/><span class="small color-type-secondary">{{track.type}}</span></span>
                             </div>
                         </div>
                     </li>
