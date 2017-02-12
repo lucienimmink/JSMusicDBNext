@@ -6,6 +6,7 @@
     z-index: 13;
     height: 50px;
 }
+
 .btn-menu {
     margin: 0;
     min-width: 50px;
@@ -17,16 +18,19 @@
     left: 0;
     background: transparent;
 }
+
 .btn-menu:active {
     box-shadow: none;
     outline: none;
 }
+
 .btn-search {
     position: absolute;
     right: 0;
     top: 0;
     left: auto;
 }
+
 .menu-top form {
     position: absolute;
     left: 10px;
@@ -34,12 +38,15 @@
     right: 50px;
     display: none;
 }
+
 .menu-top form.visible {
     display: block;
 }
+
 .menu-top form input {
     max-width: 100%;
 }
+
 .logo {
     max-width: 50px;
     min-width: 50px;
@@ -47,6 +54,7 @@
     top: -14px;
     left: 10px;
 }
+
 h1 {
     display: inline-block;
     font-size: 30px;
@@ -67,36 +75,47 @@ h1 {
     top: 100px;
     height: calc(100% - 100px);
     z-index: 13;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .side-nav__content li {
     border-left: 5px solid transparent;
     margin: 0;
 }
+
 .side-nav__content li a {
     padding: 20px 20px;
 }
-.side-nav__content li:hover, .side-nav__content li.active {
-    border-left-color: rgba(0,120,215,1);
+
+.side-nav__content li:hover,
+.side-nav__content li.active {
+    border-left-color: rgba(0, 120, 215, 1);
 }
-.side-nav__content li:hover a, .side-nav__content li.active a {
-    color: rgba(0,120,215,1);
+
+.side-nav__content li:hover a,
+.side-nav__content li.active a {
+    color: rgba(0, 120, 215, 1);
     background-color: transparent;
 }
+
 .side-nav__content li a .glyph {
     margin-right: 10px;
     font-size: 1.6em;
     position: relative;
     top: -2px;
 }
-.side-nav__content .search-bar .form-group{
+
+.side-nav__content .search-bar .form-group {
     margin: 0;
     padding: 10px 15px;
 }
+
 .side-nav__content .search-bar .input-group {
     position: relative;
     width: 100%;
 }
+
 .side-nav__content .search-bar .input-group-addon {
     border: 0;
     background: none;
@@ -105,9 +124,12 @@ h1 {
     top: 7px;
     z-index: 3;
 }
-.side-nav__content .search-bar .input-group-addon:focus, .side-nav__content .search-bar .input-group-addon:active {
+
+.side-nav__content .search-bar .input-group-addon:focus,
+.side-nav__content .search-bar .input-group-addon:active {
     outline: none;
 }
+
 .side-nav__content .search-bar:hover {
     border-left-color: transparent;
     background-color: transparent;
