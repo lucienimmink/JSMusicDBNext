@@ -4,7 +4,7 @@ import Track from './models/Track';
 import Letter from './models/Letter';
 import Year from './models/Year';
 import * as _ from "lodash";
-import { Subject }    from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 
 const VERSION: string = "1.0.0";
 
@@ -32,8 +32,28 @@ export class musicdbcore {
     private _latestAdditions: Array<Album> = [];
 
     constructor() {
-        console.log(`Core init ${VERSION}`);
+        console.info(`Core init ${VERSION}`);
 
+    }
+
+    public resetCollection() {
+        this.artists = {};
+        this.albums = {};
+        this.tracks = {};
+        this.letters = {};
+        this.years = {};
+        this.sortedLetters = [];
+        this.sortedAlbums = [];
+
+        this.totals = {
+            artists: 0,
+            albums: 0,
+            tracks: 0,
+            playingTime: 0,
+            parsingTime: 0
+        }
+
+        this._latestAdditions = [];
     }
 
     private instanceIfPresent(core: any, key: any, map: INameToValueMap, obj: Object, excecuteIfNew: Function): any {
@@ -136,7 +156,7 @@ export class musicdbcore {
             track = this.handleTrack(artist, album, track);
         }
     };
-    
+
 
     private parseTree(tree: any): void {
         for (let l in tree) {
@@ -184,8 +204,6 @@ export class musicdbcore {
         this.totals.parsingTime += (new Date().getTime() - start);
         this.coreParsedSource.next(true);
 
-        // console.log(this.years);
-
     }
     getTrackByArtistAndName(artistName: string, trackName: string): Track {
         let artist = new Artist({ name: artistName, dummy: true });
@@ -205,8 +223,8 @@ export class musicdbcore {
         }
         return ret;
     }
-    getTrackById(id:string): Track {
-        let c= this;
+    getTrackById(id: string): Track {
+        let c = this;
         let ret = new Track({});
         _.forEach(this.tracks, function (track) {
             if (track.id === id) {
@@ -216,12 +234,12 @@ export class musicdbcore {
         //console.log(`search for track with id ${id} yieled: `, ret);
         return ret;
     }
-    getArtistByName(artistName:string): Artist {
+    getArtistByName(artistName: string): Artist {
         let artist = new Artist({ name: artistName, dummy: true });
         let coreArtist = this.artists[artist.sortName];
         return coreArtist;
     }
-    getAlbumByArtistAndName(artist:Artist, albumName:string): Album {
+    getAlbumByArtistAndName(artist: Artist, albumName: string): Album {
         let ret = null;
         artist.albums.forEach((album) => {
             //console.log(album.name, albumName);
@@ -231,7 +249,7 @@ export class musicdbcore {
         });
         return ret;
     }
-    getTrackByAlbumAndName(album:Album, trackName:string): Track {
+    getTrackByAlbumAndName(album: Album, trackName: string): Track {
         let ret = null;
         album.tracks.forEach((track) => {
             if (track.title.toLowerCase() === trackName.toLowerCase()) {
@@ -251,7 +269,7 @@ export class musicdbcore {
         });
         return ret;
     }
-    searchArtist(query:string): Array<Artist> {
+    searchArtist(query: string): Array<Artist> {
         let ret = [];
         let artistnames = Object.keys(this.artists);
         artistnames = artistnames.filter(name => {
@@ -264,7 +282,7 @@ export class musicdbcore {
         });
         return ret;
     }
-    searchAlbum(query:string): Array<Album> {
+    searchAlbum(query: string): Array<Album> {
         let c = this;
         let ret = [];
         let albumnames = Object.keys(this.albums);
@@ -279,7 +297,7 @@ export class musicdbcore {
         })
         return ret;
     }
-    searchTrack(query:string): Array<Track> {
+    searchTrack(query: string): Array<Track> {
         let c = this;
         let ret = [];
 
@@ -290,12 +308,12 @@ export class musicdbcore {
         });
         return ret;
     }
-    getLatestAdditions(amount:number = 10): Array<Album> {
+    getLatestAdditions(amount: number = 10): Array<Album> {
         let c = this;
         if (this._latestAdditions.length !== 0) {
             return this._latestAdditions;
         }
-        this.sortedAlbums.sort((a,b) => {
+        this.sortedAlbums.sort((a, b) => {
             if (a.modified > b.modified) {
                 return -1;
             } else if (a.modified < b.modified) {
