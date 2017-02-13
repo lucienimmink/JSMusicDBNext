@@ -6,7 +6,7 @@ import Year from './models/Year';
 import * as _ from "lodash";
 import { Subject } from 'rxjs/Subject';
 
-const VERSION: string = "1.0.0";
+const VERSION: string = "1.1.0";
 
 export class musicdbcore {
 
