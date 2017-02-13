@@ -11,11 +11,8 @@
             </span>
         </div>
         <div class="col-xs-4 text-right">
-            <span class="icon-stack">
-                                        <span class="stack-text">{{track.type}}</span>
-            <i class="glyph glyph-page-outline"></i>
-            </span>
             {{track.duration | timeFormat }}
+            <br/><span class="small color-type-secondary">{{track.type}}</span>
         </div>
     </li>
 </ol>
