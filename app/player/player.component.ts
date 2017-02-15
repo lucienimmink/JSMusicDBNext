@@ -122,7 +122,7 @@ export class PlayerComponent implements OnDestroy {
             let HEIGHT = canvas.offsetHeight;
 
             // set canvas defaults
-            
+
             canvas.width = WIDTH;
             canvas.height = HEIGHT;
             var ctx = canvas.getContext("2d");
@@ -308,7 +308,7 @@ export class PlayerComponent implements OnDestroy {
             data => { }
         )
     }
-    toggleVolumeWindow(e:Event) {
+    toggleVolumeWindow(e: Event) {
         e.stopPropagation();
         e.stopImmediatePropagation();
         e.preventDefault();
@@ -325,7 +325,7 @@ export class PlayerComponent implements OnDestroy {
         this.mediaObject.volume = this.volume / 100;
         this.playerService.setVolume(this.volume) // update the shared volume property
     }
-    jump(e:any): void {
+    jump(e: any): void {
         let clientX = e.clientX || e.changedTouches[0].clientX;
         let left = clientX, perc = (left / document.querySelector('.player').clientWidth);
         let pos = this.track.duration / 1000 * perc;

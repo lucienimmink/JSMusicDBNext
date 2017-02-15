@@ -29,6 +29,7 @@ export class AppComponent implements OnDestroy {
   private path: string = "JSMusicDB Next";
   private isLoading: boolean = false;
   private viewContainerRef: ViewContainerRef;
+  private isPlaying:boolean = false;
   constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService, viewContainerRef: ViewContainerRef) {
 
     if (this.loginService.hasToken) {
@@ -54,6 +55,10 @@ export class AppComponent implements OnDestroy {
         }
       };
     }
+    this.subscription = this.playerService.playlistAnnounced$.subscribe(
+      playerData => {
+        this.isPlaying = true;
+      });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

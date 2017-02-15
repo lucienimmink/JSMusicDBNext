@@ -70,7 +70,6 @@ export class AlbumArt {
     }
 
     ngOnChanges(changes) {
-        console.log(changes);
         this.ngOnInit();
     }
     setImage(data: any) {

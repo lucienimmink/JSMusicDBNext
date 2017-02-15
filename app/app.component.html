@@ -1,4 +1,4 @@
-<div class="container-fluid fixed" (click)="hideVolumeWindow()">
+<div class="container-fluid fixed" (click)="hideVolumeWindow()" [ngClass]="{'isPlaying': isPlaying}">
     <topmenu></topmenu>
 </div>
 <div class="container-fluid fixed" (click)="hideVolumeWindow()">
