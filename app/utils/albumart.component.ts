@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, OnChanges } from "@angular/core";
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { AlbumArtService } from './albumart.service';
@@ -30,7 +30,6 @@ export class AlbumArt {
         art.name = 'unknown album';
         art.url = NOIMAGE;
         this.albumart = art;
-        // TODO: add listener for when we switch between 2 pages while both pages are album detail pages.
     }
 
     ngOnInit() {
@@ -56,7 +55,7 @@ export class AlbumArt {
         }
 
         let c = this;
-        this.arttable.get(key, function (err:any, data:any) {
+        this.arttable.get(key, function (err: any, data: any) {
             if (data) {
                 c.setImage(data.url);
             } else {
@@ -68,7 +67,11 @@ export class AlbumArt {
             }
         });
 
+    }
 
+    ngOnChanges(changes) {
+        console.log(changes);
+        this.ngOnInit();
     }
     setImage(data: any) {
         let dsm = localStorage.getItem('dsm');
@@ -91,7 +94,7 @@ export class AlbumArt {
                         _id: `art-${this.searchArtist}-${this.searchAlbum}`,
                         url: data
                     };
-                    this.arttable.put(item, function (err:any, response:any) {
+                    this.arttable.put(item, function (err: any, response: any) {
                         // boring
                     });
                 },
@@ -103,7 +106,7 @@ export class AlbumArt {
                 _id: `art-${this.searchArtist}-${this.searchAlbum}`,
                 url: data
             };
-            this.arttable.put(item, function (err:any, response:any) {
+            this.arttable.put(item, function (err: any, response: any) {
                 // boring
             });
         }
