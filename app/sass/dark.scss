@@ -1,34 +1,40 @@
 @charset "utf-8";
-
 @import "variables";
-
 $background-color: black;
 $primary-color: white;
-
 $secondary-color: rgba($primary-color, 0.6);
 $disabled-color: rgba($primary-color, 0.2);
 $hover-color: rgba($primary-color, 0.05);
 $tertiary-color: lighten($background-color, 12.5%);
 $forth-color: lighten($background-color, 17.5%);
-
 ::-webkit-input-placeholder {
-   color: darken($primary-color, 20%) !important;
+    color: darken($primary-color, 20%) !important;
 }
+
 :-moz-placeholder {
-   color: darken($primary-color, 20%) !important;
+    color: darken($primary-color, 20%) !important;
 }
+
 ::-moz-placeholder {
-   color: darken($primary-color, 20%) !important;
+    color: darken($primary-color, 20%) !important;
 }
+
 :-ms-input-placeholder {
-   color: darken($primary-color, 20%) !important;
+    color: darken($primary-color, 20%) !important;
 }
-form .theme-alt input.form-control:focus, form .theme-alt textarea.form-control:focus, form .theme-on-img-dark input.form-control:focus, form .theme-on-img-dark textarea.form-control:focus, form.theme-alt input.form-control:focus, form.theme-alt textarea.form-control:focus, form.theme-on-img-dark input.form-control:focus, form.theme-on-img-dark textarea.form-control:focus {
-    background-color:rgba(0,0,0,0.8);
+
+form .theme-alt input.form-control:focus,
+form .theme-alt textarea.form-control:focus,
+form .theme-on-img-dark input.form-control:focus,
+form .theme-on-img-dark textarea.form-control:focus,
+form.theme-alt input.form-control:focus,
+form.theme-alt textarea.form-control:focus,
+form.theme-on-img-dark input.form-control:focus,
+form.theme-on-img-dark textarea.form-control:focus {
+    background-color: rgba(0, 0, 0, 0.8);
     color: #ffffff;
 }
 
 @import "mixins";
 @import "webkit";
-
 @import "styles";

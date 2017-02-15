@@ -167,8 +167,9 @@ a,
     transition: .1s ease-out;
     overflow: hidden;
     text-align: center;
+    text-shadow: 0px 0px 3px black;
     @include musicdb-respond-min-width(sm) {
-        padding: 10px 15px;
+        padding: 10px;
     }
     span {
         display: block;
