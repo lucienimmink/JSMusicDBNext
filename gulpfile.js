@@ -186,7 +186,7 @@ gulp.task('bundle-app', ['inline-templates'], function(cb) {
     var builder = new Builder('', 'dist-systemjs.config.js');
 
     builder
-        .bundle('dist/app/**/*', 'target/js/app.bundle.js', { minify: true })
+        .bundle('dist/app/**/*', 'target/js/app.bundle.js', { minify: true, globalDefs: { DEBUG: false } })
         .then(function() { cb() })
         .catch(function(err) {
             cb(err);
