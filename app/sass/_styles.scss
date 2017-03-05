@@ -264,6 +264,19 @@ textarea.form-control:focus {
     }
 }
 
+.side-nav-xl {
+    position: fixed;
+    left: 0;
+    top: 100px;
+    height: calc(100% - 100px);
+    z-index: 13;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .isPlaying & {
+        height: calc(100% - 100px - 80px);
+    }
+}
+
 .side-nav__container,
 .side-nav-xl {
     background-color: $tertiary-color;
