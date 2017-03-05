@@ -32,6 +32,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private subscription3: Subscription;
     private savePlaylistState: boolean = this.booleanState("save-playlist-state");
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
+    private isContinuesplay: boolean = this.booleanState('continues-play');
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private isReloading: boolean = false;
     private scanperc: number = 0;
@@ -124,6 +125,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     toggleSavePlaylistState() {
         this.savePlaylistState = !this.savePlaylistState;
         localStorage.setItem('save-playlist-state', this.savePlaylistState.toString());
+    }
+    toggleContinuesPlay() {
+        this.isContinuesplay = !this.isContinuesplay;
+        localStorage.setItem('continues-play', this.isContinuesplay.toString());
     }
     toggleManualScrobbling() {
         this.manualScrobbling = !this.manualScrobbling;

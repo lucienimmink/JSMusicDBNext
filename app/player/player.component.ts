@@ -14,6 +14,8 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 import { AnimationService } from './../utils/animation.service';
 import { PathService } from './../utils/path.service';
 
+import { Playlist } from './../playlists/Playlist';
+
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
@@ -25,7 +27,7 @@ export class PlayerComponent implements OnDestroy {
     private subscription3: Subscription;
     private subscription4: Subscription;
     private subscription5: Subscription;
-    private playlist: any;
+    private playlist: Playlist;
     private trackIndex: any;
     private track: Track;
     private currentTrack: Track;
@@ -56,7 +58,7 @@ export class PlayerComponent implements OnDestroy {
                 this.isPlaying = playerData.isPlaying;
                 this.isShuffled = playerData.isShuffled;
                 this.forceRestart = playerData.forceRestart;
-                this.showPlayer = true;
+                this.showPlayer = this.isPaused || this.isPlaying;
                 this.setTrack(playerData.position);
             }
         )
@@ -212,21 +214,15 @@ export class PlayerComponent implements OnDestroy {
                 let track = core.tracks[id];
                 list.push(track);
             });
-            let playlist: Album = {
-                tracks: list,
-                name: 'Current playlist',
-                sortName: 'Current playlist',
-                artist: null,
-                discs: null,
-                year: null,
-                art: null,
-                url: null,
-                sortedDiscs: null,
-                modified: 0
-            }
+
+            let playlist = new Playlist();
+            playlist.tracks = list;
+            playlist.name = "Current Playlist";
+            playlist.isContinues = false;
+
             this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;
-            this.playerService.doPlayAlbum(playlist, current.current, false, current.isShuffled);
+            this.playerService.doPlayPlaylist(playlist, current.current, false, current.isShuffled);
         }
     }
     ngOnDestroy() {
@@ -254,6 +250,14 @@ export class PlayerComponent implements OnDestroy {
         if (this.trackIndex < this.playlist.tracks.length - 1) {
             this.trackIndex++;
             this.playerService.next();
+        } else {
+            if (this.playlist.isContinues) {
+                // generate a new playlist and start playing that one
+                this.trackIndex = 0;
+                this.playerService.nextPlaylist(this.track.album);
+            } else {
+                this.playerService.stop();
+            }
         }
     }
     prev() {

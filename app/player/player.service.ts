@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs/Subject';
+import { musicdbcore } from './../org/arielext/musicdb/core';
+import { CoreService } from './../core.service';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
@@ -29,7 +31,15 @@ export class PlayerService {
     private hideVolumeWindowAsSource = new Subject<any>();
     public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
 
-    constructor(private lastFMService: LastFMService) { };
+    constructor(private lastFMService: LastFMService, private coreService: CoreService) { };
+
+    private booleanState(key: string): boolean {
+        let raw = localStorage.getItem(key);
+        if (raw && raw === 'true') {
+            return true;
+        }
+        return false;
+    }
 
     setPosition(position: number) {
         this.position = position;
@@ -52,6 +62,21 @@ export class PlayerService {
         };
         this.announce();
     }
+    doPlayPlaylist(playlist: Playlist, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
+        if (this.currentTrack) {
+            this.currentTrack.isPaused = false;
+            this.currentTrack.isPlaying = false;
+        }
+        this.currentPlaylist = {
+            playlist: playlist,
+            startIndex: startIndex,
+            isPlaying: this.isPlaying = true,
+            isPaused: this.isPaused = false,
+            isShuffled: this.isShuffled = isShuffled,
+            forceRestart: this.forceRestart = forceRestart
+        }
+        this.announce();
+    }
 
     doPlayTrack(track:Track) {
         if (this.currentTrack) {
@@ -72,6 +97,20 @@ export class PlayerService {
         };
         this.announce();
     }
+
+    nextPlaylist (album:Album): void {
+        if (this.booleanState("continues-play")) {
+            let nextAlbum = this.coreService.getCore().getNextAlbum(album);
+            if (nextAlbum) {
+                this.doPlayAlbum(nextAlbum, 0, true, this.isShuffled);
+            } else {
+                console.warn('no new album found, stopping playback');
+                this.stop();
+            }
+        } else {
+            this.stop();
+        }
+    }
     playlistToString(): string {
         let list: Array<string> = [];
         _.each(this.currentPlaylist.playlist.tracks, function (track: Track) {
@@ -82,6 +121,7 @@ export class PlayerService {
         return JSON.stringify({
             ids: list,
             isShuffled: this.isShuffled,
+            isContinues: this.currentPlaylist.playlist.isContinues,
             current: this.currentPlaylist.startIndex
         });
     }
@@ -106,7 +146,8 @@ export class PlayerService {
         if (this.currentPlaylist) {
             this.currentPlaylist.startIndex++;
             if (this.currentPlaylist.startIndex >= this.currentPlaylist.playlist.length) {
-                this.currentPlaylist.startIndex = this.currentPlaylist.playlist.length - 1;
+                //this.currentPlaylist.startIndex = this.currentPlaylist.playlist.length - 1;
+                console.log(this.currentPlaylist);
             }
             this.currentPlaylist.forceRestart = false;
             this.announce();
@@ -141,6 +182,12 @@ export class PlayerService {
             this.currentPlaylist.forceRestart = false;
             this.announce();
         }
+    }
+    stop() {
+        this.isPlaying = false;
+        this.isPaused = false;
+        this.currentPlaylist.forceRestart = false;
+        this.announce();
     }
     togglePlayPause() {
         if (this.isPlaying) {

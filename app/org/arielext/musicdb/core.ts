@@ -6,7 +6,7 @@ import Year from './models/Year';
 import * as _ from "lodash";
 import { Subject } from 'rxjs/Subject';
 
-const VERSION: string = "1.1.0";
+const VERSION: string = "1.2.0";
 
 export class musicdbcore {
 
@@ -324,5 +324,34 @@ export class musicdbcore {
         });
         this._latestAdditions = this.sortedAlbums.splice(0, amount);
         return this._latestAdditions;
+    }
+    getNextAlbum (album:Album):Album {
+        let artist = album.artist;
+        let albumIndex = artist.albums.indexOf(album);
+        let nextAlbum = artist.albums[albumIndex + 1];
+        if (!nextAlbum) {
+            // get next artist
+            let nextArtist = this.getNextArtist(artist);
+            nextAlbum = nextArtist.albums[0];
+        }
+        return nextAlbum;
+    }
+    getNextArtist(artist:Artist):Artist {
+        let letter = artist.letter;
+        let artistIndex = letter.artists.indexOf(artist);
+        let nextArtist = letter.artists[artistIndex + 1];
+        if (!nextArtist) {
+            let nextLetter = this.getNextLetter(letter);
+            nextArtist = nextLetter.artists[0];
+        }
+        return nextArtist;
+    }
+    getNextLetter(letter:Letter):Letter {
+        let letterIndex = this.sortedLetters.indexOf(letter);
+        let nextLetter = this.sortedLetters[letterIndex + 1];
+        if (!nextLetter) {
+            nextLetter = this.sortedLetters[0];
+        }
+        return nextLetter;
     }
 }

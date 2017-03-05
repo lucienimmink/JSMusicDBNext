@@ -119,9 +119,11 @@ export class PlaylistsComponent implements OnInit {
             )
         } else if (name === 'random') {
             this.playlist = this.generateRandom();
+            this.playlist.isContinues = true;
             this.loading = false;
         } else if (name === 'radio') {
             this.playlist = this.generateRadio();
+            this.playlist.isContinues = true;
         } else if (name === 'artist') {
             this.askForStartingArtist();
         } else if (name instanceof Playlist) {
@@ -149,9 +151,8 @@ export class PlaylistsComponent implements OnInit {
         let randomTracks = _.shuffle(coretracknames).splice(0, 50);
         let tmpPlaylist: Playlist = new Playlist();
         tmpPlaylist.name = "50 random tracks";
-        let c = this;
-        _.each(randomTracks, function (id) {
-            tmpPlaylist.tracks.push(c.core.tracks[id]);
+        _.each(randomTracks, (id) => {
+            tmpPlaylist.tracks.push(this.core.tracks[id]);
         });
         return tmpPlaylist;
     }

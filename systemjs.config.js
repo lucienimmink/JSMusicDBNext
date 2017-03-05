@@ -38,8 +38,7 @@
         'http',
         'platform-browser',
         'platform-browser-dynamic',
-        'router',
-        'upgrade'
+        'router'
     ];
     // Individual files (~300 requests):
     function packIndex(pkgName) {

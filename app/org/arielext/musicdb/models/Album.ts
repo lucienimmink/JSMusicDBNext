@@ -13,6 +13,7 @@ export default class Album {
   art:string;
   modified:number = 0;
   type:string;
+  isContinues:boolean = true;
 
   constructor (json:any){
     if (json.album && json.title) {
