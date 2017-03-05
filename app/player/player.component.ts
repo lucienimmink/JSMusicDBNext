@@ -52,14 +52,20 @@ export class PlayerComponent implements OnDestroy {
     constructor(private pathService: PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
-                this.playlist = playerData.playlist;
-                this.trackIndex = playerData.startIndex;
-                this.isPaused = playerData.isPaused;
-                this.isPlaying = playerData.isPlaying;
-                this.isShuffled = playerData.isShuffled;
-                this.forceRestart = playerData.forceRestart;
-                this.showPlayer = this.isPaused || this.isPlaying;
-                this.setTrack(playerData.position);
+                if (playerData) {
+                    this.playlist = playerData.playlist;
+                    this.trackIndex = playerData.startIndex;
+                    this.isPaused = playerData.isPaused;
+                    this.isPlaying = playerData.isPlaying;
+                    this.isShuffled = playerData.isShuffled;
+                    this.forceRestart = playerData.forceRestart;
+                    this.showPlayer = this.isPaused || this.isPlaying;
+                    this.setTrack(playerData.position);
+                } else {
+                    this.isPlaying = false;
+                    this.showPlayer = false;
+                    this.mediaObject.pause();
+                }
             }
         )
         this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
@@ -218,7 +224,7 @@ export class PlayerComponent implements OnDestroy {
             let playlist = new Playlist();
             playlist.tracks = list;
             playlist.name = "Current Playlist";
-            playlist.isContinues = false;
+            playlist.isContinues = current.isContinues || false;
 
             this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;

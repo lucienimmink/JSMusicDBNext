@@ -52,14 +52,7 @@ export class PlayerService {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
         }
-        this.currentPlaylist = {
-            playlist: album,
-            startIndex: startIndex,
-            isPlaying: this.isPlaying = true,
-            isPaused: this.isPaused = false,
-            isShuffled: this.isShuffled = isShuffled,
-            forceRestart: this.forceRestart = forceRestart
-        };
+        this.setPlaylist(album, startIndex, forceRestart, isShuffled, 'album');
         this.announce();
     }
     doPlayPlaylist(playlist: Playlist, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
@@ -67,15 +60,20 @@ export class PlayerService {
             this.currentTrack.isPaused = false;
             this.currentTrack.isPlaying = false;
         }
+        this.setPlaylist(playlist, startIndex, forceRestart, isShuffled, 'playlist');
+        this.announce();
+    }
+
+    private setPlaylist(playlist:any, startIndex: number = 0, forceRestart:boolean = true, isShuffled: boolean = false, type:string = "album"):void {
         this.currentPlaylist = {
             playlist: playlist,
             startIndex: startIndex,
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused = false,
             isShuffled: this.isShuffled = isShuffled,
-            forceRestart: this.forceRestart = forceRestart
+            forceRestart: this.forceRestart = forceRestart,
+            isContinues: playlist.isContinues || type === 'album'
         }
-        this.announce();
     }
 
     doPlayTrack(track:Track) {
@@ -93,7 +91,8 @@ export class PlayerService {
             isPlaying: this.isPlaying = true,
             isPaused: this.isPaused = false,
             isShuffled: false,
-            forceRestart: this.forceRestart = true
+            forceRestart: this.forceRestart = true,
+            isContinues: false
         };
         this.announce();
     }
@@ -121,7 +120,7 @@ export class PlayerService {
         return JSON.stringify({
             ids: list,
             isShuffled: this.isShuffled,
-            isContinues: this.currentPlaylist.playlist.isContinues,
+            isContinues: this.currentPlaylist.isContinues,
             current: this.currentPlaylist.startIndex
         });
     }
@@ -186,8 +185,10 @@ export class PlayerService {
     stop() {
         this.isPlaying = false;
         this.isPaused = false;
-        this.currentPlaylist.forceRestart = false;
-        this.announce();
+        this.currentPlaylist = null;
+        localStorage.removeItem('current-playlist');
+        localStorage.removeItem('current-time');
+        this.playlistSource.next(this.currentPlaylist);
     }
     togglePlayPause() {
         if (this.isPlaying) {
@@ -197,27 +198,29 @@ export class PlayerService {
         }
     }
     announce() {
-        this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
-        if (this.lastfmUserName) {
-            this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(
-                status => {
-                    this.currentTrack.isLoved = status;
-                }
-            )
-        }
-        if (this.currentTrack) {
-            this.currentTrack.isPaused = this.isPaused;
-            this.currentTrack.isPlaying = this.isPlaying;
+        if (this.currentPlaylist) {
+            this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
+            if (this.lastfmUserName) {
+                this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(
+                    status => {
+                        this.currentTrack.isLoved = status;
+                    }
+                )
+            }
+            if (this.currentTrack) {
+                this.currentTrack.isPaused = this.isPaused;
+                this.currentTrack.isPlaying = this.isPlaying;
 
-            this.currentPlaylist.isPlaying = this.isPlaying;
-            this.currentPlaylist.isPaused = this.isPaused;
+                this.currentPlaylist.isPlaying = this.isPlaying;
+                this.currentPlaylist.isPaused = this.isPaused;
 
-            this.currentPlaylist.isShuffled = this.isShuffled;
+                this.currentPlaylist.isShuffled = this.isShuffled;
 
-            this.currentPlaylist.position = this.position;
+                this.currentPlaylist.position = this.position;
 
-            localStorage.setItem('current-playlist', this.playlistToString());
-            this.playlistSource.next(this.currentPlaylist);
+                localStorage.setItem('current-playlist', this.playlistToString());
+                this.playlistSource.next(this.currentPlaylist);
+            }
         }
     }
     getVolume():number {

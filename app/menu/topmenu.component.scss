@@ -77,9 +77,10 @@ h1 {
     z-index: 13;
     overflow-y: auto;
     overflow-x: hidden;
-    .isPlaying & {
-        height: calc(100% - 100px - 80px);
-    }
+}
+
+.isPlaying /deep/ .side-nav-xl {
+    height: calc(100% - 100px - 80px);
 }
 
 .side-nav__content li {
