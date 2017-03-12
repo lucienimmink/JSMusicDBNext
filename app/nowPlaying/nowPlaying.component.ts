@@ -148,6 +148,18 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         if (this.trackIndex < this.playlist.tracks.length - 1) {
             this.trackIndex++;
             this.playerService.next();
+        } else {
+            if (this.playlist.isContinues) {
+                // generate a new playlist and start playing that one
+                this.trackIndex = 0;
+                if (this.playlist.type === 'random' || this.playlist.type === 'radio') {
+                    this.playerService.nextPlaylist(this.playlist.type);
+                } else {
+                    this.playerService.nextAlbum(this.track.album);
+                }
+            } else {
+                this.playerService.stop();
+            }
         }
     }
     prev() {
