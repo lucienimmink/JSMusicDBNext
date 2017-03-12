@@ -7,6 +7,8 @@ import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
 import * as _ from 'lodash';
 import { Playlist } from './../playlists/Playlist';
+import { PlaylistService } from './../playlists/playlist.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class PlayerService {
@@ -31,7 +33,16 @@ export class PlayerService {
     private hideVolumeWindowAsSource = new Subject<any>();
     public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
 
-    constructor(private lastFMService: LastFMService, private coreService: CoreService) { };
+    private subscription: Subscription;
+
+    constructor(private lastFMService: LastFMService, private coreService: CoreService, private playlistService: PlaylistService) {
+        this.subscription = this.playlistService.playlistAnnounced$.subscribe(
+            nextPlaylist => {
+                // a new radio playlist has been generated; let's play
+                this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled); 
+            }
+        );
+     };
 
     private booleanState(key: string): boolean {
         let raw = localStorage.getItem(key);
@@ -72,7 +83,8 @@ export class PlayerService {
             isPaused: this.isPaused = false,
             isShuffled: this.isShuffled = isShuffled,
             forceRestart: this.forceRestart = forceRestart,
-            isContinues: playlist.isContinues || type === 'album'
+            isContinues: playlist.isContinues || type === 'album',
+            type: playlist.type
         }
     }
 
@@ -92,12 +104,25 @@ export class PlayerService {
             isPaused: this.isPaused = false,
             isShuffled: false,
             forceRestart: this.forceRestart = true,
-            isContinues: false
+            isContinues: false,
         };
         this.announce();
     }
 
-    nextPlaylist (album:Album): void {
+    nextPlaylist (type:string): void {
+        if (this.booleanState("continues-play")) {
+            if (type === 'random') {
+                let nextPlaylist = this.playlistService.generateRandom();
+                this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled); 
+            } else {
+                this.playlistService.generateRadio(); // async
+            }
+        } else {
+            this.stop();
+        }
+    }
+
+    nextAlbum (album:Album): void {
         if (this.booleanState("continues-play")) {
             let nextAlbum = this.coreService.getCore().getNextAlbum(album);
             if (nextAlbum) {
@@ -109,7 +134,7 @@ export class PlayerService {
         } else {
             this.stop();
         }
-    }
+    } 
     playlistToString(): string {
         let list: Array<string> = [];
         _.each(this.currentPlaylist.playlist.tracks, function (track: Track) {
@@ -121,7 +146,8 @@ export class PlayerService {
             ids: list,
             isShuffled: this.isShuffled,
             isContinues: this.currentPlaylist.isContinues,
-            current: this.currentPlaylist.startIndex
+            current: this.currentPlaylist.startIndex,
+            type: this.currentPlaylist.type
         });
     }
     getCurrentPlaylist() {

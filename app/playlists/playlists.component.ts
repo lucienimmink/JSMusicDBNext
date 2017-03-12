@@ -120,10 +120,10 @@ export class PlaylistsComponent implements OnInit {
         } else if (name === 'random') {
             this.playlist = this.generateRandom();
             this.playlist.isContinues = true;
+            this.playlist.type = name;
             this.loading = false;
         } else if (name === 'radio') {
             this.playlist = this.generateRadio();
-            this.playlist.isContinues = true;
         } else if (name === 'artist') {
             this.askForStartingArtist();
         } else if (name instanceof Playlist) {
@@ -160,6 +160,8 @@ export class PlaylistsComponent implements OnInit {
         this.lastfmservice.getTopArtists(this.username).subscribe(
             data => {
                 this.playlist = this.extractArtists(data);
+                this.playlist.isContinues = true;
+                this.playlist.type = 'radio';
                 this.loading = false;
             }
         )

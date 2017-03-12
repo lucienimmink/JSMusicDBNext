@@ -5,4 +5,5 @@ export class Playlist {
     public tracks: Array<Track> = [];
     public isOwn:boolean = false;
     public isContinues:boolean = false;
+    public type:string;
 }

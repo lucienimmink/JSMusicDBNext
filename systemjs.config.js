@@ -20,7 +20,6 @@
         'app': { main: 'main.js', defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'lodash': { main: 'lodash.js', defaultExtension: 'js' },
-        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
         'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
         'ng2-bootstrap': { main: 'bundles/ng2-bootstrap.umd.js', defaultExtension: 'js' },
         'moment': { main: 'moment.js', defaultExtension: 'js' },

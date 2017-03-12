@@ -6,6 +6,7 @@ import { CollectionService } from './collection.service';
 import { CoreService } from './core.service';
 import { PathService } from './utils/path.service';
 import { PlayerService } from './player/player.service';
+import { PlaylistService } from './playlists/playlist.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './utils/imagelazyloadarea.directive';
 import { LastFMService } from './lastfm/lastfm.service';
 import { LoginService } from './login/login.service';
@@ -19,7 +20,7 @@ import './rxjs-operators';
 @Component({
   selector: 'musicdb',
   templateUrl: 'app/app.component.html',
-  providers: [CollectionService, CoreService, PathService, PlayerService, LastFMService, AnimationService, ConfigService]
+  providers: [CollectionService, CoreService, PathService, PlayerService, LastFMService, AnimationService, ConfigService, PlaylistService]
 })
 
 export class AppComponent implements OnDestroy {

@@ -225,6 +225,7 @@ export class PlayerComponent implements OnDestroy {
             playlist.tracks = list;
             playlist.name = "Current Playlist";
             playlist.isContinues = current.isContinues || false;
+            playlist.type = current.type;
 
             this.isShuffled = current.isShuffled;
             this.isCurrentPlaylistLoaded = true;
@@ -260,7 +261,11 @@ export class PlayerComponent implements OnDestroy {
             if (this.playlist.isContinues) {
                 // generate a new playlist and start playing that one
                 this.trackIndex = 0;
-                this.playerService.nextPlaylist(this.track.album);
+                if (this.playlist.type === 'random' || this.playlist.type === 'radio') {
+                    this.playerService.nextPlaylist(this.playlist.type);
+                } else {
+                    this.playerService.nextAlbum(this.track.album);
+                }
             } else {
                 this.playerService.stop();
             }
