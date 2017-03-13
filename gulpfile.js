@@ -74,7 +74,7 @@ gulp.task('bundle-css', function(cb) {
     return gulp.src(cssSources)
         .pipe(concat('styles.css'))
         .pipe(autoprefixer({
-            browsers: ['last 3 versions'],
+            browsers: ['last 1 versions'],
             cascade: false
         }))
         .pipe(gulp.dest('./target/css/'));
@@ -124,7 +124,7 @@ gulp.task('copy-css', function(cb) {
     ];
     return gulp.src(rootfiles)
         .pipe(autoprefixer({
-            browsers: ['last 3 versions'],
+            browsers: ['last 1 versions'],
             cascade: false
         }))
         .pipe(gulp.dest('./target/css/'));
