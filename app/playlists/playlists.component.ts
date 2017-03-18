@@ -11,7 +11,7 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import Artist from './../org/arielext/musicdb/models/Artist';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
-import * as _ from 'lodash';
+
 import { StickyDirective } from './../utils/sticky.directive';
 import { ConfigService } from './../utils/config.service';
 import { Playlist } from './Playlist';
@@ -104,6 +104,15 @@ export class PlaylistsComponent implements OnInit {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
     }
+    shuffle(list:Array<any>):Array<any> {
+        for (var i = list.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+        return list;
+    }
     setPlaylist(name: any) {
         this.loading = true;
         this.showStartingArtist = false;
@@ -148,10 +157,10 @@ export class PlaylistsComponent implements OnInit {
     }
     generateRandom(): any {
         let coretracknames = Object.keys(this.core.tracks);
-        let randomTracks = _.shuffle(coretracknames).splice(0, 50);
+        let randomTracks = this.shuffle(coretracknames).splice(0, 50);
         let tmpPlaylist: Playlist = new Playlist();
         tmpPlaylist.name = "50 random tracks";
-        _.each(randomTracks, (id) => {
+        randomTracks.forEach(id => {
             tmpPlaylist.tracks.push(this.core.tracks[id]);
         });
         return tmpPlaylist;
@@ -167,14 +176,13 @@ export class PlaylistsComponent implements OnInit {
         )
     }
     extractArtists(data: Array<any>): any {
-        let c = this;
         let highRotation: Array<Artist> = [];
         let mediumRotation: Array<Artist> = [];
-        _.each(data, function (line, index) {
+        data.forEach((line, index) => {
             let artistName: string = line.name;
             line.dummy = true // use dummy artist for lookup;
             let artist: Artist = new Artist(line);
-            let foundArtist: Artist = c.core.artists[artist.sortName];
+            let foundArtist: Artist = this.core.artists[artist.sortName];
             if (foundArtist && index < 10) {
                 highRotation.push(foundArtist);
             } else {
@@ -187,7 +195,6 @@ export class PlaylistsComponent implements OnInit {
         let tmpPlaylist: Playlist = new Playlist();
         tmpPlaylist.name = "Random based on your preferences";
         
-        let c = this;
         for (let i = 0; i < 50; i++) {
             if (i % 3 === 0 || i % 5 === 0) {
                 tmpPlaylist.tracks.push(this.getRandomTrackFromList(highRotation));
@@ -200,10 +207,10 @@ export class PlaylistsComponent implements OnInit {
         return tmpPlaylist;
     }
     private getRandomTrackFromList(list: Array<Artist>): Track {
-        let randomArtist: Artist = _.shuffle(list)[0];
+        let randomArtist: Artist = this.shuffle(list)[0];
         if (randomArtist) {
-            let randomAlbum: Album = _.shuffle(randomArtist.albums)[0];
-            let randomTrack: Track = _.shuffle(randomAlbum.tracks)[0];
+            let randomAlbum: Album = this.shuffle(randomArtist.albums)[0];
+            let randomTrack: Track = this.shuffle(randomAlbum.tracks)[0];
             if (randomTrack.duration <= 1000 * 60 * 10) {
                 // only use 'small' tracks to prevent boredom or concerts
                 return randomTrack;
@@ -240,7 +247,7 @@ export class PlaylistsComponent implements OnInit {
                 this.loading = false;
                 let c = this;
                 let foundSimilair: Array<Artist> = [];
-                _.each(data, function (lastfmartist) {
+                data.forEach(lastfmartist => {
                     let name = lastfmartist.name;
                     let coreArtist = c.core.getArtistByName(name)
                     if (coreArtist) {

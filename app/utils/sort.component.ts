@@ -11,7 +11,7 @@ import { Sort } from './sort';
     styleUrls: ['dist/utils/sort.component.css']
 })
 export class SortComponent implements OnInit {
-    @Input() sorting: Array<string>;
+    @Input() sorting: Array<any>;
     @Output() onSortChange = new EventEmitter<string>();
     private sort: Sort;
     private theme: string;
@@ -29,7 +29,7 @@ export class SortComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.sort.sort = this.sorting[0];
+        this.sort.sort = this.sorting[0].value;
     }
 
     ngOnDestroy() {

@@ -18,7 +18,7 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   private artists: Array<any> = [];
   private core: musicdbcore;
   private subscription: Subscription;
-  private sorting: Array<string> = ['name', 'albums'];
+  private sorting: Array<any> = [{name: 'name', value: 'sortName'}, {name: 'albums', value: 'albums'}];
   private coreletter: Letter;
 
   constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {

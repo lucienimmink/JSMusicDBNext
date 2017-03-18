@@ -4,7 +4,6 @@ import { Observable } from "rxjs/Observable";
 import { Subject } from 'rxjs/Subject';
 import { MyQueryEncoder } from './../utils/queryEncoder';
 import Artist from './../org/arielext/musicdb/models/Artist';
-import * as _ from 'lodash';
 import * as PouchDB from 'pouchdb';
 
 import Track from './../org/arielext/musicdb/models/Track';

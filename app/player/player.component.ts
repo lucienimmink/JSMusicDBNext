@@ -2,7 +2,6 @@ import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { PlayerService } from './player.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import * as _ from 'lodash';
 
 import { AlbumArt } from './../utils/albumart.component';
 import Album from './../org/arielext/musicdb/models/Album';
@@ -213,14 +212,12 @@ export class PlayerComponent implements OnDestroy {
     readCurrentPlaylist() {
         let current = JSON.parse(localStorage.getItem('current-playlist'));
         if (current) {
-            let c = this;
             let core = this.coreService.getCore();
             let list: Array<Track> = [];
-            _.each(current.ids, function (id) {
+            current.ids.forEach(id => {
                 let track = core.tracks[id];
                 list.push(track);
             });
-
             let playlist = new Playlist();
             playlist.tracks = list;
             playlist.name = "Current Playlist";

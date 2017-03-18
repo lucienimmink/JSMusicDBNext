@@ -1,5 +1,4 @@
 import Artist from "./Artist";
-import * as _ from "lodash";
 
 export default class Letter {
 
@@ -24,14 +23,14 @@ export default class Letter {
   private stripFromName(name: string, strip: string): string {
     var s = strip.toUpperCase();
     var f = name.toUpperCase();
-    f = _.trim(f);
-    if (_.startsWith(f, s)) {
+    f = f.trim();
+    if (f.indexOf(s) === 0) {
       f = f.substring(s.length);
     }
     return this.groupIfSpecialChar(f.substr(0, 1));
   }
   private groupIfSpecialChar(c: string): string {
-    if (_.indexOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '[', ']', '{', '}', '_', '-', '.'], c) !== -1) {
+    if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '[', ']', '{', '}', '_', '-', '.'].indexOf(c) !== -1) {
       return '#';
     }
     return c;

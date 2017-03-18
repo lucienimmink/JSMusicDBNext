@@ -9,8 +9,6 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import { StickyDirective } from './../utils/sticky.directive';
 import { Subscription } from 'rxjs/Subscription';
 
-import * as _ from 'lodash';
-
 @Component({
     templateUrl: 'app/scrobbleCache/scrobbleCache.component.html',
     styleUrls: ['dist/scrobbleCache/scrobbleCache.component.css']
@@ -76,7 +74,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
         let index = -1;
         this.manualScrobblingList.forEach(function (value, i) {
-            if (_.isEqual(value, item)) {
+            if (Object.is(value, item)) {
                 index = i;
             }
         })

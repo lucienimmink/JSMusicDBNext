@@ -1,18 +1,18 @@
 <div class="row">
-	<div class="col-xs-16 col-sm-12 col-lg-6 pull-right">
-		<form class="form-horizontal" [ngClass]="{'theme-alt': theme === 'dark'}">
-			<div class="form-group">
-				<label class="control-label col-xs-12 text-right" style="margin-top: 8px;">Sort by: </label>
-				<div class="col-xs-12">
-					<div class="combobox">
-						<form role="form" #sortForm="ngForm">
-							<select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="sort.sort" (ngModelChange)="onChange($event)">
-                            	<option *ngFor="let sort of sorting">{{sort}}</option>
+    <div class="col-xs-16 col-sm-12 col-lg-6 pull-right">
+        <form class="form-horizontal" [ngClass]="{'theme-alt': theme === 'dark'}">
+            <div class="form-group">
+                <label class="control-label col-xs-12 text-right" style="margin-top: 8px;">Sort by: </label>
+                <div class="col-xs-12">
+                    <div class="combobox">
+                        <form role="form" #sortForm="ngForm">
+                            <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="sort.sort" (ngModelChange)="onChange($event)">
+                            	<option *ngFor="let sort of sorting" value="{{sort.value}}">{{sort.name}}</option>
                         	</select>
-						</form>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

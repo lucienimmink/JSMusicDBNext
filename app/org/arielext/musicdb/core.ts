@@ -3,10 +3,9 @@ import Album from './models/Album';
 import Track from './models/Track';
 import Letter from './models/Letter';
 import Year from './models/Year';
-import * as _ from "lodash";
 import { Subject } from 'rxjs/Subject';
 
-const VERSION: string = "1.2.0";
+const VERSION: string = "1.2.1";
 
 export class musicdbcore {
 
@@ -29,7 +28,7 @@ export class musicdbcore {
         parsingTime: 0
     }
 
-    private _latestAdditions: Array<Album> = [];
+    private latestAdditions: Array<Album> = [];
 
     constructor() {
         console.info(`Core init ${VERSION}`);
@@ -53,7 +52,7 @@ export class musicdbcore {
             parsingTime: 0
         }
 
-        this._latestAdditions = [];
+        this.latestAdditions = [];
     }
 
     private instanceIfPresent(core: any, key: any, map: INameToValueMap, obj: Object, excecuteIfNew: Function): any {
@@ -226,12 +225,12 @@ export class musicdbcore {
     getTrackById(id: string): Track {
         let c = this;
         let ret = new Track({});
-        _.forEach(this.tracks, function (track) {
+        this.tracks.forEach(track => {
             if (track.id === id) {
                 ret = track;
             }
+
         });
-        //console.log(`search for track with id ${id} yieled: `, ret);
         return ret;
     }
     getArtistByName(artistName: string): Artist {
@@ -301,7 +300,7 @@ export class musicdbcore {
         let c = this;
         let ret = [];
 
-        _.forEach(this.tracks, function (track) {
+        this.tracks.forEach(track => {
             if (track.title.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
                 ret.push(track);
             }
@@ -309,9 +308,8 @@ export class musicdbcore {
         return ret;
     }
     getLatestAdditions(amount: number = 10): Array<Album> {
-        let c = this;
-        if (this._latestAdditions.length !== 0) {
-            return this._latestAdditions;
+        if (this.latestAdditions.length !== 0) {
+            return this.latestAdditions;
         }
         this.sortedAlbums.sort((a, b) => {
             if (a.modified > b.modified) {
@@ -322,8 +320,8 @@ export class musicdbcore {
                 return 0;
             }
         });
-        this._latestAdditions = this.sortedAlbums.splice(0, amount);
-        return this._latestAdditions;
+        this.latestAdditions = this.sortedAlbums.splice(0, amount);
+        return this.latestAdditions;
     }
     getNextAlbum (album:Album):Album {
         let artist = album.artist;

@@ -11,8 +11,6 @@ import { StickyDirective } from './../utils/sticky.directive';
 
 import Album from './../org/arielext/musicdb/models/album';
 
-import * as _ from "lodash";
-
 @Component({
     templateUrl: 'app/years/years.component.html',
     styleUrls: ['dist/years/years.component.css']

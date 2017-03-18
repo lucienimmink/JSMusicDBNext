@@ -5,7 +5,6 @@ import { CoreService } from './../core.service';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 import { LastFMService } from './../lastfm/lastfm.service';
-import * as _ from 'lodash';
 import { Playlist } from './../playlists/Playlist';
 import { PlaylistService } from './../playlists/playlist.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -137,11 +136,11 @@ export class PlayerService {
     } 
     playlistToString(): string {
         let list: Array<string> = [];
-        _.each(this.currentPlaylist.playlist.tracks, function (track: Track) {
+        this.currentPlaylist.playlist.tracks.forEach((track:Track) => {
             if (track) {
                 list.push(track.id);
             }
-        });
+        })
         return JSON.stringify({
             ids: list,
             isShuffled: this.isShuffled,
@@ -155,13 +154,36 @@ export class PlayerService {
     }
     shufflePlaylist(shuffled: boolean) {
         this.isShuffled = shuffled;
-        this.currentPlaylist.playlist.tracks = _.sortBy(this.currentPlaylist.playlist.tracks, ['disc', 'number']);
+        this.currentPlaylist.playlist.tracks.sort(this.sortPlaylist);
         if (shuffled) {
-            this.currentPlaylist.playlist.tracks = _.shuffle(this.currentPlaylist.playlist.tracks);
+            this.currentPlaylist.playlist.tracks = this.shuffle(this.currentPlaylist.playlist.tracks);
         }
         this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(this.currentTrack);
         this.currentPlaylist.forceRestart = false;
         this.announce();
+    }
+    sortPlaylist(a:Track, b:Track) {
+        if (a.disc < b.disc) {
+            return -1;
+        } else if (a.disc > b.disc) {
+            return 1;
+        } else {
+            if (a.number < b.number) {
+                return -1;
+            } else if (a.number > b.number) {
+                return 1;
+            }
+            return 0;
+        }
+    }
+    shuffle(list:Array<Track>):Array<Track> {
+        for (var i = list.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+        return list;
     }
     next() {
         if (this.currentTrack) {

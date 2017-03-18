@@ -1,10 +1,9 @@
-import { Component, OnDestroy, Input, NgModule } from "@angular/core";
+import { Component, OnDestroy, Input } from "@angular/core";
 import { Router } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
-import * as _ from 'lodash';
 
 import { CollectionService } from './../collection.service';
 import { CoreService } from './../core.service';
@@ -16,9 +15,9 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import { ConfigService } from './../utils/config.service';
 import { PlayerService } from './../player/player.service';
 
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
-import { User } from "./user"; 
+import { User } from "./user";
 
 import * as PouchDB from 'pouchdb';
 
@@ -43,8 +42,8 @@ export class HomeComponent implements OnDestroy {
     private subscription2: Subscription;
     private theme: string;
     private recentlyListenedTable = recentlyListenedTable;
-    private user:User;
-    private username:string;
+    private user: User;
+    private username: string;
     private recentlyAdded: Array<Album> = [];
 
     constructor(private playerService: PlayerService, private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
@@ -121,7 +120,7 @@ export class HomeComponent implements OnDestroy {
             )
         } else {
             let c = this;
-            this.recentlyListenedTable.get('recentlyListened', function (err:any, data:any) {
+            this.recentlyListenedTable.get('recentlyListened', function (err: any, data: any) {
                 if (data) {
                     c.populate(data.tracks);
                 }
@@ -140,24 +139,36 @@ export class HomeComponent implements OnDestroy {
     setImage(track: any): String {
         // last one is the best possible quality
         if (track.image) {
-            return _.last(track.image)["#text"];
+            return track.image[track.image.length - 1]["#text"];
         } else {
             return '';
         }
     }
 
     populate(json: any): void {
-        var c: any = this;
-        _.each(json, function (fmtrack) {
-            var track = {
+        json.forEach(fmtrack => {
+            let track = {
                 artist: fmtrack.artist["#text"],
                 album: fmtrack.album["#text"],
                 title: fmtrack.name,
-                image: c.setImage(fmtrack),
+                image: this.setImage(fmtrack),
                 nowPlaying: (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false,
-                date: c.setDate(fmtrack)
+                date: this.setDate(fmtrack),
+                source: null,
+                trackArtist: fmtrack.artist["#text"],
+                duration: null,
+                disc: null,
+                number: null,
+                type: null,
+                isPlaying: false,
+                isPaused: false,
+                isLoved: false,
+                id: `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`,
+                position: null,
+                buffered: null,
+                showActions: false
             }
-            c.newListenedTracks.push(track);
+            this.newListenedTracks.push(track);
         });
         if (this.recentlyListenedTracks !== this.newListenedTracks) {
             this.recentlyListenedTracks = this.newListenedTracks;
@@ -172,7 +183,7 @@ export class HomeComponent implements OnDestroy {
         this.username = username;
         this.startPolling();
     }
-    playTrack(track:any): void {
+    playTrack(track: any): void {
         // get the track from the core;
         let artist = this.core.getArtistByName(track.artist);
         if (artist) {
@@ -184,7 +195,7 @@ export class HomeComponent implements OnDestroy {
                     setTimeout(() => {
                         this.checkRecentlyListened();
                     }, 500);
-                    
+
                 } else {
                     console.warn('track not found', track);
                 }
@@ -194,7 +205,7 @@ export class HomeComponent implements OnDestroy {
         } else {
             console.warn('artist not found', track);
         }
-        
+
     }
 
 };

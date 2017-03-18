@@ -12,8 +12,6 @@ import { Settings } from './settings';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import * as _ from 'lodash';
-
 const VERSION = "__dev__";
 
 @Component({
@@ -155,7 +153,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
         let index = -1;
         this.manualScrobblingList.forEach(function (value, i) {
-            if (_.isEqual(value, item)) {
+            if (Object.is(value, item)) {
                 index = i;
             }
         })

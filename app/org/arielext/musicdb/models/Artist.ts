@@ -25,8 +25,8 @@ export default class Artist {
   private stripFromName(name: string, strip: string): string {
     var s = strip.toUpperCase();
     var f = name.toUpperCase();
-    f = _.trim(f);
-    if (_.startsWith(f, s)) {
+    f = f.trim();
+    if (f.indexOf(s) === 0) {
       f = f.substring(s.length);
     }
     return f;
