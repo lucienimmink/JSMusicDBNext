@@ -2,8 +2,8 @@
     "globalDependencies": {
         "core-js": "registry:dt/core-js#0.0.0+20160914114559",
         "moment": "registry:dt/moment#2.11.1+20161010105546",
-        "node": "registry:dt/node#7.0.0+20170310052549",
+        "node": "registry:dt/node#7.0.0+20170322231424",
         "pouchdb": "registry:dt/pouchdb#5.4.4+20160916155957",
-        "service_worker_api": "registry:dt/service_worker_api#0.0.0+20170210210346"
+        "service_worker_api": "registry:dt/service_worker_api#0.0.0+20161208200532"
     }
 }
