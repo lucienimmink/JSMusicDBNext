@@ -90,4 +90,7 @@ export class AppComponent implements OnDestroy {
   onExternalToggle(event: Event): void {
     this.playerService.togglePlayPause();
   }
+  onExternalStop(event: Event): void {
+    this.playerService.stop();
+  }
 }
