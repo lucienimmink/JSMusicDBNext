@@ -21,7 +21,7 @@
         'rxjs': { defaultExtension: 'js' },
         'lodash': { main: 'lodash.js', defaultExtension: 'js' },
         'angular2-jwt': { main: 'angular2-jwt.js', defaultExtension: 'js' },
-        'ng2-bootstrap': { main: 'bundles/ng2-bootstrap.umd.min.js', defaultExtension: 'js' },
+        'ng2-bootstrap': { main: 'bundles/ngx-bootstrap.umd.min.js', defaultExtension: 'js' },
         'moment': { main: 'moment.js', defaultExtension: 'js' },
         'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' },
         'jsrsasign': { main: 'lib/jsrsasign.js', defaultExtension: 'js' }
