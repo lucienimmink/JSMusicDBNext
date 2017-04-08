@@ -65,6 +65,12 @@ a,
     }
 }
 
+.logo {
+    path {
+        fill: $primary-color;
+    }
+}
+
 .media-container {
     flex-direction: row;
     flex-wrap: wrap;
