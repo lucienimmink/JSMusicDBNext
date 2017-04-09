@@ -4,8 +4,7 @@ import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
 @Component({
     selector: 'mdb-artist',
-    templateUrl: 'app/artist/artist.component.html',
-    styleUrls: ['dist/artist/artist.component.css']
+    templateUrl: './artist.component.html'
 })
 export class ArtistComponent {
     @Input() artist: any = {};

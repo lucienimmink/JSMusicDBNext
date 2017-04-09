@@ -15,8 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 const VERSION = "__dev__";
 
 @Component({
-    templateUrl: 'app/settings/settings.component.html',
-    styleUrls: ['dist/settings/settings.component.css']
+    templateUrl: './settings.component.html'
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
@@ -6,15 +6,10 @@ import { CoreService } from './../core.service';
 import { AlbumComponent } from './../album/album.component';
 import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 import { PathService } from './../utils/path.service';
-import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { Subscription } from 'rxjs/Subscription';
 
-@NgModule({
-  declarations: [AlbumComponent, BackgroundArtDirective, IMAGELAZYLOAD_DIRECTIVE]
-})
 @Component({
-  templateUrl: 'app/artist/artistdetail.component.html',
-  styleUrls: ['dist/artist/artistdetail.component.css']
+  templateUrl: './artistdetail.component.html'
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
   private artistName: string;

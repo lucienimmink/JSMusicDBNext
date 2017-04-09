@@ -7,8 +7,7 @@ import { Sort } from './sort';
 
 @Component({
     selector: 'sort',
-    templateUrl: 'app/utils/sort.component.html',
-    styleUrls: ['dist/utils/sort.component.css']
+    templateUrl: './sort.component.html'
 })
 export class SortComponent implements OnInit {
     @Input() sorting: Array<any>;

@@ -4,7 +4,6 @@ import { AlbumComponent } from './../album/album.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
-import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
 import { Subscription } from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
@@ -12,8 +11,7 @@ import { StickyDirective } from './../utils/sticky.directive';
 import Album from './../org/arielext/musicdb/models/album';
 
 @Component({
-    templateUrl: 'app/years/years.component.html',
-    styleUrls: ['dist/years/years.component.css']
+    templateUrl: './years.component.html'
 })
 export class YearsComponent implements OnInit, OnDestroy {
 

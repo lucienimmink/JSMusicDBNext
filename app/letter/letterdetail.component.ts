@@ -6,12 +6,10 @@ import Letter from './../org/arielext/musicdb/models/Letter';
 import { CoreService } from './../core.service';
 import { ArtistComponent } from './../artist/artist.component';
 import { PathService } from './../utils/path.service';
-import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  templateUrl: 'app/letter/letterdetail.component.html',
-  styleUrls: ['dist/letter/letterdetail.component.css']
+  templateUrl: './letterdetail.component.html'
 })
 export class LetterDetailComponent implements OnInit, OnDestroy {
   private letter: string;

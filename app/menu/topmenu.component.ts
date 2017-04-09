@@ -11,9 +11,8 @@ import { CoreService } from './../core.service';
 import { Search } from './search';
 
 @Component({
-    templateUrl: 'app/menu/topmenu.component.html',
-    selector: 'topmenu',
-    styleUrls: ['dist/menu/topmenu.component.css', 'dist/menu/side-nav.css']
+    templateUrl: './topmenu.component.html',
+    selector: 'topmenu'
 })
 export class TopMenuComponent implements OnDestroy {
     path: string;

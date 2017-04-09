@@ -18,8 +18,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 import { ConfigService } from './../utils/config.service';
 
 @Component({
-    templateUrl: 'app/album/albumdetail.component.html',
-    styleUrls: ['dist/album/albumdetail.component.css']
+    templateUrl: './albumdetail.component.html'
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
     private albumName: string = '';

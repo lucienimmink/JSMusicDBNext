@@ -4,14 +4,12 @@ import { ArtistComponent } from './artist.component';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { CoreService } from './../core.service';
 import { PathService } from './../utils/path.service';
-import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
 import { Subscription }   from 'rxjs/Subscription';
 import { StickyDirective } from './../utils/sticky.directive';
 
 @Component({
-    templateUrl: 'app/artist/artists.component.html',
-    styleUrls: ['dist/artist/artists.component.css']
+    templateUrl: './artists.component.html'
 })
 export class ArtistsComponent implements OnInit, OnDestroy {
 

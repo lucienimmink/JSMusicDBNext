@@ -8,8 +8,7 @@ import { CoreService } from './../core.service';
 
 @Component({
   selector: 'letters',
-  templateUrl: 'app/letter/letter.component.html',
-  styleUrls: [ 'dist/letter/letter.component.css' ]
+  templateUrl: './letter.component.html'
 })
 export class LetterComponent implements OnInit, OnDestroy {
   private letters:Array<any>;

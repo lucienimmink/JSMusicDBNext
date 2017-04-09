@@ -10,7 +10,6 @@ import { LastFMService } from './../lastfm/lastfm.service';
 import { ArtistComponent } from './../artist/artist.component';
 import { AlbumComponent } from './../album/album.component';
 import { TrackListComponent } from './../track/tracklist.component';
-import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 
 import { Subscription }   from 'rxjs/Subscription';
 import Track from './../org/arielext/musicdb/models/track';
@@ -18,8 +17,7 @@ import Track from './../org/arielext/musicdb/models/track';
 const MAXALLOWEDITEMS = 15;
 
 @Component({
-    templateUrl: 'app/search/search.component.html',
-    styleUrls: ['dist/search/search.component.css']
+    templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnInit, OnDestroy {
 

@@ -10,8 +10,7 @@ import { Subscription }   from 'rxjs/Subscription';
 import { User } from "./user";
 
 @Component({
-  templateUrl: 'app/login/login.component.html',
-  styleUrls: ['dist/login/login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private user: User;

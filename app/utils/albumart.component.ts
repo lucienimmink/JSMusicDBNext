@@ -11,8 +11,7 @@ let arttable = new PouchDB('art');
 
 @Component({
     selector: 'albumart',
-    templateUrl: 'app/utils/albumart.component.html',
-    styleUrls: ['dist/utils/albumart.component.css'],
+    templateUrl: './albumart.component.html',
     providers: [AlbumArtService]
 })
 export class AlbumArt {

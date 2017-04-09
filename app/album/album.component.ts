@@ -4,8 +4,7 @@ import { BackgroundArtDirective } from './../utils/backgroundart.directive';
 
 @Component({
     selector: 'mdbalbum',
-    templateUrl: 'app/album/album.component.html',
-    styleUrls: ['dist/album/album.component.css']
+    templateUrl: './album.component.html'
 })
 export class AlbumComponent {
     @Input() album: any = {};

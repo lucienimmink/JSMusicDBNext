@@ -10,8 +10,7 @@ import { StickyDirective } from './../utils/sticky.directive';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    templateUrl: 'app/scrobbleCache/scrobbleCache.component.html',
-    styleUrls: ['dist/scrobbleCache/scrobbleCache.component.css']
+    templateUrl: './scrobbleCache.component.html'
 })
 export class ScrobbleCacheComponent implements OnInit, OnDestroy {
 

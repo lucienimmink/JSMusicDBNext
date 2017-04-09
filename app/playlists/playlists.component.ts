@@ -18,8 +18,7 @@ import { Playlist } from './Playlist';
 import { ModalDirective } from 'ng2-bootstrap';
 
 @Component({
-    templateUrl: 'app/playlists/playlists.component.html',
-    styleUrls: ['dist/playlists/playlists.component.css']
+    templateUrl: './playlists.component.html'
 })
 export class PlaylistsComponent implements OnInit {
 

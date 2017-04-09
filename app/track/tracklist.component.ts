@@ -7,8 +7,7 @@ import { Playlist } from './../playlists/Playlist';
 
 @Component({
     selector: 'mdb-tracklist',
-    templateUrl: 'app/track/tracklist.component.html',
-    styleUrls: ['dist/track/tracklist.component.css']
+    templateUrl: './tracklist.component.html'
 })
 export class TrackListComponent {
     @Input() playlist: any = {};

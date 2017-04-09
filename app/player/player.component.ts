@@ -16,9 +16,8 @@ import { PathService } from './../utils/path.service';
 import { Playlist } from './../playlists/Playlist';
 
 @Component({
-    templateUrl: 'app/player/player.component.html',
-    selector: 'mdb-player',
-    styleUrls: ['dist/player/player.component.css']
+    templateUrl: './player.component.html',
+    selector: 'mdb-player'
 })
 export class PlayerComponent implements OnDestroy {
     private subscription: Subscription;

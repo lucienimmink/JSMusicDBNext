@@ -9,8 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
 import Letter from './../org/arielext/musicdb/models/letter';
 
 @Component({
-    templateUrl: 'app/letter/letters.component.html',
-    styleUrls: ['dist/letter/letters.component.css']
+    templateUrl: './letters.component.html'
 })
 export class LettersComponent implements OnInit, OnDestroy {
 

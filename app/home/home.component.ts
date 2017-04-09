@@ -26,9 +26,8 @@ let recentlyListenedTable = new PouchDB('recentlyListened');
 const RECENTLYLISTENEDINTERVAL = 1000 * 60;
 
 @Component({
-    templateUrl: 'app/home/home.component.html',
+    templateUrl: './home.component.html',
     selector: 'home',
-    styleUrls: ['dist/home/home.component.css'],
     providers: [RecentlyListenedService]
 })
 export class HomeComponent implements OnDestroy {
