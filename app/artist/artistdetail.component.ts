@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
@@ -9,9 +9,6 @@ import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { Subscription } from 'rxjs/Subscription';
 
-@NgModule({
-  declarations: [AlbumComponent, BackgroundArtDirective, IMAGELAZYLOAD_DIRECTIVE]
-})
 @Component({
   templateUrl: 'app/artist/artistdetail.component.html',
   styleUrls: ['dist/artist/artistdetail.component.css']
