@@ -5,7 +5,7 @@ import Letter from './models/Letter';
 import Year from './models/Year';
 import { Subject } from 'rxjs/Subject';
 
-const VERSION: string = "1.2.1";
+const VERSION: string = "1.2.2";
 
 export class musicdbcore {
 
@@ -299,12 +299,17 @@ export class musicdbcore {
     searchTrack(query: string): Array<Track> {
         let c = this;
         let ret = [];
-
-        this.tracks.forEach(track => {
+        let tracks = Object.keys(this.tracks);
+        tracks = tracks.filter(title => {
+            let track = this.tracks[title];
             if (track.title.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
-                ret.push(track);
+                return true;
             }
-        });
+        })
+
+        tracks.forEach(name => {
+            ret.push(this.tracks[name]);
+        })
         return ret;
     }
     getLatestAdditions(amount: number = 10): Array<Album> {
