@@ -176,12 +176,11 @@ export class PlayerComponent implements OnDestroy {
 
 
     setTrack(position: any) {
-        let c = this;
-        setTimeout(function () {
-            if (c.albumart) c.albumart.ngOnInit();
+        setTimeout(() => {
+            if (this.albumart) this.albumart.ngOnInit();
         });
         this.track = this.playlist.tracks[this.trackIndex];
-        if ((this.currentTrack !== this.track) || this.forceRestart) {
+        if ((!this.currentTrack || (this.track && this.currentTrack.id !== this.track.id)) || this.forceRestart) {
             let dsm = localStorage.getItem("dsm");
             if (dsm) {
                 this.url = dsm;

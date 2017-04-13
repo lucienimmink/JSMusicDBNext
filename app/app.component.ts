@@ -49,7 +49,6 @@ export class AppComponent implements OnDestroy {
           }).then((response) => {
             return response.json();
           }).then((data) => {
-            console.info('refreshing collection from cache');
             this.coreService.getCore().resetCollection();
             this.fillCollection(data);
           })
