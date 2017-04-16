@@ -192,10 +192,6 @@ export class PlayerService {
         }
         if (this.currentPlaylist) {
             this.currentPlaylist.startIndex++;
-            if (this.currentPlaylist.startIndex >= this.currentPlaylist.playlist.length) {
-                //this.currentPlaylist.startIndex = this.currentPlaylist.playlist.length - 1;
-                console.log(this.currentPlaylist);
-            }
             this.currentPlaylist.forceRestart = false;
             this.announce();
         }

@@ -71,25 +71,24 @@ export class PlayerComponent implements OnDestroy {
             this.showVolumeWindow = false;
         });
         this.mediaObject = document.querySelector('audio');
-        let c = this;
         this.mediaObject.crossOrigin = "anonymous";
-        this.mediaObject.addEventListener('ended', function () {
-            c.next();
+        this.mediaObject.addEventListener('ended', () => {
+            this.next();
         });
-        this.mediaObject.addEventListener('timeupdate', function () {
-            c.updateTime();
+        this.mediaObject.addEventListener('timeupdate', () => {
+            this.updateTime();
         });
-        this.mediaObject.addEventListener('play', function () {
-            c.onplay();
+        this.mediaObject.addEventListener('play', () => {
+            this.onplay();
         });
-        this.mediaObject.addEventListener('progress', function () {
-            c.onprogress();
+        this.mediaObject.addEventListener('progress', () => {
+            this.onprogress();
         });
-        this.mediaObject.addEventListener('pause', function () {
-            c.onpause();
+        this.mediaObject.addEventListener('pause', () => {
+            this.onpause();
         });
-        this.mediaObject.addEventListener('ended', function () {
-            c.onstop();
+        this.mediaObject.addEventListener('ended', () => {
+            this.onstop();
         });
         let dsm = localStorage.getItem("dsm");
         if (dsm) {
@@ -122,7 +121,8 @@ export class PlayerComponent implements OnDestroy {
             this.isMobile = true; // treat edge always as mobile
         }
 
-        if (!this.isMobile) {
+        if (navigator.userAgent.indexOf('Mobi') === -1) {
+            
             // lets only handle these calculations on desktop grade devices.
             let canvas = document.querySelector('canvas');
             let WIDTH = canvas.offsetWidth;
@@ -134,7 +134,7 @@ export class PlayerComponent implements OnDestroy {
             canvas.height = HEIGHT;
             var ctx = canvas.getContext("2d");
 
-            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            var audioCtx = new window.AudioContext();
             var javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
             javascriptNode.connect(audioCtx.destination);
 
