@@ -30,7 +30,9 @@ export class AppComponent implements OnDestroy {
   private path: string = "JSMusicDB Next";
   private isLoading: boolean = false;
   private viewContainerRef: ViewContainerRef;
-  private isPlaying:boolean = false;
+  private isPlaying: boolean = false;
+  private mediaObject: any;
+  private isFlacSupported: boolean;
   constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService, viewContainerRef: ViewContainerRef) {
 
     if (this.loginService.hasToken) {
@@ -62,6 +64,10 @@ export class AppComponent implements OnDestroy {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  ngOnInit() {
+    this.mediaObject = document.querySelector('audio');
+    this.isFlacSupported = (this.mediaObject.canPlayType('audio/flac') === 'probably' || this.mediaObject.canPlayType('audio/flac') === 'maybe');
   }
 
   getCollection() {

@@ -72,6 +72,7 @@ export class PlayerComponent implements OnDestroy {
         });
         this.mediaObject = document.querySelector('audio');
         this.mediaObject.crossOrigin = "anonymous";
+        this.mediaObject.canPlayType('audio/flac');
         this.mediaObject.addEventListener('ended', () => {
             this.next();
         });
