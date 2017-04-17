@@ -13,7 +13,8 @@
         'ng2-bootstrap': 'node_modules/ng2-bootstrap',
         'moment': 'node_modules/moment',
         'pouchdb': 'node_modules/pouchdb',
-        'jsrsasign': 'node_modules/jsrsasign'
+        'jsrsasign': 'node_modules/jsrsasign',
+        'ng2-youtube-player': 'node_modules/ng2-youtube-player'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -24,7 +25,8 @@
         'ng2-bootstrap': { main: 'bundles/ngx-bootstrap.umd.min.js', defaultExtension: 'js' },
         'moment': { main: 'moment.js', defaultExtension: 'js' },
         'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' },
-        'jsrsasign': { main: 'lib/jsrsasign.js', defaultExtension: 'js' }
+        'jsrsasign': { main: 'lib/jsrsasign.js', defaultExtension: 'js' },
+        'ng2-youtube-player': { main: 'ng2-youtube-player.js', defaultExtension: 'js' }
     };
     var meta = {
         'pouchdb': { format: 'cjs' },
