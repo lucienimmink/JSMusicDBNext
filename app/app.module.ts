@@ -38,6 +38,8 @@ import { StickyDirective } from './utils/sticky.directive';
 import { MediaEvents } from './utils/MediaEvents';
 import { TooltipModule, ModalModule } from 'ng2-bootstrap';
 
+import { YoutubePlayerModule } from 'ng2-youtube-player';
+
 
 
 @NgModule({
@@ -69,7 +71,7 @@ import { TooltipModule, ModalModule } from 'ng2-bootstrap';
         BackgroundArtDirective,
         StickyDirective
     ],
-    imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule.forRoot(), ModalModule.forRoot()],
+    imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule.forRoot(), ModalModule.forRoot(), YoutubePlayerModule],
     providers: [
         appRoutingProviders,
         { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true },

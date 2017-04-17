@@ -87,6 +87,15 @@
                         </button>
                     </div>
                 </div>
+                <div class="form-group">
+                    <span class="color-type-secondary">Prefer video if available:</span>
+                    <div class="btn-group">
+                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': preferVideo, 'theme-alt': theme === 'dark'}" (click)="togglePreferVideo()">
+                            <span class="stateLabel stateLabel-on">On</span>
+                            <span class="stateLabel stateLabel-off">Off</span>
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

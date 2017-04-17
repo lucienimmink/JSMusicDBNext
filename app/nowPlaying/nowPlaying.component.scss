@@ -8,7 +8,8 @@
     overflow: hidden;
 }
 
-#nowPlaying .top, #nowPlaying .bottom {
+#nowPlaying .top,
+#nowPlaying .bottom {
     transition: 0.3s ease-out;
     position: absolute;
     overflow: hidden;
@@ -17,17 +18,20 @@
     top: 0;
     bottom: 0;
 }
+
 #nowPlaying .top {
     z-index: 1;
     will-change: transform;
 }
+
 #nowPlaying .bottom {
     height: calc(100% - 200px);
     overflow: auto;
     margin-top: 200px;
 }
 
-#nowPlaying .image-wrapper {
+#nowPlaying .image-wrapper,
+#nowPlaying .youtube-wrapper {
     position: relative;
     height: calc(100% - 160px);
     z-index: 0;
@@ -38,15 +42,15 @@
     transition: all 0.3s ease-out;
     opacity: 1;
     will-change: transform, opacity;
-
     canvas {
         display: none;
     }
 }
-@media screen and (min-width: 768px) {
-    #nowPlaying .image-wrapper {
-        height: calc(100% - 175px);
 
+@media screen and (min-width: 768px) {
+    #nowPlaying .image-wrapper,
+    #nowPlaying .youtube-wrapper {
+        height: calc(100% - 175px);
         canvas {
             display: inline-block;
             position: absolute;
@@ -57,11 +61,14 @@
         }
     }
 }
+
 @media screen and (min-width: 1200px) {
-    #nowPlaying .image-wrapper {
+    #nowPlaying .image-wrapper,
+    #nowPlaying .youtube-wrapper {
         height: calc(100% - 115px);
     }
 }
+
 #nowPlaying .image-wrapper div.current-album-art {
     z-index: 0;
     opacity: 0.985;
@@ -82,33 +89,46 @@
     position: absolute;
     top: 0;
 }
+
+#nowPlaying .youtube-wrapper /deep/ iframe {
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    margin-top: 10px;
+}
+
 #nowPlaying .controls-wrapper {
-  position: relative;
+    position: relative;
 }
-#nowPlaying .controls-wrapper h4, #nowPlaying .controls-wrapper h5 {
-  padding-top: 0;
-  margin-left: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+
+#nowPlaying .controls-wrapper h4,
+#nowPlaying .controls-wrapper h5 {
+    padding-top: 0;
+    margin-left: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
+
 #nowPlaying .controls-wrapper h4 {
-  padding-top: 10px;
+    padding-top: 10px;
 }
+
 #nowPlaying .icons {
     text-align: center;
 }
+
 @media screen and (min-width: 1200px) {
     #nowPlaying .icons {
         top: -55px;
         position: relative;
         pointer-events: none;
-
-        button, input {
+        button,
+        input {
             pointer-events: all;
         }
     }
 }
+
 #nowPlaying .icons button {
     display: inline-block;
     min-width: 65px;
@@ -119,24 +139,29 @@
     border-radius: 50%;
     height: 65px;
 }
+
 #nowPlaying .icons button .glyph {
     display: block;
     position: relative;
     margin: -1px 0 0 6px;
 }
+
 #nowPlaying .icons button.active {
-    background: rgba(0,120,215,1);
+    background: rgba(0, 120, 215, 1);
     color: #ffffff;
 }
-#nowPlaying .icons button:active  {
+
+#nowPlaying .icons button:active {
     background: #e1e1e1;
-    color: rgba(0,120,215,1);
+    color: rgba(0, 120, 215, 1);
 }
+
 #nowPlaying .icons .btn-updown {
     margin-top: -7px;
     min-width: 45px;
     height: 45px;
 }
+
 #nowPlaying .icons .btn-love {
     position: absolute;
     right: 10px;
@@ -152,6 +177,11 @@
     right: 170px;
 }
 
+#nowPlaying .icons .btn-youtube {
+    position: absolute;
+    right: 250px;
+}
+
 #nowPlaying .progress {
     width: calc(100% - 150px);
     margin: 0 auto;
@@ -165,10 +195,10 @@
     left: 20px;
 }
 
-    #nowPlaying .time.stop {
-        left: auto;
-        right: 20px;
-    }
+#nowPlaying .time.stop {
+    left: auto;
+    right: 20px;
+}
 
 footer.hidePlayer {
     height: 0;
@@ -177,23 +207,26 @@ footer.hidePlayer {
 #nowPlaying.slided .top {
     transform: translateY(calc(-100% + 185px));
 }
+
 @media screen and (min-width: 1200px) {
     #nowPlaying.slided .top {
         transform: translateY(calc(-100% + 125px));
     }
 }
+
 #nowPlaying.slided .top .image-wrapper {
     opacity: 0;
 }
+
 #nowPlaying #upordown {
     transition: 0.3s ease-out 0.15s;
     margin-left: 5px;
     font-size: 14px;
 }
+
 #nowPlaying.slided #upordown {
     transform: rotate(180deg);
 }
-
 
 #nowPlaying .volume-control {
     position: absolute;
@@ -204,7 +237,6 @@ footer.hidePlayer {
     padding: 10px;
 }
 
-
 #progress-pusher {
     position: relative;
     width: calc(100% - 150px);
@@ -213,10 +245,11 @@ footer.hidePlayer {
     top: -30px;
     margin-bottom: -60px;
 }
+
 #position-indicator {
     width: 18px;
     height: 18px;
-    border-color: rgba(0,120,215,1);
+    border-color: rgba(0, 120, 215, 1);
     border-width: 3px;
     border-radius: 50%;
     border-style: solid;
@@ -226,7 +259,7 @@ footer.hidePlayer {
     left: -8px;
     cursor: pointer;
     display: block;
-    transform-origin:center;
+    transform-origin: center;
     transition: all 0.1s linear;
     pointer-events: none;
     will-change: margin;
@@ -238,11 +271,13 @@ footer.hidePlayer {
     -khtml-user-drag: element;
     -webkit-user-drag: element;
 }
+
 #position-indicator.dragging {
     transform: scale(2);
     border-width: 2px;
     transition: none !important;
 }
+
 .buffered-bar {
     position: absolute;
     opacity: 0.25;

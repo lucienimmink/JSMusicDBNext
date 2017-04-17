@@ -40,6 +40,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private lastParsed: number = Number(localStorage.getItem('lastParsed'));
 
     private visualisation: boolean = this.booleanState('visualisation-state');
+    private preferVideo: boolean = this.booleanState('preferVideo-state');
 
     private themeForm: NgForm;
     @ViewChild('themeForm') currentForm: NgForm;
@@ -136,6 +137,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     toggleVisualisation() {
         this.visualisation = !this.visualisation;
         localStorage.setItem('visualisation-state', this.visualisation.toString());
+    }
+    togglePreferVideo() {
+        this.preferVideo = !this.preferVideo;
+        localStorage.setItem('preferVideo-state', this.preferVideo.toString());
     }
     scrobbleNow() {
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
