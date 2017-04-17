@@ -32,7 +32,8 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private selectedTrack: Track = null;
     private isSwiping: boolean = false;
     private theme: string;
-    private isShrunk:boolean = false;
+    private isShrunk: boolean = false;
+    private isFlacSupported: boolean = true;
     @ViewChild('editModal') private editModal: ModalDirective;
 
     constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute, private configService: ConfigService) {
@@ -95,6 +96,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
                 });
             }
         }
+
+        const mediaObject = document.querySelector('audio');
+        const canPlayType = mediaObject.canPlayType('audio/flac');
+        this.isFlacSupported = (canPlayType === 'probably' || canPlayType === 'maybe');
     }
 
     ngOnDestroy() {
@@ -141,7 +146,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         return total;
     }
     onScroll(event) {
-        if(document.body.scrollTop < 10) {
+        if (document.body.scrollTop < 10) {
             this.isShrunk = false;
         } else {
             this.isShrunk = true;

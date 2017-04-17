@@ -43,6 +43,12 @@
                         </div>
                     </li>
                 </ol>
+                <div *ngIf="album.type === 'flac' && !isFlacSupported">
+                    <br />
+                    <div class="alert alert-warning">
+                        <strong>Warning!</strong> This album cannot be played since FLAC support is lacking.
+                    </div>
+                </div>
             </div>
         </div>
     </div>

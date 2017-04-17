@@ -67,7 +67,8 @@ export class AppComponent implements OnDestroy {
   }
   ngOnInit() {
     this.mediaObject = document.querySelector('audio');
-    this.isFlacSupported = (this.mediaObject.canPlayType('audio/flac') === 'probably' || this.mediaObject.canPlayType('audio/flac') === 'maybe');
+    const canPlayType = this.mediaObject.canPlayType('audio/flac');
+    this.isFlacSupported = (canPlayType === 'probably' || canPlayType === 'maybe');
   }
 
   getCollection() {
@@ -79,7 +80,7 @@ export class AppComponent implements OnDestroy {
   }
   fillCollection(data: any): void {
     localStorage.setItem('lastParsed', new Date().getTime().toString());
-    this.coreService.getCore().parseSourceJson(data);
+    this.coreService.getCore().parseSourceJson(data, this.isFlacSupported);
     this.isLoading = false;
   }
   hideVolumeWindow(): void {
