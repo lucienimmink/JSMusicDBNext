@@ -22,6 +22,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     private subscription: Subscription;
     private subscription2: Subscription;
+    private subscription3: Subscription;
     private playlist: any;
     private track: Track;
     private currentTrack: Track;
@@ -34,6 +35,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private core: musicdbcore;
     private isDragging: boolean = false;
     private c: any = this;
+    private lastfmusername:string = '';
 
     private showVolumeWindow: boolean = false;
     private volume: number = 100;
@@ -76,7 +78,10 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         )
         this.subscription2 = this.playerService.volumeAnnounced.subscribe(volume => {
             this.volume = volume;
-        })
+        });
+        this.subscription3 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
+            this.showVolumeWindow = false;
+        });
         this.pathService.announcePage('Now playing');
 
         if ('ontouchstart' in document.documentElement) {
@@ -100,6 +105,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
                 }
             } catch (e) { }
         }, 250);
+        this.lastfmusername = localStorage.getItem("lastfm-username") || '';
     }
 
     private booleanState(key: string): boolean {
@@ -139,6 +145,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     ngOnDestroy() {
         this.subscription.unsubscribe(); // prevent memory leakage
         this.subscription2.unsubscribe();
+        this.subscription3.unsubscribe();
         if ('ontouchstart' in document.documentElement) {
             document.getElementsByTagName('body')[0].removeEventListener('touchmove', this.drag);
             document.getElementsByTagName('body')[0].removeEventListener('touchend', this.stopDrag);
@@ -250,7 +257,10 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             this.playerService.setPosition(pos);
         }
     }
-    toggleVolumeWindow() {
+    toggleVolumeWindow(e: Event) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        e.preventDefault();
         this.showVolumeWindow = !this.showVolumeWindow;
     }
     setVolume() {
