@@ -34,7 +34,7 @@ import { BackgroundArtDirective } from './utils/backgroundart.directive';
 import { TimeFormatPipe } from './timeformat.pipe';
 import { TrackListComponent } from './track/tracklist.component';
 
-import { StickyDirective } from './utils/sticky.directive';
+import { StickyModule } from 'ng2-sticky-kit/ng2-sticky-kit';
 import { MediaEvents } from './utils/MediaEvents';
 import { TooltipModule, ModalModule } from 'ng2-bootstrap';
 
@@ -68,10 +68,9 @@ import { YoutubePlayerModule } from 'ng2-youtube-player';
         AlbumArt,
         TimeFormatPipe,
         TrackListComponent,
-        BackgroundArtDirective,
-        StickyDirective
+        BackgroundArtDirective
     ],
-    imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule.forRoot(), ModalModule.forRoot(), YoutubePlayerModule],
+    imports: [BrowserModule, routing, HttpModule, FormsModule, TooltipModule.forRoot(), ModalModule.forRoot(), YoutubePlayerModule, StickyModule],
     providers: [
         appRoutingProviders,
         { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true },

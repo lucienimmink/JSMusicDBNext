@@ -1,5 +1,5 @@
 <div *ngIf="album" class="animated-page" (window:scroll)="onScroll($event)">
-    <div class="jumbotron theme-light" [ngClass]="{'shrunk': isShrunk}">
+    <sticky class="jumbotron theme-light" [ngClass]="{'shrunk': isShrunk}" sticky-offset-top="100" sticky-width="100%" sticky-zIndex="11" sticky-parent="false">
         <div class="container">
             <div class="row albumdetail">
                 <div class="col-xs-6 col-md-6 col-lg-4">
@@ -13,13 +13,13 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container">
+    </sticky>
+    <div class="container" [ngClass]="{'top-shrunk': isShrunk}">
         <div class="row">
             <div class="col-xs-24">
                 <ol class="list-items" *ngFor="let disc of album.sortedDiscs">
-                    <li class="list-items-row disc-row visible-xs visible-sm header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 49px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
-                    <li class="list-items-row disc-row visible-md visible-lg header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 99px" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
+                    <sticky class="list-items-row disc-row visible-xs visible-sm header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky sticky-offset-top="49" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</sticky>
+                    <sticky class="list-items-row disc-row visible-md visible-lg header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky sticky-offset-top="242" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</sticky>
                     <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions, 'hq': track.type === 'flac'}">
                         <div class="details" (click)="onSelect(track, $event)">
                             <div class="col-xs-2 col-sm-1">

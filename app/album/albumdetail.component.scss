@@ -5,12 +5,15 @@
 
 .albumdetail /deep/ albumart {
     background: white;
+    transition: all 0.1s ease-out;
+    width: 190px;
 }
 
 .albumdetail h2 {
     padding-top: 0;
     margin-top: 5px;
     font-size: 24px;
+    transition: all 0.1s ease-out;
 }
 
 @media screen and (min-width: 768px) {
@@ -21,11 +24,13 @@
 
 .albumdetail h3 {
     padding-top: 5px;
+    transition: all 0.1s ease-out;
 }
 
 .albumdetail h4 {
     font-size: 16px;
     padding-top: 5px;
+    transition: all 0.1s ease-out;
 }
 
 @media screen and (min-width: 768px) {
@@ -84,4 +89,31 @@
 
 .details:hover .btn {
     display: inline-block;
+}
+
+.shrunk {
+    background: rgba(242, 242, 242, 0.9);
+    left: 82px !important;
+    position: fixed !important;
+    bottom: auto !important;
+    top: 100px !important;
+    &.sticky {
+        left: 41px !important;
+    }
+    .albumdetail /deep/ albumart {
+        width: 100px;
+    }
+    .albumdetail h2 {
+        font-size: 24px;
+    }
+    .albumdetail h3 {
+        font-size: 20px;
+    }
+    .col-lg-20 {
+        margin-left: -100px;
+    }
+}
+
+.top-shrunk {
+    margin-top: 238px;
 }
