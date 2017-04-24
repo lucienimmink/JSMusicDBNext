@@ -11,7 +11,6 @@ import { TimeFormatPipe } from './../timeformat.pipe';
 import { PathService } from './../utils/path.service';
 import { PlayerService } from './../player/player.service';
 import { Subscription } from 'rxjs/Subscription';
-import { StickyDirective } from './../utils/sticky.directive';
 import { Playlist } from './../playlists/Playlist';
 import { ModalDirective } from 'ng2-bootstrap';
 
@@ -144,12 +143,5 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             total += track.duration;
         });
         return total;
-    }
-    onScroll(event) {
-        if (document.body.scrollTop < 10) {
-            this.isShrunk = false;
-        } else {
-            this.isShrunk = true;
-        }
     }
 }

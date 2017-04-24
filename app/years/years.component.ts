@@ -7,7 +7,6 @@ import { PathService } from './../utils/path.service';
 import { IMAGELAZYLOAD_DIRECTIVE } from './../utils/imagelazyloadarea.directive';
 import { VsFor } from './../utils/ng2-vs-for';
 import { Subscription } from 'rxjs/Subscription';
-import { StickyDirective } from './../utils/sticky.directive';
 
 import Album from './../org/arielext/musicdb/models/album';
 

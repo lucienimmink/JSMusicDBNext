@@ -6,7 +6,6 @@ import { CollectionService } from './../collection.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { TimeFormatPipe } from './../timeformat.pipe';
 import { LastFMService } from './../lastfm/lastfm.service';
-import { StickyDirective } from './../utils/sticky.directive';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({

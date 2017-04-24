@@ -12,7 +12,6 @@ import Artist from './../org/arielext/musicdb/models/Artist';
 import Album from './../org/arielext/musicdb/models/Album';
 import Track from './../org/arielext/musicdb/models/Track';
 
-import { StickyDirective } from './../utils/sticky.directive';
 import { ConfigService } from './../utils/config.service';
 import { Playlist } from './Playlist';
 import { ModalDirective } from 'ng2-bootstrap';
