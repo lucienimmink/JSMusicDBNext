@@ -4,9 +4,7 @@
 <head>
     <title>JSMusicDB next</title>
     <meta charset="UTF-8">
-
     <link rel="manifest" href="manifest.json">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="css/styles.css">
     <base href=".">
@@ -25,17 +23,12 @@
             </div>
         </div>
     </musicdb>
-
     <script src="js/polyfills.js"></script>
-
     <script src="js/app.bundle.js"></script>
-
-    <script src="js/dist-systemjs.config.js"></script>
     <script>
+        /* inline here */
         var ENV = 'prod';
-        System.import('app/main').catch(function(err) {
-            console.error(err);
-        });
+        System.import('app/main');
     </script>
 </body>
 

@@ -23,11 +23,11 @@ var d = new Date();
 var VERSION = prefixZero(d.getDate()) + "-" + prefixZero(d.getMonth() + 1) + "-" + d.getFullYear() + ", " + prefixZero(d.getHours()) + ":" + prefixZero(d.getMinutes());
 
 gulp.task('bundle', ['bundle-app', 'bundle-css'], function(cb) { cb(); });
-gulp.task('copy', ['copy-js', 'copy-css', 'copy-polyfills', 'copy-assets'], function(cb) { cb(); });
+gulp.task('copy', ['copy-css', 'copy-polyfills', 'copy-assets'], function(cb) { cb(); });
 gulp.task('copy-assets', ['copy-global', 'copy-fonts', 'copy-root'], function(cb) { cb(); });
 
 gulp.task('build', function(cb) {
-    runSequence('clean', 'bundle', 'add-version', 'copy', 'rev', 'revreplace', 'revreplace-electron', 'cleanup', cb);
+    runSequence('clean', 'bundle', 'add-version', 'copy', 'rev', 'revreplace', 'revreplace-electron', 'cleanup', 'inject-inline', 'inject-inline-electron', cb);
 });
 
 /**
@@ -140,8 +140,7 @@ gulp.task('cleanup', function(cb) {
         'target/css/styles.css',
         'target/js/app.bundle.js',
         'target/js/dependencies.bundle.js',
-        'target/js/polyfills.js',
-        'target/js/dist-systemjs.config.js'
+        'target/js/polyfills.js'
     ]);
     cb();
 });
@@ -180,6 +179,30 @@ gulp.task('revreplace-electron', function(cb) {
         .pipe(revReplace({ manifest: manifest }))
         .pipe(rename('electron.html'))
         .pipe(gulp.dest('./target'));
+});
+
+gulp.task('inject-inline', (cb) => {
+    const fs = require('fs');
+    fs.readFile('./target/index.html', 'utf8', (e, txt) => {
+        fs.readFile('./dist-systemjs.config.js', 'utf8', (e, js) => {
+            let output = txt.replace(`/* inline here */`, js);
+            fs.writeFile('./target/index.html', output, (e) => {
+                cb();
+            });
+        });
+    });
+});
+
+gulp.task('inject-inline-electron', (cb) => {
+    const fs = require('fs');
+    fs.readFile('./target/electron.html', 'utf8', (e, txt) => {
+        fs.readFile('./dist-systemjs.config.js', 'utf8', (e, js) => {
+            let output = txt.replace(`/* inline here */`, js);
+            fs.writeFile('./target/electron.html', output, (e) => {
+                cb();
+            });
+        });
+    });
 });
 
 gulp.task('bundle-app', ['inline-templates'], function(cb) {
