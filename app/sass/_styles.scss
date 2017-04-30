@@ -454,9 +454,12 @@ canvas {
     border: none;
     color: $primary-color;
     font-size: 16px;
-}
-
-#title-bar-btns button:hover {
-    background-color: $secondary-color;
-    color: $background-color;
+    &:hover {
+        background-color: $secondary-color;
+        color: $background-color;
+    }
+    &:active,
+    &:focus {
+        outline: none;
+    }
 }
