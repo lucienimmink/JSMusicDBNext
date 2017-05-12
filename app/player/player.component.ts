@@ -12,13 +12,15 @@ import { musicdbcore } from './../org/arielext/musicdb/core';
 
 import { AnimationService } from './../utils/animation.service';
 import { PathService } from './../utils/path.service';
+import { AlbumArtService } from './../utils/albumart.service';
 
 import { Playlist } from './../playlists/Playlist';
 
 @Component({
     templateUrl: 'app/player/player.component.html',
     selector: 'mdb-player',
-    styleUrls: ['dist/player/player.component.css']
+    styleUrls: ['dist/player/player.component.css'],
+    providers: [AlbumArtService]
 })
 export class PlayerComponent implements OnDestroy {
     private subscription: Subscription;
@@ -40,15 +42,12 @@ export class PlayerComponent implements OnDestroy {
     private isCurrentPlaylistLoaded: boolean = false;
     private isShuffled: boolean = false;
     private forceRestart: boolean = false;
-
-    private isMobile: boolean = false;
-
     private showVolumeWindow: boolean = false;
     private volume: number = 100;
 
     @ViewChild(AlbumArt) albumart: AlbumArt;
 
-    constructor(private pathService: PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService) {
+    constructor(private pathService: PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastFMService, private coreService: CoreService, private animationService: AnimationService, private albumartService: AlbumArtService) {
         this.subscription = this.playerService.playlistAnnounced$.subscribe(
             playerData => {
                 if (playerData) {
@@ -117,13 +116,8 @@ export class PlayerComponent implements OnDestroy {
             }
         );
 
-
-        if (navigator.userAgent.indexOf('Mobi') !== -1 || navigator.userAgent.indexOf('Edge/') !== -1) {
-            this.isMobile = true; // treat edge always as mobile
-        }
-
         if (navigator.userAgent.indexOf('Mobi') === -1) {
-            
+
             // lets only handle these calculations on desktop grade devices.
             let canvas = document.querySelector('canvas');
             let WIDTH = canvas.offsetWidth;
@@ -188,9 +182,6 @@ export class PlayerComponent implements OnDestroy {
             }
             let jwt = localStorage.getItem("jwt");
             this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}&jwt=${jwt}`;
-            if (this.isMobile) {
-                this.mediaObject.src += "&full=true";
-            }
             this.currentTrack = this.track;
             this.hasScrobbledCurrentTrack = false;
             this.animationService.requestAnimation('enter', document.querySelector('.player h4'));
@@ -302,6 +293,26 @@ export class PlayerComponent implements OnDestroy {
             error => { },
             () => { }
         );
+        if ('mediaSession' in navigator) {
+            this.albumartService.getAlbumArt(this.track.trackArtist, this.track.album.name, 'album').subscribe(
+                data => {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: this.track.title,
+                        artist: this.track.trackArtist,
+                        album: this.track.album.name,
+                        artwork: [
+                            { src: `${data}`, sizes: '500x500', type: 'image/png' }
+                        ]
+                    });
+                    
+                    navigator.mediaSession.setActionHandler('play', () => { this.togglePlayPause() });
+                    navigator.mediaSession.setActionHandler('pause',  () => { this.togglePlayPause() });
+                    navigator.mediaSession.setActionHandler('previoustrack',  () => { this.prev() });
+                    navigator.mediaSession.setActionHandler('nexttrack',  () => { this.next() });
+                    
+                }
+            );
+        }
         document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbplaying', { 'detail': this.track }));
     }
     onstop() {
@@ -310,6 +321,7 @@ export class PlayerComponent implements OnDestroy {
     onpause() {
         document.querySelector('mdb-player').dispatchEvent(new CustomEvent('external.mdbpaused', { 'detail': this.track }));
     }
+
     toggleShuffle() {
         this.isShuffled = !this.isShuffled;
         this.playerService.shufflePlaylist(this.isShuffled);
