@@ -53,8 +53,9 @@
         height: 150px;
         top: 0;
         right: 0;
-        background-position: top right;
+        background-position: center;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        background-size: cover;
     }
 }
 
@@ -175,22 +176,22 @@
 
 #nowPlaying .icons .btn-love {
     position: absolute;
-    right: 250px;
+    right: 10px;
 }
 
 #nowPlaying .icons .btn-volume {
     position: absolute;
-    right: 10px;
+    right: 90px;
 }
 
 #nowPlaying .icons .btn-shuffle {
     position: absolute;
-    right: 90px;
+    right: 170px;
 }
 
 #nowPlaying .icons .btn-youtube {
     position: absolute;
-    right: 170px;
+    right: 250px;
 }
 
 #nowPlaying .progress {
