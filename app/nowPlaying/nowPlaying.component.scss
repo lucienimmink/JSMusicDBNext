@@ -48,6 +48,17 @@
 }
 
 @media screen and (min-width: 768px) {
+    #nowPlaying.small-art .image-wrapper>div {
+        width: 150px;
+        height: 150px;
+        top: 0;
+        right: 0;
+        background-position: top right;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media screen and (min-width: 768px) {
     #nowPlaying .image-wrapper,
     #nowPlaying .youtube-wrapper {
         height: calc(100% - 175px);

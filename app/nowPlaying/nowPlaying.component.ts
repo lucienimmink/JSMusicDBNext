@@ -42,6 +42,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     private showVisualisation: boolean = this.booleanState('visualisation-state');
     private preferVideo: boolean = this.booleanState('preferVideo-state');
+    private smallArt: boolean = this.booleanState('small-art');
 
     private youtubeSearchBase: string = "https://www.googleapis.com/youtube/v3/search";
     private youtubeVideoId: string = null;

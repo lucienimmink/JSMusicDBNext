@@ -1,4 +1,4 @@
-<div class="container-fluid animated-page" [ngClass]="{'slided': slided}" id="nowPlaying" *ngIf="track">
+<div class="container-fluid animated-page" [ngClass]="{'slided': slided, 'small-art': smallArt}" id="nowPlaying" *ngIf="track">
     <div class="top">
         <div class="image-wrapper" *ngIf="!videoMode">
             <canvas *ngIf="showVisualisation"></canvas>

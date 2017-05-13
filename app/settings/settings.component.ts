@@ -31,6 +31,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private savePlaylistState: boolean = this.booleanState("save-playlist-state");
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
     private isContinuesplay: boolean = this.booleanState('continues-play');
+    private smallArt: boolean = this.booleanState('small-art');
     private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
     private isReloading: boolean = false;
     private scanperc: number = 0;
@@ -136,11 +137,20 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
     toggleVisualisation() {
         this.visualisation = !this.visualisation;
+        if (!this.visualisation) {
+            // small art without visualisation is not needed.
+            this.smallArt = false;
+            localStorage.setItem('small-art', this.smallArt.toString());
+        }
         localStorage.setItem('visualisation-state', this.visualisation.toString());
     }
     togglePreferVideo() {
         this.preferVideo = !this.preferVideo;
         localStorage.setItem('preferVideo-state', this.preferVideo.toString());
+    }
+    toggleSmallArt() {
+        this.smallArt = !this.smallArt;
+        localStorage.setItem('small-art', this.smallArt.toString());
     }
     scrobbleNow() {
         this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
