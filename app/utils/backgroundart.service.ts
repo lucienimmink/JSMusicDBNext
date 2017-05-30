@@ -38,8 +38,8 @@ export class BackgroundArtService {
 
   getMediaArt(media: any): Observable<any[]> {
     let info = this.extractInfo(media);
-    return this.spotifyImageRetriever.getMediaArt(info.artist, info.album, info.type);
-    //return this.lastFMImageRetriever.getMediaArt(info.artist, info.album, info.type);
+    //return this.spotifyImageRetriever.getMediaArt(info.artist, info.album, info.type);
+    return this.lastFMImageRetriever.getMediaArt(info.artist, info.album, info.type);
   }
 
   getMediaArtFromLastFm(media: any): Observable<any> {

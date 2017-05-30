@@ -39,7 +39,7 @@
         "pouchdb": "^6.2.0",
         "reflect-metadata": "^0.1.10",
         "rxjs": "^5.3.0",
-        "systemjs": "^0.20.12",
+        "systemjs": "^0.20.13",
         "winstrap": "^0.5.11",
         "zone.js": "^0.8.9"
     },
@@ -61,7 +61,7 @@
         "node-sass": "^4.5.2",
         "rimraf": "^2.6.1",
         "run-sequence": "^1.2.2",
-        "systemjs-builder": "^0.16.4",
+        "systemjs-builder": "^0.16.6",
         "tslint": "^5.1.0",
         "typescript": "^2.2.2",
         "typings": "^2.1.1"

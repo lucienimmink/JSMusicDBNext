@@ -134,13 +134,13 @@ export class PlayerComponent implements OnDestroy {
                 var mediaButton = Windows.Media.SystemMediaTransportControlsButton;
                 switch (e.button) {
                     case mediaButton.play:
-                        this.onplay();
+                        this.mediaObject.play();
                         break;
                     case mediaButton.pause:
-                        this.onpause();
+                        this.mediaObject.pause();
                         break;
                     case mediaButton.stop:
-                        this.onstop();
+                        this.playerService.stop();
                         break;
                     case mediaButton.next:
                         this.next();
