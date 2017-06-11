@@ -130,7 +130,6 @@ export class PlayerComponent implements OnDestroy {
             this.systemMediaControls.isNextEnabled = true;
             this.systemMediaControls.isPreviousEnabled = true;
             this.systemMediaControls.addEventListener("buttonpressed", (e: Event) => {
-                console.log('systemMediaControlButton is pressed');
                 var mediaButton = Windows.Media.SystemMediaTransportControlsButton;
                 switch (e.button) {
                     case mediaButton.play:
@@ -169,15 +168,15 @@ export class PlayerComponent implements OnDestroy {
             canvas.height = HEIGHT;
             var ctx = canvas.getContext("2d");
 
-            var audioCtx = new window.AudioContext();
-            var javascriptNode = audioCtx.createScriptProcessor(2048, 1, 1);
+            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            var javascriptNode = audioCtx.createScriptProcessor(1024*2, 1, 1);
             javascriptNode.connect(audioCtx.destination);
 
             var analyser = audioCtx.createAnalyser();
             var source = audioCtx.createMediaElementSource(this.mediaObject);
 
             var analyser = audioCtx.createAnalyser();
-            analyser.fftSize = 256;
+            analyser.fftSize = 128;
             var bufferLength = analyser.frequencyBinCount;
             source.connect(analyser);
             analyser.connect(javascriptNode);
@@ -194,23 +193,21 @@ export class PlayerComponent implements OnDestroy {
                 var dataArray = new Uint8Array(bufferLength);
                 analyser.getByteFrequencyData(dataArray);
                 ctx.clearRect(0, 0, WIDTH, HEIGHT);
-                var barWidth = Math.floor((WIDTH / bufferLength) * 2.5);
+                var barWidth = Math.floor((WIDTH / bufferLength) * 1.1);
                 var barHeight;
                 var x = 0;
                 var y = (HEIGHT / 150) * 1.17;
 
                 for (var i = 0; i < bufferLength; i++) {
                     barHeight = dataArray[i] * y;
-                    ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
+                    // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
+                    // rgba(0, 120, 215, 1);
+                    ctx.fillStyle = `rgba(0,120,215,${dataArray[i]/255})`
                     ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
                     x += barWidth + 1;
                 }
             };
         }
-    }
-
-    systemMediaControlsButtonPressed(e: Event): void {
-
     }
 
     setTrack(position: any) {

@@ -35,13 +35,13 @@ export class LastFMImageRetriever implements AbstractImageRetriever {
         let image = this.NOIMAGE;
         if (json && json.album) {
             json.album.image.some((e) => {
-                if (e.size === "extralarge") {
+                if (e.size === "mega") {
                     image = e["#text"];
                 }
             });
         } else if (json && json.artist) {
             json.artist.image.some((e) => {
-                if (e.size === "extralarge") {
+                if (e.size === "mega") {
                     image = e["#text"];
                 }
             });

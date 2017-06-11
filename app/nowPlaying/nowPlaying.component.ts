@@ -35,7 +35,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private core: musicdbcore;
     private isDragging: boolean = false;
     private c: any = this;
-    private lastfmusername:string = '';
+    private lastfmusername: string = '';
 
     private showVolumeWindow: boolean = false;
     private volume: number = 100;
@@ -50,6 +50,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private videoMode: boolean = false;
     private player;
     private ytEvent;
+
+    private isEventBound: boolean = false;
 
     @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
@@ -95,16 +97,15 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     }
     ngOnInit() {
-        let c = this;
-        setTimeout(function () {
-            try {
+        setTimeout(() => {
+            if (this.track) {
                 if ('ontouchstart' in document.documentElement) {
-
-                    document.getElementById('progress-pusher').addEventListener('touchstart', c.startDrag);
+                    document.getElementById('progress-pusher').addEventListener('touchstart', this.startDrag);
                 } else {
-                    document.getElementById('progress-pusher').addEventListener('mousedown', c.startDrag);
+                    document.getElementById('progress-pusher').addEventListener('mousedown', this.startDrag);
                 }
-            } catch (e) { }
+                this.isEventBound = true;
+            }
         }, 250);
         this.lastfmusername = localStorage.getItem("lastfm-username") || '';
     }
@@ -137,6 +138,20 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
                     }
                 }
             );
+        }
+
+        // we need to bind the event to the dragger when it is activated
+        if (!this.isEventBound) {
+            setTimeout(() => {
+                try {
+                    if ('ontouchstart' in document.documentElement) {
+                        document.getElementById('progress-pusher').addEventListener('touchstart', this.startDrag);
+                    } else {
+                        document.getElementById('progress-pusher').addEventListener('mousedown', this.startDrag);
+                    }
+                    this.isEventBound = true;
+                } catch (e) { }
+            }, 250);
         }
     }
     toggleSlide() {
