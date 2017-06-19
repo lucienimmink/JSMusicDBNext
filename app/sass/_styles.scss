@@ -433,11 +433,11 @@ canvas {
 #title-bar {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 82px;
     -webkit-app-region: drag;
     height: 24px;
     z-index: 100;
+    right: 112px;
 }
 
 #title-bar-btns {

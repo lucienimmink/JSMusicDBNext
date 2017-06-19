@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     autoprefixer = require('gulp-autoprefixer'),
     replace = require('gulp-replace'),
-    inlineNg2Template = require('gulp-inline-ng2-template');
+    inlineNg2Template = require('gulp-inline-ng2-template'),
+    cleanCSS = require('gulp-clean-css');
 var tsProject = tsc.createProject('./dist-tsconfig.json');
 
 const penthouse = require('penthouse'),
@@ -83,6 +84,7 @@ gulp.task('bundle-css', function(cb) {
             browsers: ['last 1 versions'],
             cascade: false
         }))
+        .pipe(cleanCSS({ compatibility: '*' }))
         .pipe(gulp.dest('./target/css/'));
 });
 
