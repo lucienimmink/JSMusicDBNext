@@ -1,6 +1,6 @@
 <div class="menu-top">
     <span (click)="toggleMenu()">
-        <button class="btn btn-menu hidden-md hidden-lg">
+        <button class="btn btn-menu hidden-md hidden-lg" aria-label="menu button">
             <span class="glyph glyph-hamburger" aria-hidden="true"></span>
     </button>
     <a class="visible-md-inline-block visible-lg-inline-block">
@@ -42,7 +42,7 @@
         <span *ngIf="!path && page">{{page}}</span>
         <span *ngIf="!path && !page">JSMusicDB Next</span>
     </h1>
-    <button class="btn btn-menu btn-search visible-xs visible-sm" (click)="toggleSearch()">
+    <button class="btn btn-menu btn-search visible-xs visible-sm" (click)="toggleSearch()" aria-label="search button">
         <i class="glyph glyph-magnifier" *ngIf="!topSearchVisible"></i>
         <i class="glyph glyph-clear" *ngIf="topSearchVisible"></i>
     </button>

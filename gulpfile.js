@@ -13,6 +13,12 @@ var gulp = require('gulp'),
     inlineNg2Template = require('gulp-inline-ng2-template');
 var tsProject = tsc.createProject('./dist-tsconfig.json');
 
+const penthouse = require('penthouse'),
+    path = require('path'),
+    fs = require('fs'),
+    __basedir = './';
+
+
 var prefixZero = function(n) {
     if (n < 10) {
         return "0" + n;
@@ -213,5 +219,37 @@ gulp.task('bundle-app', ['inline-templates'], function(cb) {
         .then(function() { cb() })
         .catch(function(err) {
             cb(err);
+        });
+});
+
+gulp.task('critical-css', function(cb) {
+    penthouse({
+            url: 'http://localhost:3000', // npm run start first; then run gulp critical-css
+            css: path.join(__basedir + '/target/css/styles-3712b0437f.css'),
+            // OPTIONAL params 
+            width: 1300, // viewport width 
+            height: 900, // viewport height 
+            timeout: 10000, // ms; abort critical CSS generation after this timeout 
+            strict: false, // set to true to throw on CSS errors (will run faster if no errors) 
+            maxEmbeddedBase64Length: 1000, // characters; strip out inline base64 encoded resources larger than this 
+            userAgent: 'Penthouse Critical Path CSS Generator', // specify which user agent string when loading the page 
+            blockJSRequests: true, // set to false to load (external) JS (default: true) 
+            phantomJsOptions: { // see `phantomjs --help` for the list of all available options 
+                // 'proxy': 'http://proxy.company.com:8080', 
+                // 'ssl-protocol': 'SSLv3' 
+            },
+            customPageHeaders: {
+                'Accept-Encoding': 'identity' // add if getting compression errors like 'Data corrupted' 
+            }
+        })
+        .then(criticalCss => {
+            // use the critical css 
+            fs.writeFileSync('outfile.css', criticalCss);
+            cb();
+        })
+        .catch(err => {
+            // handle the error 
+            console.error(err);
+            cb();
         });
 });
