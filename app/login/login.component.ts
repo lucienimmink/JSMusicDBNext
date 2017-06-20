@@ -24,12 +24,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService, private coreService: CoreService, private configService: ConfigService) {
     this.user = new User();
 
-    this.subscription = this.configService.theme$.subscribe(
+    this.subscription = this.configService.mode$.subscribe(
       data => {
         this.theme = data;
       }
     )
-    this.theme = configService.theme;
+    this.theme = configService.mode;
   }
 
   ngOnInit() {

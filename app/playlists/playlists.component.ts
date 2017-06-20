@@ -62,7 +62,7 @@ export class PlaylistsComponent implements OnInit {
                 this.ngOnInit();
             }
         )
-        this.theme = configService.theme;
+        this.theme = configService.mode;
 
         this.newPlaylist = new Playlist();
     }

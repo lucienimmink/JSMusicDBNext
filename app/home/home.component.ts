@@ -49,7 +49,7 @@ export class HomeComponent implements OnDestroy {
     constructor(private playerService: PlayerService, private collectionService: CollectionService, private coreService: CoreService, private router: Router, private recentlyListened: RecentlyListenedService, private pathService: PathService, private lastFMService: LastFMService, private configService: ConfigService) {
         this.user = new User();
 
-        this.subscription = this.configService.theme$.subscribe(
+        this.subscription = this.configService.mode$.subscribe(
             data => {
                 this.theme = data;
             }
@@ -60,7 +60,7 @@ export class HomeComponent implements OnDestroy {
                 this.init();
             }
         )
-        this.theme = configService.theme;
+        this.theme = configService.mode;
         this.pathService.announcePage('Home');
 
         if (localStorage.getItem('lastfm-username')) {

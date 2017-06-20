@@ -28,6 +28,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private subscription2: Subscription;
     private subscription3: Subscription;
+    private subscription4: Subscription;
     private savePlaylistState: boolean = this.booleanState("save-playlist-state");
     private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
     private isContinuesplay: boolean = this.booleanState('continues-play');
@@ -46,6 +47,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private themeForm: NgForm;
     @ViewChild('themeForm') currentForm: NgForm;
     private theme: string;
+    private mode: string;
 
     private isVisualCapable:boolean = (navigator.userAgent.indexOf('Mobi') === -1 && navigator.userAgent.indexOf('Edge/') === -1);
 
@@ -68,9 +70,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 this.theme = data;
             }
         )
+        this.subscription4 = this.configService.mode$.subscribe(
+            data => {
+                this.mode = data;
+            }
+        )
         // setup a form for changing stuff
         this.settings.theme = this.configService.theme;
-        this.theme = this.settings.theme;
+        this.theme = this.configService.theme;
+        this.mode = this.configService.mode;
 
         // check if the collection is in reloading state
         this.poll();
@@ -112,6 +120,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
         this.subscription3.unsubscribe();
+        this.subscription4.unsubscribe();
     }
 
     removeLastfm() {

@@ -30,7 +30,7 @@
             <div class="col-xs-24">
                 <span class="color-type-secondary">Save playliststate:</span>
                 <div class="btn-group">
-                    <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': savePlaylistState, 'theme-alt': theme === 'dark'}" (click)="toggleSavePlaylistState()">
+                    <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': savePlaylistState, 'theme-alt': mode === 'dark'}" (click)="toggleSavePlaylistState()">
             <span class="stateLabel stateLabel-on">On</span>
             <span class="stateLabel stateLabel-off">Off</span>
         </button>
@@ -39,7 +39,7 @@
             <div class="col-xs-24" *ngIf="lastfmusername && lastfmusername.length > 0 && lastfmusername !== 'mdb-skipped'">
                 <span class="color-type-secondary">Manual scrobbling:</span>
                 <div class="btn-group">
-                    <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': manualScrobbling, 'theme-alt': theme === 'dark'}" (click)="toggleManualScrobbling()">
+                    <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': manualScrobbling, 'theme-alt': mode === 'dark'}" (click)="toggleManualScrobbling()">
             <span class="stateLabel stateLabel-on">On</span>
             <span class="stateLabel stateLabel-off">Off</span>
         </button>
@@ -51,7 +51,7 @@
             <div class="col-xs-24">
                 <span class="color-type-secondary">Continues play:</span>
                 <div class="btn-group">
-                    <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': isContinuesplay, 'theme-alt': theme === 'dark'}" (click)="toggleContinuesPlay()">
+                    <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': isContinuesplay, 'theme-alt': mode === 'dark'}" (click)="toggleContinuesPlay()">
             <span class="stateLabel stateLabel-on">On</span>
             <span class="stateLabel stateLabel-off">Off</span>
         </button>
@@ -62,7 +62,7 @@
     <div class="row">
         <div class="col-xs-24">
             <h4>Interface settings</h4>
-            <form [ngClass]="{'theme-alt': theme === 'dark'}" #themeForm="ngForm">
+            <form [ngClass]="{'theme-alt': mode === 'dark'}" #themeForm="ngForm">
                 <div class="form-group">
                     <p class="form-group-label">Theme</p>
                     <div class="radio">
@@ -77,11 +77,17 @@
                         <span>Dark</span>
                     </label>
                     </div>
+                    <div class="radio">
+                        <label>
+                        <input type="radio" name='theme' value="auto" [(ngModel)]="settings.theme" #name="ngModel" name="theme">
+                        <span>Auto</span> <span class="small color-type-secondary">Dark mode between 22:00 and 07:00</span>
+                    </label>
+                    </div>
                 </div>
                 <div class="form-group" *ngIf="isVisualCapable">
                     <span class="color-type-secondary">Show visualisation on now playing screen:</span>
                     <div class="btn-group">
-                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': visualisation, 'theme-alt': theme === 'dark'}" (click)="toggleVisualisation()">
+                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': visualisation, 'theme-alt': mode === 'dark'}" (click)="toggleVisualisation()">
                             <span class="stateLabel stateLabel-on">Yes</span>
                             <span class="stateLabel stateLabel-off">No</span>
                         </button>
@@ -90,7 +96,7 @@
                 <div class="form-group" *ngIf="visualisation && isVisualCapable">
                     <span class="color-type-secondary">Show smaller album-art on now playing screen:</span>
                     <div class="btn-group">
-                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': smallArt, 'theme-alt': theme === 'dark'}" (click)="toggleSmallArt()">
+                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': smallArt, 'theme-alt': mode === 'dark'}" (click)="toggleSmallArt()">
                             <span class="stateLabel stateLabel-on">Yes</span>
                             <span class="stateLabel stateLabel-off">No</span>
                         </button>
@@ -99,7 +105,7 @@
                 <div class="form-group">
                     <span class="color-type-secondary">Prefer video if available:</span>
                     <div class="btn-group">
-                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': preferVideo, 'theme-alt': theme === 'dark'}" (click)="togglePreferVideo()">
+                        <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': preferVideo, 'theme-alt': mode === 'dark'}" (click)="togglePreferVideo()">
                             <span class="stateLabel stateLabel-on">On</span>
                             <span class="stateLabel stateLabel-off">Off</span>
                         </button>

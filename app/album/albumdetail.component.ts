@@ -51,7 +51,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
             this.ngOnInit();
         });
 
-        this.theme = configService.theme;
+        this.theme = configService.mode;
     }
 
     ngOnInit() {

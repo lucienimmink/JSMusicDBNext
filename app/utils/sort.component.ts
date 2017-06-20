@@ -20,12 +20,12 @@ export class SortComponent implements OnInit {
     constructor(private configService: ConfigService) {
         this.sort = new Sort();
 
-        this.subscription = this.configService.theme$.subscribe(
+        this.subscription = this.configService.mode$.subscribe(
             data => {
                 this.theme = data;
             }
         )
-        this.theme = configService.theme;
+        this.theme = configService.mode;
     }
 
     ngOnInit() {
