@@ -40,22 +40,24 @@ export class ConfigService {
     set theme(theme: string) {
         if (this._theme !== theme) {
             this._theme = theme;
-
-            if (this._theme === "auto" && !this.counter) {
-                this.counter = setInterval(() => { this.checkTheme() }, this.COUNTERTIMER);
-                this.checkTheme();
-            } else if (this._theme === "auto") {
-                // timer has already started, we can ignore it all!
-            } else {
-                this.setStyleSheet(this._theme);
-                clearInterval(this.counter);
-                this.counter = 0;
-                this._mode = this._theme;
-            }
+        }
+        if (this._theme === "auto" && !this.counter) {
+            this.counter = setInterval(() => { this.checkTheme() }, this.COUNTERTIMER);
+            this.checkTheme();
+        } else if (this._theme === "auto") {
+            // timer has already started, we can ignore it all!
+        } else {
+            this.setStyleSheet(this._theme);
+            clearInterval(this.counter);
+            this.counter = 0;
+            this._mode = this._theme;
         }
     }
     applyTheme() {
         if (this._theme === "auto") {
+            if (!this.counter) {
+                this.counter = setInterval(() => { this.checkTheme() }, this.COUNTERTIMER);
+            }
             this.checkTheme();
         } else {
             this.setStyleSheet(this._theme);
@@ -63,7 +65,8 @@ export class ConfigService {
     }
     checkTheme() {
         let d: Date = new Date();
-        if (d.getHours() < 7 || d.getHours() > 21 && this._mode !== "dark" ) {
+        console.log(this._mode);
+        if (d.getHours() < 7 || d.getHours() > 21 && this._mode !== "dark") {
             this._mode = "dark";
             this.setStyleSheet(this._mode);
         } else if (d.getHours() > 6 && d.getHours() < 22 && this._mode !== "light") {
