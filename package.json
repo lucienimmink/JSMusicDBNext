@@ -1,6 +1,6 @@
 {
     "name": "jsmusicdb-next",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "scripts": {
         "start": "concurrent \"npm run watch\" \"npm run lite\" ",
         "clean": "rm -rf dist && mkdir dist",
