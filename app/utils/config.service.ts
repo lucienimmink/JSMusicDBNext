@@ -65,7 +65,6 @@ export class ConfigService {
     }
     checkTheme() {
         let d: Date = new Date();
-        console.log(this._mode);
         if (d.getHours() < 7 || d.getHours() > 21 && this._mode !== "dark") {
             this._mode = "dark";
             this.setStyleSheet(this._mode);

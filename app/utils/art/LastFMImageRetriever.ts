@@ -1,6 +1,7 @@
 import { AbstractImageRetriever } from './AbstractImageRetriever';
 import { Http, Response, RequestOptionsArgs, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Observable";
+import { MyURLEncoder } from "./MyURLEncoder";
 
 export class LastFMImageRetriever implements AbstractImageRetriever {
     NOIMAGE: 'global/images/no-cover.png'; // I want this in my interface; but how
@@ -8,7 +9,7 @@ export class LastFMImageRetriever implements AbstractImageRetriever {
     constructor(private http: Http) { }
 
     getMediaArt(artist: string, album: string, type: string): Observable<any[]> {
-        let urlSearchParams: URLSearchParams = new URLSearchParams();
+        let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyURLEncoder());
         urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
         urlSearchParams.set('artist', artist);
         urlSearchParams.set('format', 'json');
@@ -20,7 +21,7 @@ export class LastFMImageRetriever implements AbstractImageRetriever {
         } else {
             urlSearchParams.set('method', 'artist.getinfo');
         }
-
+        
         let query: RequestOptionsArgs = {
             search: urlSearchParams
         };
