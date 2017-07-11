@@ -92,6 +92,6 @@ export class AppModule {
     }
 }
 
-if (window['ENV'] && window['ENV'] === "prod") {
+if (window['ENV'] && window['ENV'] === "prod" || !window['ENV']) {
     enableProdMode();
 }

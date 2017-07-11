@@ -11,7 +11,8 @@ var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     replace = require('gulp-replace'),
     inlineNg2Template = require('gulp-inline-ng2-template'),
-    cleanCSS = require('gulp-clean-css');
+    cleanCSS = require('gulp-clean-css'),
+    csso = require('gulp-csso');
 var tsProject = tsc.createProject('./dist-tsconfig.json');
 
 const penthouse = require('penthouse'),
@@ -84,7 +85,7 @@ gulp.task('bundle-css', function(cb) {
             browsers: ['last 1 versions'],
             cascade: false
         }))
-        .pipe(cleanCSS({ compatibility: '*' }))
+        .pipe(csso())
         .pipe(gulp.dest('./target/css/'));
 });
 
@@ -93,8 +94,7 @@ gulp.task('copy-polyfills', function(cb) {
         './node_modules/core-js/client/shim.min.js',
         './node_modules/zone.js/dist/zone.js',
         './node_modules/reflect-metadata/Reflect.js',
-        './node_modules/hammerjs/hammer.js',
-        './node_modules/systemjs/dist/system.src.js'
+        './node_modules/hammerjs/hammer.js'
     ];
 
     return gulp.src(jsSources)
@@ -217,7 +217,7 @@ gulp.task('bundle-app', ['inline-templates'], function(cb) {
     var builder = new Builder('', 'dist-systemjs.config.js');
 
     builder
-        .bundle('dist/app/**/*', 'target/js/app.bundle.js', { minify: true, globalDefs: { DEBUG: false } })
+        .buildStatic('dist/app/**/*', 'target/js/app.bundle.js', { minify: true, globalDefs: { DEBUG: false } })
         .then(function() { cb() })
         .catch(function(err) {
             cb(err);
@@ -227,7 +227,7 @@ gulp.task('bundle-app', ['inline-templates'], function(cb) {
 gulp.task('critical-css', function(cb) {
     penthouse({
             url: 'http://localhost:3000', // npm run start first; then run gulp critical-css
-            css: path.join(__basedir + '/target/css/styles-3712b0437f.css'),
+            css: path.join(__basedir + '/target/css/styles-4cd04ff5e5.css'),
             // OPTIONAL params 
             width: 1300, // viewport width 
             height: 900, // viewport height 
