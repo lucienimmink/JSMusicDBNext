@@ -463,3 +463,10 @@ canvas {
         outline: none;
     }
 }
+
+#nowPlaying .control-wrapper-wrapper {
+    background: linear-gradient(to bottom, transparent 0%,$background-color 90%);
+}
+#nowPlaying .controls-wrapper h5 a{
+    color: $primary-color;
+}
