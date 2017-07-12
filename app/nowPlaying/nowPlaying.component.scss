@@ -56,9 +56,8 @@
         height: 150px;
         top: auto;
         left: 0;
-        bottom: 10px;
+        bottom: 20px;
         background-position: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         background-size: cover;
     }
 }
@@ -87,7 +86,7 @@
 
 #nowPlaying .image-wrapper div.current-album-art {
     z-index: 0;
-    opacity: 0.985;
+    /* opacity: 0.985; */
 }
 
 #nowPlaying .image-wrapper div.previous-album-art {
@@ -128,10 +127,22 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    // small
+    position: absolute;
+    bottom: 60px;
+    font-size: 36px;
+    left: 185px;
+    width: calc(100% - 205px);
+    margin: 0;
 }
 
 #nowPlaying .controls-wrapper h4 {
-    padding-top: 10px;
+    /* padding-top: 10px */
+
+    // small
+    bottom: 110px;
+    font-size: 52px;
 }
 
 #nowPlaying .icons {
@@ -140,9 +151,12 @@
 
 @media screen and (min-width: 1200px) {
     #nowPlaying .icons {
-        top: -55px;
+        /* top: -55px; */
         position: relative;
         pointer-events: none;
+
+        // small
+        margin-top: 8px;
         button,
         input {
             pointer-events: all;

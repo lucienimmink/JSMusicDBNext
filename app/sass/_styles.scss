@@ -382,7 +382,6 @@ h4 .small {
         background: $background-color;
     }
 }
-
 .main-content {
     @include musicdb-respond-min-width(lg) {
         margin-left: 82px;
@@ -465,7 +464,8 @@ canvas {
 }
 
 #nowPlaying .control-wrapper-wrapper {
-    background: linear-gradient(to bottom, transparent 0%,$background-color 90%);
+    text-shadow: 0px 0px 1px $background-color;
+    background: linear-gradient(to bottom, transparent 0%,$background-color 100%);
 }
 #nowPlaying .controls-wrapper h5 a{
     color: $primary-color;
