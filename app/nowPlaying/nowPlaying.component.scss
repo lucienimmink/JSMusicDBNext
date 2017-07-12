@@ -65,15 +65,21 @@
 @media screen and (min-width: 768px) {
     #nowPlaying .image-wrapper,
     #nowPlaying .youtube-wrapper {
-        height: calc(100% - 175px);
+        height: calc(100% - 115px);
         canvas {
             display: inline-block;
             position: absolute;
-            left: 0;
-            width: 100%;
-            height: calc(100% + 115px);
-            bottom: -115px;
+            left: 10px;
+            width: calc(100% - 20px);
+            height: calc(100% - 30px);
+            bottom: 20px;
         }
+    }
+    #nowPlaying.small-art .image-wrapper canvas {
+        left: 0;
+        width: 100%;
+        height: calc(100% + 175px);
+        bottom: -175px;
     }
 }
 
@@ -82,11 +88,14 @@
     #nowPlaying .youtube-wrapper {
         height: calc(100% - 115px);
     }
+    #nowPlaying.small-art .image-wrapper canvas {
+        height: calc(100% + 115px);
+        bottom: -115px;
+    }
 }
 
 #nowPlaying .image-wrapper div.current-album-art {
     z-index: 0;
-    /* opacity: 0.985; */
 }
 
 #nowPlaying .image-wrapper div.previous-album-art {
@@ -110,11 +119,15 @@
     height: calc(100% - 20px);
     margin-top: 10px;
 }
-
-#nowPlaying .control-wrapper-wrapper {
-    position: relative;
-    margin: -150px -10px 0;
-    padding: 150px 10px 0;
+@media screen and (min-width: 768px) {
+    #nowPlaying.small-art .control-wrapper-wrapper {
+        position: relative;
+        margin: -150px -10px 0;
+        padding: 150px 10px 0;
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+    }
 }
 #nowPlaying .controls-wrapper {
     position: relative;
@@ -127,22 +140,27 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-
-    // small
-    position: absolute;
-    bottom: 60px;
-    font-size: 36px;
-    left: 185px;
-    width: calc(100% - 205px);
-    margin: 0;
 }
-
+@media screen and (min-width: 768px) {
+    #nowPlaying.small-art .controls-wrapper h4,
+    #nowPlaying.small-art .controls-wrapper h5 {
+        position: absolute;
+        bottom: 60px;
+        font-size: 36px;
+        left: 185px;
+        width: calc(100% - 205px);
+        margin: 0;
+    }
+}
 #nowPlaying .controls-wrapper h4 {
-    /* padding-top: 10px */
-
-    // small
-    bottom: 110px;
-    font-size: 52px;
+    padding-top: 10px
+    
+}
+@media screen and (min-width: 768px) {
+    #nowPlaying.small-art .controls-wrapper h4 {
+        bottom: 110px;
+        font-size: 52px;
+    }
 }
 
 #nowPlaying .icons {
@@ -151,16 +169,19 @@
 
 @media screen and (min-width: 1200px) {
     #nowPlaying .icons {
-        /* top: -55px; */
+        top: -55px;
         position: relative;
         pointer-events: none;
-
-        // small
-        margin-top: 8px;
         button,
         input {
             pointer-events: all;
         }
+
+    }
+    #nowPlaying.small-art .icons {
+        top: 0;
+        margin-top: 8px;
+        
     }
 }
 
