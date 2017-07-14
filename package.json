@@ -36,12 +36,12 @@
         "moment": "^2.18.1",
         "ng2-bootstrap": "^1.6.3",
         "ng2-sticky-kit": "^4.0.1",
-        "pouchdb": "^6.2.0",
+        "pouchdb": "~6.2.0",
         "reflect-metadata": "^0.1.10",
         "rxjs": "^5.4.2",
         "systemjs": "^0.20.15",
         "winstrap": "^0.5.11",
-        "zone.js": "^0.8.12"
+        "zone.js": "0.8.12"
     },
     "devDependencies": {
         "babel-plugin-transform-amd-system-wrapper": "^0.3.7",

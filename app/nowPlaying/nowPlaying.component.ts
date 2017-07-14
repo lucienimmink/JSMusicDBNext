@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, OnInit } from "@angular/core";
+import { Component, OnDestroy, ViewChild, OnInit, HostListener } from "@angular/core";
 import { Http, Response, RequestOptionsArgs, URLSearchParams } from "@angular/http";
 import { PlayerService } from './../player/player.service';
 import { PathService } from './../utils/path.service';
@@ -52,6 +52,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     private ytEvent;
 
     private isEventBound: boolean = false;
+    private noFocus: boolean = false;
 
     @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
@@ -329,5 +330,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             this.videoMode = false;
             this.next();
         }
+    }
+    @HostListener('mousemove', ['$event'])
+    onClick(e) {
+        console.log(e)
     }
 }
