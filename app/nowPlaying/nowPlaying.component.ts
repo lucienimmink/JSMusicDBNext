@@ -53,6 +53,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     private isEventBound: boolean = false;
     private noFocus: boolean = false;
+    private timeoutTimer:any = null;
+    private timeoutTime:number = 5000;
 
     @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
@@ -96,6 +98,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             document.getElementsByTagName('body')[0].addEventListener('mouseup', this.stopDrag);
         }
 
+        this.timeoutTimer = setTimeout(() => {this.onTimeout();}, this.timeoutTime);
     }
     ngOnInit() {
         setTimeout(() => {
@@ -170,6 +173,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             document.getElementsByTagName('body')[0].removeEventListener('mousemove', this.drag);
             document.getElementsByTagName('body')[0].removeEventListener('mouseup', this.stopDrag);
         }
+        clearTimeout(this.timeoutTime);
     }
     navigateToArtist() {
         //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
@@ -331,8 +335,15 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
             this.next();
         }
     }
+
+    onTimeout() {
+        this.noFocus = true;
+    }
+
     @HostListener('mousemove', ['$event'])
-    onClick(e) {
-        console.log(e)
+    onMove(e):void {
+        clearTimeout(this.timeoutTimer);
+        this.noFocus = false;
+        this.timeoutTimer = setTimeout(() => {this.onTimeout();}, this.timeoutTime);
     }
 }
