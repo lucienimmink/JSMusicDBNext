@@ -467,6 +467,9 @@ canvas {
     text-shadow: 0px 0px 1px $background-color;
     background: linear-gradient(to bottom, transparent 0%,$background-color 100%);
 }
+#nowPlaying.small-art.no-focus .control-wrapper-wrapper {
+    background: linear-gradient(to bottom, transparent 90%,$background-color 100%);
+}
 #nowPlaying .controls-wrapper h5 a{
     color: $primary-color;
 }
