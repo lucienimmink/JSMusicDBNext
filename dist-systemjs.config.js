@@ -21,7 +21,7 @@
         'moment': { main: 'moment.js', defaultExtension: 'js' },
         'pouchdb': { main: 'dist/pouchdb.js', defaultExtension: 'js' },
         'jsrsasign': { main: 'lib/jsrsasign.js', defaultExtension: 'js' },
-        'ng2-youtube-player': { main: 'ng2-youtube-player.js', defaultExtension: 'js' },
+        'ng2-youtube-player': { main: 'bundles/ng2-youtube-player.umd.js', defaultExtension: 'js' },
         'ng2-sticky-kit': { main: 'ng2-sticky-kit.js', defaultExtension: 'js' }
     };
     var meta = {
