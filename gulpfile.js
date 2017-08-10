@@ -227,7 +227,7 @@ gulp.task('bundle-app', ['inline-templates'], function(cb) {
 gulp.task('critical-css', function(cb) {
     penthouse({
             url: 'http://localhost:3000', // npm run start first; then run gulp critical-css
-            css: path.join(__basedir + '/target/css/styles-4cd04ff5e5.css'),
+            css: path.join(__basedir + '/target/css/styles-ee01d255b5.css'),
             // OPTIONAL params 
             width: 1300, // viewport width 
             height: 900, // viewport height 

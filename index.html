@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
     <title>JSMusicDB next</title>
@@ -19,10 +19,16 @@
     <link rel="icon" type="image/png" sizes="1024x1024" href="global/images/logo.png">
     <link rel="apple-touch-icon" type="image/png" sizes="1024x1024" href="global/images/logo.png">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/node_modules/winstrap/dist/css/winstrap.min.css">
     <link rel="stylesheet" href="/dist/sass/animations.css">
-    <link rel="prefetch" href="/dist/sass/base.css" onload="this.rel = 'stylesheet';">
+    <script>
+        var fileref = document.createElement("link");
+        fileref.setAttribute("rel", "stylesheet");
+        fileref.setAttribute("type", "text/css");
+        fileref.setAttribute("href", "/dist/sass/base.css");
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+    </script>
     <base href="/">
 </head>
 <!-- 3. Display the application -->
@@ -41,6 +47,10 @@
         </div>
     </musicdb>
 
+    <noscript>
+        Unfortunately JavaScript is needed for this JavaScript based client webaudio based music database.
+    </noscript>
+
     <!-- Polyfill(s) for older browsers -->
     <script src="/node_modules/core-js/client/shim.min.js"></script>
     <script src="/node_modules/zone.js/dist/zone.js"></script>
@@ -52,7 +62,7 @@
     <script src="/systemjs.config.js"></script>
     <script>
         var ENV = 'dev';
-        System.import('app/main').catch(function(err) {
+        System.import('app/main').catch(function (err) {
             console.error(err);
         });
     </script>
@@ -61,10 +71,10 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             var maybePreventPullToRefresh = false;
             var lastTouchY = 0;
-            var touchstartHandler = function(e) {
+            var touchstartHandler = function (e) {
                 if (e.touches.length != 1) return;
                 lastTouchY = e.touches[0].clientY;
                 // Pull-to-refresh will only trigger if the scroll begins when the
@@ -73,7 +83,7 @@
                     window.pageYOffset == 0;
             }
 
-            var touchmoveHandler = function(e) {
+            var touchmoveHandler = function (e) {
                 var touchY = e.touches[0].clientY;
                 var touchYDelta = touchY - lastTouchY;
                 lastTouchY = touchY;
