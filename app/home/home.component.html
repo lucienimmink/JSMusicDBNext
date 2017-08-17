@@ -8,11 +8,12 @@
             <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" (click)="playTrack(track)">
               <div class="col-xs-5 col-sm-2 col-lg-1">
                 <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
-                <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
+                <mdbalbum [album]="track.album" *ngIf="track.nowPlaying === false && track.album"></mdbalbum>
+                <mdb-artist [artist]="track.artist" *ngIf="track.nowPlaying === false && !track.album && track.artist"></mdb-artist>
               </div>
               <div class="col-xs-19 col-sm-18 col-md-19 col-lg-20 pull-up">
-                {{track.artist}} &bull; {{track.title}} <br />
-                <span class="color-type-secondary small">{{track.album}} </span>
+                <span *ngIf="track.artist">{{track.artist.name}} &bull; {{track.title}}</span> <br />
+                <span *ngIf="track.album" class="color-type-secondary small">{{track.album.name}} </span>
               </div>
               <div class="col-xs-24 col-sm-4 col-md-3 text-right pull-up" [ngClass]="{'now-playing': track.nowPlaying}">
                 <span *ngIf="!track.nowPlaying">
@@ -51,13 +52,15 @@
           <div class="form-group">
             <label for="name" class="col-sm-8 col-lg-4 control-label">Username*</label>
             <div class="col-sm-16 col-lg-20">
-              <input type="text" class="form-control" id="name" placeholder="e.g. JohnDoe" required name="name" [(ngModel)]="user.name" #name="ngModel">
+              <input type="text" class="form-control" id="name" placeholder="e.g. JohnDoe" required name="name" [(ngModel)]="user.name"
+                #name="ngModel">
             </div>
           </div>
           <div class="form-group">
             <label for="password" class="col-sm-8 col-lg-4 control-label">Password*</label>
             <div class="col-sm-16 col-lg-20">
-              <input type="password" class="form-control" id="password" placeholder="password" required name="password" [(ngModel)]="user.password" #password="ngModel">
+              <input type="password" class="form-control" id="password" placeholder="password" required name="password" [(ngModel)]="user.password"
+                #password="ngModel">
             </div>
           </div>
           <div class="form-group">

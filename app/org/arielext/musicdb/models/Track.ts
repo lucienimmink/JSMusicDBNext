@@ -23,6 +23,8 @@ export default class Track {
     end: 0
   };
   showActions: boolean = false;
+  date: Date;
+  nowPlaying:boolean;
 
   constructor(json: any) {
     if (json.album && json.title) {

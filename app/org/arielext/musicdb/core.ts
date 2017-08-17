@@ -5,7 +5,7 @@ import Letter from './models/Letter';
 import Year from './models/Year';
 import { Subject } from 'rxjs/Subject';
 
-const VERSION: string = "1.2.3";
+const VERSION: string = "1.2.4";
 
 export class musicdbcore {
 
