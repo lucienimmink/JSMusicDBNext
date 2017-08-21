@@ -49,7 +49,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private theme: string;
     private mode: string;
 
-    private isVisualCapable:boolean = (navigator.userAgent.indexOf('Mobi') === -1 && navigator.userAgent.indexOf('Edge/') === -1);
+    private isVisualCapable:boolean = (navigator.userAgent.indexOf('Mobi') === -1);
 
     constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastFMService, private collectionService: CollectionService, private router: Router, private configService: ConfigService) {
         this.settings = new Settings();

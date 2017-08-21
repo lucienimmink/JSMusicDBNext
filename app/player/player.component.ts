@@ -155,7 +155,7 @@ export class PlayerComponent implements OnDestroy {
             this.c = this;
         }
         // not for mobile or Edge atm
-        if (navigator.userAgent.indexOf('Mobi') === -1 && navigator.userAgent.indexOf('Edge/') === -1) {
+        if (navigator.userAgent.indexOf('Mobi') === -1) {
 
             // lets only handle these calculations on desktop grade devices.
             let canvas = document.querySelector('canvas');
