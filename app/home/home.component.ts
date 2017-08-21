@@ -61,7 +61,7 @@ export class HomeComponent implements OnDestroy {
         this.core = this.coreService.getCore();
         this.subscription2 = this.core.coreParsed$.subscribe(
             data => {
-                this.init();
+                this.init(true);
             }
         );
         this.theme = configService.mode;
@@ -87,17 +87,11 @@ export class HomeComponent implements OnDestroy {
         );
     }
 
-    init():void {
-        if (localStorage.getItem("lastfm-username")) {
+    init(skipCoreCheck:boolean = false):void {
+        if ((this.coreService.getCore().isCoreParsed || skipCoreCheck)  && localStorage.getItem("lastfm-username")) {
             this.startPolling();
         }
         this.recentlyAdded = this.core.getLatestAdditions();
-        /*
-        let cachedlist:string = localStorage.getItem("cached-recently-listened");
-        if (cachedlist) {
-            this.recentlyListenedTracks = JSON.parse(cachedlist);
-        }
-        */
     }
 
     ngOnDestroy():void {

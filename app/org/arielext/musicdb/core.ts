@@ -1,9 +1,9 @@
-import Artist from './models/Artist';
-import Album from './models/Album';
-import Track from './models/Track';
-import Letter from './models/Letter';
-import Year from './models/Year';
-import { Subject } from 'rxjs/Subject';
+import Artist from "./models/Artist";
+import Album from "./models/Album";
+import Track from "./models/Track";
+import Letter from "./models/Letter";
+import Year from "./models/Year";
+import { Subject } from "rxjs/Subject";
 
 const VERSION: string = "1.2.4";
 
@@ -17,6 +17,8 @@ export class musicdbcore {
     public sortedLetters: Array<Letter> = [];
     public sortedAlbums: Array<Album> = [];
 
+    public isCoreParsed:boolean = false;
+
     private coreParsedSource = new Subject<any>();
     coreParsed$ = this.coreParsedSource.asObservable();
 
@@ -26,16 +28,17 @@ export class musicdbcore {
         tracks: 0,
         playingTime: 0,
         parsingTime: 0
-    }
+    };
 
     private latestAdditions: Array<Album> = [];
 
     constructor() {
+        // tslint:disable-next-line:no-console
         console.info(`Core init ${VERSION}`);
 
     }
 
-    public resetCollection() {
+    public resetCollection():void {
         this.artists = {};
         this.albums = {};
         this.tracks = {};
@@ -50,7 +53,7 @@ export class musicdbcore {
             tracks: 0,
             playingTime: 0,
             parsingTime: 0
-        }
+        };
 
         this.latestAdditions = [];
     }
@@ -67,27 +70,27 @@ export class musicdbcore {
         return ret;
     }
     private handleLetter(letter: Letter): Letter {
-        return this.instanceIfPresent(this, letter.letter, this.letters, letter, function (core: any) { });
+        return this.instanceIfPresent(this, letter.letter, this.letters, letter, function (core: any):void { return; });
     }
     private handleArtist(letter: Letter, artist: Artist): Artist {
-        return this.instanceIfPresent(this, artist.sortName, this.artists, artist, function (core: any) {
+        return this.instanceIfPresent(this, artist.sortName, this.artists, artist, function (core: any):void {
             letter.artists.push(artist);
             artist.letter = letter;
             core.totals.artists++;
         });
     }
     private handleAlbum(artist: Artist, album: Album, isFlacSupported: boolean = true): Album {
-        return this.instanceIfPresent(this, artist.sortName + '|' + album.sortName, this.albums, album, function (core: any) {
-            if (album.type === 'flac' && isFlacSupported || album.type !== 'flac') {
+        return this.instanceIfPresent(this, artist.sortName + "|" + album.sortName, this.albums, album, function (core: any):void {
+            if (album.type === "flac" && isFlacSupported || album.type !== "flac") {
                 album.artist = artist;
                 artist.albums.push(album);
-                artist.sortAndReturnAlbumsBy('year', 'asc');
+                artist.sortAndReturnAlbumsBy("year", "asc");
                 core.sortedAlbums.push(album);
                 core.totals.albums++;
                 if (core.years[album.year]) {
                     core.years[album.year].albums.push(album);
                 } else {
-                    let year = new Year(album);
+                    let year:Year = new Year(album);
                     year.albums.push(album);
                     core.years[year.year] = year;
                 }
@@ -95,20 +98,20 @@ export class musicdbcore {
         });
     }
     private handleTrack(artist: Artist, album: Album, track: Track, isFlacSupported: boolean = true): Track {
-        return this.instanceIfPresent(this, track.id, this.tracks, track, function (core: any) {
+        return this.instanceIfPresent(this, track.id, this.tracks, track, function (core: any):void {
             if (album.type && album.type !== track.type) {
-                album.type = 'mixed';
+                album.type = "mixed";
             } else {
                 album.type = track.type;
             }
-            if (track.type === 'flac' && isFlacSupported || track.type !== 'flac') {
+            if (track.type === "flac" && isFlacSupported || track.type !== "flac") {
                 core.totals.tracks++;
                 core.totals.playingTime += track.duration;
                 track.artist = artist;
                 track.album = album;
                 album.tracks.push(track);
                 // group by discnumber
-                let disc = track.disc;
+                let disc:number = track.disc;
                 if (!album.discs[`disc-${disc}`]) {
                     album.discs[`disc-${disc}`] = [];
                     album.discs[`disc-${disc}`].push(track);
@@ -116,7 +119,7 @@ export class musicdbcore {
                     album.discs[`disc-${disc}`].push(track);
                 }
                 // sort if needed
-                album.discs[`disc-${disc}`].sort(function (a, b) {
+                album.discs[`disc-${disc}`].sort(function (a:any, b:any):number {
                     if (a.number < b.number) {
                         return -1;
                     }
@@ -124,7 +127,7 @@ export class musicdbcore {
                 });
 
                 // sort all tracks firstly by disc, then by number
-                album.tracks.sort(function (a, b) {
+                album.tracks.sort(function (a:any, b:any):number {
                     if (a.disc < b.disc) {
                         return -1;
                     }
@@ -138,7 +141,7 @@ export class musicdbcore {
                     return 1;
                 });
             } else {
-                console.warn('skipping flac track, flac is not supported');
+                console.warn("skipping flac track, flac is not supported");
             }
         });
     }
@@ -148,33 +151,37 @@ export class musicdbcore {
         if (letter.letter) {
             letter = this.handleLetter(letter);
         }
-        let artist = new Artist(line);
+        let artist:Artist = new Artist(line);
         if (artist.name) {
             artist = this.handleArtist(letter, artist);
         }
-        let album = new Album(line);
+        let album:Album = new Album(line);
         if (album.name) {
             album = this.handleAlbum(artist, album, isFlacSupported);
         }
-        let track = new Track(line);
+        let track:Track = new Track(line);
         if (track.title) {
             track = this.handleTrack(artist, album, track, isFlacSupported);
         }
-    };
+    }
 
 
     private parseTree(tree: any): void {
+        // tslint:disable-next-line:forin
         for (let l in tree) {
             let letter: Letter = new Letter(tree[l]);
             letter = this.handleLetter(letter);
+            // tslint:disable-next-line:forin
             for (let a in tree[l].artists) {
                 // add artist in letter
                 let artist: Artist = new Artist(tree[l].artists[a]);
                 artist = this.handleArtist(letter, artist);
+                // tslint:disable-next-line:forin
                 for (let aa in tree[l].artists[a].albums) {
                     // add albums in artist in letter
                     let album: Album = new Album(tree[l].artists[a].albums[aa]);
                     album = this.handleAlbum(artist, album);
+                    // tslint:disable-next-line:forin
                     for (let t in tree[l].artists[a].albums[aa].tracks) {
                         let track: Track = new Track(tree[l].artists[a].albums[aa].tracks[t]);
                         track = this.handleTrack(artist, album, track);
@@ -182,7 +189,7 @@ export class musicdbcore {
                 }
             }
         }
-    };
+    }
     parseSourceJson(json: any, isFlacSupported: boolean = true): void {
         let start: number = new Date().getTime();
         if (json.length) {
@@ -195,24 +202,25 @@ export class musicdbcore {
             this.parseTree(json.tree);
         }
         // sort letters
-        let sorted = Object.keys(this.letters).sort(function (a, b) {
+        let sorted:any = Object.keys(this.letters).sort(function (a:any, b:any):number {
             return (a < b) ? -1 : 1;
         });
-        let t = [];
-        let core = this;
-        sorted.forEach(function (value, index) {
-            t.push(core.letters[value]);
-            core.letters[value].sortAndReturnArtistsBy('name', 'asc');
+        let t:Array<any> = [];
+        // let core = this;
+        sorted.forEach((value, index) => {
+            t.push(this.letters[value]);
+            this.letters[value].sortAndReturnArtistsBy("name", "asc");
         });
         this.sortedLetters = t;
         // update parsing time
         this.totals.parsingTime += (new Date().getTime() - start);
         this.coreParsedSource.next(true);
+        this.isCoreParsed = true;
 
     }
     getTrackByArtistAndName(artistName: string, trackName: string): Track {
-        let artist = new Artist({ name: artistName, dummy: true });
-        let coreArtist = this.artists[artist.sortName];
+        let artist:Artist = new Artist({ name: artistName, dummy: true });
+        let coreArtist:any = this.artists[artist.sortName];
         let ret: Track = null;
         if (coreArtist) {
             coreArtist.albums.some((album) => {
@@ -229,8 +237,7 @@ export class musicdbcore {
         return ret;
     }
     getTrackById(id: string): Track {
-        let c = this;
-        let ret = new Track({});
+        let ret:Track = new Track({});
         this.tracks.forEach(track => {
             if (track.id === id) {
                 ret = track;
@@ -240,14 +247,14 @@ export class musicdbcore {
         return ret;
     }
     getArtistByName(artistName: string): Artist {
-        let artist = new Artist({ name: artistName, dummy: true });
-        let coreArtist = this.artists[artist.sortName];
+        let artist:Artist = new Artist({ name: artistName, dummy: true });
+        let coreArtist:any = this.artists[artist.sortName];
         return coreArtist;
     }
     getAlbumByArtistAndName(artist: Artist, albumName: string): Album {
-        let ret = null;
+        let ret:Album = null;
         artist.albums.forEach((album) => {
-            //console.log(album.name, albumName);
+            // console.log(album.name, albumName);
             if (album.name.toLowerCase() === albumName.toLowerCase()) {
                 ret = album;
             }
@@ -255,7 +262,7 @@ export class musicdbcore {
         return ret;
     }
     getTrackByAlbumAndName(album: Album, trackName: string): Track {
-        let ret = null;
+        let ret:Track = null;
         album.tracks.forEach((track) => {
             if (track.title.toLowerCase() === trackName.toLowerCase()) {
                 ret = track;
@@ -264,19 +271,18 @@ export class musicdbcore {
         return ret;
     }
     artistsList(): Array<Artist> {
-        let c = this;
         let ret: Array<Artist> = [];
-        let sorted = Object.keys(this.artists).sort(function (a, b) {
+        let sorted:any = Object.keys(this.artists).sort(function (a:any, b:any):number {
             return (a < b) ? -1 : 1;
         });
-        sorted.forEach(function (value, index) {
-            ret.push(c.artists[value]);
+        sorted.forEach((value, index) => {
+            ret.push(this.artists[value]);
         });
         return ret;
     }
     searchArtist(query: string): Array<Artist> {
-        let ret = [];
-        let artistnames = Object.keys(this.artists);
+        let ret:Array<Artist> = [];
+        let artistnames:any = Object.keys(this.artists);
         artistnames = artistnames.filter(name => {
             if (name.indexOf(query.toUpperCase()) !== -1) {
                 return true;
@@ -288,34 +294,32 @@ export class musicdbcore {
         return ret;
     }
     searchAlbum(query: string): Array<Album> {
-        let c = this;
-        let ret = [];
-        let albumnames = Object.keys(this.albums);
+        let ret:Array<Album> = [];
+        let albumnames:any = Object.keys(this.albums);
         albumnames = albumnames.filter(name => {
-            name = name.substring(name.indexOf('|'));
+            name = name.substring(name.indexOf("|"));
             if (name.indexOf(query.toUpperCase()) !== -1) {
                 return true;
             }
         });
         albumnames.forEach(name => {
             ret.push(this.albums[name]);
-        })
+        });
         return ret;
     }
     searchTrack(query: string): Array<Track> {
-        let c = this;
-        let ret = [];
-        let tracks = Object.keys(this.tracks);
+        let ret:Array<Track> = [];
+        let tracks:any = Object.keys(this.tracks);
         tracks = tracks.filter(title => {
-            let track = this.tracks[title];
+            let track:any = this.tracks[title];
             if (track.title.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
                 return true;
             }
-        })
+        });
 
         tracks.forEach(name => {
             ret.push(this.tracks[name]);
-        })
+        });
         return ret;
     }
     getLatestAdditions(amount: number = 10): Array<Album> {
@@ -335,29 +339,29 @@ export class musicdbcore {
         return this.latestAdditions;
     }
     getNextAlbum(album: Album): Album {
-        let artist = album.artist;
-        let albumIndex = artist.albums.indexOf(album);
-        let nextAlbum = artist.albums[albumIndex + 1];
+        let artist:Artist = album.artist;
+        let albumIndex:number = artist.albums.indexOf(album);
+        let nextAlbum:Album = artist.albums[albumIndex + 1];
         if (!nextAlbum) {
             // get next artist
-            let nextArtist = this.getNextArtist(artist);
+            let nextArtist:Artist = this.getNextArtist(artist);
             nextAlbum = nextArtist.albums[0];
         }
         return nextAlbum;
     }
     getNextArtist(artist: Artist): Artist {
-        let letter = artist.letter;
-        let artistIndex = letter.artists.indexOf(artist);
-        let nextArtist = letter.artists[artistIndex + 1];
+        let letter:Letter = artist.letter;
+        let artistIndex:number = letter.artists.indexOf(artist);
+        let nextArtist:Artist = letter.artists[artistIndex + 1];
         if (!nextArtist) {
-            let nextLetter = this.getNextLetter(letter);
+            let nextLetter:Letter = this.getNextLetter(letter);
             nextArtist = nextLetter.artists[0];
         }
         return nextArtist;
     }
     getNextLetter(letter: Letter): Letter {
-        let letterIndex = this.sortedLetters.indexOf(letter);
-        let nextLetter = this.sortedLetters[letterIndex + 1];
+        let letterIndex:number = this.sortedLetters.indexOf(letter);
+        let nextLetter:Letter = this.sortedLetters[letterIndex + 1];
         if (!nextLetter) {
             nextLetter = this.sortedLetters[0];
         }

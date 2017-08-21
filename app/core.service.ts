@@ -1,4 +1,4 @@
-import { musicdbcore } from './org/arielext/musicdb/core';
+import { musicdbcore } from "./org/arielext/musicdb/core";
 
 export class CoreService {
     protected core: musicdbcore = null;

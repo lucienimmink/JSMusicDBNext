@@ -12,7 +12,7 @@
                 <mdb-artist [artist]="track.artist" *ngIf="track.nowPlaying === false && !track.album && track.artist"></mdb-artist>
               </div>
               <div class="col-xs-19 col-sm-18 col-md-19 col-lg-20 pull-up">
-                <span *ngIf="track.artist">{{track.artist.name}} &bull; {{track.title}}</span> <br />
+                <span *ngIf="track.artist">{{track.artist.name}} &bull; </span>{{track.title}}<br />
                 <span *ngIf="track.album" class="color-type-secondary small">{{track.album.name}} </span>
               </div>
               <div class="col-xs-24 col-sm-4 col-md-3 text-right pull-up" [ngClass]="{'now-playing': track.nowPlaying}">
