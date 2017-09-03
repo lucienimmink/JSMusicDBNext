@@ -24,9 +24,9 @@ import { User } from "./user";
 import * as PouchDB from "pouchdb";
 
 
-let recentlyListenedTable:any = new PouchDB("recentlyListened");
+let recentlyListenedTable: any = new PouchDB("recentlyListened");
 
-const RECENTLYLISTENEDINTERVAL:number = 1000 * 60;
+const RECENTLYLISTENEDINTERVAL: number = 1000 * 60;
 
 @Component({
     templateUrl: "app/home/home.component.html",
@@ -73,7 +73,7 @@ export class HomeComponent implements OnDestroy {
         this.init();
     }
 
-    onSubmit():void {
+    onSubmit(): void {
 
         this.lastFMService.authenticate({ user: this.user.name, password: this.user.password }).subscribe(
             data => {
@@ -87,20 +87,24 @@ export class HomeComponent implements OnDestroy {
         );
     }
 
-    init(skipCoreCheck:boolean = false):void {
-        if ((this.coreService.getCore().isCoreParsed || skipCoreCheck)  && localStorage.getItem("lastfm-username")) {
+    init(skipCoreCheck: boolean = false): void {
+        if ((this.coreService.getCore().isCoreParsed || skipCoreCheck) && localStorage.getItem("lastfm-username")) {
             this.startPolling();
         }
         this.recentlyAdded = this.core.getLatestAdditions();
+        let cachedlist = localStorage.getItem('cached-recently-listened');
+        if (cachedlist) {
+            this.recentlyListenedTracks = JSON.parse(cachedlist);
+        }
     }
 
-    ngOnDestroy():void {
+    ngOnDestroy(): void {
         clearInterval(this.counter);
         this.subscription.unsubscribe();
         this.subscription2.unsubscribe();
     }
 
-    startPolling():void {
+    startPolling(): void {
         if (!this.counter) {
             this.counter = setInterval(() => {
                 this.checkRecentlyListened();
@@ -109,7 +113,7 @@ export class HomeComponent implements OnDestroy {
         }
     }
 
-    checkRecentlyListened():void {
+    checkRecentlyListened(): void {
         this.newListenedTracks = [];
         this.loading = true;
         if (this.username !== "mdb-skipped") {
@@ -134,76 +138,76 @@ export class HomeComponent implements OnDestroy {
             return new Date(Number(track.date.uts) * 1000);
         }
     }
-
-    createFauxTrack(artist:Artist, album:Album, fmtrack:any): any {
-        const track:any = {
-            title: fmtrack.name,
-            nowPlaying: (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false,
-            date: this.setDate(fmtrack),
-            source: null,
-            trackArtist: fmtrack.artist["#text"],
-            duration: null,
-            disc: null,
-            number: null,
-            type: null,
-            isPlaying: false,
-            isPaused: false,
-            isLoved: false,
-            id: `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`,
-            position: null,
-            buffered: null,
-            showActions: false
-        };
-        if (artist) {
-            track.artist = artist;
+    setImage(track: any): String {
+        // last one is the best possible quality
+        if (track.image) {
+            return track.image[track.image.length - 1]["#text"];
+        } else {
+            return '';
         }
-        if (album) {
-            track.album = album;
-        }
-        return track;
     }
 
     populate(json: any): void {
         json.forEach(fmtrack => {
-            let artist:Artist = this.core.getArtistByName(fmtrack.artist["#text"]);
-            if (artist) {
-                let album:Album = this.core.getAlbumByArtistAndName(artist, fmtrack.album["#text"]);
-                if (album) {
-                    let coretrack:Track = this.core.getTrackByAlbumAndName(album, fmtrack.name);
-                        if (coretrack) {
-                            coretrack.date = this.setDate(fmtrack);
-                            coretrack.nowPlaying = (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false;
-                            this.newListenedTracks.push(coretrack);
-                        } else {
-                            this.newListenedTracks.push(this.createFauxTrack(artist, album, fmtrack));
-                        }
-                } else {
-                    this.newListenedTracks.push(this.createFauxTrack(artist, null, fmtrack));
-                }
-            } else {
-                this.newListenedTracks.push(this.createFauxTrack(null, null, fmtrack));
+            let track = {
+                artist: fmtrack.artist["#text"],
+                album: fmtrack.album["#text"],
+                title: fmtrack.name,
+                image: this.setImage(fmtrack),
+                nowPlaying: (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false,
+                date: this.setDate(fmtrack),
+                source: null,
+                trackArtist: fmtrack.artist["#text"],
+                duration: null,
+                disc: null,
+                number: null,
+                type: null,
+                isPlaying: false,
+                isPaused: false,
+                isLoved: false,
+                id: `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`,
+                position: null,
+                buffered: null,
+                showActions: false
             }
+            this.newListenedTracks.push(track);
         });
         if (this.recentlyListenedTracks !== this.newListenedTracks) {
             this.recentlyListenedTracks = this.newListenedTracks;
-            // let cachedlist:string = JSON.stringify(this.newListenedTracks);
-            // localStorage.setItem("cached-recently-listened", cachedlist);
+            let cachedlist: string = JSON.stringify(this.newListenedTracks);
+            localStorage.setItem("cached-recently-listened", cachedlist);
         }
         this.loading = false;
     }
     skipLastfm(): void {
-        let username:string = "mdb-skipped";
+        let username: string = "mdb-skipped";
         localStorage.setItem("lastfm-username", username);
         this.username = username;
         this.startPolling();
     }
     playTrack(track: any): void {
-        if (track instanceof Track) {
-            this.playerService.doPlayTrack(track);
-            setTimeout(() => {
-                this.checkRecentlyListened();
-            }, 500);
+        // get the track from the core;
+        let artist:Artist = this.core.getArtistByName(track.artist);
+        if (artist) {
+            let album:Album = this.core.getAlbumByArtistAndName(artist, track.album);
+            if (album) {
+                let coretrack:Track = this.core.getTrackByAlbumAndName(album, track.title);
+                if (coretrack) {
+                    this.playerService.doPlayTrack(coretrack);
+                    setTimeout(() => {
+                        this.checkRecentlyListened();
+                    }, 500);
+
+                } else {
+                    console.warn('track not found', track);
+                }
+            } else {
+                console.warn('album not found', track);
+            }
+        } else {
+            console.warn('artist not found', track);
         }
+
     }
 
 }
