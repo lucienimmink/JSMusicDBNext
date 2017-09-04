@@ -65,10 +65,10 @@ export class ConfigService {
     }
     checkTheme() {
         let d: Date = new Date();
-        if (d.getHours() < 7 || d.getHours() > 21 && this._mode !== "dark") {
+        if (d.getHours() < 7 || d.getHours() > 20 && this._mode !== "dark") {
             this._mode = "dark";
             this.setStyleSheet(this._mode);
-        } else if (d.getHours() > 6 && d.getHours() < 22 && this._mode !== "light") {
+        } else if (d.getHours() > 6 && d.getHours() < 21 && this._mode !== "light") {
             this._mode = "light";
             this.setStyleSheet(this._mode);
         }

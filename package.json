@@ -48,7 +48,7 @@
         "del": "^3.0.0",
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^4.0.0",
-        "gulp-clean-css": "^3.7.0",
+        "gulp-clean-css": "^3.8.0",
         "gulp-concat": "^2.6.1",
         "gulp-csso": "^3.0.0",
         "gulp-inline-ng2-template": "^4.0.0",
