@@ -15,7 +15,9 @@
         'pouchdb': 'node_modules/pouchdb',
         'jsrsasign': 'node_modules/jsrsasign',
         'ng2-youtube-player': 'node_modules/ng2-youtube-player',
-        'ng2-sticky-kit': 'node_modules/ng2-sticky-kit'
+        'ng2-sticky-kit': 'node_modules/ng2-sticky-kit',
+        'plugin-babel': 'node_modules/systemjs-plugin-babel/plugin-babel.js',
+        'systemjs-babel-build': 'node_modules/systemjs-plugin-babel/systemjs-babel-browser.js'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
@@ -58,7 +60,8 @@
     var config = {
         map: map,
         packages: packages,
-        meta: meta
+        meta: meta,
+        transpiler: 'plugin-babel'
     }
     System.config(config);
 })(this);
