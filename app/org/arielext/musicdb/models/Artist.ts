@@ -14,8 +14,8 @@ export default class Artist {
   constructor(json: any) {
     // a dummy artist is only used to search for a core artist but is not stored in the core.
     if ((json.album && json.title) || json.dummy) {
-      this.name = json.name || json.artist;
-      this.albumArtist = json.albumartist || json.albumArtist;
+      this.name = json.name || json.artist || '';
+      this.albumArtist = json.albumartist || json.albumArtist || '';
       this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), 'the ');
       this.bio = json.bio;
       this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false; // if albumartist doesn't exist it can't be a collection.
