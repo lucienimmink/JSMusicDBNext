@@ -71,6 +71,7 @@ img {
   width: 4px;
   height: 4px;
   opacity: 0;
+  -webkit-animation: progress-bar-animation 3s infinite;
   animation: progress-bar-animation 3s infinite;
 }
 
@@ -82,41 +83,84 @@ img {
 }
 
 .progress-bar .progress-circle:nth-child(2) {
+  -webkit-animation-delay: 200ms;
   animation-delay: 200ms;
 }
 
 .progress-bar .progress-circle:nth-child(3) {
+  -webkit-animation-delay: 400ms;
   animation-delay: 400ms;
 }
 
 .progress-bar .progress-circle:nth-child(4) {
+  -webkit-animation-delay: 600ms;
   animation-delay: 600ms;
 }
 
 .progress-bar .progress-circle:nth-child(5) {
+  -webkit-animation-delay: 800ms;
   animation-delay: 800ms;
 }
 
-@keyframes progress-bar-animation {
+@-webkit-keyframes progress-bar-animation {
   0% {
+    -webkit-transform: translate(0,0);
     transform: translate(0,0);
+    -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
     opacity: 0;
   }
 
   30% {
+    -webkit-transform: translate(60px,0);
     transform: translate(60px,0);
+    -webkit-animation-timing-function: linear;
     animation-timing-function: linear;
     opacity: 1;
   }
 
   70% {
+    -webkit-transform: translate(120px,0);
     transform: translate(120px,0);
+    -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
     opacity: 1;
   }
 
   to {
+    -webkit-transform: translate(180px,0);
+    transform: translate(180px,0);
+    opacity: 0;
+  }
+}
+
+@keyframes progress-bar-animation {
+  0% {
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    -webkit-animation-timing-function: ease-in;
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  30% {
+    -webkit-transform: translate(60px,0);
+    transform: translate(60px,0);
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    opacity: 1;
+  }
+
+  70% {
+    -webkit-transform: translate(120px,0);
+    transform: translate(120px,0);
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: translate(180px,0);
     transform: translate(180px,0);
     opacity: 0;
   }

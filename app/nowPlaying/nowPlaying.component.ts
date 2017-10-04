@@ -337,7 +337,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     }
 
     onTimeout() {
-        this.noFocus = true;
+        if (!this.slided && !this.videoMode) {
+            this.noFocus = true;
+        }
     }
 
     @HostListener('mousemove', ['$event'])
