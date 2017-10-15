@@ -1,8 +1,8 @@
 //== Colors (white)
-$background-color: white !default;
+$background-color: rgb(244, 244, 244) !default;
 $primary-color: black !default;
-$tertiary-color: darken($background-color, 5%);
-$forth-color: darken($background-color, 10%);
+$tertiary-color: darken($background-color, 3%);
+$forth-color: darken($background-color, 15%);
 $accent-color: rgba(0, 120, 215, 1);
 $secondary-color: rgba($primary-color, 0.6);
 $disabled-color: rgba($primary-color, 0.2);

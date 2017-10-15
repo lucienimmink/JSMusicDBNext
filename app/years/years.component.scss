@@ -1,67 +1,70 @@
 .container-longlist ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
+
 .container-longlist li {
-  margin: 0 0 10px;
-  padding: 10px;
-  list-style: none;
-  overflow: hidden;
-  height: 80px;
+    margin: 0;
+    padding: 13px 10px 7px;
+    list-style: none;
+    overflow: hidden;
+    height: 90px;
 }
-.container-longlist li:hover {
-  background-color: rgba(0,120,215,1);
-  color:#ffffff;
-}
+
 h4 {
-  padding-left: 25px;
-  margin-bottom: 5px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
+    padding-left: 25px;
+    margin-bottom: 5px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
+
 h4:before,
 h4:after {
     content: '';
     display: table;
 }
-.container-longlist li:hover .color-type-secondary {
-  color: #dddddd
-}
-.container-longlist /deep/ .panel-background {
-  display: inline-block;
-  margin: 0 10px 0 0;
-  width: 60px;
-  height: 60px;
-  box-shadow: none;
-}
-.container-longlist /deep/ .panel-info {
-  display: none;
-}
-.container-longlist .image-wrapper {
-  float: left;
-}
-.container-longlist .text-wrapper {
-  float: left;
-  width: calc(100% - 70px);
 
-  .text {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.container-longlist /deep/ .panel-background {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 60px;
+    height: 60px;
+    box-shadow: none;
 }
+
+.container-longlist /deep/ .panel-info {
+    display: none;
+}
+
+.container-longlist .image-wrapper {
+    float: left;
+}
+
+.container-longlist .text-wrapper {
+    float: left;
+    width: calc(100% - 70px);
+    .text {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
 .container-longlist h4 {
-  border-bottom: 1px solid rgba(0,120,215,1);
-  padding-left: 10px;
-  margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 120, 215, 1);
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
+
 .container-longlist h4 a:hover {
-  text-decoration: none;
-  color: #cccccc;
+    text-decoration: none;
+    color: #cccccc;
 }
-/deep/ .vsFor-before, /deep/ .vsFor-after {
+
+/deep/ .vsFor-before,
+/deep/ .vsFor-after {
     float: left;
 }

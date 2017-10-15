@@ -304,17 +304,21 @@ textarea.form-control:focus {
     }
 }
 
-.list-group-item {
+.list-group-item,
+.container-longlist li {
     padding: 10px 5px;
     border-bottom: 1px solid $forth-color;
+    transition: 0.25s ease-in-out;
 }
 
-.list-group-item:nth-child(2n+1) {
-    // background-color: $tertiary-color;
+.list-group-item:last-child,
+.container-longlist li:last-child {
+    border-bottom: none;
 }
 
-.list-group-item:hover {
-    background-color: $forth-color;
+.list-group-item:hover,
+.container-longlist li:hover {
+    background-color: $tertiary-color;
 }
 
 .list-group-item .glyph {
