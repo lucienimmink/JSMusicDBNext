@@ -7,6 +7,9 @@ $disabled-color: rgba($primary-color, 0.2);
 $hover-color: rgba($primary-color, 0.05);
 $tertiary-color: lighten($background-color, 12.5%);
 $forth-color: lighten($background-color, 17.5%);
+
+$accent-color: lighten($accent-color, 20%);
+
 ::-webkit-input-placeholder {
     color: darken($primary-color, 20%) !important;
 }

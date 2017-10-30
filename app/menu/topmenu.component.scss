@@ -71,24 +71,8 @@ h1 {
     margin-left: 10px;
 }
 
-.side-nav__content li {
-    border-left: 5px solid transparent;
-    margin: 0;
-}
-
 .side-nav__content li a {
     padding: 20px 20px;
-}
-
-.side-nav__content li:hover,
-.side-nav__content li.active {
-    border-left-color: rgba(0, 120, 215, 1);
-}
-
-.side-nav__content li:hover a,
-.side-nav__content li.active a {
-    color: rgba(0, 120, 215, 1);
-    background-color: transparent;
 }
 
 .side-nav__content li a .glyph {

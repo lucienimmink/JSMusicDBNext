@@ -481,3 +481,29 @@ canvas {
 #nowPlaying .controls-wrapper h5 a {
     color: $primary-color;
 }
+.now-playing {
+    color: $accent-color;
+  }
+h4.header-seperator {
+    border-bottom: 1px solid $accent-color;
+}
+.side-nav__content>li+li {
+    margin: 0;
+}
+.side-nav__content>li {
+    border-left: 5px solid transparent;
+    margin: 0;
+}
+
+.side-nav__content>li:hover,
+.side-nav__content>li.active {
+    border-left-color: $accent-color;
+}
+
+.side-nav__content>li:hover>a,
+.side-nav__content>li.active>a,
+.side-nav__content>li.active>a:hover,
+.side-nav__content>li.active>a:focus { 
+    color: $accent-color;
+    background-color: transparent;
+}

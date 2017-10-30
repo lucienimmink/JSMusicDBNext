@@ -1,5 +1,4 @@
 h4 {
-  border-bottom: 1px solid rgba(0,120,215,1);
   padding-left: 10px;
   padding-top: 10px;
   margin-bottom: 10px;
@@ -32,9 +31,7 @@ h4[sticky] {
     display: none;
   }
 }
-.now-playing {
-  color: rgba(0,120,215,1);
-}
+
 .glyph {
   font-size: 24px;
   display: inline-block;
