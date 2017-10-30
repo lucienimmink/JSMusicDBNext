@@ -29,71 +29,71 @@
     </script>
     <base href="/">
     <style>
-        @charset "UTF-8";
         html {
             font-family: sans-serif;
             -ms-text-size-adjust: 100%;
             -webkit-text-size-adjust: 100%;
-        }
-        
-        body {
+          }
+          
+          body {
             margin: 0;
-        }
-        
-        img {
+          }
+          
+          img {
             border: 0;
-        }
-        
-        *,
-         :after,
-         :before {
+          }
+          
+          *,
+          :after,
+          :before {
             box-sizing: border-box;
-        }
-        
-        html {
+          }
+          
+          html {
             font-size: 10px;
-        }
-        
-        body {
-            font-family: "Segoe UI", "Selawik", Tahoma, Verdana, Arial, sans-serif;
+          }
+          
+          body {
+            font-family: "Segoe UI","Selawik",Tahoma,Verdana,Arial,sans-serif;
             line-height: 1.5625;
+            background-color: #fff;
             padding-top: 55px;
             padding-bottom: 80px;
             background: #f4f4f4;
             color: #000;
             font-size: 17px;
-        }
-        
-        img {
+          }
+          
+          img {
             vertical-align: middle;
-        }
-        
-        .progress-bar {
+          }
+          
+          .progress-bar {
             float: left;
             font-size: 12px;
             line-height: 23px;
             color: #fff;
             text-align: center;
             background-color: #000;
-            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
-        }
-        
-        @-ms-viewport {
+            box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+          }
+          
+          @-ms-viewport {
             width: device-width;
-        }
-        
-        @font-face {
+          }
+          
+          @font-face {
             font-family: "Selawik";
             src: url(../fonts/selawk.eot);
-            src: url(../fonts/selawk.eot#iefix) format("embedded-opentype"), url(../fonts/selawk.ttf) format("truetype");
-        }
-        
-        .progress-bar {
+            src: url(../fonts/selawk.eot#iefix) format("embedded-opentype"),url(../fonts/selawk.ttf) format("truetype");
+          }
+          
+          .progress-bar {
             position: relative;
             width: 180px;
-        }
-        
-        .progress-bar .progress-circle {
+          }
+          
+          .progress-bar .progress-circle {
             position: absolute;
             top: 0;
             left: 0;
@@ -102,128 +102,136 @@
             opacity: 0;
             -webkit-animation: progress-bar-animation 3s infinite;
             animation: progress-bar-animation 3s infinite;
-        }
-        
-        .progress-bar .progress-circle:after {
+          }
+          
+          .progress-bar .progress-circle:after {
             content: "\2022";
             position: absolute;
             font-size: 10px;
             color: #0078d7;
-        }
-        
-        .progress-bar .progress-circle:nth-child(2) {
+          }
+          
+          .progress-bar .progress-circle:nth-child(2) {
             -webkit-animation-delay: 200ms;
             animation-delay: 200ms;
-        }
-        
-        .progress-bar .progress-circle:nth-child(3) {
+          }
+          
+          .progress-bar .progress-circle:nth-child(3) {
             -webkit-animation-delay: 400ms;
             animation-delay: 400ms;
-        }
-        
-        .progress-bar .progress-circle:nth-child(4) {
+          }
+          
+          .progress-bar .progress-circle:nth-child(4) {
             -webkit-animation-delay: 600ms;
             animation-delay: 600ms;
-        }
-        
-        .progress-bar .progress-circle:nth-child(5) {
+          }
+          
+          .progress-bar .progress-circle:nth-child(5) {
             -webkit-animation-delay: 800ms;
             animation-delay: 800ms;
-        }
-        
-        @-webkit-keyframes progress-bar-animation {
+          }
+          
+          @-webkit-keyframes progress-bar-animation {
             0% {
-                -webkit-transform: translate(0, 0);
-                transform: translate(0, 0);
-                -webkit-animation-timing-function: ease-in;
-                animation-timing-function: ease-in;
-                opacity: 0;
+              -webkit-transform: translate(0,0);
+              transform: translate(0,0);
+              -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+              opacity: 0;
             }
+          
             30% {
-                -webkit-transform: translate(60px, 0);
-                transform: translate(60px, 0);
-                -webkit-animation-timing-function: linear;
-                animation-timing-function: linear;
-                opacity: 1;
+              -webkit-transform: translate(60px,0);
+              transform: translate(60px,0);
+              -webkit-animation-timing-function: linear;
+              animation-timing-function: linear;
+              opacity: 1;
             }
+          
             70% {
-                -webkit-transform: translate(120px, 0);
-                transform: translate(120px, 0);
-                -webkit-animation-timing-function: ease-out;
-                animation-timing-function: ease-out;
-                opacity: 1;
+              -webkit-transform: translate(120px,0);
+              transform: translate(120px,0);
+              -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+              opacity: 1;
             }
+          
             to {
-                -webkit-transform: translate(180px, 0);
-                transform: translate(180px, 0);
-                opacity: 0;
+              -webkit-transform: translate(180px,0);
+              transform: translate(180px,0);
+              opacity: 0;
             }
-        }
-        
-        @keyframes progress-bar-animation {
+          }
+          
+          @keyframes progress-bar-animation {
             0% {
-                -webkit-transform: translate(0, 0);
-                transform: translate(0, 0);
-                -webkit-animation-timing-function: ease-in;
-                animation-timing-function: ease-in;
-                opacity: 0;
+              -webkit-transform: translate(0,0);
+              transform: translate(0,0);
+              -webkit-animation-timing-function: ease-in;
+              animation-timing-function: ease-in;
+              opacity: 0;
             }
+          
             30% {
-                -webkit-transform: translate(60px, 0);
-                transform: translate(60px, 0);
-                -webkit-animation-timing-function: linear;
-                animation-timing-function: linear;
-                opacity: 1;
+              -webkit-transform: translate(60px,0);
+              transform: translate(60px,0);
+              -webkit-animation-timing-function: linear;
+              animation-timing-function: linear;
+              opacity: 1;
             }
+          
             70% {
-                -webkit-transform: translate(120px, 0);
-                transform: translate(120px, 0);
-                -webkit-animation-timing-function: ease-out;
-                animation-timing-function: ease-out;
-                opacity: 1;
+              -webkit-transform: translate(120px,0);
+              transform: translate(120px,0);
+              -webkit-animation-timing-function: ease-out;
+              animation-timing-function: ease-out;
+              opacity: 1;
             }
+          
             to {
-                -webkit-transform: translate(180px, 0);
-                transform: translate(180px, 0);
-                opacity: 0;
+              -webkit-transform: translate(180px,0);
+              transform: translate(180px,0);
+              opacity: 0;
             }
-        }
-        
-         ::-webkit-scrollbar {
+          }
+          
+          ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
-        }
-        
-         ::-webkit-scrollbar-track {
-            background-color: rgba(128, 128, 128, .2);
-        }
-        
-         ::-webkit-scrollbar-thumb {
+          }
+          
+          ::-webkit-scrollbar-track {
+            background-color: rgba(128,128,128,.2);
+          }
+          
+          ::-webkit-scrollbar-thumb {
             background-color: #0078d7;
-        }
-        
-        @media only screen and (min-width:768px) {
+          }
+          
+          @media only screen and (min-width:768px) {
             body {
-                padding-top: 105px;
+              padding-top: 105px;
             }
-        }
-        
-        .preloader {
+          }
+          
+          .preloader {
             width: 320px;
             margin: 0 auto;
             text-align: center;
-        }
-        
-        .preloader .progress-bar {
+            background: #f4f4f4;
+          }
+          
+          .preloader .progress-bar {
             height: 0;
             width: 180px;
             margin: 0 auto;
             float: none;
-        }
-        
-        .progress-bar {
+          }
+          
+          .progress-bar {
             height: 0;
-        }
+          }
+          
     </style>
 </head>
 

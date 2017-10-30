@@ -30,7 +30,7 @@ body {
   background-color: #fff;
   padding-top: 55px;
   padding-bottom: 80px;
-  background: #fff;
+  background: #f4f4f4;
   color: #000;
   font-size: 17px;
 }
@@ -189,7 +189,7 @@ img {
   width: 320px;
   margin: 0 auto;
   text-align: center;
-  background: #fff;
+  background: #f4f4f4;
 }
 
 .preloader .progress-bar {
