@@ -10,7 +10,12 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "author": "Lucien Immink",
+  "description": "Web version of musicdb next",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/lucienimmink/JSMusicDBNext"
+  },
   "dependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",
