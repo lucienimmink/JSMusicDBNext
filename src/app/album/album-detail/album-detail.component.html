@@ -9,8 +9,7 @@
           <h2>{{album.name}}</h2>
           <h3 class="hidden-xs">{{album.artist.albumArtist || album.artist.name}}</h3>
           <h4>
-            <span *ngIf="album.year && album.year !== 0">{{album.year}} &bull; </span>{{album.tracks.length}} song
-            <span *ngIf="album.tracks.length !== 1">s</span> &bull; {{totalRunningTime() | timeFormat}} &bull; {{album.type}}
+            <span *ngIf="album.year && album.year !== 0">{{album.year}} &bull; </span>{{album.tracks.length}} song<span *ngIf="album.tracks.length !== 1">s</span> &bull; {{totalRunningTime() | timeFormat}} &bull; {{album.type}}
           </h4>
         </div>
       </div>

@@ -91,10 +91,13 @@ export class HomeComponent implements OnInit {
       this.startPolling();
     }
     this.recentlyAdded = this.core.getLatestAdditions();
+    // the cachedlist is just an array of strings; even without the info to really populate the list here; drop for now.
+    /*
     let cachedlist = localStorage.getItem('cached-recently-listened');
     if (cachedlist && this.core.isCoreParsed) {
       this.recentlyListenedTracks = JSON.parse(cachedlist);
     }
+    */
   }
 
   ngOnDestroy(): void {
