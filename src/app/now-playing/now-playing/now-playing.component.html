@@ -7,7 +7,7 @@
       <div class="previous-album-art" (swipeleft)="next()" (swiperight)="prev()"></div>
     </div>
     <div class="youtube-wrapper" *ngIf="videoMode">
-      <youtube-player [videoId]="youtubeVideoId" (ready)="savePlayer($event)" (change)="onStateChange($event)">
+      <youtube-player [videoId]="youtubeVideoId" (ready)="savePlayer($event)" (change)="onStateChange($event)" protocol="https">
       </youtube-player>
     </div>
     <div class="control-wrapper-wrapper">
