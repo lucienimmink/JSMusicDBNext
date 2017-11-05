@@ -1,0 +1,76 @@
+<div class="animated-page">
+  <div class="container" *ngIf="recentlyListenedTracks && username">
+    <div class="row">
+      <div class="col-xs-24">
+        <div *ngIf="recentlyListenedTracks.length > 0">
+          <h4 sticky class="header-seperator">Recently listened</h4>
+          <ol class="list-items">
+            <li class="list-group-item" *ngFor="let track of recentlyListenedTracks" (click)="playTrack(track)">
+              <div class="col-xs-5 col-sm-2 col-lg-1">
+                <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
+                <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
+              </div>
+              <div class="col-xs-19 col-sm-18 col-md-19 col-lg-20 pull-up">
+                {{track.artist}} &bull; {{track.title}}
+                <br />
+                <span class="color-type-secondary small">{{track.album}} </span>
+              </div>
+              <div class="col-xs-24 col-sm-4 col-md-3 text-right pull-up" [ngClass]="{'now-playing': track.nowPlaying}">
+                <span *ngIf="!track.nowPlaying">
+                  {{track.date | date:'shortTime' }}
+                  <span class="color-type-secondary small">
+                    <span *ngIf="!track.nowPlaying">{{track.date | date:'mediumDate' }}</span>
+                  </span>
+                </span>
+                <span *ngIf="track.nowPlaying">
+                  Playing
+                  <span class="color-type-secondary small">
+                    right now
+                  </span>
+                </span>
+              </div>
+            </li>
+          </ol>
+        </div>
+        <div *ngIf="recentlyAdded.length > 0">
+          <h4 sticky class="header-seperator media-header">Recently added / modified</h4>
+          <div class="media-container">
+            <div class="album-panel media-panel" *ngFor="let album of recentlyAdded">
+              <mdb-album [album]="album"></mdb-album>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="!username">
+    <div class="row">
+      <div class="col-xs-24">
+        <h4>Login to last.fm</h4>
+        <form role="form" class="form-horizontal" (ngSubmit)="onSubmit()" [ngClass]="{'theme-alt': theme === 'dark'}" #lastfmForm="ngForm">
+          <div class="form-group">
+            <label for="name" class="col-sm-8 col-lg-4 control-label">Username*</label>
+            <div class="col-sm-16 col-lg-20">
+              <input type="text" class="form-control" id="name" placeholder="e.g. JohnDoe" required name="name" [(ngModel)]="user.name"
+                #name="ngModel">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-sm-8 col-lg-4 control-label">Password*</label>
+            <div class="col-sm-16 col-lg-20">
+              <input type="password" class="form-control" id="password" placeholder="password" required name="password" [(ngModel)]="user.password"
+                #password="ngModel">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-8 col-lg-offset-4 col-sm-16 col-lg-20">
+              <button class="btn btn-primary" type="submit" [disabled]="!lastfmForm.form.valid">Login</button>
+              <button class="btn btn-link" type="button" (click)="skipLastfm()">Skip</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="container-fluid animated-page" [ngClass]="{'slided': slided, 'small-art': smallArt, 'no-focus': noFocus}" id="nowPlaying"
+  *ngIf="track">
+  <div class="top">
+    <div class="image-wrapper" *ngIf="!videoMode">
+      <canvas *ngIf="showVisualisation"></canvas>
+      <div class="current-album-art always-replace" [mdb-BackgroundArt]="track" (swipeleft)="next()" (swiperight)="prev()"></div>
+      <div class="previous-album-art" (swipeleft)="next()" (swiperight)="prev()"></div>
+    </div>
+    <div class="youtube-wrapper" *ngIf="videoMode">
+      <youtube-player [videoId]="youtubeVideoId" (ready)="savePlayer($event)" (change)="onStateChange($event)">
+      </youtube-player>
+    </div>
+    <div class="control-wrapper-wrapper">
+      <div class="row controls-wrapper">
+        <div class="progress" *ngIf="!videoMode">
+          <div class="progress-bar buffered-bar" role="progressbar" [ngStyle]="{'width': round((track.buffered.end / track.duration)* 100) + '%'}"></div>
+          <div class="progress-bar" [ngStyle]="{'width': ((track.position / track.duration)* 100) + '%'}"></div>
+          <div id="position-indicator" [ngStyle]="{'margin-left': ((track.position / track.duration)* 100) + '%'}" [ngClass]="{'dragging': isDragging }"></div>
+        </div>
+        <div id="progress-pusher" *ngIf="!videoMode"></div>
+        <span class="time start" *ngIf="!videoMode">{{track.position | timeFormat}}</span>
+        <span class="time stop" *ngIf="!videoMode">{{track.duration | timeFormat}}</span>
+
+        <div class="col-xs-24">
+          <h4>{{track.title}}</h4>
+          <h5>
+            <a (click)="navigateToArtist()">{{track.trackArtist}}</a>
+            <span class="hidden-xs color-type-secondary"> &bull;
+              <a (click)="navigateToAlbum()">{{track.album.name}}</a>
+            </span>
+          </h5>
+        </div>
+      </div>
+      <div class="row icons">
+        <div class="col-xs-24">
+          <button class="btn btn-link" (click)="prev()">
+            <i class="glyph glyph-previous"></i>
+          </button>
+          <button class="btn btn-link" (click)="togglePlayPause()">
+            <i class="glyph glyph-pause" *ngIf="isPlaying"></i>
+            <i class="glyph glyph-play" *ngIf="isPaused"></i>
+          </button>
+          <button class="btn btn-link" (click)="next()">
+            <i class="glyph glyph-next"></i>
+          </button>
+          <button class="btn btn-link btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}" *ngIf="lastfmusername !== 'mdb-skipped'">
+            <i class="glyph glyph-star-outline"></i>
+          </button>
+          <button class="btn btn-link btn-volume hidden-xs hidden-sm" (click)="toggleVolumeWindow($event)" [disabled]="videoMode">
+            <span class="glyph" [ngClass]="{'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span>
+          </button>
+          <button class="btn btn-link hidden-xs hidden-sm btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}">
+            <i class="glyph glyph-shuffle"></i>
+          </button>
+          <button class="btn btn-link hidden-xs hidden-sm btn-youtube" (click)="toggleVideo()" *ngIf="youtubeVideoId">
+            <i class="glyph glyph-video"></i>
+          </button>
+        </div>
+
+        <div class="volume-control hidden-xs hidden-sm" [hidden]="!showVolumeWindow">
+          <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()">
+        </div>
+
+        <div class="col-xs-24">
+          <button class="btn btn-link btn-updown" (click)="toggleSlide()">
+            <i class="glyph glyph-chevron-up" id="upordown"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom ">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-24">
+          <mdb-tracklist [playlist]="playlist"></mdb-tracklist>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="animated-page" *ngIf="!track">
+  <div class="jumbotron theme-light">
+    <div class="container">
+      <div class="row albumdetail">
+        <div class="col-xs-24">
+          <h3>Nothing is playing</h3>
+          <p>This is where you'll see the song you're playing and songs that are coming up.</p>
+          <p>Find an
+            <a routerLink="/artists">
+              <span class="glyph glyph-people"></span> artist</a> or
+            <a routerLink="/albums">
+              <span class="glyph glyph-music-album"></span> album</a> that you want to play; or setup a
+            <a routerLink="/playlists">
+              <span class="glyph glyph-music-info"></span> playlist</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

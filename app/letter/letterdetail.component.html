@@ -1,9 +1,0 @@
-<div class="container">
-  <sort [sorting]="sorting" (onSortChange)="onSortChange($event)"></sort>
-</div>
-<div class="media-container animated-page" imageLazyLoadArea>
-  
-  <div class="artist-panel media-panel" *ngFor="let artist of artists">
-    <mdb-artist [artist]="artist"></mdb-artist>
-  </div>
-</div>

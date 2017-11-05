@@ -1,0 +1,64 @@
+<div *ngIf="album" class="animated-page">
+  <div class="jumbotron theme-light" [ngClass]="{'shrunk': isShrunk}">
+    <div class="container">
+      <div class="row albumdetail">
+        <div class="col-xs-6 col-md-6 col-lg-4">
+          <mdb-album-art [album]="album"></mdb-album-art>
+        </div>
+        <div class="col-xs-18 col-md-18 col-lg-20">
+          <h2>{{album.name}}</h2>
+          <h3 class="hidden-xs">{{album.artist.albumArtist || album.artist.name}}</h3>
+          <h4>
+            <span *ngIf="album.year && album.year !== 0">{{album.year}} &bull; </span>{{album.tracks.length}} song
+            <span *ngIf="album.tracks.length !== 1">s</span> &bull; {{totalRunningTime() | timeFormat}} &bull; {{album.type}}
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-24">
+        <ol class="list-items" *ngFor="let disc of album.sortedDiscs">
+          <li class="list-items-row disc-row visible-xs visible-sm header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 49px"
+            [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
+          <li class="list-items-row disc-row visible-md visible-lg header-seperator" *ngIf="album.sortedDiscs.length > 1" sticky style="top: 99px"
+            [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
+          <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions, 'hq': track.type === 'flac'}">
+            <div class="details" (click)="onSelect(track, $event)">
+              <div class="col-xs-2 col-sm-1">
+                <span *ngIf="!track.isPlaying && !track.isPaused && track.number !== 0">{{track.number}}</span>
+                <span *ngIf="!track.isPlaying && track.isPaused">
+                  <span class="glyph glyph-pause"></span>
+                </span>
+                <span *ngIf="track.isPlaying && !track.isPaused">
+                  <span class="glyph glyph-play"></span>
+                </span>
+              </div>
+              <div class="col-xs-18 col-sm-19 col-md-21">
+                {{track.title}}
+                <br />
+                <span class="small color-type-secondary">
+                  {{track.trackArtist}}
+                </span>
+              </div>
+              <div class="col-xs-4 col-sm-4 col-md-2 text-right">
+                {{track.duration | timeFormat }}
+                <span *ngIf="album.type === 'mixed'">
+                  <br/>
+                  <span class="small color-type-secondary">{{track.type}}</span>
+                </span>
+              </div>
+            </div>
+          </li>
+        </ol>
+        <div *ngIf="album.type === 'flac' && !isFlacSupported">
+          <br />
+          <div class="alert alert-warning">
+            <strong>Warning!</strong> This album cannot be played since FLAC support is lacking.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

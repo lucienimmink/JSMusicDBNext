@@ -1,0 +1,86 @@
+h4 {
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    margin-top: -9px;
+  }
+  h4[sticky] {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+  }
+  @media screen and (min-width: 768px) {
+    h4[sticky] {
+      top: 100px;
+    }
+  }
+  .list-group-item {
+      overflow: hidden;
+      margin: 0;
+      cursor: pointer;
+  }
+  .list-items /deep/ .panel-background {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 45px;
+    height: 45px;
+    box-shadow: none;
+  }
+  .list-items /deep/ .panel-info {
+    display: none;
+  }
+  
+  .glyph {
+    font-size: 24px;
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .nowplaying-image {
+    width: 100%;
+    height: auto;
+    max-height: 87px;
+    display: inline-block;
+  }
+  .pull-up {
+    margin-top: -6px;
+  }
+  @media screen and (min-width: 768px) {
+      .nowplaying-image {
+          width: 45px;
+          height: 45px;
+      }
+  }
+  @media screen and (min-width: 768px) {
+      .text-right span {
+          display: block;
+      }
+  }
+  .media-header {
+    margin-left: -10px;
+    margin-right: -10px;
+  
+    padding-left: 20px;
+  }
+  .media-container {
+    margin: 0 -10px;
+  }
+  @media screen and (min-width: 480px) {
+    .media-container /deep/ .media-panel:nth-child(10n) {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .media-container /deep/ .media-panel {
+      width: 17vw;
+      height: 17vw;
+    }
+    .media-container /deep/ .media-panel:nth-child(10n) {
+      display: block;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .media-container /deep/ .media-panel {
+      width: 11vw;
+      height: 11vw;
+    } 
+  }

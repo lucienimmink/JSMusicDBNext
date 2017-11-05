@@ -1,0 +1,36 @@
+<div class="container animated-page">
+  <div class="row">
+    <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
+      <h4 sticky style="top: 49px;" class="visible-xs visible-sm header-seperator">Tracks in cache
+        <span class="small color-type-secondary">({{manualScrobblingList.length}})</span>
+        <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a>
+      </h4>
+      <h4 sticky style="top: 90px;" class="visible-md visible-lg header-seperator">Tracks in scrobble cache
+        <span class="small color-type-secondary">({{manualScrobblingList.length}})</span>
+        <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a>
+      </h4>
+      <ol class="list-items">
+        <li class="list-items-row" *ngFor="let item of manualScrobblingList">
+          <div class="row">
+            <div class="col-lg-1 text-right pull-right">
+              <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
+            </div>
+            <div class="col-lg-6">
+              {{item.artist}}
+            </div>
+            <div class="col-lg-6 color-type-secondary hidden-xs">
+              {{item.album}}
+            </div>
+            <div class="col-lg-8">
+              {{item.track}}
+            </div>
+            <div class="col-lg-3 color-type-secondary">
+              {{item.timestamp*1000 | date:'mediumDate' }} {{item.timestamp*1000 | date:'shortTime' }}
+            </div>
+          </div>
+        </li>
+      </ol>
+      <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0 && !isBusy">Scrobble now</button>
+    </div>
+  </div>
+</div>

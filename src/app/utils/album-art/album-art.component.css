@@ -1,0 +1,8 @@
+:host {
+    display: block;
+    overflow: hidden;
+    text-align: left;
+  }
+  img {
+    height: 75px;
+  }

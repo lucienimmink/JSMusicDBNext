@@ -1,0 +1,104 @@
+<div class="container animated-page">
+  <div class="row">
+    <div class="col-xs-24 col-lg-3 col-lg-fixed">
+      <h4>Playlists</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li *ngIf="currentPlaylist">
+          <a (click)="setPlaylist('current')">Current playlist</a>
+        </li>
+        <li>
+          <a (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved tracks on last.fm</a>
+        </li>
+        <li>
+          <a (click)="setPlaylist('random')">50 random tracks</a>
+        </li>
+        <li>
+          <a (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">Random based on your preferences</a>
+        </li>
+        <li>
+          <a (click)="setPlaylist('artist')">Artist radio</a>
+        </li>
+        <li *ngFor="let playlist of ownPlaylists">
+          <a (click)="setPlaylist(playlist)">{{playlist.name}}
+            <a (click)="removePlaylist(playlist)">
+              <span class="glyph glyph-delete"></span>
+            </a>
+          </a>
+        </li>
+      </ul>
+      <!--
+      <div class="entity-list entity-list-add-item-button" [ngClass]="{'theme-alt': theme === 'dark'}">
+        <a class="entity-list-item" (click)="addPlaylist()">
+          <div class="item-icon">
+            <span class="glyph glyph-add"></span>
+          </div>
+          <div class="item-content-primary">
+            <div class="content-text-primary">Create playlist</div>
+          </div>
+        </a>
+      </div>
+      -->
+    </div>
+    <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="loading">
+      <div class="progress-bar">
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+        <div class="progress-circle"></div>
+      </div>
+      <br />
+      <p class="small" *ngIf="playlist && playlist.tracks && playlist.tracks.length > 0">
+        Tracks found: {{ playlist.tracks.length}}
+      </p>
+    </div>
+    <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="playlist && !loading && !showStartingArtist">
+      <h4 sticky class="header-seperator">
+        {{playlist.name}}
+        <span class="small color-type-secondary">({{playlist.tracks.length}})</span> &nbsp;
+        <a (click)="updatePlaylist(playlist)" *ngIf="playlist.isOwn">
+          <span class="glyph glyph-edit small"></span>
+        </a> &nbsp;
+        <a (click)="removePlaylist(playlist)" *ngIf="playlist.isOwn">
+          <span class="glyph glyph-delete small"></span>
+        </a>
+      </h4>
+      <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length !== 0">
+        <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
+      </div>
+      <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length === 0">
+        <div class="col-xs-24">
+          <h3>Let's play!</h3>
+          <p>Unfortunately this playlist is empty :( Add some tracks from an
+            <a routerLink="/artists">
+              <span class="glyph glyph-people"></span> artist</a> or
+            <a routerLink="/albums">
+              <span class="glyph glyph-music-album"></span> album</a>.
+          </p>
+          <p>Tap the
+            <span class="glyph glyph-add"></span> on the active track to add it to a playlist (for example {{playlist.name}}).
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-24 col-lg-19 col-lg-offset-5" *ngIf="showStartingArtist && !loading && !playlist">
+      <h4 sticky class="header-seperator">Select an artist as starting point</h4>
+      <form role="form" #sortForm="ngForm" [ngClass]="{'theme-alt': theme === 'dark'}" class="form-inline">
+        <ol class="list-items">
+          <li class="list-group-item list-group-special">
+            <div class="form-group">
+              <label for="sort">
+                <span class="small color-type-secondary">Select an artist</span>
+              </label>
+              <div class="combobox">
+                <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName" (ngModelChange)="onChange($event)">
+                  <option *ngFor="let artist of artists">{{artist.name}}</option>
+                </select>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </form>
+    </div>
+  </div>
+</div>

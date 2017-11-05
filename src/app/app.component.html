@@ -1,0 +1,15 @@
+<div class="container-fluid fixed" (click)="hideVolumeWindow" [ngClass]="{'isPlaying': isPlaying}">
+  <mdb-topmenu></mdb-topmenu>
+</div>
+
+<div class="container-fluid fixed" (click)="hideVolumeWindow">
+  <mdb-letters></mdb-letters>
+</div>
+
+<div class="main-content" (click)="hideVolumeWindow">
+  <router-outlet></router-outlet>
+</div>
+
+<audio style="display: none;"></audio>
+<canvas></canvas>
+<mdb-player (mdbprev)="onExternalPrev($event)" (mdbnext)="onExternalNext($event)" (mdbtoggle)="onExternalToggle($event)" (mdbstop)="onExternalStop($event)" (click)="hideVolumeWindow()"></mdb-player>
