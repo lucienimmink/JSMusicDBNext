@@ -1,6 +1,6 @@
 {
-  "name": "jsmusic-dbnext5",
-  "version": "2.0.0-beta.3",
+  "name": "jsmusicdb-next",
+  "version": "2.0.0-beta.4",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
