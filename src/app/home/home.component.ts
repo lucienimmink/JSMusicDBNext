@@ -29,7 +29,7 @@ import PouchDB from 'pouchdb';
 export class HomeComponent implements OnInit {
 
   private recentlyListenedTable: any = new PouchDB("recentlyListened");
-  
+
   private RECENTLYLISTENEDINTERVAL: number = 1000 * 60;
 
   private core: musicdbcore;
@@ -87,12 +87,12 @@ export class HomeComponent implements OnInit {
   }
 
   init(skipCoreCheck: boolean = false): void {
-    if ((this.coreService.getCore().isCoreParsed || skipCoreCheck) && localStorage.getItem("lastfm-username")) {
+    if ((this.core.isCoreParsed || skipCoreCheck) && localStorage.getItem("lastfm-username")) {
       this.startPolling();
     }
     this.recentlyAdded = this.core.getLatestAdditions();
     let cachedlist = localStorage.getItem('cached-recently-listened');
-    if (cachedlist) {
+    if (cachedlist && this.core.isCoreParsed) {
       this.recentlyListenedTracks = JSON.parse(cachedlist);
     }
   }
@@ -148,21 +148,19 @@ export class HomeComponent implements OnInit {
 
   populate(json: any): void {
     json.forEach(fmtrack => {
-      if (fmtrack.mbid) {
-        let track:Track = new Track({});
-        track.artist = fmtrack.artist["#text"];
-        track.album = fmtrack.album["#text"];
-        track.title = fmtrack.name;
-        track.image = this.setImage(fmtrack);
-        track.nowPlaying = (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false;
-        track.date = this.setDate(fmtrack);
-        track.trackArtist = fmtrack.artist["#text"];
-        track.isPlaying = false;
-        track.isPaused = false;
-        track.isLoved = false;
-        track.id = `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`;
-        this.newListenedTracks.push(track);
-      }
+      let track: Track = new Track({});
+      track.artist = fmtrack.artist["#text"];
+      track.album = fmtrack.album["#text"];
+      track.title = fmtrack.name;
+      track.image = this.setImage(fmtrack);
+      track.nowPlaying = (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false;
+      track.date = this.setDate(fmtrack);
+      track.trackArtist = fmtrack.artist["#text"];
+      track.isPlaying = false;
+      track.isPaused = false;
+      track.isLoved = false;
+      track.id = `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`;
+      this.newListenedTracks.push(track);
     });
     if (this.recentlyListenedTracks !== this.newListenedTracks) {
       this.recentlyListenedTracks = this.newListenedTracks;

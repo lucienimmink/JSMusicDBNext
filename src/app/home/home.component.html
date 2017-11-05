@@ -34,9 +34,11 @@
         </div>
         <div *ngIf="recentlyAdded.length > 0">
           <h4 sticky class="header-seperator media-header">Recently added / modified</h4>
-          <div class="media-container">
-            <div class="album-panel media-panel" *ngFor="let album of recentlyAdded">
-              <mdb-album [album]="album"></mdb-album>
+          <div class="row">
+            <div class="media-container col-xs-24">
+              <div class="album-panel media-panel" *ngFor="let album of recentlyAdded">
+                <mdb-album [album]="album"></mdb-album>
+              </div>
             </div>
           </div>
         </div>

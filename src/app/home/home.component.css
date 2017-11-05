@@ -61,9 +61,6 @@ h4 {
   
     padding-left: 20px;
   }
-  .media-container {
-    margin: 0 -10px;
-  }
   @media screen and (min-width: 480px) {
     .media-container /deep/ .media-panel:nth-child(10n) {
       display: none;
@@ -80,7 +77,13 @@ h4 {
   }
   @media screen and (min-width: 992px) {
     .media-container /deep/ .media-panel {
-      width: 11vw;
-      height: 11vw;
+      width: 13vw;
+      height: 13vw;
+    } 
+  }
+  @media screen and (min-width: 1400px) {
+    .media-container /deep/ .media-panel {
+      width: 8vw;
+      height: 8vw;
     } 
   }

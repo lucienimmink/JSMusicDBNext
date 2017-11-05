@@ -5,7 +5,7 @@ import Letter from "./models/Letter";
 import Year from "./models/Year";
 import { Subject } from "rxjs/Subject";
 
-const VERSION: string = "1.2.6";
+const VERSION: string = "1.2.7";
 
 export class musicdbcore {
 
@@ -322,7 +322,7 @@ export class musicdbcore {
         });
         return ret;
     }
-    getLatestAdditions(amount: number = 10): Array<Album> {
+    getLatestAdditions(amount: number = 14): Array<Album> {
         if (this.latestAdditions.length !== 0) {
             return this.latestAdditions;
         }
