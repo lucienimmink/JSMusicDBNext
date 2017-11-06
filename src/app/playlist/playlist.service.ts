@@ -17,6 +17,7 @@ export class PlaylistService {
   private playlist: Playlist;
   private playlistSubject: Subject<any> = new Subject<any>();
   public playlistAnnounced$ = this.playlistSubject.asObservable();
+  public numberOfTracksInAPlaylist:number = 100;
 
   constructor(private coreService: CoreService, private lastfmservice: LastfmService) {
     this.core = this.coreService.getCore();
@@ -24,9 +25,9 @@ export class PlaylistService {
 
   generateRandom(): any {
     let coretracknames = Object.keys(this.core.tracks);
-    let randomTracks: Array<string> = this.shuffle(coretracknames).splice(0, 50);
+    let randomTracks: Array<string> = this.shuffle(coretracknames).splice(0, this.numberOfTracksInAPlaylist);
     let tmpPlaylist: Playlist = new Playlist();
-    tmpPlaylist.name = "50 random tracks";
+    tmpPlaylist.name = `${this.numberOfTracksInAPlaylist} random tracks`;
     randomTracks.map((id) => {
       tmpPlaylist.tracks.push(this.core.tracks[id]);
     });
@@ -41,15 +42,27 @@ export class PlaylistService {
     )
   }
 
-  extractArtists(data: Array<any>): Playlist {
-    let c = this;
+  extractTracks(data: Array<any>): any {
+    let tmpPlaylist: Playlist = new Playlist();
+    tmpPlaylist.name = "Loved tracks on Last.FM";
+    data.map((line) => {
+      let artistName: string = line.artist.name;
+      let trackName: string = line.name;
+      let track: any = this.core.getTrackByArtistAndName(artistName, trackName);
+      if (track) {
+        tmpPlaylist.tracks.push(track);
+      }
+    });
+    return tmpPlaylist;
+  }
+  extractArtists(data: Array<any>): any {
     let highRotation: Array<Artist> = [];
     let mediumRotation: Array<Artist> = [];
-    data.map((line, index) => {
+    data.forEach((line, index) => {
       let artistName: string = line.name;
       line.dummy = true // use dummy artist for lookup;
       let artist: Artist = new Artist(line);
-      let foundArtist: Artist = c.core.artists[artist.sortName];
+      let foundArtist: Artist = this.core.artists[artist.sortName];
       if (foundArtist && index < 10) {
         highRotation.push(foundArtist);
       } else {
@@ -61,10 +74,9 @@ export class PlaylistService {
 
   generateRadioList(highRotation: Array<Artist>, mediumRotation: Array<Artist>): Playlist {
     let tmpPlaylist: Playlist = new Playlist();
-    tmpPlaylist.name = "Random based on your preferences";
+    tmpPlaylist.name = `${this.numberOfTracksInAPlaylist} random tracks based on your recently listened tracks`;
 
-    let c = this;
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < this.numberOfTracksInAPlaylist; i++) {
       if (i % 3 === 0 || i % 5 === 0) {
         tmpPlaylist.tracks.push(this.getRandomTrackFromList(highRotation));
       } else if (i % 4 === 0 || i % 7 === 0) {
@@ -76,7 +88,7 @@ export class PlaylistService {
     return tmpPlaylist;
   }
 
-  private getRandomTrackFromList(list: Array<Artist>): Track {
+  getRandomTrackFromList(list: Array<Artist>): Track {
     let randomArtist: Artist = this.shuffle(list)[0];
     if (randomArtist) {
       let randomAlbum: Album = this.shuffle(randomArtist.albums)[0];
@@ -92,22 +104,26 @@ export class PlaylistService {
       return this.getRandomTrackFromList(list);
     }
   }
-  private shuffle(array: Array<any>) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+  shuffle(list: Array<any>): Array<any> {
+    for (var i = list.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = list[i];
+      list[i] = list[j];
+      list[j] = temp;
     }
-
-    return array;
+    return list;
+  }
+  getNextTrackForPlaylist(foundSimilair: Array<Artist>, playlist: any): Track {
+    let nextTrack = this.getRandomTrackFromList(foundSimilair);
+    if (nextTrack) {
+      let nextArtist = nextTrack.artist;
+      // if the last added track is a track by the same artist we'd like a different artist (if we can!)
+      if (playlist.tracks.length > 1 && (playlist.tracks[playlist.tracks.length - 1].artist === nextArtist) && foundSimilair.length > 1) {
+        // do stuff again with foundSimilair
+        return this.getNextTrackForPlaylist(foundSimilair, playlist);
+      }
+      return nextTrack;
+    }
+    return null;
   }
 }

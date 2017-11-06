@@ -10,10 +10,10 @@
           <a (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved tracks on last.fm</a>
         </li>
         <li>
-          <a (click)="setPlaylist('random')">50 random tracks</a>
+          <a (click)="setPlaylist('random')">{{playlistService.numberOfTracksInAPlaylist}} random tracks</a>
         </li>
         <li>
-          <a (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">Random based on your preferences</a>
+          <a (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">{{playlistService.numberOfTracksInAPlaylist}} random tracks based on your recently listened tracks</a>
         </li>
         <li>
           <a (click)="setPlaylist('artist')">Artist radio</a>
