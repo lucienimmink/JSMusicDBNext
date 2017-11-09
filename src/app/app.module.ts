@@ -70,11 +70,11 @@ import { PlayerComponent } from './player/player/player.component';
     routing,
     YoutubePlayerModule
     , TooltipModule.forRoot()
-    //, ModalModule.forRoot()
+    // , ModalModule.forRoot()
   ],
   providers: [appRoutingProviders,
     { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true },
-    { provide: LOCALE_ID, useValue: "en-GB" }],
+    { provide: LOCALE_ID, useValue: 'en-GB' }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

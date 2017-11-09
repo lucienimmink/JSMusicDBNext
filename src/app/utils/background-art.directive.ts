@@ -6,10 +6,11 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
 
-//import * as PouchDB from 'pouchdb';
-import PouchDB from 'pouchdb'
+// import * as PouchDB from 'pouchdb';
+import PouchDB from 'pouchdb';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[mdb-BackgroundArt]',
   providers: [BackgroundArtService]
 })
@@ -18,14 +19,15 @@ export class BackgroundArtDirective {
   arttable = new PouchDB('art');
 
   private el: HTMLElement;
-  public loading: boolean = false;
-  public loaded: boolean = false;
-  public error: boolean = false;
+  public loading = false;
+  public loaded = false;
+  public error = false;
   private tagName: string;
-  private loadingClass: string = 'loading';
-  private loadedClass: string = 'loaded';
-  private errorClass: string = 'error';
+  private loadingClass = 'loading';
+  private loadedClass = 'loaded';
+  private errorClass = 'error';
 
+  // tslint:disable-next-line:no-input-rename
   @Input('mdb-BackgroundArt') media: any;
 
   constructor(el: ElementRef, private backgroundArtService: BackgroundArtService) {
@@ -41,7 +43,7 @@ export class BackgroundArtDirective {
       this.addClassName(this.loadingClass);
 
       let key = `art-${this.media.name}`;
-      let c = this;
+      const c = this;
 
       if (this.media.artist && !this.media.trackArtist) {
         key = `art-${this.media.artist.name}-${this.media.name}`;
@@ -54,9 +56,10 @@ export class BackgroundArtDirective {
         } else {
           c.backgroundArtService.getMediaArt(c.media)
             .subscribe(
+            // tslint:disable-next-line:no-shadowed-variable
             data => c.setImage(data),
             error => {
-              c.el.style.backgroundImage = `url(${this.NOIMAGE})`
+              c.el.style.backgroundImage = `url(${this.NOIMAGE})`;
               c.error = true;
               c.loading = false;
               c.removeClassName(c.loadingClass);
@@ -75,6 +78,7 @@ export class BackgroundArtDirective {
     if (!this.loaded || this.hasClassName('always-replace')) {
       if (data === this.NOIMAGE || data === '' || !data) {
         this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
           data => {
             if (data && data !== this.NOIMAGE) {
               this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`;
@@ -85,12 +89,12 @@ export class BackgroundArtDirective {
               this.el.style.backgroundImage = `url(${data})`;
             }
 
-            let item = {
+            const item = {
               _id: `art-${this.media.name}`,
               url: data
             };
             if (this.media.artist) {
-              item._id = `art-${this.media.artist.name}-${this.media.name}`
+              item._id = `art-${this.media.artist.name}-${this.media.name}`;
             }
             this.arttable.put(item, function (err: any, response: any) {
               // boring
@@ -101,12 +105,12 @@ export class BackgroundArtDirective {
       } else {
         this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`;
 
-        let item = {
+        const item = {
           _id: `art-${this.media.name}`,
           url: data
         };
         if (this.media.artist) {
-          item._id = `art-${this.media.artist.name}-${this.media.name}`
+          item._id = `art-${this.media.artist.name}-${this.media.name}`;
         }
         this.arttable.put(item, function (err: any, respons: any) {
           // boring
@@ -117,8 +121,8 @@ export class BackgroundArtDirective {
     }
   }
   getPosition() {
-    let box = this.el.getBoundingClientRect();
-    let top = box.top + (window.pageYOffset - document.documentElement.clientTop);
+    const box = this.el.getBoundingClientRect();
+    const top = box.top + (window.pageYOffset - document.documentElement.clientTop);
     return {
       top: top,
       left: box.left + (window.pageXOffset - document.documentElement.clientLeft),
@@ -133,14 +137,14 @@ export class BackgroundArtDirective {
   }
   addClassName(name: string) {
     if (!this.hasClassName(name)) {
-      let container = this.getLoadingContainer();
+      const container = this.getLoadingContainer();
       container.className = container.className ? [container.className, name].join(' ') : name;
     }
   }
   removeClassName(name: string) {
     if (this.hasClassName(name)) {
-      let container = this.getLoadingContainer();
-      let c = container.className;
+      const container = this.getLoadingContainer();
+      const c = container.className;
       container.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
     }
   }

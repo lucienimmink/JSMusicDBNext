@@ -1,4 +1,4 @@
-import { musicdbcore } from "./../org/arielext/musicdb/core";
+import { musicdbcore } from './../org/arielext/musicdb/core';
 
 export class CoreService {
   protected core: musicdbcore;
@@ -6,7 +6,7 @@ export class CoreService {
   constructor() {
     this.core = new musicdbcore();
   }
-   getCore():musicdbcore {
+   getCore(): musicdbcore {
      return this.core;
    }
 

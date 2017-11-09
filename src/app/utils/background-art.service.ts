@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptionsArgs, URLSearchParams } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Http, Response, RequestOptionsArgs, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import { LastfmImageRetriever } from "./art/lastfm-image-retriever";
+import { LastfmImageRetriever } from './art/lastfm-image-retriever';
 
 @Injectable()
 export class BackgroundArtService {
@@ -12,7 +12,7 @@ export class BackgroundArtService {
   }
   private extractInfo(media: any): any {
     let artist = '';
-    let album = ''
+    let album = '';
     let type = 'artist';
     if (media.trackArtist && media.album.artist.isCollection) {
       artist = media.trackArtist;
@@ -27,16 +27,16 @@ export class BackgroundArtService {
       artist,
       album,
       type
-    }
+    };
   }
 
   getMediaArt(media: any): Observable<any[]> {
-    let info = this.extractInfo(media);
+    const info = this.extractInfo(media);
     return this.lastFMImageRetriever.getMediaArt(info.artist, info.album, info.type);
   }
 
   getMediaArtFromLastFm(media: any): Observable<any> {
-    let info = this.extractInfo(media);
+    const info = this.extractInfo(media);
     return this.lastFMImageRetriever.getMediaArt(info.artist, info.album, info.type);
   }
 }

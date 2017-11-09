@@ -1,15 +1,16 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from "@angular/core";
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ConfigService } from './../config.service';
 import { Sort } from './sort';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-sort',
   templateUrl: './sort.component.html',
   styleUrls: ['./sort.component.css']
 })
-export class SortComponent implements OnInit {
+export class SortComponent implements OnInit, OnDestroy {
   @Input() sorting: Array<any>;
   @Output() onSortChange = new EventEmitter<string>();
   public sort: Sort;
@@ -23,7 +24,7 @@ export class SortComponent implements OnInit {
       data => {
         this.theme = data;
       }
-    )
+    );
     this.theme = configService.mode;
   }
 
@@ -35,7 +36,7 @@ export class SortComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  onChange(e:Event) {
+  onChange(e: Event) {
     // emit the change to the parent
     this.onSortChange.emit(this.sort.sort);
   }

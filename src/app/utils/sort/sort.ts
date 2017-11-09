@@ -1,3 +1,3 @@
 export class Sort {
-    public sort:string;
-} 
+    public sort: string;
+}

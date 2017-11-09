@@ -1,7 +1,7 @@
 import { AbstractImageRetriever } from './../abstract-image-retriever';
-import { Http, Response, RequestOptionsArgs, URLSearchParams } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import { UrlEncoder } from "./url-encoder";
+import { Http, Response, RequestOptionsArgs, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { UrlEncoder } from './url-encoder';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -11,20 +11,20 @@ export class LastfmImageRetriever implements AbstractImageRetriever {
     constructor(private http: Http) { }
 
     getMediaArt(artist: string, album: string, type: string): Observable<any[]> {
-        let urlSearchParams: URLSearchParams = new URLSearchParams('', new UrlEncoder());
+        const urlSearchParams: URLSearchParams = new URLSearchParams('', new UrlEncoder());
         urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
         urlSearchParams.set('artist', artist);
         urlSearchParams.set('format', 'json');
         urlSearchParams.set('autoCorrect', 'true');
 
-        if (type === "album") {
+        if (type === 'album') {
             urlSearchParams.set('method', 'album.getinfo');
             urlSearchParams.set('album', album);
         } else {
             urlSearchParams.set('method', 'artist.getinfo');
         }
 
-        let query: RequestOptionsArgs = {
+        const query: RequestOptionsArgs = {
             search: urlSearchParams
         };
 
@@ -34,18 +34,18 @@ export class LastfmImageRetriever implements AbstractImageRetriever {
     }
 
     extractData(res: Response): string {
-        let json = res.json();
+        const json = res.json();
         let image = this.NOIMAGE;
         if (json && json.album) {
             json.album.image.some((e) => {
-                if (e.size === "mega") {
-                    image = e["#text"];
+                if (e.size === 'mega') {
+                    image = e['#text'];
                 }
             });
         } else if (json && json.artist) {
             json.artist.image.some((e) => {
-                if (e.size === "mega") {
-                    image = e["#text"];
+                if (e.size === 'mega') {
+                    image = e['#text'];
                 }
             });
         }

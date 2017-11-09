@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -15,21 +15,23 @@ import { ConfigService } from './utils/config.service';
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers: [CollectionService, CoreService, PathService, PlayerService, LastfmService, AnimationService, ConfigService, PlaylistService]
 })
-export class AppComponent implements OnDestroy {
-  private letter: string = 'N';
+export class AppComponent implements OnInit, OnDestroy {
+  private letter = 'N';
   private artists: Array<any>;
   private subscription: Subscription;
-  private path: string = "JSMusicDB Next";
-  private isLoading: boolean = false;
+  private path = 'JSMusicDB Next';
+  private isLoading = false;
   private viewContainerRef: ViewContainerRef;
-  public isPlaying: boolean = false;
+  public isPlaying = false;
   private mediaObject: any;
   private isFlacSupported: boolean;
+  // tslint:disable-next-line:max-line-length
   constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService, viewContainerRef: ViewContainerRef) {
 
     if (this.loginService.hasToken) {
@@ -41,7 +43,7 @@ export class AppComponent implements OnDestroy {
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.onmessage = (evt) => {
-        var message = JSON.parse(evt.data);
+        const message = JSON.parse(evt.data);
         if (message.type === 'refresh') {
           window.caches.open('v1').then((cache) => {
             return cache.match(message.url);
@@ -50,7 +52,7 @@ export class AppComponent implements OnDestroy {
           }).then((data) => {
             this.coreService.getCore().resetCollection();
             this.fillCollection(data);
-          })
+          });
         }
       };
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { AlbumComponent } from './../../album/album/album.component';
@@ -17,7 +17,7 @@ export class YearComponent implements OnInit, OnDestroy {
 
   public items: Array<any> = [];
   public years: Array<any> = [];
-  public showJumpList: boolean = false;
+  public showJumpList = false;
   private cummlativeLength: Array<any> = [];
   private core: musicdbcore;
   private subscription: Subscription;
@@ -28,16 +28,16 @@ export class YearComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
   }
 
   ngOnInit() {
-    this.pathService.announcePage("Years");
-    let yearsobject = this.core.years;
-    let sorted = Object.keys(yearsobject).sort(function (a, b) {
-      return (parseInt(a) < parseInt(b)) ? 1 : -1;
+    this.pathService.announcePage('Years');
+    const yearsobject = this.core.years;
+    const sorted = Object.keys(yearsobject).sort(function (a, b) {
+      return (parseInt(a, 10) < parseInt(b, 10)) ? 1 : -1;
     });
-    let tmp: Array<any> = [];
+    const tmp: Array<any> = [];
     sorted.forEach((year) => {
       if (year !== 'undefined') {
         tmp.push(this.core.years[year]);
@@ -46,10 +46,10 @@ export class YearComponent implements OnInit, OnDestroy {
     });
     this.items = tmp;
     this.items.forEach((item, index) => {
-      let letterLength = this.getSize(item, index);
+      const letterLength = this.getSize(item, index);
       if (index > 0) {
-        let prevLength = this.cummlativeLength[index - 1].l
-        let newLength = prevLength + letterLength;
+        const prevLength = this.cummlativeLength[index - 1].l;
+        const newLength = prevLength + letterLength;
         this.cummlativeLength[index] = {
           l: newLength,
           year: item.year.year
@@ -67,7 +67,7 @@ export class YearComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   navigateToAlbum(album: Album) {
-    this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName])
+    this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName]);
   }
   getSize(item: any, index: number) {
     return (item.albums.length * 90) + 39;
@@ -77,16 +77,15 @@ export class YearComponent implements OnInit, OnDestroy {
   }
   jumpToLetter(year: any) {
     this.showJumpList = false;
-    let c = this;
 
-    this.items.some(function (item, i) {
+    this.items.some((item, i) => {
       let ret = false;
-      if (item.year === parseInt(year)) {
-        let jump = (i > 0) ? i - 1 : 0;
+      if (item.year === parseInt(year, 10)) {
+        const jump = (i > 0) ? i - 1 : 0;
         if (jump === 0) {
           window.scrollTo(0, 0);
         } else {
-          window.scrollTo(0, c.cummlativeLength[jump].l);
+          window.scrollTo(0, this.cummlativeLength[jump].l);
         }
         ret = true;
       }

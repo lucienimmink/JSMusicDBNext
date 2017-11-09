@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Http, Response, URLSearchParams, RequestOptionsArgs, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { MyQueryEncoder } from './my-query-encoder';
 import Artist from './../org/arielext/musicdb/models/Artist';
 import Track from './../org/arielext/musicdb/models/Track';
-//import * as PouchDB from 'pouchdb';
+// import * as PouchDB from 'pouchdb';
 import PouchDB from 'pouchdb';
 
-const APIKEY: string = '956c1818ded606576d6941de5ff793a5';
-const SECRET: string = '4d183e73f7578dee78557665e9be3acc';
+const APIKEY = '956c1818ded606576d6941de5ff793a5';
+const SECRET = '4d183e73f7578dee78557665e9be3acc';
 const NOIMAGE = 'global/images/no-cover.png';
 
-let recentlyListenedTable = new PouchDB('recentlyListened');
-let arttable = new PouchDB('art');
+const recentlyListenedTable = new PouchDB('recentlyListened');
+const arttable = new PouchDB('art');
 
 @Injectable()
 export class LastfmService {
@@ -28,14 +28,14 @@ export class LastfmService {
   constructor(private http: Http) { }
 
   getLovedTracks(user: string): Observable<any> {
-    let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+    const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
     urlSearchParams.set('api_key', APIKEY);
     urlSearchParams.set('format', 'json');
     urlSearchParams.set('limit', '1000');
     urlSearchParams.set('method', 'user.getlovedtracks');
     urlSearchParams.set('user', user);
 
-    let query: RequestOptionsArgs = {
+    const query: RequestOptionsArgs = {
       search: urlSearchParams
     };
 
@@ -44,9 +44,9 @@ export class LastfmService {
       .catch(this.handleError);
   }
   toggleLoved(track: Track): Observable<any> {
-    let sk = localStorage.getItem('lastfm-token');
-    let urlSearchParams: URLSearchParams = new URLSearchParams();
-    let method: string = (track.isLoved) ? 'track.love' : 'track.unlove';
+    const sk = localStorage.getItem('lastfm-token');
+    const urlSearchParams: URLSearchParams = new URLSearchParams();
+    const method: string = (track.isLoved) ? 'track.love' : 'track.unlove';
     urlSearchParams.set('method', method);
     urlSearchParams.set('api_key', APIKEY);
     urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, null, sk, method));
@@ -55,7 +55,7 @@ export class LastfmService {
     urlSearchParams.set('track', track.title);
     urlSearchParams.set('sk', sk);
 
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type',
       'application/x-www-form-urlencoded');
 
@@ -64,10 +64,11 @@ export class LastfmService {
     })
       .map(this.noop)
       .catch(this.handleError);
-  };
+  }
+
   getTrackInfo(track: Track, user: string): Observable<any> {
     if (track) {
-      let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+      const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
       urlSearchParams.set('method', 'track.getInfo');
       urlSearchParams.set('artist', track.trackArtist);
       urlSearchParams.set('album', track.album.name);
@@ -76,7 +77,7 @@ export class LastfmService {
       urlSearchParams.set('format', 'json');
       urlSearchParams.set('user', user);
 
-      let query: RequestOptionsArgs = {
+      const query: RequestOptionsArgs = {
         search: urlSearchParams
       };
 
@@ -86,9 +87,10 @@ export class LastfmService {
     } else {
       return Observable.throw(null);
     }
-  };
+  }
+
   getTopArtists(user: string): Observable<any> {
-    let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+    const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
     urlSearchParams.set('api_key', APIKEY);
     urlSearchParams.set('format', 'json');
     urlSearchParams.set('limit', '50');
@@ -96,7 +98,7 @@ export class LastfmService {
     urlSearchParams.set('period', '1month');
     urlSearchParams.set('user', user);
 
-    let query: RequestOptionsArgs = {
+    const query: RequestOptionsArgs = {
       search: urlSearchParams
     };
 
@@ -104,8 +106,9 @@ export class LastfmService {
       .map(this.extractLastFMTop)
       .catch(this.handleError);
   }
+
   getSimilairArtists(artist: Artist): Observable<any> {
-    let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+    const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
     urlSearchParams.set('api_key', APIKEY);
     urlSearchParams.set('format', 'json');
     urlSearchParams.set('limit', '20');
@@ -113,7 +116,7 @@ export class LastfmService {
     urlSearchParams.set('method', 'artist.getSimilar');
     urlSearchParams.set('artist', artist.name);
 
-    let query: RequestOptionsArgs = {
+    const query: RequestOptionsArgs = {
       search: urlSearchParams
     };
 
@@ -121,14 +124,15 @@ export class LastfmService {
       .map(this.extractLastFMSimilair)
       .catch(this.handleError);
   }
+
   authenticate(user: any): Observable<any> {
-    let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+    const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
     urlSearchParams.set('api_key', APIKEY);
     urlSearchParams.set('api_sig', this.signAuthentication(user.user, user.password));
     urlSearchParams.set('username', user.user);
     urlSearchParams.set('password', user.password);
 
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type',
       'application/x-www-form-urlencoded');
 
@@ -140,22 +144,24 @@ export class LastfmService {
   }
 
   announceNowPlaying(track: Track): Observable<any> {
-    let username = localStorage.getItem('lastfm-username');
+    const username = localStorage.getItem('lastfm-username');
     if (username !== 'mdb-skipped') {
-      let now = new Date();
-      let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
-      let sk = localStorage.getItem('lastfm-token');
-      let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+      const now = new Date();
+      const timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(),
+        now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
+      const sk = localStorage.getItem('lastfm-token');
+      const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
       urlSearchParams.set('method', 'track.updateNowPlaying');
       urlSearchParams.set('api_key', APIKEY);
-      urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.updateNowPlaying'));
+      urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title,
+        timestamp, sk, 'track.updateNowPlaying'));
       urlSearchParams.set('artist', track.trackArtist);
       urlSearchParams.set('album', track.album.name);
       urlSearchParams.set('track', track.title);
       urlSearchParams.set('timestamp', timestamp.toString());
       urlSearchParams.set('sk', sk);
 
-      let headers = new Headers();
+      const headers = new Headers();
       headers.append('Content-Type',
         'application/x-www-form-urlencoded');
 
@@ -170,12 +176,13 @@ export class LastfmService {
   }
 
   scrobbleTrack(track: Track): any {
-    let username = localStorage.getItem('lastfm-username');
-    let now = new Date();
-    let timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
+    const username = localStorage.getItem('lastfm-username');
+    const now = new Date();
+    const timestamp = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(),
+      now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
     if (username !== 'mdb-skipped') {
-      let sk = localStorage.getItem('lastfm-token');
-      let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+      const sk = localStorage.getItem('lastfm-token');
+      const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
       urlSearchParams.set('method', 'track.scrobble');
       urlSearchParams.set('api_key', APIKEY);
       urlSearchParams.set('api_sig', this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, 'track.scrobble'));
@@ -185,11 +192,11 @@ export class LastfmService {
       urlSearchParams.set('timestamp', timestamp.toString());
       urlSearchParams.set('sk', sk);
 
-      let headers = new Headers();
+      const headers = new Headers();
       headers.append('Content-Type',
         'application/x-www-form-urlencoded');
 
-      let saveScrobble = this.booleanState('manual-scrobble-state');
+      const saveScrobble = this.booleanState('manual-scrobble-state');
       if (!saveScrobble) {
         return this.http.post('https://ws.audioscrobbler.com/2.0/', urlSearchParams.toString(), {
           headers: headers
@@ -198,21 +205,21 @@ export class LastfmService {
           .catch(this.handleError);
       } else {
         // save details
-        let offlineCache = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
-        let cachedItem = {
+        const offlineCache = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
+        const cachedItem = {
           artist: track.trackArtist,
           album: track.album.name,
           track: track.title,
           timestamp: timestamp.toString()
-        }
+        };
         offlineCache.unshift(cachedItem);
         this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
         localStorage.setItem('manual-scrobble-list', JSON.stringify(offlineCache));
       }
     } else {
-      let key = `art-${track.trackArtist}-${track.album.name}`;
-      let c = this;
-      let imageurl = NOIMAGE;
+      const key = `art-${track.trackArtist}-${track.album.name}`;
+      const c = this;
+      const imageurl = NOIMAGE;
       this.arttable.get(key, function (err: any, data: any) {
         if (data) {
           c.saveInLocal(track, timestamp, data.url);
@@ -223,8 +230,8 @@ export class LastfmService {
     }
   }
   saveInLocal(track: Track, timestamp: number, imageurl: string): void {
-    let c = this;
-    let cachedItem = {
+    const c = this;
+    const cachedItem = {
       artist: {
         '#text': track.trackArtist
       },
@@ -250,27 +257,29 @@ export class LastfmService {
         rev = data._rev;
       }
       tracks.unshift(cachedItem);
-      let item = {
+      const item = {
         _id: `recentlyListened`,
         _rev: rev,
         tracks: tracks
       };
+      // tslint:disable-next-line:no-shadowed-variable
       c.recentlyListenedTable.put(item, function (err: any, res: any) { });
     });
   }
   scrobbleCachedTrack(cachedTrack: any) {
-    let sk = localStorage.getItem('lastfm-token');
-    let urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
+    const sk = localStorage.getItem('lastfm-token');
+    const urlSearchParams: URLSearchParams = new URLSearchParams('', new MyQueryEncoder());
     urlSearchParams.set('method', 'track.scrobble');
     urlSearchParams.set('api_key', APIKEY);
-    urlSearchParams.set('api_sig', this.signTrack(cachedTrack.artist, cachedTrack.album, cachedTrack.track, cachedTrack.timestamp, sk, 'track.scrobble'));
+    urlSearchParams.set('api_sig', this.signTrack(cachedTrack.artist, cachedTrack.album, cachedTrack.track,
+      cachedTrack.timestamp, sk, 'track.scrobble'));
     urlSearchParams.set('artist', cachedTrack.artist);
     urlSearchParams.set('album', cachedTrack.album);
     urlSearchParams.set('track', cachedTrack.track);
     urlSearchParams.set('timestamp', cachedTrack.timestamp);
     urlSearchParams.set('sk', sk);
 
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type',
       'application/x-www-form-urlencoded');
 
@@ -282,7 +291,7 @@ export class LastfmService {
   }
 
   private booleanState(key: string): boolean {
-    let raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
     if (raw && raw === 'true') {
       return true;
     }
@@ -290,14 +299,14 @@ export class LastfmService {
   }
 
   private extractAuthenticate(response: Response) {
-    let responseText = response.text();
-    let responseXml = new DOMParser().parseFromString(responseText, 'text/xml');
-    return responseXml.getElementsByTagName("key")[0].textContent;
+    const responseText = response.text();
+    const responseXml = new DOMParser().parseFromString(responseText, 'text/xml');
+    return responseXml.getElementsByTagName('key')[0].textContent;
   }
 
   private extractTrackInfo(response: Response) {
-    let json = response.json();
-    if (json.track && json.track.userloved && json.track.userloved === "1") {
+    const json = response.json();
+    if (json.track && json.track.userloved && json.track.userloved === '1') {
       return true;
     }
     return false;
@@ -313,14 +322,14 @@ export class LastfmService {
 
   private signTrack(artist: string, album: string, track: string, timestamp: number, sk: string, method: string): string {
     if (timestamp) {
-      return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}timestamp${timestamp}track${track}${SECRET}`)
+      return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}timestamp${timestamp}track${track}${SECRET}`);
     } else {
-      return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}track${track}${SECRET}`)
+      return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}track${track}${SECRET}`);
     }
   }
 
   private extractLastFMLoved(res: Response): Array<any> {
-    let json = res.json();
+    const json = res.json();
     if (json.lovedtracks) {
       return json.lovedtracks.track;
     } else {
@@ -329,7 +338,7 @@ export class LastfmService {
   }
 
   private extractLastFMTop(res: Response): Array<any> {
-    let json = res.json();
+    const json = res.json();
 
     if (json.topartists) {
       return json.topartists.artist;
@@ -339,7 +348,7 @@ export class LastfmService {
   }
 
   private extractLastFMSimilair(res: Response): Array<any> {
-    let json = res.json();
+    const json = res.json();
 
     if (json.similarartists) {
       return json.similarartists.artist;
@@ -359,15 +368,16 @@ export class LastfmService {
   }
   private rstr2hex(input: string) {
     try {
-      this.hexcase
+      this.hexcase = this.hexcase;
     } catch (e) {
       this.hexcase = 0;
     }
-    var hex_tab = this.hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-    var output = "";
-    var x: number;
-    for (var i = 0; i < input.length; i++) {
+    const hex_tab = this.hexcase ? '0123456789ABCDEF' : '0123456789abcdef';
+    let output = '';
+    let x: number;
+    for (let i = 0; i < input.length; i++) {
       x = input.charCodeAt(i);
+      // tslint:disable-next-line:no-bitwise
       output += hex_tab.charAt((x >>> 4) & 0x0F) + hex_tab.charAt(x & 0x0F);
     }
     return output;
@@ -376,52 +386,61 @@ export class LastfmService {
     return this.binl2rstr(this.binl_md5(this.rstr2binl(s), s.length * 8));
   }
   private str2rstr_utf8(input: string) {
-    var output = "";
-    var i = -1;
-    var x: number, y: number;
+    let output = '';
+    let i = -1;
+    let x: number, y: number;
 
     while (++i < input.length) {
       /* Decode utf-16 surrogate pairs */
       x = input.charCodeAt(i);
       y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
       if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
+        // tslint:disable-next-line:no-bitwise
         x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
         i++;
       }
 
       /* Encode output as utf-8 */
-      if (x <= 0x7F)
+      if (x <= 0x7F) {
         output += String.fromCharCode(x);
-      else if (x <= 0x7FF)
+      } else if (x <= 0x7FF) {
+        // tslint:disable-next-line:no-bitwise
         output += String.fromCharCode(0xC0 | ((x >>> 6) & 0x1F), 0x80 | (x & 0x3F));
-      else if (x <= 0xFFFF)
+      } else if (x <= 0xFFFF) {
+        // tslint:disable-next-line:no-bitwise
         output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F), 0x80 | ((x >>> 6) & 0x3F), 0x80 | (x & 0x3F));
-      else if (x <= 0x1FFFFF)
+      } else if (x <= 0x1FFFFF) {
+        // tslint:disable-next-line:no-bitwise
         output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07), 0x80 | ((x >>> 12) & 0x3F), 0x80 | ((x >>> 6) & 0x3F), 0x80 | (x & 0x3F));
+      }
     }
     return output;
   }
   private binl2rstr(input: any) {
-    var output = "";
-    for (var i = 0; i < input.length * 32; i += 8)
+    let output = '';
+    for (let i = 0; i < input.length * 32; i += 8) {
+      // tslint:disable-next-line:no-bitwise
       output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xFF);
+    }
     return output;
   }
   private binl_md5(x: any, len: number) {
     /* append padding */
+    // tslint:disable-next-line:no-bitwise
     x[len >> 5] |= 0x80 << ((len) % 32);
+    // tslint:disable-next-line:no-bitwise
     x[(((len + 64) >>> 9) << 4) + 14] = len;
 
-    var a = 1732584193;
-    var b = -271733879;
-    var c = -1732584194;
-    var d = 271733878;
+    let a = 1732584193;
+    let b = -271733879;
+    let c = -1732584194;
+    let d = 271733878;
 
-    for (var i = 0; i < x.length; i += 16) {
-      var olda = a;
-      var oldb = b;
-      var oldc = c;
-      var oldd = d;
+    for (let i = 0; i < x.length; i += 16) {
+      const olda = a;
+      const oldb = b;
+      const oldc = c;
+      const oldd = d;
 
       a = this.md5_ff(a, b, c, d, x[i + 0], 7, -680876936);
       d = this.md5_ff(d, a, b, c, x[i + 1], 12, -389564586);
@@ -499,11 +518,15 @@ export class LastfmService {
     return Array(a, b, c, d);
   }
   private rstr2binl(input: string) {
-    var output = Array(input.length >> 2);
-    for (var i = 0; i < output.length; i++)
+    // tslint:disable-next-line:no-bitwise
+    const output = Array(input.length >> 2);
+    for (let i = 0; i < output.length; i++) {
       output[i] = 0;
-    for (var i = 0; i < input.length * 8; i += 8)
+    }
+    for (let i = 0; i < input.length * 8; i += 8) {
+      // tslint:disable-next-line:no-bitwise
       output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (i % 32);
+    }
     return output;
   }
 
@@ -511,25 +534,33 @@ export class LastfmService {
     return this.safe_add(this.bit_rol(this.safe_add(this.safe_add(a, q), this.safe_add(x, t)), s), b);
   }
   private md5_ff(a: any, b: any, c: any, d: any, x: any, s: any, t: any) {
+    // tslint:disable-next-line:no-bitwise
     return this.md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
   }
   private md5_gg(a: any, b: any, c: any, d: any, x: any, s: any, t: any) {
+    // tslint:disable-next-line:no-bitwise
     return this.md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
   }
 
   private md5_hh(a: any, b: any, c: any, d: any, x: any, s: any, t: any) {
+    // tslint:disable-next-line:no-bitwise
     return this.md5_cmn(b ^ c ^ d, a, b, x, s, t);
   }
 
   private md5_ii(a: any, b: any, c: any, d: any, x: any, s: any, t: any) {
+    // tslint:disable-next-line:no-bitwise
     return this.md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
   }
   private safe_add(x: any, y: any) {
-    var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    // tslint:disable-next-line:no-bitwise
+    const lsw = (x & 0xFFFF) + (y & 0xFFFF);
+    // tslint:disable-next-line:no-bitwise
+    const msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    // tslint:disable-next-line:no-bitwise
     return (msw << 16) | (lsw & 0xFFFF);
   }
   private bit_rol(num: number, cnt: number) {
+    // tslint:disable-next-line:no-bitwise
     return (num << cnt) | (num >>> (32 - cnt));
   }
 }

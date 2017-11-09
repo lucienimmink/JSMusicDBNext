@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 import { LastfmImageRetriever } from './art/lastfm-image-retriever';
 
@@ -11,7 +11,7 @@ export class AlbumArtService {
     this.lastfmImageRetriever = new LastfmImageRetriever(http);
   }
   getAlbumArt(artist: string, album: string, type: string): Observable<any[]> {
-    //return this.spotifyImageRetriever.getMediaArt(artist, album, type);
+    // return this.spotifyImageRetriever.getMediaArt(artist, album, type);
     return this.lastfmImageRetriever.getMediaArt(artist, album, type);
   }
 

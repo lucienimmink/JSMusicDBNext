@@ -3,16 +3,17 @@ import Album from './../../org/arielext/musicdb/models/Album';
 import Track from './../../org/arielext/musicdb/models/Track';
 import { AlbumArtService } from './../album-art.service';
 import { AlbumArt } from './album-art';
-//import * as PouchDB from 'pouchdb';
-import PouchDB from 'pouchdb'
+// import * as PouchDB from 'pouchdb';
+import PouchDB from 'pouchdb';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-album-art',
   templateUrl: './album-art.component.html',
   styleUrls: ['./album-art.component.css'],
   providers: [AlbumArtService]
 })
-export class AlbumArtComponent implements OnInit {
+export class AlbumArtComponent implements OnInit, OnChanges {
   public albumart: AlbumArt = new AlbumArt();
 
   @Input() album: Album;
@@ -20,7 +21,7 @@ export class AlbumArtComponent implements OnInit {
 
   private searchArtist: string;
   private searchAlbum: string;
-  private searchType: string = 'album';
+  private searchType = 'album';
   private NOIMAGE = 'global/images/no-cover.png';
   private arttable = new PouchDB('art');
 
@@ -57,6 +58,7 @@ export class AlbumArtComponent implements OnInit {
       } else {
         this.albumArtService.getAlbumArt(this.searchArtist, this.searchAlbum, this.searchType)
           .subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
           data => this.setImage(data),
           error => this.albumart.url = this.NOIMAGE
           );
@@ -76,6 +78,7 @@ export class AlbumArtComponent implements OnInit {
     if (data === 'global/images/no-cover.png' || data === '' || !data) {
       this.albumArtService.getMediaArtFromLastFm(this.searchArtist, this.searchAlbum, this.searchType)
         .subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
         data => {
           if (data && data !== 'global/images/no-cover.png') {
             this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
@@ -85,7 +88,7 @@ export class AlbumArtComponent implements OnInit {
             }
             this.albumart.url = data;
           }
-          let item = {
+          const item = {
             _id: `art-${this.searchArtist}-${this.searchAlbum}`,
             url: data
           };
@@ -94,10 +97,10 @@ export class AlbumArtComponent implements OnInit {
           });
         },
         error => this.albumart.url = this.NOIMAGE
-        )
+        );
     } else {
       this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
-      let item = {
+      const item = {
         _id: `art-${this.searchArtist}-${this.searchAlbum}`,
         url: data
       };

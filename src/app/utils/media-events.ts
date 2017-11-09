@@ -1,4 +1,4 @@
-import { EventManager } from '@angular/platform-browser'
+import { EventManager } from '@angular/platform-browser';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -6,7 +6,7 @@ export class MediaEvents {
     manager: EventManager;
 
     supports(eventName: string): boolean {
-        var ret = false;
+        let ret = false;
         if (eventName.indexOf('mdb') === 0) {
             ret = true;
         }
@@ -14,25 +14,24 @@ export class MediaEvents {
     }
 
     addEventListener(element: HTMLElement, eventName: string, handler: Function): any {
-        let zone = this.manager.getZone();
+        const zone = this.manager.getZone();
 
         // Entering back into angular to trigger changeDetection
-        var outsideHandler = (event: any) => {
+        const outsideHandler = (event: any) => {
             zone.run(() => handler(event));
         };
 
         // Executed outside of angular so that change detection is not constantly triggered.
-        var addAndRemoveHostListenersForOutsideEvents = () => {
+        const addAndRemoveHostListenersForOutsideEvents = () => {
             this.manager.addEventListener(element, 'external.' + eventName, outsideHandler);
-        }
+        };
 
         return this.manager.getZone().runOutsideAngular(addAndRemoveHostListenersForOutsideEvents);
     }
 
     addGlobalEventListener(target: string, eventName: string, handler: Function): any {
-        console.log('adding global eventlistener for', target, eventName, handler);
-        var zone = this.manager.getZone();
-        var outsideHandler = (event: any) => zone.run(() => handler(event));
+        const zone = this.manager.getZone();
+        const outsideHandler = (event: any) => zone.run(() => handler(event));
 
         return this.manager.getZone().runOutsideAngular(() => {
             this.manager.addGlobalEventListener(target, eventName, outsideHandler);
