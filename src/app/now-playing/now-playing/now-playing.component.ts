@@ -1,7 +1,7 @@
-import { Component, OnDestroy, ViewChild, OnInit, HostListener } from "@angular/core";
-import { Http, Response, RequestOptionsArgs, URLSearchParams } from "@angular/http";
+import { Component, OnDestroy, ViewChild, OnInit, HostListener } from '@angular/core';
+import { Http, Response, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { PlayerService } from './../../player/player.service';
@@ -29,39 +29,40 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
   private currentTrack: Track;
   private trackIndex: number;
   private previousTrack = {};
-  private slided: boolean = false;
-  private isPlaying: boolean = false;
-  private isPaused: boolean = false;
-  private isShuffled: boolean = false;
+  private slided = false;
+  private isPlaying = false;
+  private isPaused = false;
+  private isShuffled = false;
   private core: musicdbcore;
-  private isDragging: boolean = false;
+  private isDragging = false;
   private c: any = this;
-  private lastfmusername: string = '';
+  private lastfmusername = '';
 
-  private showVolumeWindow: boolean = false;
-  private volume: number = 100;
+  private showVolumeWindow = false;
+  private volume = 100;
 
   private showVisualisation: boolean = this.booleanState('visualisation-state');
   private preferVideo: boolean = this.booleanState('preferVideo-state');
   private smallArt: boolean = this.booleanState('small-art');
 
-  private youtubeSearchBase: string = "https://www.googleapis.com/youtube/v3/search";
+  private youtubeSearchBase = 'https://www.googleapis.com/youtube/v3/search';
   private youtubeVideoId: string = null;
 
-  private videoMode: boolean = false;
+  private videoMode = false;
   private player;
   private ytEvent;
 
-  private isEventBound: boolean = false;
-  private noFocus: boolean = false;
+  private isEventBound = false;
+  private noFocus = false;
   private timeoutTimer: any = null;
-  private timeoutTime: number = 5000;
+  private timeoutTime = 5000;
 
   @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
-  constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService, private router: Router, private lastFMService: LastfmService, private animationService: AnimationService, private http: Http) {
+  constructor(private pathService: PathService, private coreService: CoreService, private playerService: PlayerService,
+    private router: Router, private lastFMService: LastfmService, private animationService: AnimationService, private http: Http) {
     // this is for when we open the page; just wanting to know the current state of the playerService
-    let playerData = this.playerService.getCurrentPlaylist();
+    const playerData = this.playerService.getCurrentPlaylist();
     if (playerData) {
       this.playlist = playerData.playlist;
       this.trackIndex = playerData.startIndex;
@@ -74,6 +75,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     // this is for when a new track is announced while we are already on the page
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
+      // tslint:disable-next-line:no-shadowed-variable
       playerData => {
         this.playlist = playerData.playlist;
         this.trackIndex = playerData.startIndex;
@@ -82,7 +84,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.isShuffled = playerData.isShuffled;
         this.setTrack();
       }
-    )
+    );
     this.subscription2 = this.playerService.volumeAnnounced.subscribe(volume => {
       this.volume = volume;
     });
@@ -112,11 +114,11 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.isEventBound = true;
       }
     }, 250);
-    this.lastfmusername = localStorage.getItem("lastfm-username") || '';
+    this.lastfmusername = localStorage.getItem('lastfm-username') || '';
   }
 
   private booleanState(key: string): boolean {
-    let raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
     if (raw && raw === 'true') {
       return true;
     }
@@ -125,7 +127,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
   setTrack() {
     setTimeout(() => {
-      if (this.albumart) this.albumart.loadImage();
+      if (this.albumart) {
+        this.albumart.loadImage();
+      }
     });
     this.track = this.playlist.tracks[this.trackIndex];
 
@@ -177,11 +181,10 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     clearTimeout(this.timeoutTime);
   }
   navigateToArtist() {
-    //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
     this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName]);
   }
   navigateToAlbum() {
-    // this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
+    // tslint:disable-next-line:max-line-length
     this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName]);
   }
   next() {
@@ -190,7 +193,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     }
     this.videoMode = false;
     setTimeout(() => {
-      let previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');
+      const previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');
       previousAlbumArt.style.backgroundImage = (<HTMLElement>document.querySelector('.current-album-art')).style.backgroundImage;
       previousAlbumArt.classList.remove('slideRightOut');
       previousAlbumArt.classList.remove('slideLeftOut');
@@ -219,7 +222,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     }
     this.videoMode = false;
     setTimeout(() => {
-      let previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');
+      const previousAlbumArt = <HTMLElement>document.querySelector('.previous-album-art');
       previousAlbumArt.style.backgroundImage = (<HTMLElement>document.querySelector('.current-album-art')).style.backgroundImage;
       previousAlbumArt.classList.remove('slideRightOut');
       previousAlbumArt.classList.remove('slideLeftOut');
@@ -253,15 +256,15 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     this.track.isLoved = !this.track.isLoved;
     this.lastFMService.toggleLoved(this.track).subscribe(
       data => { }
-    )
+    );
   }
   private startDrag = (e: any) => {
     this.isDragging = true;
   }
   private drag = (e: any) => {
     if (this.isDragging) {
-      let clientX = e.clientX || e.changedTouches[0].clientX;
-      let left = clientX - 60, perc = (left / document.getElementById('progress-pusher').clientWidth);
+      const clientX = e.clientX || e.changedTouches[0].clientX;
+      const left = clientX - 60, perc = (left / document.getElementById('progress-pusher').clientWidth);
       if (perc >= 0 && perc <= 1) {
         this.setIndicatorPosition(perc);
       }
@@ -273,9 +276,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
   private stopDrag = (e: any) => {
     if (this.isDragging) {
       this.isDragging = false;
-      let clientX = e.clientX || e.changedTouches[0].clientX;
-      let left = clientX - 60, perc = (left / document.getElementById('progress-pusher').clientWidth);
-      let pos = this.track.duration / 1000 * perc;
+      const clientX = e.clientX || e.changedTouches[0].clientX;
+      const left = clientX - 60, perc = (left / document.getElementById('progress-pusher').clientWidth);
+      const pos = this.track.duration / 1000 * perc;
       this.playerService.setPosition(pos);
     }
   }
@@ -286,18 +289,18 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     this.showVolumeWindow = !this.showVolumeWindow;
   }
   setVolume() {
-    //this.mediaObject.volume = this.volume / 100;
+    // this.mediaObject.volume = this.volume / 100;
     this.playerService.setVolume(this.volume);
   }
   round(nr: number) {
     return Math.floor(nr);
   }
   checkYouTubeForVideo(track: Track): Observable<string> {
-    let urlSearchParams: URLSearchParams = new URLSearchParams();
+    const urlSearchParams: URLSearchParams = new URLSearchParams();
     urlSearchParams.set('q', `${track.trackArtist} - ${track.title}`);
     urlSearchParams.set('key', 'AIzaSyDNIncH70uAPgdUK_hZfQ9EQBDPwhuOYmM');
     urlSearchParams.set('part', 'id');
-    let query: RequestOptionsArgs = {
+    const query: RequestOptionsArgs = {
       search: urlSearchParams
     };
     return this.http.get(this.youtubeSearchBase, query)
@@ -305,8 +308,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       .catch(this.handleError);
   }
   extractData(res: Response): string {
-    let json = res.json();
-    let videoid = null;
+    const json = res.json();
+    const videoid = null;
     if (json && json.items) {
       return json.items[0].id.videoId;
     }

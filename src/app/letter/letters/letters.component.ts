@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { LetterComponent } from './../letter/letter.component';
@@ -24,12 +24,12 @@ export class LettersComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
   }
 
   ngOnInit() {
-    this.pathService.announcePage("Letters");
-    let core: musicdbcore = this.coreService.getCore();
+    this.pathService.announcePage('Letters');
+    const core: musicdbcore = this.coreService.getCore();
     this.letters = core.sortedLetters;
   }
   ngOnDestroy() {

@@ -1,6 +1,6 @@
-import Artist from "./Artist";
-import Album from "./Album";
-import MediaSource from "./MediaSource";
+import Artist from './Artist';
+import Album from './Album';
+import MediaSource from './MediaSource';
 
 export default class Track {
 
@@ -14,18 +14,18 @@ export default class Track {
   disc: number;
   number: number;
   type: string;
-  isPlaying:boolean = false;
-  isPaused:boolean = false;
-  isLoved:boolean = false;
-  position:number = 0;
-  buffered:any = {
+  isPlaying = false;
+  isPaused = false;
+  isLoved = false;
+  position = 0;
+  buffered: any = {
     start: 0,
     end: 0
   };
-  showActions: boolean = false;
+  showActions = false;
   date: Date;
-  nowPlaying:boolean;
-  image:String = '';
+  nowPlaying: boolean;
+  image: String = '';
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -41,9 +41,10 @@ export default class Track {
   }
 
   private guessBySource(json: any): number {
-    let guessable = this.source.url;
-    let discs: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    for (let i of discs) {
+    const guessable = this.source.url;
+    const discs: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    for (const i of discs) {
+      // tslint:disable-next-line:max-line-length
       if (guessable.indexOf(` - ${i}.`) !== -1 || guessable.indexOf(`(${i}) - `) !== -1 || guessable.indexOf(`CD${i}`) !== -1 || guessable.indexOf(`\\${i}-`) !== -1) {
         return i;
       }
@@ -52,6 +53,7 @@ export default class Track {
   }
 
   url() {
+    // tslint:disable-next-line:max-line-length
     return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.album.name)}/track/${encodeURIComponent(this.title)}`;
   }
 

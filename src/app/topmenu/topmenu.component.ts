@@ -1,35 +1,38 @@
-import { Component, OnDestroy, Input, ViewChild } from "@angular/core";
+import { Component, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-//import { TooltipModule } from 'ngx-bootstrap';
+// import { TooltipModule } from 'ngx-bootstrap';
 
-import { PathService } from "./../utils/path.service";
+import { PathService } from './../utils/path.service';
 import { LastfmService } from './../utils/lastfm.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
 import { CoreService } from './../utils/core.service';
 import { Search } from './search';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-topmenu',
   templateUrl: './topmenu.component.html',
   styleUrls: ['./topmenu.component.css']
 })
-export class TopmenuComponent implements OnDestroy {
+export class TopmenuComponent implements OnDestroy, OnInit {
   path: any;
   subscription: Subscription;
   page: any;
   subscription2: Subscription;
   subscription3: Subscription;
   subscription4: Subscription;
-  menuVisible: boolean = false;
-  public topSearchVisible: boolean = false;
+  menuVisible = false;
+  public topSearchVisible = false;
   public manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
   private theme: String;
   public search: Search;
   private core: musicdbcore;
   private letters: Array<any>;
 
-  constructor(private pathService: PathService, private router: Router, private lastFMService: LastfmService, private coreService: CoreService) {
+  constructor(private pathService: PathService, private router: Router, private lastFMService: LastfmService,
+    private coreService: CoreService) {
     this.core = this.coreService.getCore();
     // subscribe to a change in path; so we can display it
     this.subscription = pathService.pathAnnounced$.subscribe(
@@ -54,12 +57,12 @@ export class TopmenuComponent implements OnDestroy {
       data => {
         this.manualScrobblingList = data;
       }
-    )
+    );
     this.subscription4 = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.search = new Search();
   }
 
@@ -72,7 +75,7 @@ export class TopmenuComponent implements OnDestroy {
       if (letter.active) {
         letter.active = false;
       }
-    })
+    });
   }
   activateLetter(letter: any) {
     if (letter) {
@@ -93,22 +96,22 @@ export class TopmenuComponent implements OnDestroy {
     }
   }
   slideOut() {
-    let sideNavEl = document.querySelector('.js-side-nav');
+    const sideNavEl = document.querySelector('.js-side-nav');
     sideNavEl.classList.add('side-nav--animatable');
     sideNavEl.classList.add('side-nav--visible');
     document.addEventListener('click', this.onDocumentClick);
     sideNavEl.addEventListener('transitionend', this.onTransitionEnd);
   }
   slideIn() {
-    let sideNavEl = document.querySelector('.js-side-nav');
+    const sideNavEl = document.querySelector('.js-side-nav');
     sideNavEl.classList.add('side-nav--animatable');
     sideNavEl.classList.remove('side-nav--visible');
     document.removeEventListener('click', this.onDocumentClick);
-    //this.detabinator.inert = true;
+    // this.detabinator.inert = true;
     sideNavEl.addEventListener('transitionend', this.onTransitionEnd);
   }
   onTransitionEnd(evt: Event) {
-    let sideNavEl = document.querySelector('.js-side-nav');
+    const sideNavEl = document.querySelector('.js-side-nav');
     sideNavEl.classList.remove('side-nav--animatable');
     sideNavEl.removeEventListener('transitionend', this.onTransitionEnd);
   }
@@ -128,8 +131,8 @@ export class TopmenuComponent implements OnDestroy {
     }
   }
   private onDocumentClick = (e: Event) => {
-    let target = <HTMLElement>e.target;
-    if (target.classList.contains("side-nav--visible")) {
+    const target = <HTMLElement>e.target;
+    if (target.classList.contains('side-nav--visible')) {
       this.toggleMenu();
     }
   }
@@ -137,6 +140,7 @@ export class TopmenuComponent implements OnDestroy {
     this.router.navigate(['letter', path.artist.letter.escapedLetter, 'artist', path.artist.sortName]);
   }
   selectAlbum(path: any): void {
-    this.router.navigate(['letter', path.album.artist.letter.escapedLetter, 'artist', path.album.artist.sortName, 'album', path.album.sortName]);
+    this.router.navigate(['letter', path.album.artist.letter.escapedLetter, 'artist', path.album.artist.sortName,
+      'album', path.album.sortName]);
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { LoginService } from './login.service';
@@ -8,7 +8,7 @@ import { CoreService } from './../utils/core.service';
 import { ConfigService } from './../utils/config.service';
 
 
-import { User } from "./user";
+import { User } from './user';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,16 +20,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   public theme: string;
   private subscription: Subscription;
   private sid: string;
-  public isLoading: boolean = false;
+  public isLoading = false;
 
-  constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService, private coreService: CoreService, private configService: ConfigService) {
+  constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService,
+    private coreService: CoreService, private configService: ConfigService) {
     this.user = new User();
 
     this.subscription = this.configService.mode$.subscribe(
       data => {
         this.theme = data;
       }
-    )
+    );
     this.theme = configService.mode;
   }
 
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       error => {
         console.error('session failed; bah');
       }
-    )
+    );
   }
 
   getCollection() {
@@ -67,5 +68,4 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.coreService.getCore().parseSourceJson(data);
     this.router.navigate(['/home']);
   }
-
-};
+}

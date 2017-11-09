@@ -19,7 +19,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
 
   public items: Array<any> = [];
   public letters: Array<any> = [];
-  public showJumpList: boolean = false;
+  public showJumpList = false;
   private cummlativeLength: Array<any> = [];
   private core: musicdbcore;
   private subscription: Subscription;
@@ -31,28 +31,28 @@ export class AlbumsComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
   }
 
   ngOnInit() {
-    let s = new Date().getTime();
-    this.pathService.announcePage("Albums");
-    let artists = this.core.artists;
+    const s = new Date().getTime();
+    this.pathService.announcePage('Albums');
+    const artists = this.core.artists;
     this.letters = this.core.sortedLetters;
-    let c = this;
-    let sorted = Object.keys(artists).sort(function (a, b) {
+    const c = this;
+    const sorted = Object.keys(artists).sort(function (a, b) {
       return (a < b) ? -1 : 1;
     });
-    let tmp: Array<Artist> = [];
+    const tmp: Array<Artist> = [];
     sorted.forEach(function (artistName) {
       tmp.push(c.core.artists[artistName]);
     });
     this.items = tmp;
     this.items.forEach(function (item, index) {
-      let letterLength = c.getSize(item, index);
+      const letterLength = c.getSize(item, index);
       if (index > 0) {
-        let prevLength = c.cummlativeLength[index - 1].l
-        let newLength = prevLength + letterLength;
+        const prevLength = c.cummlativeLength[index - 1].l;
+        const newLength = prevLength + letterLength;
         c.cummlativeLength[index] = {
           l: newLength,
           letter: item.letter.letter
@@ -70,7 +70,7 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   navigateToAlbum(album: Album) {
-    this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName])
+    this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName]);
   }
   getSize(item: any, index: number) {
     return (item.albums.length * 90) + 49;
@@ -80,12 +80,12 @@ export class AlbumsComponent implements OnInit, OnDestroy {
   }
   jumpToLetter(letter: any) {
     this.showJumpList = false;
-    let c = this;
+    const c = this;
 
     this.items.some(function (item, i) {
       let ret = false;
       if (item.letter.letter === letter.letter) {
-        let jump = (i > 0) ? i - 1 : 0;
+        const jump = (i > 0) ? i - 1 : 0;
         window.scrollTo(0, c.cummlativeLength[jump].l);
         ret = true;
       }

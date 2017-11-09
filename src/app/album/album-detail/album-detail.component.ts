@@ -11,7 +11,7 @@ import { AlbumArtComponent } from './../../utils/album-art/album-art.component';
 import { BackgroundArtDirective } from './../../utils/background-art.directive';
 import { TimeFormatPipe } from './../../utils/time-format.pipe';
 import { PathService } from './../../utils/path.service';
-import { PlayerService } from "./../../player/player.service";
+import { PlayerService } from './../../player/player.service';
 import { Playlist } from './../../playlist/playlist';
 import { ConfigService } from './../../utils/config.service';
 
@@ -19,34 +19,35 @@ import { ConfigService } from './../../utils/config.service';
   templateUrl: './album-detail.component.html',
   styleUrls: ['./album-detail.component.css']
 })
-export class AlbumDetailComponent implements OnInit {
-  private albumName: string = '';
-  private artistName: string = '';
+export class AlbumDetailComponent implements OnInit, OnDestroy {
+  private albumName = '';
+  private artistName = '';
   public album: Album;
   private core: musicdbcore;
   private subscription: Subscription;
   private albumart: AlbumArtComponent;
   public ownPlaylists: Array<Playlist> = [];
   private selectedTrack: Track = null;
-  private isSwiping: boolean = false;
+  private isSwiping = false;
   public theme: string;
-  private isShrunk: boolean = false;
-  private isFlacSupported: boolean = true;
+  private isShrunk = false;
+  private isFlacSupported = true;
   // @ViewChild('editModal') private editModal: ModalDirective;
 
-  constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private playerService: PlayerService, private route: ActivatedRoute, private configService: ConfigService) {
+  constructor(private coreService: CoreService, private router: Router, private pathService: PathService,
+    private playerService: PlayerService, private route: ActivatedRoute, private configService: ConfigService) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
     this.albumName = decodeURIComponent(this.route.snapshot.params['album']);
 
     this.route.params.subscribe(data => {
-      this.artistName = decodeURIComponent(data["artist"]);
-      this.albumName = decodeURIComponent(data["album"]);
+      this.artistName = decodeURIComponent(data['artist']);
+      this.albumName = decodeURIComponent(data['album']);
       this.ngOnInit();
     });
 
@@ -58,10 +59,10 @@ export class AlbumDetailComponent implements OnInit {
     if (this.album) {
       this.album.sortedDiscs = []; // reset
 
-      let namedDiscs = Object.keys(this.album.discs);
+      const namedDiscs = Object.keys(this.album.discs);
       let discnrs: Array<any> = [];
       namedDiscs.forEach(name => {
-        let discnr = name.substring(5);
+        const discnr = name.substring(5);
         discnrs.push({
           nr: discnr,
           id: name
@@ -82,10 +83,10 @@ export class AlbumDetailComponent implements OnInit {
     // TODO this should a call from the backend
     this.ownPlaylists = [];
     if (localStorage.getItem('customlisttest')) {
-      let list: Array<Playlist> = JSON.parse(localStorage.getItem('customlisttest'));
+      const list: Array<Playlist> = JSON.parse(localStorage.getItem('customlisttest'));
       if (list) {
         list.forEach(item => {
-          let playlist = new Playlist();
+          const playlist = new Playlist();
           playlist.isOwn = true;
           playlist.name = item.name;
           playlist.tracks = item.tracks;

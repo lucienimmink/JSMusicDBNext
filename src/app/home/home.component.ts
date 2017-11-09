@@ -1,34 +1,35 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { Router } from "@angular/router";
-import { NgClass } from "@angular/common";
-import { Subscription } from "rxjs/Subscription";
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { Subscription } from 'rxjs/Subscription';
 
-import { musicdbcore } from "./../org/arielext/musicdb/core";
-import Artist from "../org/arielext/musicdb/models/Artist";
-import Album from "./../org/arielext/musicdb/models/Album";
-import Track from "./../org/arielext/musicdb/models/Track";
-import { CollectionService } from "./../utils/collection.service";
-import { CoreService } from "./../utils/core.service";
-import { PathService } from "./../utils/path.service";
-import { AlbumComponent } from "./../album/album/album.component";
-import { BackgroundArtDirective } from "./../utils/background-art.directive";
-import { RecentlyListenedService } from "./../utils/recently-listened.service";
-import { LastfmService } from "./../utils/lastfm.service";
-import { ConfigService } from "./../utils/config.service";
-import { PlayerService } from "./../player/player.service";
-import { User } from "./user";
-//import * as PouchDB from 'pouchdb';
+import { musicdbcore } from './../org/arielext/musicdb/core';
+import Artist from '../org/arielext/musicdb/models/Artist';
+import Album from './../org/arielext/musicdb/models/Album';
+import Track from './../org/arielext/musicdb/models/Track';
+import { CollectionService } from './../utils/collection.service';
+import { CoreService } from './../utils/core.service';
+import { PathService } from './../utils/path.service';
+import { AlbumComponent } from './../album/album/album.component';
+import { BackgroundArtDirective } from './../utils/background-art.directive';
+import { RecentlyListenedService } from './../utils/recently-listened.service';
+import { LastfmService } from './../utils/lastfm.service';
+import { ConfigService } from './../utils/config.service';
+import { PlayerService } from './../player/player.service';
+import { User } from './user';
+// import * as PouchDB from 'pouchdb';
 import PouchDB from 'pouchdb';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   providers: [RecentlyListenedService]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
-  private recentlyListenedTable: any = new PouchDB("recentlyListened");
+  private recentlyListenedTable: any = new PouchDB('recentlyListened');
 
   private RECENTLYLISTENEDINTERVAL: number = 1000 * 60;
 
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit {
   public recentlyListenedTracks: Array<Track> = [];
   private newListenedTracks: Array<Track> = [];
   private counter: any;
-  private loading: boolean = true;
+  private loading = true;
   private subscription: Subscription;
   private subscription2: Subscription;
   private theme: string;
@@ -60,10 +61,10 @@ export class HomeComponent implements OnInit {
       }
     );
     this.theme = configService.mode;
-    this.pathService.announcePage("Home");
+    this.pathService.announcePage('Home');
 
-    if (localStorage.getItem("lastfm-username")) {
-      this.username = localStorage.getItem("lastfm-username");
+    if (localStorage.getItem('lastfm-username')) {
+      this.username = localStorage.getItem('lastfm-username');
     }
     this.init();
   }
@@ -77,8 +78,8 @@ export class HomeComponent implements OnInit {
     this.lastFMService.authenticate({ user: this.user.name, password: this.user.password }).subscribe(
       data => {
         // save in storage
-        localStorage.setItem("lastfm-token", data);
-        localStorage.setItem("lastfm-username", this.user.name);
+        localStorage.setItem('lastfm-token', data);
+        localStorage.setItem('lastfm-username', this.user.name);
         // set in instance
         this.username = this.user.name;
         this.startPolling();
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
   }
 
   init(skipCoreCheck: boolean = false): void {
-    if ((this.core.isCoreParsed || skipCoreCheck) && localStorage.getItem("lastfm-username")) {
+    if ((this.core.isCoreParsed || skipCoreCheck) && localStorage.getItem('lastfm-username')) {
       this.startPolling();
     }
     this.recentlyAdded = this.core.getLatestAdditions();
@@ -118,13 +119,13 @@ export class HomeComponent implements OnInit {
   checkRecentlyListened(): void {
     this.newListenedTracks = [];
     this.loading = true;
-    if (this.username !== "mdb-skipped") {
+    if (this.username !== 'mdb-skipped') {
       this.recentlyListened.getRecentlyListened(this.username).subscribe(
         data => this.populate(data),
         error => console.log(error)
       );
     } else {
-      this.recentlyListenedTable.get("recentlyListened", (err: any, data: any) => {
+      this.recentlyListenedTable.get('recentlyListened', (err: any, data: any) => {
         if (data) {
           this.populate(data.tracks);
         }
@@ -134,7 +135,7 @@ export class HomeComponent implements OnInit {
   }
 
   setDate(track: any): Date {
-    if (track["@attr"] && track["@attr"].nowplaying) {
+    if (track['@attr'] && track['@attr'].nowplaying) {
       return new Date();
     } else {
       return new Date(Number(track.date.uts) * 1000);
@@ -143,7 +144,7 @@ export class HomeComponent implements OnInit {
   setImage(track: any): String {
     // last one is the best possible quality
     if (track.image) {
-      return track.image[track.image.length - 1]["#text"];
+      return track.image[track.image.length - 1]['#text'];
     } else {
       return '';
     }
@@ -151,40 +152,40 @@ export class HomeComponent implements OnInit {
 
   populate(json: any): void {
     json.forEach(fmtrack => {
-      let track: Track = new Track({});
-      track.artist = fmtrack.artist["#text"];
-      track.album = fmtrack.album["#text"];
+      const track: Track = new Track({});
+      track.artist = fmtrack.artist['#text'];
+      track.album = fmtrack.album['#text'];
       track.title = fmtrack.name;
       track.image = this.setImage(fmtrack);
-      track.nowPlaying = (fmtrack["@attr"] && fmtrack["@attr"].nowplaying) ? true : false;
+      track.nowPlaying = (fmtrack['@attr'] && fmtrack['@attr'].nowplaying) ? true : false;
       track.date = this.setDate(fmtrack);
-      track.trackArtist = fmtrack.artist["#text"];
+      track.trackArtist = fmtrack.artist['#text'];
       track.isPlaying = false;
       track.isPaused = false;
       track.isLoved = false;
-      track.id = `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`;
+      track.id = `${fmtrack.artist['#text']}-${fmtrack.album['#text']}-${fmtrack.name}`;
       this.newListenedTracks.push(track);
     });
     if (this.recentlyListenedTracks !== this.newListenedTracks) {
       this.recentlyListenedTracks = this.newListenedTracks;
-      let cachedlist: string = JSON.stringify(this.newListenedTracks);
-      localStorage.setItem("cached-recently-listened", cachedlist);
+      const cachedlist: string = JSON.stringify(this.newListenedTracks);
+      localStorage.setItem('cached-recently-listened', cachedlist);
     }
     this.loading = false;
   }
   skipLastfm(): void {
-    let username: string = "mdb-skipped";
-    localStorage.setItem("lastfm-username", username);
+    const username = 'mdb-skipped';
+    localStorage.setItem('lastfm-username', username);
     this.username = username;
     this.startPolling();
   }
   playTrack(track: any): void {
     // get the track from the core;
-    let artist: Artist = this.core.getArtistByName(track.artist);
+    const artist: Artist = this.core.getArtistByName(track.artist);
     if (artist) {
-      let album: Album = this.core.getAlbumByArtistAndName(artist, track.album);
+      const album: Album = this.core.getAlbumByArtistAndName(artist, track.album);
       if (album) {
-        let coretrack: Track = this.core.getTrackByAlbumAndName(album, track.title);
+        const coretrack: Track = this.core.getTrackByAlbumAndName(album, track.title);
         if (coretrack) {
           this.playerService.doPlayTrack(coretrack);
           setTimeout(() => {

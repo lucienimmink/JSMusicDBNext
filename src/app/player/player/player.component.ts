@@ -1,7 +1,7 @@
 declare const Windows: any;
 declare const MediaMetadata: any;
 
-import { Component, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -18,6 +18,7 @@ import { AlbumArtService } from './../../utils/album-art.service';
 import { Playlist } from './../../playlist/playlist';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css'],
@@ -33,18 +34,18 @@ export class PlayerComponent implements OnDestroy {
   private trackIndex: any;
   private track: Track;
   private currentTrack: Track;
-  public showPlayer: boolean = false;
-  private isPlaying: boolean = false;
-  private isPaused: boolean = false;
+  public showPlayer = false;
+  private isPlaying = false;
+  private isPaused = false;
   private mediaObject: any;
-  private hasScrobbledCurrentTrack: boolean = false;
+  private hasScrobbledCurrentTrack = false;
   private url: string;
   private core: musicdbcore;
-  private isCurrentPlaylistLoaded: boolean = false;
-  private isShuffled: boolean = false;
-  private forceRestart: boolean = false;
-  private showVolumeWindow: boolean = false;
-  private volume: number = 100;
+  private isCurrentPlaylistLoaded = false;
+  private isShuffled = false;
+  private forceRestart = false;
+  private showVolumeWindow = false;
+  private volume = 100;
   // onetime check to see if we have a hosted web app
   private isHostedApp: boolean = (typeof Windows !== 'undefined');
   private systemMediaControls: any;
@@ -52,7 +53,9 @@ export class PlayerComponent implements OnDestroy {
 
   @ViewChild(AlbumArtComponent) albumart: AlbumArtComponent;
 
-  constructor(private pathService: PathService, private playerService: PlayerService, private router: Router, private lastFMService: LastfmService, private coreService: CoreService, private animationService: AnimationService, private albumartService: AlbumArtService) {
+  constructor(private pathService: PathService, private playerService: PlayerService, private router: Router,
+    private lastFMService: LastfmService, private coreService: CoreService, private animationService: AnimationService,
+    private albumartService: AlbumArtService) {
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
         if (playerData) {
@@ -70,12 +73,12 @@ export class PlayerComponent implements OnDestroy {
           this.mediaObject.pause();
         }
       }
-    )
+    );
     this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
       this.showVolumeWindow = false;
     });
     this.mediaObject = document.querySelector('audio');
-    this.mediaObject.crossOrigin = "anonymous";
+    this.mediaObject.crossOrigin = 'anonymous';
     this.mediaObject.canPlayType('audio/flac');
     this.mediaObject.addEventListener('ended', () => {
       this.next();
@@ -95,24 +98,24 @@ export class PlayerComponent implements OnDestroy {
     this.mediaObject.addEventListener('ended', () => {
       this.onstop();
     });
-    let dsm = localStorage.getItem("dsm");
+    const dsm = localStorage.getItem('dsm');
     if (dsm) {
       this.url = dsm;
     }
     this.core = this.coreService.getCore();
     this.subscription2 = this.core.coreParsed$.subscribe(
       data => {
-        let state = localStorage.getItem("save-playlist-state");
-        if (state && state === "true") {
+        const state = localStorage.getItem('save-playlist-state');
+        if (state && state === 'true') {
           // read the current playlist on startup
           this.readCurrentPlaylist();
         }
       }
-    )
+    );
     this.subscription3 = this.playerService.volumeAnnounced.subscribe(volume => {
       this.volume = volume;
       this.mediaObject.volume = this.volume / 100;
-    })
+    });
     this.subscription4 = pathService.pageAnnounced$.subscribe(
       page => {
         if (page.page === 'Now playing') {
@@ -129,8 +132,8 @@ export class PlayerComponent implements OnDestroy {
       this.systemMediaControls.isStopEnabled = true;
       this.systemMediaControls.isNextEnabled = true;
       this.systemMediaControls.isPreviousEnabled = true;
-      this.systemMediaControls.addEventListener("buttonpressed", (e: Event) => {
-        var mediaButton = Windows.Media.SystemMediaTransportControlsButton;
+      this.systemMediaControls.addEventListener('buttonpressed', (e: Event) => {
+        const mediaButton = Windows.Media.SystemMediaTransportControlsButton;
         switch ((e as any).button) {
           case mediaButton.play:
             this.mediaObject.play();
@@ -155,7 +158,7 @@ export class PlayerComponent implements OnDestroy {
     }
     if (navigator.userAgent.indexOf('Mobi') === -1) {
       // lets only handle these calculations on desktop grade devices.
-      let canvas = document.querySelector('canvas');
+      const canvas = document.querySelector('canvas');
       let WIDTH = canvas.offsetWidth;
       let HEIGHT = canvas.offsetHeight;
 
@@ -163,43 +166,44 @@ export class PlayerComponent implements OnDestroy {
 
       canvas.width = WIDTH;
       canvas.height = HEIGHT;
-      var ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
 
-      var audioCtx = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
-      var javascriptNode = audioCtx.createScriptProcessor(1024 * 2, 1, 1);
+      const audioCtx = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
+      const javascriptNode = audioCtx.createScriptProcessor(1024 * 2, 1, 1);
       javascriptNode.connect(audioCtx.destination);
 
-      var analyser = audioCtx.createAnalyser();
-      var source = audioCtx.createMediaElementSource(this.mediaObject);
+      const analyser = audioCtx.createAnalyser();
+      const source = audioCtx.createMediaElementSource(this.mediaObject);
 
-      var analyser = audioCtx.createAnalyser();
       analyser.fftSize = 128;
-      var bufferLength = analyser.frequencyBinCount;
+      const bufferLength = analyser.frequencyBinCount;
       source.connect(analyser);
       analyser.connect(javascriptNode);
 
       source.connect(audioCtx.destination);
 
       javascriptNode.onaudioprocess = function () {
-        let canvas = document.querySelector('canvas');
+        // tslint:disable-next-line:no-shadowed-variable
+        const canvas = document.querySelector('canvas');
         WIDTH = canvas.offsetWidth;
         HEIGHT = canvas.offsetHeight;
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
-        var ctx = canvas.getContext("2d");
-        var dataArray = new Uint8Array(bufferLength);
+        // tslint:disable-next-line:no-shadowed-variable
+        const ctx = canvas.getContext('2d');
+        const dataArray = new Uint8Array(bufferLength);
         analyser.getByteFrequencyData(dataArray);
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        var barWidth = Math.floor((WIDTH / bufferLength) * 1.1);
-        var barHeight;
-        var x = 0;
-        var y = (HEIGHT / 150) * 1.17;
+        const barWidth = Math.floor((WIDTH / bufferLength) * 1.1);
+        let barHeight;
+        let x = 0;
+        const y = (HEIGHT / 150) * 1.17;
 
-        for (var i = 0; i < bufferLength; i++) {
+        for (let i = 0; i < bufferLength; i++) {
           barHeight = dataArray[i] * y;
           // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
           // rgba(0, 120, 215, 1);
-          ctx.fillStyle = `rgba(0,120,215,${dataArray[i] / 255})`
+          ctx.fillStyle = `rgba(0,120,215,${dataArray[i] / 255})`;
           ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
           x += barWidth + 1;
         }
@@ -209,15 +213,17 @@ export class PlayerComponent implements OnDestroy {
 
   setTrack(position: any) {
     setTimeout(() => {
-      if (this.albumart) this.albumart.ngOnInit();
+      if (this.albumart) {
+        this.albumart.ngOnInit();
+      }
     });
     this.track = this.playlist.tracks[this.trackIndex];
     if ((!this.currentTrack || (this.track && this.currentTrack.id !== this.track.id)) || this.forceRestart) {
-      let dsm = localStorage.getItem("dsm");
+      const dsm = localStorage.getItem('dsm');
       if (dsm) {
         this.url = dsm;
       }
-      let jwt = localStorage.getItem("jwt");
+      const jwt = localStorage.getItem('jwt');
       this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}&jwt=${jwt}`;
       this.currentTrack = this.track;
       this.hasScrobbledCurrentTrack = false;
@@ -238,17 +244,17 @@ export class PlayerComponent implements OnDestroy {
     }
   }
   readCurrentPlaylist() {
-    let current = JSON.parse(localStorage.getItem('current-playlist'));
+    const current = JSON.parse(localStorage.getItem('current-playlist'));
     if (current) {
-      let core = this.coreService.getCore();
-      let list: Array<Track> = [];
+      const core = this.coreService.getCore();
+      const list: Array<Track> = [];
       current.ids.forEach(id => {
-        let track = core.tracks[id];
+        const track = core.tracks[id];
         list.push(track);
       });
-      let playlist = new Playlist();
+      const playlist = new Playlist();
       playlist.tracks = list;
-      playlist.name = "Current Playlist";
+      playlist.name = 'Current Playlist';
       playlist.isContinues = current.isContinues || false;
       playlist.type = current.type;
 
@@ -267,12 +273,11 @@ export class PlayerComponent implements OnDestroy {
     this.showVolumeWindow = false;
   }
   navigateToArtist() {
-    //this.router.navigate(['Artist', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName }]);
     this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName]);
   }
   navigateToAlbum() {
-    //this.router.navigate(['Album', { letter: this.track.album.artist.letter.escapedLetter, artist: this.track.album.artist.sortName, album: this.track.album.sortName }]);
-    this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName, 'album', this.track.album.sortName]);
+    this.router.navigate(['/letter', this.track.album.artist.letter.escapedLetter, 'artist', this.track.album.artist.sortName,
+    'album', this.track.album.sortName]);
   }
   navigateToNowPlaying() {
     // this.router.navigate(['NowPlaying']);
@@ -309,15 +314,15 @@ export class PlayerComponent implements OnDestroy {
   updateTime() {
     this.track.position = this.mediaObject.currentTime * 1000;
     if (!this.hasScrobbledCurrentTrack) {
-      //TODO: this must be settings; add offline/manual scrobbling
+      // TODO: this must be settings; add offline/manual scrobbling
       if (this.track.position >= 4 * 60 * 1000 || this.track.position / this.track.duration >= 0.5) {
         this.hasScrobbledCurrentTrack = true;
         try {
           this.lastFMService.scrobbleTrack(this.track).subscribe(
             () => {
-              //console.log('track is scrobbled');
+              // console.log('track is scrobbled');
             }
-          )
+          );
         } catch (e) { }
       }
     }
@@ -343,10 +348,10 @@ export class PlayerComponent implements OnDestroy {
             ]
           });
 
-          (navigator as any).mediaSession.setActionHandler('play', () => { this.togglePlayPause() });
-          (navigator as any).mediaSession.setActionHandler('pause', () => { this.togglePlayPause() });
-          (navigator as any).mediaSession.setActionHandler('previoustrack', () => { this.prev() });
-          (navigator as any).mediaSession.setActionHandler('nexttrack', () => { this.next() });
+          (navigator as any).mediaSession.setActionHandler('play', () => { this.togglePlayPause(); });
+          (navigator as any).mediaSession.setActionHandler('pause', () => { this.togglePlayPause(); });
+          (navigator as any).mediaSession.setActionHandler('previoustrack', () => { this.prev(); });
+          (navigator as any).mediaSession.setActionHandler('nexttrack', () => { this.next(); });
 
         }
       );
@@ -358,12 +363,13 @@ export class PlayerComponent implements OnDestroy {
         data => {
           // update system transport
           try {
-            if (this.displayUpdater != undefined) {
+            if (this.displayUpdater !== undefined) {
               this.displayUpdater.musicProperties.albumArtist = this.track.trackArtist;
               this.displayUpdater.musicProperties.artist = this.track.trackArtist;
               this.displayUpdater.musicProperties.albumTitle = this.track.album.name;
               this.displayUpdater.musicProperties.title = this.track.title;
               if (data) {
+                // tslint:disable-next-line:max-line-length
                 this.displayUpdater.thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(new Windows.Foundation.Uri(data));
               }
               this.displayUpdater.update();
@@ -372,20 +378,21 @@ export class PlayerComponent implements OnDestroy {
             console.error('error occurred', e);
           }
           // update live tile
-          var Notifications = Windows.UI.Notifications;
+          const Notifications = Windows.UI.Notifications;
           Notifications.TileUpdateManager.createTileUpdaterForApplication('App').clear();
-          var tileXml = Notifications.TileUpdateManager.getTemplateContent(Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02);
-          var textNode = tileXml.getElementsByTagName("text")[0];
+          // tslint:disable-next-line:max-line-length
+          const tileXml = Notifications.TileUpdateManager.getTemplateContent(Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02);
+          let textNode = tileXml.getElementsByTagName('text')[0];
           textNode.innerText = this.track.title;
-          textNode = tileXml.getElementsByTagName("text")[1];
+          textNode = tileXml.getElementsByTagName('text')[1];
           textNode.innerText = this.track.trackArtist;
           if (data) {
-            var imageNode = tileXml.getElementsByTagName("image")[0];
+            const imageNode = tileXml.getElementsByTagName('image')[0];
             imageNode.attributes[1].value = data;
           }
-          var currentTime = new Date();
-          var expiryTime = new Date(currentTime.getTime() + Number(this.track.duration));
-          var tileNotification = new Notifications.TileNotification(tileXml);
+          const currentTime = new Date();
+          const expiryTime = new Date(currentTime.getTime() + Number(this.track.duration));
+          const tileNotification = new Notifications.TileNotification(tileXml);
           tileNotification.expirationTime = expiryTime;
           Notifications.TileUpdateManager.createTileUpdaterForApplication('App').update(tileNotification);
         }
@@ -414,7 +421,7 @@ export class PlayerComponent implements OnDestroy {
     this.track.isLoved = !this.track.isLoved;
     this.lastFMService.toggleLoved(this.track).subscribe(
       data => { }
-    )
+    );
   }
   toggleVolumeWindow(e: Event) {
     e.stopPropagation();
@@ -423,20 +430,20 @@ export class PlayerComponent implements OnDestroy {
     this.showVolumeWindow = !this.showVolumeWindow;
   }
   onprogress() {
-    let buffered = this.mediaObject.buffered;
+    const buffered = this.mediaObject.buffered;
     if ((buffered.length !== 0)) {
       this.track.buffered.start = buffered.start((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000;
-      this.track.buffered.end = buffered.end((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000
+      this.track.buffered.end = buffered.end((buffered.length !== 0) ? buffered.length - 1 : 0) * 1000;
     }
   }
   setVolume() {
     this.mediaObject.volume = this.volume / 100;
-    this.playerService.setVolume(this.volume) // update the shared volume property
+    this.playerService.setVolume(this.volume); // update the shared volume property
   }
   jump(e: any): void {
-    let clientX = e.clientX || e.changedTouches[0].clientX;
-    let left = clientX, perc = (left / document.querySelector('.player').clientWidth);
-    let pos = this.track.duration / 1000 * perc;
+    const clientX = e.clientX || e.changedTouches[0].clientX;
+    const left = clientX, perc = (left / document.querySelector('.player').clientWidth);
+    const pos = this.track.duration / 1000 * perc;
     this.playerService.setPosition(pos);
   }
 }

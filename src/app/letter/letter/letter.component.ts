@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { musicdbcore } from './../../org/arielext/musicdb/core';
@@ -6,6 +6,7 @@ import Letter from './../../org/arielext/musicdb/models/Letter';
 import { CoreService } from './../../utils/core.service';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mdb-letters',
   templateUrl: './letter.component.html',
   styleUrls: ['./letter.component.css']
@@ -22,7 +23,7 @@ export class LetterComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
   }
 
   ngOnInit() {

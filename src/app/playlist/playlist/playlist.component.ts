@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-//import { ModalDirective } from 'ngx-bootstrap';
+// import { ModalDirective } from 'ngx-bootstrap';
 
 import { PlayerService } from './../../player/player.service';
 import { PathService } from './../../utils/path.service';
@@ -21,7 +21,7 @@ import Track from './../../org/arielext/musicdb/models/Track';
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.css']
 })
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   private subscription2: Subscription;
   public playlist: Playlist;
@@ -30,19 +30,21 @@ export class PlaylistComponent implements OnInit {
   private track: Track;
   private trackIndex: number;
   private core: musicdbcore;
-  public loading: boolean = false;
+  public loading = false;
   public username: string = localStorage.getItem('lastfm-username');
-  public showStartingArtist: boolean = false;
+  public showStartingArtist = false;
   private artists: Array<Artist> = [];
   private startingArtistName: string;
   private theme: string;
-  //@ViewChild('addModal') private addModal: ModalDirective;
-  //@ViewChild('editModal') private editModal: ModalDirective;
+  // @ViewChild('addModal') private addModal: ModalDirective;
+  // @ViewChild('editModal') private editModal: ModalDirective;
   public ownPlaylists: Array<Playlist> = [];
 
-  constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private playerService: PlayerService, private lastfmservice: LastfmService, private configService: ConfigService, public playlistService:PlaylistService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private router: Router,
+    private playerService: PlayerService, private lastfmservice: LastfmService, private configService: ConfigService,
+    public playlistService: PlaylistService) {
     // this is for when we open the page; just wanting to know the current state of the playerService
-    let playerData = this.playerService.getCurrentPlaylist();
+    const playerData = this.playerService.getCurrentPlaylist();
     if (playerData) {
       this.currentPlaylist = playerData.playlist;
       this.trackIndex = playerData.startIndex;
@@ -50,18 +52,19 @@ export class PlaylistComponent implements OnInit {
     }
     // this is for when a new track is announced while we are already on the page
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
+      // tslint:disable-next-line:no-shadowed-variable
       playerData => {
         this.currentPlaylist = playerData.playlist;
         this.trackIndex = playerData.startIndex;
         this.setTrack();
       }
-    )
+    );
     this.core = this.coreService.getCore();
     this.subscription2 = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.theme = configService.mode;
     this.newPlaylist = new Playlist();
   }
@@ -80,16 +83,16 @@ export class PlaylistComponent implements OnInit {
 
     // TODO this should a call from the backend
     if (localStorage.getItem('customlisttest')) {
-      let list: Array<any> = JSON.parse(localStorage.getItem('customlisttest'));
+      const list: Array<any> = JSON.parse(localStorage.getItem('customlisttest'));
       if (list) {
         list.forEach(item => {
-          let playlist = new Playlist();
+          const playlist = new Playlist();
           playlist.name = item.name;
           playlist.isOwn = true;
           item.tracks.forEach(id => {
-            let track: Track = this.core.getTrackById(id);
+            const track: Track = this.core.getTrackById(id);
             if (track && track.title) {
-              playlist.tracks.push(track)
+              playlist.tracks.push(track);
             }
           });
 
@@ -102,11 +105,11 @@ export class PlaylistComponent implements OnInit {
     this.subscription.unsubscribe();
     this.subscription2.unsubscribe();
   }
-  
+
   setPlaylist(name: any) {
     this.loading = true;
     this.showStartingArtist = false;
-    if (name === "current") {
+    if (name === 'current') {
       this.playlist = this.currentPlaylist;
       this.loading = false;
     } else if (name === 'last.fm') {
@@ -115,7 +118,7 @@ export class PlaylistComponent implements OnInit {
           this.playlist = this.playlistService.extractTracks(data);
           this.loading = false;
         }
-      )
+      );
     } else if (name === 'random') {
       this.playlist = this.playlistService.generateRandom();
       this.playlist.isContinues = true;
@@ -140,7 +143,7 @@ export class PlaylistComponent implements OnInit {
         this.playlist.type = 'radio';
         this.loading = false;
       }
-    )
+    );
   }
   private askForStartingArtist(): void {
     this.loading = false;
@@ -148,8 +151,8 @@ export class PlaylistComponent implements OnInit {
     this.showStartingArtist = true;
   }
   onChange() {
-    let startArtist = this.core.getArtistByName(this.startingArtistName);
-    let tmpPlaylist: Playlist = new Playlist();
+    const startArtist = this.core.getArtistByName(this.startingArtistName);
+    const tmpPlaylist: Playlist = new Playlist();
     tmpPlaylist.name = `Artist radio for ${startArtist.name}`;
     tmpPlaylist.tracks = [this.playlistService.getRandomTrackFromList([startArtist])];
 
@@ -165,18 +168,18 @@ export class PlaylistComponent implements OnInit {
     this.lastfmservice.getSimilairArtists(artist).subscribe(
       data => {
         this.loading = false;
-        let c = this;
-        let foundSimilair: Array<Artist> = [];
+        const c = this;
+        const foundSimilair: Array<Artist> = [];
         data.forEach(lastfmartist => {
-          let name = lastfmartist.name;
-          let coreArtist = c.core.getArtistByName(name)
+          const name = lastfmartist.name;
+          const coreArtist = c.core.getArtistByName(name);
           if (coreArtist) {
             foundSimilair.push(coreArtist);
           }
         });
         // the next similair artist is ...
         if (foundSimilair.length > 0) {
-          let nextTrack = this.playlistService.getNextTrackForPlaylist(foundSimilair, playlist);
+          const nextTrack = this.playlistService.getNextTrackForPlaylist(foundSimilair, playlist);
           if (nextTrack && playlist.tracks.length < this.playlistService.numberOfTracksInAPlaylist) {
             playlist.tracks.push(nextTrack);
             this.getNextSimilairArtist(nextTrack.artist, playlist);
@@ -184,9 +187,9 @@ export class PlaylistComponent implements OnInit {
         }
         // if no new similair artists are found this is the end of the line.
       }
-    )
+    );
   }
-  
+
 
   /*
   addPlaylist(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { musicdbcore } from './../../org/arielext/musicdb/core';
 
@@ -19,7 +19,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   private core: musicdbcore;
   private subscription: Subscription;
   public sorting: Array<any> = [{ name: 'year', value: 'year' }, { name: 'name', value: 'sortName' }];
-  public sort:string;
+  public sort: string;
 
   constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
     this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
@@ -30,7 +30,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       }
     );
     this.route.params.subscribe(data => {
-      this.artistName = decodeURIComponent(data["artist"]);
+      this.artistName = decodeURIComponent(data['artist']);
       this.ngOnInit();
     });
   }
@@ -47,7 +47,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   onSelect(album: any) {
     this.router.navigate(['Album', { letter: album.artist.letter.escapedLetter, artist: album.artist.sortName, album: album.sortName }]);
   }
-  onSortChange(e:Event, sort: string) {
+  onSortChange(e: Event, sort: string) {
     this.albums = this.artist.sortAndReturnAlbumsBy(sort, 'asc');
   }
 }

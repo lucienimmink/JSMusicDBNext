@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -20,25 +20,26 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
   private subscription2: Subscription;
   public manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
   public manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manmual-scrobble-list')) || [];
-  private isReloading: boolean = false;
-  private isBusy: boolean = false;
+  private isReloading = false;
+  private isBusy = false;
 
-  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastfmService, private collectionService: CollectionService, private router: Router) {
+  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastfmService,
+    private collectionService: CollectionService, private router: Router) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.subscription2 = this.lastFMService.manualScrobbleList$.subscribe(
       data => {
         this.manualScrobblingList = data;
       }
-    )
+    );
   }
 
   private booleanState(key: string): boolean {
-    let raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
     if (raw && raw === 'true') {
       return true;
     }
@@ -58,7 +59,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
   scrobbleNow() {
     this.isBusy = true;
     this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
-    let track = this.manualScrobblingList.pop();
+    const track = this.manualScrobblingList.pop();
     this.lastFMService.scrobbleCachedTrack(track).subscribe(
       data => {
         localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
@@ -68,7 +69,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
           this.isBusy = false;
         }
       }
-    )
+    );
   }
   removeFromScrobbleList(item: any) {
     this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
@@ -77,7 +78,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
       if (Object.is(value, item)) {
         index = i;
       }
-    })
+    });
     this.manualScrobblingList.splice(index, 1);
     localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
   }

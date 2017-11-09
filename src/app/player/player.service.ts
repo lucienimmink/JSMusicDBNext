@@ -17,12 +17,12 @@ export class PlayerService {
   public playlistAnnounced$ = this.playlistSource.asObservable();
   private currentTrack: Track;
 
-  private isPlaying: boolean = false;
-  private isPaused: boolean = false;
-  private isShuffled: boolean = false;
-  private forceRestart: boolean = false;
+  private isPlaying = false;
+  private isPaused = false;
+  private isShuffled = false;
+  private forceRestart = false;
 
-  private volume: number = 100;
+  private volume = 100;
   private volumeSource = new Subject<any>();
   public volumeAnnounced = this.volumeSource.asObservable();
 
@@ -42,10 +42,10 @@ export class PlayerService {
         this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled);
       }
     );
-  };
+  }
 
   private booleanState(key: string): boolean {
-    let raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
     if (raw && raw === 'true') {
       return true;
     }
@@ -75,7 +75,8 @@ export class PlayerService {
     this.announce();
   }
 
-  private setPlaylist(playlist: any, startIndex: number = 0, forceRestart: boolean = true, isShuffled: boolean = false, type: string = "album"): void {
+  private setPlaylist(playlist: any, startIndex: number = 0, forceRestart: boolean = true, isShuffled: boolean = false,
+    type: string = 'album'): void {
     this.currentPlaylist = {
       playlist: playlist,
       startIndex: startIndex,
@@ -85,7 +86,7 @@ export class PlayerService {
       forceRestart: this.forceRestart = forceRestart,
       isContinues: playlist.isContinues || type === 'album',
       type: playlist.type
-    }
+    };
   }
 
   doPlayTrack(track: Track) {
@@ -93,7 +94,7 @@ export class PlayerService {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
     }
-    let playlist = new Playlist();
+    const playlist = new Playlist();
     playlist.isOwn = true;
     playlist.name = track.title;
     playlist.tracks.push(track);
@@ -110,9 +111,9 @@ export class PlayerService {
   }
 
   nextPlaylist(type: string): void {
-    if (this.booleanState("continues-play")) {
+    if (this.booleanState('continues-play')) {
       if (type === 'random') {
-        let nextPlaylist = this.playlistService.generateRandom();
+        const nextPlaylist = this.playlistService.generateRandom();
         this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled);
       } else {
         this.playlistService.generateRadio(); // async
@@ -123,8 +124,8 @@ export class PlayerService {
   }
 
   nextAlbum(album: Album): void {
-    if (this.booleanState("continues-play")) {
-      let nextAlbum = this.coreService.getCore().getNextAlbum(album);
+    if (this.booleanState('continues-play')) {
+      const nextAlbum = this.coreService.getCore().getNextAlbum(album);
       if (nextAlbum) {
         this.doPlayAlbum(nextAlbum, 0, true, this.isShuffled);
       } else {
@@ -136,12 +137,12 @@ export class PlayerService {
     }
   }
   playlistToString(): string {
-    let list: Array<string> = [];
+    const list: Array<string> = [];
     this.currentPlaylist.playlist.tracks.forEach((track: Track) => {
       if (track) {
         list.push(track.id);
       }
-    })
+    });
     return JSON.stringify({
       ids: list,
       isShuffled: this.isShuffled,
@@ -178,9 +179,9 @@ export class PlayerService {
     }
   }
   shuffle(list: Array<Track>): Array<Track> {
-    for (var i = list.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = list[i];
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = list[i];
       list[i] = list[j];
       list[j] = temp;
     }
@@ -250,7 +251,7 @@ export class PlayerService {
           status => {
             this.currentTrack.isLoved = status;
           }
-        )
+        );
       }
       if (this.currentTrack) {
         this.currentTrack.isPaused = this.isPaused;

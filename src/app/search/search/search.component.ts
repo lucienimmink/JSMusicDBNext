@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   public albums: any;
   public tracks: any;
   private query: string;
-  private MAXALLOWEDITEMS:number = 15;
+  private MAXALLOWEDITEMS = 15;
 
   constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private route: ActivatedRoute) {
     this.core = this.coreService.getCore();
@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.query = decodeURIComponent(this.route.snapshot.params['query']);
     this.route.params.subscribe(data => {
       this.query = data['query'];
@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     return {
       list: view,
       overflow: ret
-    }
+    };
   }
 
   ngOnDestroy() {
@@ -66,6 +66,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   select(track: Track) {
-    this.router.navigate(['/letter', track.album.artist.letter.escapedLetter, 'artist', track.album.artist.sortName, 'album', track.album.sortName]);
+    this.router.navigate(['/letter', track.album.artist.letter.escapedLetter, 'artist', track.album.artist.sortName,
+      'album', track.album.sortName]);
   }
 }

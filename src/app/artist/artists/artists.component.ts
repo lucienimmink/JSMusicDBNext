@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -16,7 +16,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
 
   public letters: Array<any> = [];
   private artists: Array<any> = [];
-  public showJumpList: boolean = false;
+  public showJumpList = false;
   private core: musicdbcore;
   private subscription: Subscription;
   private cummlativeLength: Array<number> = [];
@@ -27,21 +27,20 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
   }
 
   ngOnInit() {
-    this.pathService.announcePage("Artists");
+    this.pathService.announcePage('Artists');
     this.letters = this.core.sortedLetters;
-    let c = this;
-    this.letters.forEach(function (letter, index) {
-      let letterLength = c.getSize(letter, index);
+    this.letters.forEach((letter, index) => {
+      const letterLength = this.getSize(letter, index);
       if (index > 0) {
-        let prevLength = c.cummlativeLength[index - 1]
-        let newLength = prevLength + letterLength;
-        c.cummlativeLength[index] = newLength;
+        const prevLength = this.cummlativeLength[index - 1];
+        const newLength = prevLength + letterLength;
+        this.cummlativeLength[index] = newLength;
       } else {
-        c.cummlativeLength[index] = letterLength;
+        this.cummlativeLength[index] = letterLength;
       }
       // sort artists by sortName
       letter.sortArtistsBy('sortName', 'asc');
@@ -51,7 +50,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   navigateToArtist(artist) {
-    this.router.navigate(['/letter', artist.letter.escapedLetter, 'artist', artist.sortName])
+    this.router.navigate(['/letter', artist.letter.escapedLetter, 'artist', artist.sortName]);
   }
   getSize(item, index) {
     return (item.artists.length * 90) + 49;
@@ -61,8 +60,8 @@ export class ArtistsComponent implements OnInit, OnDestroy {
   }
   jumpToLetter(letter: any) {
     this.showJumpList = false;
-    let index = this.letters.indexOf(letter);
-    let jump = (index > 0) ? index - 1 : 0;
+    const index = this.letters.indexOf(letter);
+    const jump = (index > 0) ? index - 1 : 0;
     window.scrollTo(0, this.cummlativeLength[jump]);
   }
 }

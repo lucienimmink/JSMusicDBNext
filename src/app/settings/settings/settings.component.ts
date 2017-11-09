@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, AfterViewChecked, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
@@ -13,7 +13,7 @@ import { ConfigService } from './../../utils/config.service';
 import { Settings } from './../settings';
 
 declare function require(moduleName: string): any;
-const { version: appVersion } = require('../../../../package.json')
+const { version: appVersion } = require('../../../../package.json');
 
 
 @Component({
@@ -21,27 +21,27 @@ const { version: appVersion } = require('../../../../package.json')
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public totals: any;
   private core: musicdbcore;
   public lastfmusername: string;
-  public connectiontype: string = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
-  public connectiondetails: string = "";
+  public connectiontype = 'node-mp3stream'; // we can implement more connection types later on (dsm, local, etc)
+  public connectiondetails = '';
   private subscription: Subscription;
   private subscription2: Subscription;
   private subscription3: Subscription;
   private subscription4: Subscription;
-  public savePlaylistState: boolean = this.booleanState("save-playlist-state");
+  public savePlaylistState: boolean = this.booleanState('save-playlist-state');
   private manualScrobbling: boolean = this.booleanState('manual-scrobble-state');
   public isContinuesplay: boolean = this.booleanState('continues-play');
   private smallArt: boolean = this.booleanState('small-art');
   private manualScrobblingList: Array<any> = JSON.parse(localStorage.getItem('manual-scrobble-list')) || [];
-  public isReloading: boolean = false;
-  public scanperc: number = 0;
-  public version: String = "__dev__";
+  public isReloading = false;
+  public scanperc = 0;
+  public version: String = '__dev__';
   public settings: Settings;
-  private hasBeenReloading: boolean = false;
+  private hasBeenReloading = false;
   public lastParsed: number = Number(localStorage.getItem('lastParsed'));
 
   public visualisation: boolean = this.booleanState('visualisation-state');
@@ -54,30 +54,31 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   public isVisualCapable: boolean = (navigator.userAgent.indexOf('Mobi') === -1);
 
-  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastfmService, private collectionService: CollectionService, private router: Router, private configService: ConfigService) {
+  constructor(private pathService: PathService, private coreService: CoreService, private lastFMService: LastfmService,
+    private collectionService: CollectionService, private router: Router, private configService: ConfigService) {
     this.settings = new Settings();
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.subscription2 = this.lastFMService.manualScrobbleList$.subscribe(
       data => {
         this.manualScrobblingList = data;
       }
-    )
+    );
     this.subscription3 = this.configService.theme$.subscribe(
       data => {
         this.settings.theme = data;
         this.theme = data;
       }
-    )
+    );
     this.subscription4 = this.configService.mode$.subscribe(
       data => {
         this.mode = data;
       }
-    )
+    );
     // setup a form for changing stuff
     this.settings.theme = this.configService.theme;
     this.theme = this.configService.theme;
@@ -90,7 +91,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   private booleanState(key: string): boolean {
-    let raw = localStorage.getItem(key);
+    const raw = localStorage.getItem(key);
     if (raw && raw === 'true') {
       return true;
     }
@@ -115,7 +116,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.pathService.announcePage('Settings');
     this.totals = this.core.totals;
-    this.lastfmusername = localStorage.getItem("lastfm-username") || '';
+    this.lastfmusername = localStorage.getItem('lastfm-username') || '';
     this.connectiondetails = localStorage.getItem('dsm');
     this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
     this.lastParsed = Number(localStorage.getItem('lastParsed'));
@@ -134,7 +135,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.ngOnInit();
   }
   removeConnection() {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem('jwt');
     localStorage.removeItem('dsm');
     this.ngOnInit();
   }
@@ -170,7 +171,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
   scrobbleNow() {
     this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
-    let track = this.manualScrobblingList.pop();
+    const track = this.manualScrobblingList.pop();
     this.lastFMService.scrobbleCachedTrack(track).subscribe(
       data => {
         localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
@@ -178,7 +179,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           this.scrobbleNow();
         }
       }
-    )
+    );
   }
   removeFromScrobbleList(item: any) {
     this.manualScrobblingList = JSON.parse(localStorage.getItem('manual-scrobble-list'));
@@ -187,7 +188,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       if (Object.is(value, item)) {
         index = i;
       }
-    })
+    });
     this.manualScrobblingList.splice(index, 1);
     localStorage.setItem('manual-scrobble-list', JSON.stringify(this.manualScrobblingList));
   }
@@ -199,12 +200,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
           this.poll();
         }, 300);
       }
-    )
+    );
   }
   poll() {
     this.collectionService.poll().subscribe(
       data => {
-        this.scanperc = data.progress
+        this.scanperc = data.progress;
         if (data.status !== 'ready') {
           this.isReloading = true;
           setTimeout(e => {
@@ -218,7 +219,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           }
         }
       }
-    )
+    );
   }
 
   getCollection() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { musicdbcore } from './../../org/arielext/musicdb/core';
@@ -19,7 +19,7 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   public sorting: Array<any> = [{ name: 'name', value: 'sortName' }, { name: 'albums', value: 'albums' }];
   private coreletter: Letter;
-  public sort:string;
+  public sort: string;
 
   constructor(private coreService: CoreService, private router: Router, private pathService: PathService, private route: ActivatedRoute) {
     this.core = this.coreService.getCore();
@@ -27,10 +27,10 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
       data => {
         this.ngOnInit();
       }
-    )
+    );
     this.letter = decodeURIComponent(this.route.snapshot.params['letter']);
     this.route.params.subscribe(data => {
-      this.letter = decodeURIComponent(data["letter"]);
+      this.letter = decodeURIComponent(data['letter']);
       this.ngOnInit();
     });
   }
@@ -48,7 +48,7 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  onSortChange(e:Event, sort: string) {
+  onSortChange(e: Event, sort: string) {
     this.artists = this.coreletter.sortAndReturnArtistsBy(sort, 'asc');
   }
 }
