@@ -49,7 +49,7 @@
   <div class="container" *ngIf="!username">
     <div class="row">
       <div class="col-xs-24">
-        <h4>Login to last.fm</h4>
+        <h4 sticky class="header-seperator">Login to last.fm</h4>
         <form role="form" class="form-horizontal" (ngSubmit)="onSubmit()" [ngClass]="{'theme-alt': theme === 'dark'}" #lastfmForm="ngForm">
           <div class="form-group">
             <label for="name" class="col-sm-8 col-lg-4 control-label">Username*</label>
