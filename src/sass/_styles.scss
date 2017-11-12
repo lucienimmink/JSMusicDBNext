@@ -149,12 +149,13 @@ a,
     -moz-transition: .1s ease-out;
     -o-transition: .1s ease-out;
     transition: .1s ease-out;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
+    // box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
     background-size: cover;
     background-position: center center;
     &:hover,
     &:active {
-        box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+        //box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+        box-shadow: 0 7px 14px rgba(0, 0, 0, .25), 0 5px 5px rgba(0, 0, 0, .22);
     }
 }
 
