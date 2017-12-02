@@ -391,8 +391,8 @@ h4 .small {
 
 .main-content {
     @include musicdb-respond-min-width(lg) {
-        margin-left: 82px;
-        width: calc(100% - 82px);
+        margin-left: 76px;
+        width: calc(100% - 76px);
     }
 }
 

@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
-        this.isPlaying = true;
+        this.isPlaying = (playerData) ? true : false; // stopped playlist return a null
       });
   }
   ngOnDestroy() {

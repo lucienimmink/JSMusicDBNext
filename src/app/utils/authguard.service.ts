@@ -6,10 +6,12 @@ import { LoginService } from './../login/login.service';
 export class AuthGuardService implements CanActivate {
   constructor(private loginService: LoginService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const url: string = state.url;
-    window.scrollTo(0, 0); // scroll to top on every change;
-    return this.checkLogin(url);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return new Promise((resolve) => {
+      const url: string = state.url;
+      window.scrollTo(0, 0); // scroll to top on every change;
+      resolve(this.checkLogin(url));
+    });
   }
 
   checkLogin(url: string): boolean {
