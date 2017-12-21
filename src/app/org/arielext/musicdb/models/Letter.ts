@@ -20,16 +20,21 @@ export default class Letter {
     return `/letter/${this.escapedLetter}/`;
   }
   private getFirstLetterOf(name: string): string {
-    return this.stripFromName(name, 'the ');
+    let ret = '';
+    ret = this.stripFromName(name, ['the ', '"', 'a ']);
+    // now group the 1st char if it is a 'special char'
+    return this.groupIfSpecialChar(ret.substr(0, 1));
   }
-  private stripFromName(name: string, strip: string): string {
-    const s = strip.toUpperCase();
+  private stripFromName(name: string, strip: Array<string>): string {
     let f = (name) ? name.toUpperCase() : '';
     f = f.trim();
-    if (f.indexOf(s) === 0) {
-      f = f.substring(s.length);
-    }
-    return this.groupIfSpecialChar(f.substr(0, 1));
+    strip.forEach((str) => {
+      const s = str.toUpperCase();
+      if (f.indexOf(s) === 0) {
+        f = f.substring(s.length);
+      }
+    });
+    return f;
   }
   private groupIfSpecialChar(c: string): string {
     if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '[', ']', '{', '}', '_', '-', '.'].indexOf(c) !== -1) {

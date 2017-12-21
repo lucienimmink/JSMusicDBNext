@@ -17,19 +17,21 @@ export default class Artist {
       this.name = json.name || json.artist || '';
       this.albumArtist = json.albumartist || json.albumArtist || '';
       // tslint:disable-next-line:max-line-length
-      this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), 'the ');
+      this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), ['the ', '"', 'a ']);
       this.bio = json.bio;
       this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false;
     }
   }
 
-  private stripFromName(name: string, strip: string): string {
-    const s = strip.toUpperCase();
-    let f = name.toUpperCase();
+  private stripFromName(name: string, strip: Array<string>): string {
+    let f = (name) ? name.toUpperCase() : '';
     f = f.trim();
-    if (f.indexOf(s) === 0) {
-      f = f.substring(s.length);
-    }
+    strip.forEach((str) => {
+      const s = str.toUpperCase();
+      if (f.indexOf(s) === 0) {
+        f = f.substring(s.length);
+      }
+    });
     return f;
   }
 

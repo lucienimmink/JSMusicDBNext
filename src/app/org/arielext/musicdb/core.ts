@@ -5,7 +5,7 @@ import Letter from './models/Letter';
 import Year from './models/Year';
 import { Subject } from 'rxjs/Subject';
 
-const VERSION = '1.2.8';
+const VERSION = '1.3.0';
 
 // tslint:disable-next-line:class-name
 export class musicdbcore {
