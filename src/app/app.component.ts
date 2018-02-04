@@ -41,21 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService.applyTheme();
     this.viewContainerRef = viewContainerRef;
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.onmessage = (evt) => {
-        const message = JSON.parse(evt.data);
-        if (message.type === 'refresh') {
-          window.caches.open('v1').then((cache) => {
-            return cache.match(message.url);
-          }).then((response) => {
-            return response.json();
-          }).then((data) => {
-            this.coreService.getCore().resetCollection();
-            this.fillCollection(data);
-          });
-        }
-      };
-    }
+
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
         this.isPlaying = (playerData) ? true : false; // stopped playlist return a null

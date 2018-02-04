@@ -2,8 +2,11 @@ import { BrowserModule, EVENT_MANAGER_PLUGINS } from '@angular/platform-browser'
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { YoutubePlayerModule } from 'ngx-youtube-player';
 import { TooltipModule, ModalModule } from 'ngx-bootstrap';
+
+import { environment } from '../environments/environment';
 
 import { routing, appRoutingProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -71,6 +74,9 @@ import { PlayerComponent } from './player/player/player.component';
     YoutubePlayerModule
     , TooltipModule.forRoot()
     // , ModalModule.forRoot()
+    , ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: true || environment.production
+    })
   ],
   providers: [appRoutingProviders,
     { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true },
