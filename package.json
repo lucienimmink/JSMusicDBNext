@@ -5,9 +5,6 @@
   "scripts": {
     "ng": "ng",
     "start": "node-sass --output-style nested ./src/sass/dark.scss > ./src/global/css/dark.css && ng serve",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
     "sass": "node-sass",
     "prod": "node-sass --output-style compressed ./src/sass/dark.scss > ./src/global/css/dark.css && ng build -prod --locale=\"en-GB\""
   },
