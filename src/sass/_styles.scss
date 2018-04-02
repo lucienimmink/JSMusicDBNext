@@ -1,510 +1,522 @@
 body {
-    padding-top: 55px;
-    padding-bottom: 80px;
-    user-select: none;
-    background: $background-color;
-    color: $primary-color;
-    font-size: 17px;
-    transition: color 0.15s ease-in, background-color 0.15s ease-in;
-    @include musicdb-respond-min-width(sm) {
-        padding-top: 105px;
-    }
+  padding-top: 55px;
+  padding-bottom: 80px;
+  user-select: none;
+  background: $background-color;
+  color: $primary-color;
+  font-size: 17px;
+  transition: color 0.15s ease-in, background-color 0.15s ease-in;
+  @include musicdb-respond-min-width(sm) {
+    padding-top: 105px;
+  }
 }
 
 @include musicdb-respond-max-width(xs) {
-    .container {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        width: 100%;
-    }
+  .container {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+  }
 }
 
 .preloader {
-    width: 320px;
+  width: 320px;
+  margin: 0 auto;
+  text-align: center;
+  background: $background-color;
+  .progress-bar {
+    height: 0;
+    width: 180px;
     margin: 0 auto;
-    text-align: center;
-    background: $background-color;
-    .progress-bar {
-        height: 0;
-        width: 180px;
-        margin: 0 auto;
-        float: none;
-    }
+    float: none;
+  }
 }
 
 .progress-bar {
-    height: 0;
+  height: 0;
 }
 
 .progress {
-    background-color: $disabled-color;
-    .progress-bar {
-        width: 0;
-        height: 4px;
-        transition: width 0.1s linear;
-    }
+  background-color: $disabled-color;
+  .progress-bar {
+    width: 0;
+    height: 4px;
+    transition: width 0.1s linear;
+  }
 }
 
 .loading-fixed {
-    left: calc(50% - 160px);
-    position: fixed;
-    top: 50px;
-    z-index: 1000;
-    @include musicdb-respond-min-width(sm) {
-        top: 100px;
-    }
+  left: calc(50% - 160px);
+  position: fixed;
+  top: 50px;
+  z-index: 1000;
+  @include musicdb-respond-min-width(sm) {
+    top: 100px;
+  }
 }
 
 a,
 .clickable {
-    cursor: pointer;
-    color: $accent-color;
-    &:hover {
-        color: darken($accent-color, 20%);
-        text-decoration: none;
-    }
+  cursor: pointer;
+  color: $accent-color;
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: none;
+  }
 }
 
 .logo {
-    path {
-        fill: $primary-color;
-    }
+  path {
+    fill: $primary-color;
+  }
 }
 
 .media-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: flex-start;
-    align-items: stretch;
-    display: flex;
-    padding: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: stretch;
+  display: flex;
+  padding: 0;
 }
 
 .no-flex {
-    justify-content: flex-start;
-    align-items: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .media-panel {
-    width: 48vw;
-    height: 48vw;
-    margin: 0 2vw 2vw 0;
-    cursor: pointer;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOsAAADrCAMAAAC/1JHnAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAHl5eYKCgoqKipKSkpubm6Kioqurq7Ozs7q6usLCwsjIyM/Pz9bW1tzc3OLi4unp6fLy8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTwJiMAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQBwYWludC5uZXQgNC4wLjEzNANbegAAA9tJREFUeF7tnIluo0AQRDf4dmzw/v/HeifdBYYMxBvUWKamnrTSHKTF89wY7597OciVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydynctHOAgcglznghsMBIFDkOtccIOBIHAIC7hudiFYrHd3Pf0NwWLJdSZynYvdnlx/jcVauevter1e0r8a+Sks1opd69OusmuM7eHzhooR/BoEDuGFrs1xY/UD9p+ozfB6BA7hZa5XbA4yqtN443otAofwItdmyvSL6oyrBngdAofwGteTVUyzHZmovAaBQ3iFa7O1crDZHU+J/bCl86b1cgQO4QWu9WPqrQ6X3uCsz70P4YDCDi9G4BCWd/20wi82+RJTH1CX+vG3Si9F4BAWd+1Uq/HVpdmj/rusFyJwCEu7Xq0osR9fWRKXto/vUOB4GQKHsLBrO1YnGtW5tdPUYMx6EQKHsKzrDZNP9WTz247a/ifiJQgcwrKuRyt4qtrJVg3yCS9B4BAWdcVgfa7ayfaGrBcgcAiLuqIHX5D9kexazyNwCEu6Yrk5Ivszjc9iG2TX5upHuM3kYjPkbFc/pifPInAIC7peLPdxRfYpvvJskVuXq2+IhhuEn8BM1k5knkPgEJZzvVnm/5u1bdh2eFtmJa4+Mz3mmucM/8IyK3H1Ljz6yGEKn4rRiS29Ele/8d5G6Dm+ocDHY+l1uDaWHu3C5912dxjbS3knxgnA0utw9Vl1b+kBNXZIaP4+tVVg5rb0Olz9cVoudOseEo8MZa/opxE4hIVd82Mrjj6J/qEG+OfgaUuuyTVfXduHEIm8YX2F9bQl1+1qxU7ewVfq6n01c8VuysgPQO7qhwVLqg/PRHPTXOz2+q75kGRcc0raS5S0Ryxp71/Uma6ks3pJz2BKerZW1DPTkp6FY64p4zuOkr67Kuo7yZK+ay7qHYKS3g3phmwJ7/x0C89k0xK9y9WT5X9H7zFmE+zvXqZu2lNKrcv8Tm3CH7RNw/OudKKgd+AT5fy24YtyfrNiFPNbJFDKb8x+g8WS60zkOhe7Pbn+Gov17q4l/Z8LoSBwCHKdC24wEAQOQa5zwQ0GgsAhxLq+N3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV0bu93+zZs+HVGeoSwAAAABJRU5ErkJggg==');
-    background-size: contain;
-    &.artist-panel {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOsAAADrCAMAAAC/1JHnAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAICAgIGBgYKCgoODg4SEhIWFhYaGhoeHh4iIiImJiYqKiouLi42NjY6Ojo+Pj5CQkJKSkpOTk5SUlJWVlZaWlpeXl5iYmJmZmZqampubm5ycnJ6enp+fn6CgoKGhoaKioqOjo6SkpKampqenp6ioqKmpqaqqqqurq6ysrK2trbKysrOzs7e3t7i4uL29vb+/v8HBwcLCwsXFxcbGxsrKysvLy83NzdLS0tfX19nZ2eDg4OHh4eLi4ubm5unp6erq6uvr6+zs7O7u7vHx8fLy8vPz8/T09PX19fb29vn5+fv7+/z8/P39/f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJFbJMcAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQBwYWludC5uZXQgNC4wLjEzNANbegAABThJREFUeF7tmmt300YQhisZE9I0cUl6CaSQGEqhDU3phTaFAr0Aplz8//+Na82+ihXbkvfDjOd0/D5fEu3O0TmPJa12V+9Hk82BrjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaEruvjwV6/KIprBzg0xdV12Jt61myj0Q5H1zslLGu20GGFn+sWDJt8hj4b3FznL2rC9EZ2cj1drjodpVBggZNrrdobnr8cj9/9+eP1usVQ1se1es9M6T98M655dgjbfdTo4+K6n6wGT+EpfPgJv8ADVKnj4pqcPv8HljXn16T9KqrU8XDdFaW9F1Cc8TjNLe6iThsPVxHq/QbBBu/vSZfV8OTgekOEbr+DYJPnO9KHQm0cXLcrnf4T6F3mVFxvolIZB1d5txyMYHeZJzIW76JSGQfXyqa4D7k5Xg6qTqOReP2ud8X1EeTmeHuz6ixRqsz6XYfiumQUFlIvSpWhqyWbdA9v0ti0Ue+cTZpLpDni8XvoNQk3R8Tc/xx+DeLN/Sfp4rWv6Y5Rp42H6yat1SefitNm7MFM8G2j/11jb+3L1FYMUKOPj+sm7ZlO7tVq8/RRYIGTa9vGv+W2v5srlgBzXEGnDV6uad90gfIr9Fvg43q/7XE1fLs6ueIbx3LKb1GljqWrZCHK7YUsxOz+7d/C23U83p9d6hPUaWPm2p6F+ASNxQCaNRdf2o1kjVwXshCz9+YeWrZg2OBh/ft8jVpdbFyXZSGupy5MBcsh/C4jWzBWG04mrl3zhNRXwm2BtJC3mVMYuLZmIar7+Kr814PZEm5JQXGYzqWKgWutumxefyR/W69qRbrJLe5ifVesQpdmIXrp7xHalyN7bxaxCXXX7iyEsIPWNuQHMbiw6q5i07q/IqCplS+k6gZOqIe266osxJRdtLQjpfpDsbar2HRkIaacoqWdA6nDGfVQdl2dhSj6OO4g7f6rzxSVXVd/vyj2cdjFFSnEOdVQdpUhtPO7VHGCwy7kFvgY51RD2VVsOr83rhyFK2QkVl+167pmfEfOcj2RSpxUDV3XnHwADjqxSRKs3xWlDqz9HjbKQuSw9rHJcJ9wFcquq985RlmIHJRd3bIQOSi7umUhclB2xdx//VmIHLRdvbIQOWi7rlirO47CBq5OWYgc1F2dshA56Lt27pm6YuDqkoXIwcDVJQuRg4WrRxYiBwtXjyxEDvqu37Q9rs5vVwNXpyxEDtquzSzEzy/eTl+uoz/O1pCFyEHZ9UJ18GtzP/zVmXUWIgdd14ssxC8fYFnzxjgLkYOq62GyKYez6eGMp6ZZiBxUXdNjWZ7NX9TEK8ssRA6armnZ1vsBbguMDLMQOSi63haR8gxmSxjZZSFyUHRNS9Sj6j3TxjOzLEQOeq7HorHzHFrLeSSPtNOF1XNNT+v3kGrhX6ssRA56riKx+xek2khbbD5DsZpr+uC4MgsxMspC5KDmKpulLTv+TYyyEDmouaaIw2sYtfO7TRYiBzXXyiAnC/G3TRYiB13XFaNwRRqJXVbtWq7pm/ljCHVhk4XIQde1LT3QxC9JoHYP/w+ga0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTukZkMvkPE7o8iuMtUk4AAAAASUVORK5CYII=');
-    }
+  width: 48vw;
+  height: 48vw;
+  margin: 0 2vw 2vw 0;
+  cursor: pointer;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOsAAADrCAMAAAC/1JHnAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAHl5eYKCgoqKipKSkpubm6Kioqurq7Ozs7q6usLCwsjIyM/Pz9bW1tzc3OLi4unp6fLy8gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABTwJiMAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQBwYWludC5uZXQgNC4wLjEzNANbegAAA9tJREFUeF7tnIluo0AQRDf4dmzw/v/HeifdBYYMxBvUWKamnrTSHKTF89wY7597OciVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydy5USunMiVE7lyIldO5MqJXDmRKydynctHOAgcglznghsMBIFDkOtccIOBIHAIC7hudiFYrHd3Pf0NwWLJdSZynYvdnlx/jcVauevter1e0r8a+Sks1opd69OusmuM7eHzhooR/BoEDuGFrs1xY/UD9p+ozfB6BA7hZa5XbA4yqtN443otAofwItdmyvSL6oyrBngdAofwGteTVUyzHZmovAaBQ3iFa7O1crDZHU+J/bCl86b1cgQO4QWu9WPqrQ6X3uCsz70P4YDCDi9G4BCWd/20wi82+RJTH1CX+vG3Si9F4BAWd+1Uq/HVpdmj/rusFyJwCEu7Xq0osR9fWRKXto/vUOB4GQKHsLBrO1YnGtW5tdPUYMx6EQKHsKzrDZNP9WTz247a/ifiJQgcwrKuRyt4qtrJVg3yCS9B4BAWdcVgfa7ayfaGrBcgcAiLuqIHX5D9kexazyNwCEu6Yrk5Ivszjc9iG2TX5upHuM3kYjPkbFc/pifPInAIC7peLPdxRfYpvvJskVuXq2+IhhuEn8BM1k5knkPgEJZzvVnm/5u1bdh2eFtmJa4+Mz3mmucM/8IyK3H1Ljz6yGEKn4rRiS29Ele/8d5G6Dm+ocDHY+l1uDaWHu3C5912dxjbS3knxgnA0utw9Vl1b+kBNXZIaP4+tVVg5rb0Olz9cVoudOseEo8MZa/opxE4hIVd82Mrjj6J/qEG+OfgaUuuyTVfXduHEIm8YX2F9bQl1+1qxU7ewVfq6n01c8VuysgPQO7qhwVLqg/PRHPTXOz2+q75kGRcc0raS5S0Ryxp71/Uma6ks3pJz2BKerZW1DPTkp6FY64p4zuOkr67Kuo7yZK+ay7qHYKS3g3phmwJ7/x0C89k0xK9y9WT5X9H7zFmE+zvXqZu2lNKrcv8Tm3CH7RNw/OudKKgd+AT5fy24YtyfrNiFPNbJFDKb8x+g8WS60zkOhe7Pbn+Gov17q4l/Z8LoSBwCHKdC24wEAQOQa5zwQ0GgsAhxLq+N3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV07kyolcOZErJ3LlRK6cyJUTuXIiV0bu93+zZs+HVGeoSwAAAABJRU5ErkJggg==");
+  background-size: contain;
+  &.artist-panel {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOsAAADrCAMAAAC/1JHnAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMAUExURQAAAICAgIGBgYKCgoODg4SEhIWFhYaGhoeHh4iIiImJiYqKiouLi42NjY6Ojo+Pj5CQkJKSkpOTk5SUlJWVlZaWlpeXl5iYmJmZmZqampubm5ycnJ6enp+fn6CgoKGhoaKioqOjo6SkpKampqenp6ioqKmpqaqqqqurq6ysrK2trbKysrOzs7e3t7i4uL29vb+/v8HBwcLCwsXFxcbGxsrKysvLy83NzdLS0tfX19nZ2eDg4OHh4eLi4ubm5unp6erq6uvr6+zs7O7u7vHx8fLy8vPz8/T09PX19fb29vn5+fv7+/z8/P39/f///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJFbJMcAAAEAdFJOU////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wBT9wclAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAGXRFWHRTb2Z0d2FyZQBwYWludC5uZXQgNC4wLjEzNANbegAABThJREFUeF7tmmt300YQhisZE9I0cUl6CaSQGEqhDU3phTaFAr0Aplz8//+Na82+ihXbkvfDjOd0/D5fEu3O0TmPJa12V+9Hk82BrjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaEruvjwV6/KIprBzg0xdV12Jt61myj0Q5H1zslLGu20GGFn+sWDJt8hj4b3FznL2rC9EZ2cj1drjodpVBggZNrrdobnr8cj9/9+eP1usVQ1se1es9M6T98M655dgjbfdTo4+K6n6wGT+EpfPgJv8ADVKnj4pqcPv8HljXn16T9KqrU8XDdFaW9F1Cc8TjNLe6iThsPVxHq/QbBBu/vSZfV8OTgekOEbr+DYJPnO9KHQm0cXLcrnf4T6F3mVFxvolIZB1d5txyMYHeZJzIW76JSGQfXyqa4D7k5Xg6qTqOReP2ud8X1EeTmeHuz6ixRqsz6XYfiumQUFlIvSpWhqyWbdA9v0ti0Ue+cTZpLpDni8XvoNQk3R8Tc/xx+DeLN/Sfp4rWv6Y5Rp42H6yat1SefitNm7MFM8G2j/11jb+3L1FYMUKOPj+sm7ZlO7tVq8/RRYIGTa9vGv+W2v5srlgBzXEGnDV6uad90gfIr9Fvg43q/7XE1fLs6ueIbx3LKb1GljqWrZCHK7YUsxOz+7d/C23U83p9d6hPUaWPm2p6F+ASNxQCaNRdf2o1kjVwXshCz9+YeWrZg2OBh/ft8jVpdbFyXZSGupy5MBcsh/C4jWzBWG04mrl3zhNRXwm2BtJC3mVMYuLZmIar7+Kr814PZEm5JQXGYzqWKgWutumxefyR/W69qRbrJLe5ifVesQpdmIXrp7xHalyN7bxaxCXXX7iyEsIPWNuQHMbiw6q5i07q/IqCplS+k6gZOqIe266osxJRdtLQjpfpDsbar2HRkIaacoqWdA6nDGfVQdl2dhSj6OO4g7f6rzxSVXVd/vyj2cdjFFSnEOdVQdpUhtPO7VHGCwy7kFvgY51RD2VVsOr83rhyFK2QkVl+167pmfEfOcj2RSpxUDV3XnHwADjqxSRKs3xWlDqz9HjbKQuSw9rHJcJ9wFcquq985RlmIHJRd3bIQOSi7umUhclB2xdx//VmIHLRdvbIQOWi7rlirO47CBq5OWYgc1F2dshA56Lt27pm6YuDqkoXIwcDVJQuRg4WrRxYiBwtXjyxEDvqu37Q9rs5vVwNXpyxEDtquzSzEzy/eTl+uoz/O1pCFyEHZ9UJ18GtzP/zVmXUWIgdd14ssxC8fYFnzxjgLkYOq62GyKYez6eGMp6ZZiBxUXdNjWZ7NX9TEK8ssRA6armnZ1vsBbguMDLMQOSi63haR8gxmSxjZZSFyUHRNS9Sj6j3TxjOzLEQOeq7HorHzHFrLeSSPtNOF1XNNT+v3kGrhX6ssRA56riKx+xek2khbbD5DsZpr+uC4MgsxMspC5KDmKpulLTv+TYyyEDmouaaIw2sYtfO7TRYiBzXXyiAnC/G3TRYiB13XFaNwRRqJXVbtWq7pm/ljCHVhk4XIQde1LT3QxC9JoHYP/w+ga0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTusaErjGha0zoGhO6xoSuMaFrTOgaE7rGhK4xoWtM6BoTukZkMvkPE7o8iuMtUk4AAAAASUVORK5CYII=");
+  }
+  &:nth-child(2n) {
+    margin-right: 0;
+  }
+  @include musicdb-respond-min-width(xs) {
+    width: 32vw;
+    height: 32vw;
+    margin: 0 1vw 1vw 0;
     &:nth-child(2n) {
-        margin-right: 0;
+      margin-right: 1vw;
     }
-    @include musicdb-respond-min-width(xs) {
-        width: 32vw;
-        height: 32vw;
-        margin: 0 1vw 1vw 0;
-        &:nth-child(2n) {
-            margin-right: 1vw;
-        }
-        &:nth-child(3n) {
-            margin-right: 0;
-        }
+    &:nth-child(3n) {
+      margin-right: 0;
     }
-    @include musicdb-respond-min-width(sm) {
-        width: 19vw;
-        height: 19vw;
-        &:nth-child(3n) {
-            margin-right: 1vw;
-        }
-        &:nth-child(5n) {
-            margin-right: 0;
-        }
+  }
+  @include musicdb-respond-min-width(sm) {
+    width: 19vw;
+    height: 19vw;
+    &:nth-child(3n) {
+      margin-right: 1vw;
     }
-    @include musicdb-respond-min-width(md) {
-        width: 15vw;
-        height: 15vw;
-        &:nth-child(3n) {
-            margin-right: 1vw;
-        }
-        &:nth-child(5n) {
-            margin-right: 1vw;
-        }
+    &:nth-child(5n) {
+      margin-right: 0;
     }
-    @include musicdb-respond-min-width(lg) {
-        width: 11vw;
-        height: 11vw;
+  }
+  @include musicdb-respond-min-width(md) {
+    width: 15vw;
+    height: 15vw;
+    &:nth-child(3n) {
+      margin-right: 1vw;
     }
+    &:nth-child(5n) {
+      margin-right: 1vw;
+    }
+  }
+  @include musicdb-respond-min-width(lg) {
+    width: 11vw;
+    height: 11vw;
+  }
 }
 
-.nav>li>a {
-    padding: 0 15px;
+.nav > li > a {
+  padding: 0 15px;
 }
 
 .panel-background {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    -webkit-transition: .1s ease-out;
-    -moz-transition: .1s ease-out;
-    -o-transition: .1s ease-out;
-    transition: .1s ease-out;
-    // box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
-    background-size: cover;
-    background-position: center center;
-    &:hover,
-    &:active {
-        //box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
-        box-shadow: 0 7px 14px rgba(0, 0, 0, .25), 0 5px 5px rgba(0, 0, 0, .22);
-    }
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-transition: 0.1s ease-out;
+  -moz-transition: 0.1s ease-out;
+  -o-transition: 0.1s ease-out;
+  transition: 0.1s ease-out;
+  // box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
+  background-size: cover;
+  background-position: center center;
+  &:hover,
+  &:active {
+    //box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  }
 }
 
 .panel-info {
-    position: absolute;
-    padding: 5px 10px;
-    bottom: -1px;
-    left: -1px;
-    right: -1px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 100%);
-    margin: 0;
-    line-height: 1.35;
-    -webkit-transition: .1s ease-out;
-    -moz-transition: .1s ease-out;
-    -o-transition: .1s ease-out;
-    transition: .1s ease-out;
+  position: absolute;
+  padding: 5px 10px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  margin: 0;
+  line-height: 1.35;
+  -webkit-transition: 0.1s ease-out;
+  -moz-transition: 0.1s ease-out;
+  -o-transition: 0.1s ease-out;
+  transition: 0.1s ease-out;
+  overflow: hidden;
+  text-align: center;
+  text-shadow: 0px 0px 3px black;
+  @include musicdb-respond-min-width(sm) {
+    padding: 10px;
+  }
+  span {
+    display: block;
     overflow: hidden;
-    text-align: center;
-    text-shadow: 0px 0px 3px black;
-    @include musicdb-respond-min-width(sm) {
-        padding: 10px;
-    }
-    span {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .jumpList {
-    position: fixed;
-    left: 0;
-    top: 50px;
-    z-index: 1000;
-    background: $background-color;
-    right: 0;
-    bottom: 0;
-    padding: 0;
-    transform: scale(0);
-    transition: transform 0.25s ease-in-out;
+  position: fixed;
+  left: 0;
+  top: 50px;
+  z-index: 1000;
+  background: $background-color;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  transform: scale(0);
+  transition: transform 0.25s ease-in-out;
+  @include musicdb-respond-min-width(sm) {
+    top: 100px;
+  }
+  ol {
+    list-style: none;
+    padding: 3vh 3vw;
+    margin: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: stretch;
+    display: flex;
+  }
+  li {
+    font-size: 2em;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    width: 25%;
     @include musicdb-respond-min-width(sm) {
-        top: 100px;
+      font-size: 3em;
+      width: 16.6%;
     }
-    ol {
-        list-style: none;
-        padding: 3vh 3vw;
-        margin: 0;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-content: flex-start;
-        align-items: stretch;
-        display: flex;
-    }
-    li {
-        font-size: 2em;
-        font-weight: bold;
-        display: inline-block;
-        text-align: center;
-        width: 25%;
-        @include musicdb-respond-min-width(sm) {
-            font-size: 3em;
-            width: 16.6%;
-        }
-    }
-    a:hover {
-        text-decoration: none;
-        color: #dddddd;
-    }
-    &.visible {
-        display: block;
-        transform: scale(1);
-    }
+  }
+  a:hover {
+    text-decoration: none;
+    color: #dddddd;
+  }
+  &.visible {
+    display: block;
+    transform: scale(1);
+  }
 }
 
 .jumpList-years li {
-    font-size: 1.4em;
-    width: 25%;
-    margin: 5px 0 0 0;
-    @include musicdb-respond-min-width(sm) {
-        font-size: 1.5em;
-        width: 16.6%;
-    }
+  font-size: 1.4em;
+  width: 25%;
+  margin: 5px 0 0 0;
+  @include musicdb-respond-min-width(sm) {
+    font-size: 1.5em;
+    width: 16.6%;
+  }
 }
 
 .btn.focus,
 .btn:focus,
 .btn:hover,
 .btn:active {
-    color: $primary-color;
-    outline: none;
-    box-shadow: none;
+  color: $primary-color;
+  outline: none;
+  box-shadow: none;
 }
 
 input.form-control:focus,
 textarea.form-control:focus {
-    color: $primary-color;
-    background: $background-color;
+  color: $primary-color;
+  background: $background-color;
 }
 
 .alert.alert-info {
-    background-color: $disabled-color;
-    color: $primary-color;
+  background-color: $disabled-color;
+  color: $primary-color;
 }
 
 .menu-top {
-    background: $tertiary-color;
-    form input {
-        color: $primary-color;
-        background: $background-color;
-        border: 1px solid $primary-color;
-    }
+  background: $tertiary-color;
+  form input {
+    color: $primary-color;
+    background: $background-color;
+    border: 1px solid $primary-color;
+  }
 }
 
 .side-nav-xl {
-    position: fixed;
-    left: 0;
-    top: 100px;
-    height: calc(100% - 100px);
-    z-index: 13;
-    overflow-y: auto;
-    overflow-x: hidden;
-    .isPlaying & {
-        height: calc(100% - 100px - 80px);
-    }
+  position: fixed;
+  left: 0;
+  top: 100px;
+  height: calc(100% - 100px);
+  z-index: 13;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .isPlaying & {
+    height: calc(100% - 100px - 80px);
+  }
 }
 
 .side-nav__container,
 .side-nav-xl {
-    background-color: $tertiary-color;
-    .side-nav__content li a {
-        color: $primary-color;
-        outline: none;
-    }
-    .side-nav__content li:hover,
-    .side-nav__content li.active {
-        background-color: $hover-color;
-    }
-    .side-nav__content .search-bar input {
-        color: $primary-color;
-        background: $background-color;
-        border: 1px solid $primary-color;
-    }
-    .side-nav__content .search-bar .input-group-addon {
-        color: $primary-color;
-    }
+  background-color: $tertiary-color;
+  .side-nav__content li a {
+    color: $primary-color;
+    outline: none;
+  }
+  .side-nav__content li:hover,
+  .side-nav__content li.active {
+    background-color: $hover-color;
+  }
+  .side-nav__content .search-bar input {
+    color: $primary-color;
+    background: $background-color;
+    border: 1px solid $primary-color;
+  }
+  .side-nav__content .search-bar .input-group-addon {
+    color: $primary-color;
+  }
 }
 
 .list-group-item,
 .container-longlist li {
-    padding: 10px 5px;
-    border-bottom: 1px solid $forth-color;
-    transition: 0.25s ease-in-out;
+  padding: 10px 5px;
+  border-bottom: 1px solid $forth-color;
+  transition: 0.25s ease-in-out;
 }
 
 .list-group-item:last-child,
 .container-longlist li:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .list-group-item:hover,
 .container-longlist li:hover {
-    background-color: $tertiary-color;
+  background-color: $tertiary-color;
 }
 
 .list-group-item .glyph {
-    vertical-align: top;
-    margin-top: 5px;
+  vertical-align: top;
+  margin-top: 5px;
 }
 
 .player {
-    background-color: $tertiary-color;
+  background-color: $tertiary-color;
 }
 
 .volume-control {
-    background-color: $background-color;
-    border: 1px solid $accent-color;
+  background-color: $background-color;
+  border: 1px solid $accent-color;
 }
 
 .header-seperator {
-    overflow: hidden;
-    border-bottom: 1px solid $accent-color;
-    border-top: none;
-    background: $background-color;
-    color: $primary-color;
-    z-index: 2;
-    padding-top: 6px;
+  overflow: hidden;
+  border-bottom: 1px solid $accent-color;
+  border-top: none;
+  background: $background-color;
+  color: $primary-color;
+  z-index: 2;
+  padding-top: 6px;
 }
 
 .color-type-secondary,
 h4 .small {
-    color: $secondary-color;
+  color: $secondary-color;
 }
 
 .jumbotron.theme-light {
-    margin-top: -5px;
-    background-color: $accent-color;
-    color: #ffffff;
-    z-index: 12;
-    position: relative;
+  margin-top: -5px;
+  background-color: $accent-color;
+  color: #ffffff;
+  z-index: 12;
+  position: relative;
+  @include musicdb-respond-min-width(sm) {
+    background-color: $tertiary-color;
+    color: $primary-color;
+    padding: 24px 0;
+  }
+  h3 {
+    padding-top: 0;
+  }
+  a {
+    color: white;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
     @include musicdb-respond-min-width(sm) {
-        background-color: $tertiary-color;
-        color: $primary-color;
-        padding: 24px 0;
+      color: $accent-color;
+      text-decoration: none;
     }
-    h3 {
-        padding-top: 0;
-    }
-    a {
-        color: white;
-        text-decoration: underline;
-        &:hover {
-            text-decoration: none;
-        }
-        @include musicdb-respond-min-width(sm) {
-            color: $accent-color;
-            text-decoration: none;
-        }
-    }
+  }
 }
 
 #nowPlaying {
+  background: $background-color;
+  .top,
+  .bottom {
     background: $background-color;
-    .top,
-    .bottom {
-        background: $background-color;
-    }
-    #position-indicator {
-        background: $background-color;
-    }
+  }
+  #position-indicator {
+    background: $background-color;
+  }
 }
 
 .main-content {
-    @include musicdb-respond-min-width(lg) {
-        margin-left: 76px;
-        width: calc(100% - 76px);
-    }
+  @include musicdb-respond-min-width(lg) {
+    margin-left: 76px;
+    width: calc(100% - 76px);
+  }
 }
 
 .tooltip .tooltip-inner {
-    border-color: $secondary-color;
-    background-color: $tertiary-color;
-    color: $primary-color;
+  border-color: $secondary-color;
+  background-color: $tertiary-color;
+  color: $primary-color;
 }
 
 .actions {
-    background-color: $background-color;
+  background-color: $background-color;
 }
 
 canvas {
-    width: 900px;
-    display: none;
+  width: 900px;
+  display: none;
 }
 
 .icon-stack {
-    position: relative;
-    display: inline-block;
-    width: 2em;
-    height: 2em;
-    line-height: 2em;
-    font-size: 1em;
-    vertical-align: top;
-    .stack-text {
-        font-size: .6em;
-        position: absolute;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        top: 1em;
-    }
-    .glyph {
-        font-size: 2em;
-        position: absolute;
-        left: 0;
-        width: 100%;
-        text-align: center;
-    }
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  font-size: 1em;
+  vertical-align: top;
+  .stack-text {
+    font-size: 0.6em;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    top: 1em;
+  }
+  .glyph {
+    font-size: 2em;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 #title-bar {
-    position: absolute;
-    top: 0;
-    left: 82px;
-    -webkit-app-region: drag;
-    height: 24px;
-    z-index: 100;
-    right: 150px;
+  position: absolute;
+  top: 0;
+  left: 82px;
+  -webkit-app-region: drag;
+  height: 24px;
+  z-index: 100;
+  right: 150px;
 }
 
 #title-bar-btns {
-    -webkit-app-region: no-drag;
-    position: fixed;
-    top: 0px;
-    right: 6px;
+  -webkit-app-region: no-drag;
+  position: fixed;
+  top: 0px;
+  right: 6px;
 }
 
 #title-bar-btns button {
-    height: 32px;
-    width: 32px;
-    background-color: transparent;
-    border: none;
-    color: $primary-color;
-    font-size: 16px;
-    &:hover {
-        background-color: $secondary-color;
-        color: $background-color;
-    }
-    &:active,
-    &:focus {
-        outline: none;
-    }
+  height: 32px;
+  width: 32px;
+  background-color: transparent;
+  border: none;
+  color: $primary-color;
+  font-size: 16px;
+  &:hover {
+    background-color: $secondary-color;
+    color: $background-color;
+  }
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 #nowPlaying .control-wrapper-wrapper {
-    text-shadow: 0px 0px 1px $background-color;
-    background: linear-gradient(to bottom, transparent 0%, $background-color 100%);
+  text-shadow: 0px 0px 1px $background-color;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    $background-color 100%
+  );
 }
 
 #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
-    background: linear-gradient(to bottom, transparent 90%, $background-color 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 90%,
+    $background-color 100%
+  );
 }
 
 #nowPlaying .controls-wrapper h5 a {
-    color: $primary-color;
+  color: $primary-color;
 }
 .now-playing {
-    color: $accent-color;
-  }
+  color: $accent-color;
+}
 h4.header-seperator {
-    border-bottom: 1px solid $accent-color;
+  border-bottom: 1px solid $accent-color;
 }
-.side-nav__content>li+li {
-    margin: 0;
+.side-nav__content > li + li {
+  margin: 0;
 }
-.side-nav__content>li {
-    border-left: 5px solid transparent;
-    margin: 0;
-}
-
-.side-nav__content>li:hover,
-.side-nav__content>li.active {
-    border-left-color: $accent-color;
+.side-nav__content > li {
+  border-left: 5px solid transparent;
+  margin: 0;
 }
 
-.side-nav__content>li:hover>a,
-.side-nav__content>li.active>a,
-.side-nav__content>li.active>a:hover,
-.side-nav__content>li.active>a:focus { 
-    color: $accent-color;
-    background-color: transparent;
+.side-nav__content > li:hover,
+.side-nav__content > li.active {
+  border-left-color: $accent-color;
+}
+
+.side-nav__content > li:hover > a,
+.side-nav__content > li.active > a,
+.side-nav__content > li.active > a:hover,
+.side-nav__content > li.active > a:focus {
+  color: $accent-color;
+  background-color: transparent;
 }

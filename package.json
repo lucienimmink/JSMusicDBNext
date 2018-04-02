@@ -1,12 +1,17 @@
 {
   "name": "jsmusicdb-next",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "node-sass --output-style nested ./src/sass/dark.scss > ./src/global/css/dark.css && ng serve",
+    "start": "npm run --silent sass:dark && ng serve",
     "sass": "node-sass",
-    "prod": "node-sass --output-style compressed ./src/sass/dark.scss > ./src/global/css/dark.css && ng build -prod --locale=\"en-GB\""
+    "sass:dark":
+      "node-sass --output-style nested ./src/sass/dark.scss > ./src/global/css/dark.css",
+    "sass:dark:minimal":
+      "node-sass --output-style compressed ./src/sass/dark.scss > ./src/global/css/dark.css",
+    "prod":
+      "npm run --silent sass:dark:minimal && ng build -prod --locale=\"en-GB\""
   },
   "author": "Lucien Immink",
   "description": "Web version of musicdb next",
@@ -43,7 +48,7 @@
     "@angular/cli": "^1.7.3",
     "@angular/compiler-cli": "^5.2.9",
     "@angular/language-service": "^5.2.9",
-    "@types/node": "^9.6.0",
+    "@types/node": "^9.6.1",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
     "typescript": "^2.8.1"
