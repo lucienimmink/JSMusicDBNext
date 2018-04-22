@@ -13,8 +13,8 @@ export class ConfigService {
   private COUNTERTIMER: number = 60 * 1000;
   theme$ = this.themeSource.asObservable();
   mode$ = this.modeSource.asObservable();
-  public startHour: number;
-  public stopHour: number;
+  public startHour: number = parseInt(localStorage.getItem("startHour")) || 21;
+  public stopHour: number = parseInt(localStorage.getItem("stopHour")) || 9;
 
   constructor(private http: Http) {}
   public getSunriseInfo(): Observable<any> {
