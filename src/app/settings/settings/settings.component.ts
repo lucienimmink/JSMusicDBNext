@@ -144,8 +144,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.configService.stopHour = this.getHourFromDateString(
         data.results.sunrise
       );
-      localStorage.settItem("startHour", this.configService.startHour);
-      localStorage.settItem("stopHour", this.configService.stopHour);
+      localStorage.setItem("startHour", this.configService.startHour.toString());
+      localStorage.setItem("stopHour", this.configService.stopHour.toString());
       // now use the data from the service
       this.startTime = this.configService.startTime;
       this.stopTime = this.configService.stopTime;
