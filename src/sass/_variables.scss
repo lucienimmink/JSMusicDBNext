@@ -8,6 +8,7 @@ $secondary-color: rgba($primary-color, 0.6);
 $disabled-color: rgba($primary-color, 0.2);
 $hover-color: rgba($primary-color, 0.05);
 $link-hover-color: darken($accent-color, 15%);
+$font-path: "../../node_modules/winstrap/src/fonts/";
 //== Media queries breakpoints
 //
 //## Define the breakpoints at which your layout will change, adapting to different screen sizes.

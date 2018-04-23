@@ -7,10 +7,7 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": [
-        "global",
-        "manifest.json"
-      ],
+      "assets": ["global", "manifest.json"],
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
@@ -19,15 +16,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "serviceWorker": true,
-      "styles": [
-        "../node_modules/winstrap/src/scss/winstrap.scss",
-        "sass/base.scss",
-        "sass/animations.scss"
-      ],
+      "styles": ["sass/base.scss", "sass/animations.scss"],
       "stylePreprocessorOptions": {
-        "includePaths": [
-          "../node_modules"
-        ]
+        "includePaths": ["../node_modules"]
       },
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -63,7 +54,6 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {
-    }
+    "component": {}
   }
 }
