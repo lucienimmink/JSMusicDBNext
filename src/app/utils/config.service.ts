@@ -26,7 +26,7 @@ export class ConfigService {
       this.http
         // would like to get the lat/lng from the browser but don't want to bother the user
         .get(
-          "//api.sunrise-sunset.org/json?lat=" +
+          "https://api.sunrise-sunset.org/json?lat=" +
             lat +
             "&lng=" +
             lng +
