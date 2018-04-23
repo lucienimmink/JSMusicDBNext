@@ -56,8 +56,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public visualisation: boolean = this.booleanState("visualisation-state");
   public preferVideo: boolean = this.booleanState("preferVideo-state");
 
-  public startTime: string;
-  public stopTime: string;
+  public startDate: Date;
+  public stopDate: Date;
 
   private themeForm: NgForm;
   @ViewChild("themeForm") currentForm: NgForm;
@@ -136,28 +136,16 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       localStorage.getItem("manual-scrobble-list")
     );
     this.lastParsed = Number(localStorage.getItem("lastParsed"));
-    this.configService.getSunriseInfo().subscribe(data => {
-      // set this info back in the service
-      this.configService.startHour = this.getHourFromDateString(
-        data.results.sunset
-      );
-      this.configService.stopHour = this.getHourFromDateString(
-        data.results.sunrise
-      );
-      localStorage.setItem("startHour", this.configService.startHour.toString());
-      localStorage.setItem("stopHour", this.configService.stopHour.toString());
-      // now use the data from the service
-      this.startTime = this.configService.startTime;
-      this.stopTime = this.configService.stopTime;
-    });
-  }
 
-  private getHourFromDateString(date: string): number {
-    // yyyy-mm-ddThh:mm:ss+offset
-    const d = new Date();
-    const offset = d.getTimezoneOffset() / 60;
-    const baseHour = parseInt(date.split("T")[1].split(":")[0]);
-    return baseHour - offset;
+    // before the call; generic data
+    this.startDate = this.configService.startDate;
+    this.stopDate = this.configService.stopDate;
+
+    this.configService.geo$.subscribe(() => {
+      // and now it's updated for this specific location
+      this.startDate = this.configService.startDate;
+      this.stopDate = this.configService.stopDate;
+    });
   }
 
   ngOnDestroy() {

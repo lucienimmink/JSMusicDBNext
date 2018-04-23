@@ -1,70 +1,120 @@
-import { Component, OnInit, ViewChild, OnDestroy, ViewContainerRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  ViewContainerRef
+} from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 
-import { musicdbcore } from './org/arielext/musicdb/core';
-import { CollectionService } from './utils/collection.service';
-import { CoreService } from './utils/core.service';
-import { PathService } from './utils/path.service';
-import { PlayerService } from './player/player.service';
-import { PlaylistService } from './playlist/playlist.service';
-import { LastfmService } from './utils/lastfm.service';
-import { LoginService } from './login/login.service';
-import { AnimationService } from './utils/animation.service';
-import { ConfigService } from './utils/config.service';
-
+import { musicdbcore } from "./org/arielext/musicdb/core";
+import { CollectionService } from "./utils/collection.service";
+import { CoreService } from "./utils/core.service";
+import { PathService } from "./utils/path.service";
+import { PlayerService } from "./player/player.service";
+import { PlaylistService } from "./playlist/playlist.service";
+import { LastfmService } from "./utils/lastfm.service";
+import { LoginService } from "./login/login.service";
+import { AnimationService } from "./utils/animation.service";
+import { ConfigService } from "./utils/config.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'mdb-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [CollectionService, CoreService, PathService, PlayerService, LastfmService, AnimationService, ConfigService, PlaylistService]
+  selector: "mdb-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
+  providers: [
+    CollectionService,
+    CoreService,
+    PathService,
+    PlayerService,
+    LastfmService,
+    AnimationService,
+    ConfigService,
+    PlaylistService
+  ]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private letter = 'N';
+  private letter = "N";
   private artists: Array<any>;
   private subscription: Subscription;
-  private path = 'JSMusicDB Next';
+  private path = "JSMusicDB Next";
   private isLoading = false;
   private viewContainerRef: ViewContainerRef;
   public isPlaying = false;
   private mediaObject: any;
   private isFlacSupported: boolean;
   // tslint:disable-next-line:max-line-length
-  constructor(private collectionService: CollectionService, private coreService: CoreService, private loginService: LoginService, private configService: ConfigService, private playerService: PlayerService, viewContainerRef: ViewContainerRef) {
-
+  constructor(
+    private collectionService: CollectionService,
+    private coreService: CoreService,
+    private loginService: LoginService,
+    private configService: ConfigService,
+    private playerService: PlayerService,
+    viewContainerRef: ViewContainerRef
+  ) {
     if (this.loginService.hasToken) {
       this.isLoading = true;
       this.getCollection();
     }
-    this.configService.applyTheme();
     this.viewContainerRef = viewContainerRef;
-
 
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
-        this.isPlaying = (playerData) ? true : false; // stopped playlist return a null
-      });
+        this.isPlaying = playerData ? true : false; // stopped playlist return a null
+      }
+    );
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        this.configService
+          .getSunriseInfo(pos.coords.latitude, pos.coords.longitude)
+          .subscribe(data => {
+            // set this info back in the service
+            this.configService.startDate = new Date(data.results.sunset);
+            this.configService.stopDate = new Date(data.results.sunrise);
+            this.configService.stopDate.setDate(
+              this.configService.stopDate.getDate() + 1
+            );
+            this.configService.geoSource.next();
+            this.configService.applyTheme();
+          });
+      },
+      err => {
+        this.configService.startDate = new Date();
+        this.configService.startDate.setHours(21, 0, 0);
+
+        this.configService.stopDate = new Date();
+        this.configService.stopDate.setDate(
+          this.configService.stopDate.getDate() + 1
+        );
+        this.configService.stopDate.setHours(7, 0, 0);
+        this.configService.geoSource.next();
+        this.configService.applyTheme();
+      }
+    );
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
   ngOnInit() {
-    this.mediaObject = document.querySelector('audio');
-    const canPlayType = this.mediaObject.canPlayType('audio/flac');
-    this.isFlacSupported = (canPlayType === 'probably' || canPlayType === 'maybe');
+    this.mediaObject = document.querySelector("audio");
+    const canPlayType = this.mediaObject.canPlayType("audio/flac");
+    this.isFlacSupported =
+      canPlayType === "probably" || canPlayType === "maybe";
   }
 
   getCollection() {
-    this.collectionService.getCollection()
+    this.collectionService
+      .getCollection()
       .subscribe(
-      data => this.fillCollection(data),
-      error => console.log(error)
+        data => this.fillCollection(data),
+        error => console.log(error)
       );
   }
   fillCollection(data: any): void {
-    localStorage.setItem('lastParsed', new Date().getTime().toString());
+    localStorage.setItem("lastParsed", new Date().getTime().toString());
     this.coreService.getCore().parseSourceJson(data, this.isFlacSupported);
     this.isLoading = false;
   }

@@ -107,7 +107,7 @@
             <label>
               <input type="radio" name='theme' value="auto" [(ngModel)]="settings.theme" #name="ngModel" name="theme">
               <span>Auto</span>
-              <span class="small color-type-secondary">Dark mode between {{startTime}} and {{stopTime}}</span>
+              <span class="small color-type-secondary">Dark mode between {{startDate | date: 'mediumTime'}} and {{stopDate | date: 'mediumTime'}}</span>
             </label>
           </div>
         </div>

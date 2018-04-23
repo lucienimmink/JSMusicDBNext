@@ -9,19 +9,29 @@ export class ConfigService {
   private _mode = "light";
   private themeSource = new Subject<any>();
   private modeSource = new Subject<any>();
+  public geoSource = new Subject<any>();
   private counter: any = 0;
   private COUNTERTIMER: number = 60 * 1000;
   theme$ = this.themeSource.asObservable();
   mode$ = this.modeSource.asObservable();
-  public startHour: number = parseInt(localStorage.getItem("startHour")) || 21;
-  public stopHour: number = parseInt(localStorage.getItem("stopHour")) || 9;
+  geo$ = this.geoSource.asObservable();
+
+  public startDate: Date;
+  public stopDate: Date;
 
   constructor(private http: Http) {}
-  public getSunriseInfo(): Observable<any> {
+
+  public getSunriseInfo(lat: number = 51, lng: number = 5): Observable<any> {
     return (
       this.http
         // would like to get the lat/lng from the browser but don't want to bother the user
-        .get("//api.sunrise-sunset.org/json?lat=51&lng=5&formatted=0")
+        .get(
+          "//api.sunrise-sunset.org/json?lat=" +
+            lat +
+            "&lng=" +
+            lng +
+            "&formatted=0"
+        )
         .map(this.getSunriseSunset)
         .catch(this.handleError)
     );
@@ -55,14 +65,6 @@ export class ConfigService {
     localStorage.setItem("theme", this._theme);
     this.themeSource.next(this._theme);
     this.modeSource.next(style);
-  }
-
-  get startTime(): string {
-    return `${this.startHour}:00`;
-  }
-
-  get stopTime(): string {
-    return `${this.stopHour}:00`;
   }
 
   get theme(): string {
@@ -103,14 +105,15 @@ export class ConfigService {
   }
   checkTheme() {
     const d: Date = new Date();
-    if (
-      d.getHours() < this.stopHour ||
-      (d.getHours() > this.startHour && this._mode !== "dark")
-    ) {
+    if ((d < this.stopDate || d > this.startDate) && this._mode !== "dark") {
       this._mode = "dark";
-    } else if (this._mode !== "light") {
+      this.setStyleSheet(this._mode);
+    } else if (
+      (d > this.stopDate || d < this.startDate) &&
+      this._mode !== "light"
+    ) {
       this._mode = "light";
+      this.setStyleSheet(this._mode);
     }
-    this.setStyleSheet(this._mode);
   }
 }
