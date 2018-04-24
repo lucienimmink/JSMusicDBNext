@@ -1,17 +1,14 @@
 {
   "name": "jsmusicdb-next",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "npm run --silent sass:dark && ng serve",
     "sass": "node-sass",
-    "sass:dark":
-      "node-sass --output-style nested ./src/sass/dark.scss > ./src/global/css/dark.css",
-    "sass:dark:minimal":
-      "node-sass --output-style compressed ./src/sass/dark.scss > ./src/global/css/dark.css",
-    "prod":
-      "npm run --silent sass:dark:minimal && ng build -prod --locale=\"en-GB\""
+    "sass:dark": "node-sass --output-style nested ./src/sass/dark.scss > ./src/global/css/dark.css",
+    "sass:dark:minimal": "node-sass --output-style compressed ./src/sass/dark.scss > ./src/global/css/dark.css",
+    "prod": "npm run --silent sass:dark:minimal && ng build -prod --locale=\"en-GB\""
   },
   "author": "Lucien Immink",
   "description": "Web version of musicdb next",

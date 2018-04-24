@@ -105,7 +105,7 @@ export class ConfigService {
   }
   checkTheme() {
     const d: Date = new Date();
-    if ((d < this.stopDate || d > this.startDate) && this._mode !== "dark") {
+    if ((d < this.stopDate && d > this.startDate) && this._mode !== "dark") {
       this._mode = "dark";
       this.setStyleSheet(this._mode);
     } else if (
