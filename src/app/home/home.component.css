@@ -9,7 +9,7 @@ h4[sticky] {
   position: sticky;
   top: 50px;
 }
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   h4[sticky] {
     top: 100px;
   }
@@ -83,11 +83,11 @@ h4[sticky] {
   .media-container /deep/ .media-panel {
     width: 13vw;
     height: 13vw;
-  } 
+  }
 }
 @media screen and (min-width: 1400px) {
   .media-container /deep/ .media-panel {
     width: 8vw;
     height: 8vw;
-  } 
+  }
 }

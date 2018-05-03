@@ -6,7 +6,7 @@ body {
   color: $primary-color;
   font-size: 17px;
   transition: color 0.15s ease-in, background-color 0.15s ease-in;
-  @include musicdb-respond-min-width(sm) {
+  @include musicdb-respond-min-width(md) {
     padding-top: 105px;
   }
 }
