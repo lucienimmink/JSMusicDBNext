@@ -257,7 +257,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
         );
         setTimeout(e => {
           this.poll();
-        }, 300);
+        }, 5000);
         this.hasBeenReloading = true;
       } else {
         this.isReloading = false;

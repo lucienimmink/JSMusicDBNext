@@ -45,6 +45,9 @@ export class AppComponent implements OnInit, OnDestroy {
   public isPlaying = false;
   private mediaObject: any;
   private isFlacSupported: boolean;
+  public scanperc = 0;
+  public isReloading = false;
+  private hasBeenReloading = false;
   // tslint:disable-next-line:max-line-length
   constructor(
     private collectionService: CollectionService,
@@ -94,6 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.configService.applyTheme();
       }
     );
+    this.poll();
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -120,6 +124,32 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   hideVolumeWindow(): void {
     this.playerService.hideVolumeControl();
+  }
+
+  poll() {
+    this.collectionService.poll().subscribe(data => {
+      this.scanperc = data.progress;
+      if (data.status !== "ready") {
+        this.isReloading = true;
+        document.querySelector("mdb-player").dispatchEvent(
+          new CustomEvent("external.mdbscanning", {
+            detail: { percentage: this.scanperc }
+          })
+        );
+        setTimeout(e => {
+          this.poll();
+        }, 5000);
+        this.hasBeenReloading = true;
+      } else {
+        this.isReloading = false;
+        if (this.hasBeenReloading) {
+          document
+            .querySelector("mdb-player")
+            .dispatchEvent(new CustomEvent("external.mdbscanstop"));
+          this.getCollection();
+        }
+      }
+    });
   }
 
   onExternalPrev(event: Event): void {
