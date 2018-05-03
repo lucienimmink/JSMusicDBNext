@@ -59,7 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     if (this.loginService.hasToken) {
       this.isLoading = true;
-      this.getCollection();
+      this.poll();
     }
     this.viewContainerRef = viewContainerRef;
 
@@ -97,7 +97,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.configService.applyTheme();
       }
     );
-    this.poll();
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -146,8 +145,8 @@ export class AppComponent implements OnInit, OnDestroy {
           document
             .querySelector("mdb-player")
             .dispatchEvent(new CustomEvent("external.mdbscanstop"));
-          this.getCollection();
         }
+        this.getCollection();
       }
     });
   }
