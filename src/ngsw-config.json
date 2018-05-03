@@ -7,14 +7,13 @@
             "resources": {
                 "files": [
                     "/favicon.ico",
-                    "/index.html",
-                    "*.eot",
-                    "*.ttf"
+                    "/index.html"
                 ],
                 "versionedFiles": [
                     "/*.bundle.css",
                     "/*.bundle.js",
-                    "/*.chunk.js"
+                    "/*.chunk.js",
+                    "*.woff"
                 ]
             }
         },

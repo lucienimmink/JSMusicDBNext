@@ -19,3 +19,12 @@ use DOM events to control playback state by dispatching events to the mdb-player
 - 'external.mdbtoggle' - toggle play/pause
 
 More event will follow to control different part of the app so you can easily intergrate it into other systems.
+
+## React to events
+mdb-player will also emit events when something happens:
+- 'external.mdbplaying' - Player is playing a song; event detail object: the playing song
+- 'external.mdbstopped' - Player is stopped
+- 'external.mdbpaused' - Player has paused a song; event detail object: the playing song
+- 'external.mdbscanstart' - A collection refresh has started
+- 'external.mdbscanning' - The collection is refreshing; eventr detail object: percentage: [percentage done]
+- 'external.mdbscanstop' - A collection refresh has been done

@@ -264,6 +264,7 @@ export class PlayerService {
 
         this.currentPlaylist.position = this.position;
 
+        // TODO: idb-keyval?
         localStorage.setItem('current-playlist', this.playlistToString());
         this.playlistSource.next(this.currentPlaylist);
       }

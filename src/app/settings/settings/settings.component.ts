@@ -236,6 +236,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   reloadCollection() {
     this.isReloading = true;
+    document
+      .querySelector("mdb-player")
+      .dispatchEvent(new CustomEvent("external.mdbscanstart"));
     this.collectionService.reload().subscribe(data => {
       setTimeout(e => {
         this.poll();
@@ -247,6 +250,11 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.scanperc = data.progress;
       if (data.status !== "ready") {
         this.isReloading = true;
+        document.querySelector("mdb-player").dispatchEvent(
+          new CustomEvent("external.mdbscanning", {
+            detail: { percentage: this.scanperc }
+          })
+        );
         setTimeout(e => {
           this.poll();
         }, 300);
@@ -254,6 +262,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       } else {
         this.isReloading = false;
         if (this.hasBeenReloading) {
+          document
+            .querySelector("mdb-player")
+            .dispatchEvent(new CustomEvent("external.mdbscanstop"));
           this.getCollection();
         }
       }
