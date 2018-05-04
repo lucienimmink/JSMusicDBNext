@@ -1,29 +1,34 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptionsArgs, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Injectable } from "@angular/core";
+import {
+  Http,
+  Response,
+  RequestOptionsArgs,
+  URLSearchParams
+} from "@angular/http";
+import { Observable } from "rxjs/Observable";
+import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/catch";
 
 @Injectable()
 export class RecentlyListenedService {
-
-  constructor(private http: Http) { }
+  constructor(private http: Http) {}
 
   getRecentlyListened(user: string): Observable<any[]> {
     const urlSearchParams: URLSearchParams = new URLSearchParams();
-    urlSearchParams.set('user', user);
-    urlSearchParams.set('method', 'user.getrecenttracks');
-    urlSearchParams.set('api_key', '956c1818ded606576d6941de5ff793a5');
-    urlSearchParams.set('format', 'json');
-    urlSearchParams.set('limit', '6');
+    urlSearchParams.set("user", user);
+    urlSearchParams.set("method", "user.getrecenttracks");
+    urlSearchParams.set("api_key", "956c1818ded606576d6941de5ff793a5");
+    urlSearchParams.set("format", "json");
+    urlSearchParams.set("limit", "6");
 
     const query: RequestOptionsArgs = {
       search: urlSearchParams
     };
 
-    return this.http.get('https://ws.audioscrobbler.com/2.0/', query)
+    return this.http
+      .get("https://ws.audioscrobbler.com/2.0/", query)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -36,9 +41,13 @@ export class RecentlyListenedService {
     return null;
   }
 
-  private handleError(error: any): ErrorObservable {
+  private handleError(error: any): ErrorObservable<any> {
     // tslint:disable-next-line:max-line-length
-    const errorMessage: string = (error.message) ? error.message : (error.status) ? `${error.status} - ${error.statusText}` : 'Server error';
+    const errorMessage: string = error.message
+      ? error.message
+      : error.status
+        ? `${error.status} - ${error.statusText}`
+        : "Server error";
     return Observable.throw(errorMessage);
   }
 }
