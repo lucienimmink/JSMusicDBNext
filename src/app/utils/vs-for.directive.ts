@@ -1,5 +1,5 @@
 // tslint:disable-next-line:max-line-length
-import { Directive, ViewContainerRef, TemplateRef, ElementRef, Renderer, EmbeddedViewRef, NgZone, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Directive, ViewContainerRef, TemplateRef, ElementRef, Renderer2, EmbeddedViewRef, NgZone, OnInit, OnDestroy, OnChanges } from '@angular/core';
 
 const dde: any = document.documentElement,
   matchingFunction = dde.matches ? 'matches' :
@@ -149,7 +149,7 @@ export class VsForDirective implements OnInit, OnDestroy, OnChanges {
     private _element: ElementRef,
     private _viewContainer: ViewContainerRef,
     private _templateRef: TemplateRef<any>,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _ngZone: NgZone
   ) {
     let _prevClientSize: number;
