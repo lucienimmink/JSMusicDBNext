@@ -374,29 +374,32 @@ h4 .small {
   color: $secondary-color;
 }
 
-.jumbotron.theme-light {
-  margin-top: -5px;
-  background-color: $accent-color;
-  color: #ffffff;
-  z-index: 12;
-  position: relative;
-  @include musicdb-respond-min-width(sm) {
-    background-color: $tertiary-color;
-    color: $primary-color;
-    padding: 24px 0;
-  }
-  h3 {
-    padding-top: 0;
-  }
-  a {
-    color: white;
-    text-decoration: underline;
-    &:hover {
-      text-decoration: none;
-    }
+.jumbotron {
+  margin-bottom: -5px;
+  &.theme-light {
+    margin-top: -5px;
+    background-color: $accent-color;
+    color: #ffffff;
+    z-index: 12;
+    position: relative;
     @include musicdb-respond-min-width(sm) {
-      color: $accent-color;
-      text-decoration: none;
+      background-color: $tertiary-color;
+      color: $primary-color;
+      padding: 24px 0;
+    }
+    h3 {
+      padding-top: 0;
+    }
+    a {
+      color: white;
+      text-decoration: underline;
+      &:hover {
+        text-decoration: none;
+      }
+      @include musicdb-respond-min-width(sm) {
+        color: $accent-color;
+        text-decoration: none;
+      }
     }
   }
 }
@@ -513,9 +516,6 @@ canvas {
 }
 .now-playing {
   color: $accent-color;
-}
-h4.header-seperator {
-  border-bottom: 1px solid $accent-color;
 }
 .side-nav__content > li + li {
   margin: 0;
