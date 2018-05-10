@@ -465,7 +465,7 @@ canvas {
   left: 82px;
   -webkit-app-region: drag;
   height: 24px;
-  z-index: 100;
+  z-index: 1001;
   right: 150px;
 }
 
@@ -501,7 +501,6 @@ canvas {
     $background-color 100%
   );
 }
-
 #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
   background: linear-gradient(
     to bottom,
@@ -509,7 +508,6 @@ canvas {
     $background-color 100%
   );
 }
-
 #nowPlaying .controls-wrapper h5 a {
   color: $primary-color;
 }
@@ -526,12 +524,10 @@ h4.header-seperator {
   border-left: 5px solid transparent;
   margin: 0;
 }
-
 .side-nav__content > li:hover,
 .side-nav__content > li.active {
   border-left-color: $accent-color;
 }
-
 .side-nav__content > li:hover > a,
 .side-nav__content > li.active > a,
 .side-nav__content > li.active > a:hover,
