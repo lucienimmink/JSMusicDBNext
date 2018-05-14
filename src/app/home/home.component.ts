@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .authenticate({ user: this.user.name, password: this.user.password })
       .subscribe(data => {
         // save in storage
-        localStorage.setItem("lastfm-token", data);
+        localStorage.setItem("lastfm-token", data.session.key);
         localStorage.setItem("lastfm-username", this.user.name);
         // set in instance
         this.username = this.user.name;
@@ -123,7 +123,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.username !== "mdb-skipped") {
       this.recentlyListened
         .getRecentlyListened(this.username)
-        .subscribe(data => this.populate(data), error => console.log(error));
+        .subscribe(
+          data => this.populate(data.recenttracks.track),
+          error => console.log(error)
+        );
     } else {
       get("recentlyListened").then((data: any) => {
         if (data) {

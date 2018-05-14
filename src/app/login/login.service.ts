@@ -1,22 +1,22 @@
+import { throwError as observableThrowError, Observable } from "rxjs";
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
-
-import {catchError, map} from 'rxjs/operators';
+import { catchError, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { Http, Response, RequestOptions, Headers } from "@angular/http";
+// import { Http, Response, RequestOptions, Headers } from "@angular/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { KJUR } from "jsrsasign";
 
 @Injectable()
 export class LoginService {
   public hasToken = false;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     if (localStorage.getItem("jwt")) {
       this.hasToken = true;
     }
   }
 
-  doLogin(form: any, encoded: boolean = false) {
+  doLogin(form: any, encoded: boolean = false): any {
     const username = form.name;
     const password = form.password;
 
@@ -26,16 +26,17 @@ export class LoginService {
       payload = this.encode(form);
     }
 
-    // add as header
-    const headers = new Headers();
-    headers.append("X-Cred", payload);
-    const requestOptions = new RequestOptions();
-    requestOptions.headers = headers;
+    const headers = new HttpHeaders({
+      "X-Cred": payload
+    });
+
+    const options = {
+      headers: headers
+    };
 
     return this.http
-      .post(`${localStorage.getItem("dsm")}/login`, {}, requestOptions).pipe(
-      map(this.handleLogin),
-      catchError(this.handleError),);
+      .post(`${localStorage.getItem("dsm")}/login`, null, options)
+      .pipe(catchError(this.handleError));
   }
   autoLogin() {
     const cred = localStorage.getItem("jwt");
@@ -54,11 +55,6 @@ export class LoginService {
       "jsmusicdbnext"
     );
   }
-  private handleLogin(res: Response) {
-    const json = res.json();
-    return json;
-  }
-
   private handleError(error: any) {
     return observableThrowError(null);
   }

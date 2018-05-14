@@ -1,14 +1,8 @@
+import { throwError as observableThrowError, Observable } from "rxjs";
 
-import {throwError as observableThrowError,  Observable } from 'rxjs';
-
-import {catchError, map} from 'rxjs/operators';
+import { catchError, map } from "rxjs/operators";
 import { AbstractImageRetriever } from "./../abstract-image-retriever";
-import {
-  Http,
-  Response,
-  RequestOptionsArgs,
-  URLSearchParams
-} from "@angular/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { UrlEncoder } from "./url-encoder";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -16,35 +10,29 @@ import "rxjs/add/operator/catch";
 export class LastfmImageRetriever implements AbstractImageRetriever {
   NOIMAGE: "global/images/no-cover.png";
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   getMediaArt(artist: string, album: string, type: string): Observable<any> {
-    const urlSearchParams: URLSearchParams = new URLSearchParams(
-      "",
-      new UrlEncoder()
-    );
-    urlSearchParams.set("api_key", "956c1818ded606576d6941de5ff793a5");
-    urlSearchParams.set("artist", artist);
-    urlSearchParams.set("format", "json");
-    urlSearchParams.set("autoCorrect", "true");
-
+    let params = new HttpParams()
+      .set("api_key", "956c1818ded606576d6941de5ff793a5")
+      .set("artist", artist)
+      .set("format", "json")
+      .set("autoCorrect", "true");
     if (type === "album") {
-      urlSearchParams.set("method", "album.getinfo");
-      urlSearchParams.set("album", album);
+      params = params.set("method", "album.getinfo");
+      params = params.set("album", album);
     } else {
-      urlSearchParams.set("method", "artist.getinfo");
+      params = params.set("method", "artist.getinfo");
     }
-
-    const query: RequestOptionsArgs = {
-      search: urlSearchParams
+    const options = {
+      params
     };
-
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
-      map(this.extractData),
-      catchError(this.handleError),);
+      .get("https://ws.audioscrobbler.com/2.0/", options)
+      .pipe(catchError(this.handleError));
   }
 
+  /*
   extractData(res: Response): string {
     const json = res.json();
     let image = this.NOIMAGE;
@@ -63,6 +51,7 @@ export class LastfmImageRetriever implements AbstractImageRetriever {
     }
     return image || this.NOIMAGE;
   }
+  */
   handleError(error: Response) {
     return observableThrowError(this.NOIMAGE);
   }

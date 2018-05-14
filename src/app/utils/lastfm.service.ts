@@ -1,15 +1,9 @@
+import { throwError as observableThrowError, Observable, Subject } from "rxjs";
 
-import {throwError as observableThrowError,  Observable ,  Subject } from 'rxjs';
-
-import {catchError, map} from 'rxjs/operators';
+import { catchError, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import {
-  Http,
-  Response,
-  URLSearchParams,
-  RequestOptionsArgs,
-  Headers
-} from "@angular/http";
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { set, get } from "idb-keyval";
 
 import { MyQueryEncoder } from "./my-query-encoder";
@@ -29,158 +23,138 @@ export class LastfmService {
     any
   > = this.manualScrobbleListSource.asObservable();
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   getLovedTracks(user: string): Observable<any> {
-    const urlSearchParams: URLSearchParams = new URLSearchParams(
-      "",
-      new MyQueryEncoder()
-    );
-    urlSearchParams.set("api_key", APIKEY);
-    urlSearchParams.set("format", "json");
-    urlSearchParams.set("limit", "1000");
-    urlSearchParams.set("method", "user.getlovedtracks");
-    urlSearchParams.set("user", user);
-
-    const query: RequestOptionsArgs = {
-      search: urlSearchParams
+    const params = {
+      api_key: APIKEY,
+      format: "json",
+      limit: "1000",
+      method: "user.getlovedtracks",
+      user: user
     };
-
+    const options = {
+      params
+    };
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
-      map(this.extractLastFMLoved),
-      catchError(this.handleError),);
+      .get("https://ws.audioscrobbler.com/2.0/", options)
+      .pipe(catchError(this.handleError));
   }
   toggleLoved(track: Track): Observable<any> {
     const sk = localStorage.getItem("lastfm-token");
     const urlSearchParams: URLSearchParams = new URLSearchParams();
     const method: string = track.isLoved ? "track.love" : "track.unlove";
-    urlSearchParams.set("method", method);
-    urlSearchParams.set("api_key", APIKEY);
-    urlSearchParams.set(
-      "api_sig",
-      this.signTrack(
+    const params = {
+      method: method,
+      api_key: APIKEY,
+      api_sig: this.signTrack(
         track.trackArtist,
         track.album.name,
         track.title,
         null,
         sk,
         method
-      )
-    );
-    urlSearchParams.set("artist", track.trackArtist);
-    urlSearchParams.set("album", track.album.name);
-    urlSearchParams.set("track", track.title);
-    urlSearchParams.set("sk", sk);
+      ),
+      artist: track.trackArtist,
+      album: track.album.name,
+      track: track.title,
+      sk: sk
+    };
+    const headers = new HttpHeaders({
+      "Content-Type": "application/x-www-form-urlencoded"
+    });
 
-    const headers = new Headers();
-    headers.append("Content-Type", "application/x-www-form-urlencoded");
-
+    const options = {
+      params,
+      headers
+    };
     return this.http
-      .post("https://ws.audioscrobbler.com/2.0/", urlSearchParams.toString(), {
-        headers: headers
-      }).pipe(
-      map(this.noop),
-      catchError(this.handleError),);
+      .post("https://ws.audioscrobbler.com/2.0/", null, options)
+      .pipe(catchError(this.handleError));
   }
 
   getTrackInfo(track: Track, user: string): Observable<any> {
     if (track) {
-      const urlSearchParams: URLSearchParams = new URLSearchParams(
-        "",
-        new MyQueryEncoder()
-      );
-      urlSearchParams.set("method", "track.getInfo");
-      urlSearchParams.set("artist", track.trackArtist);
-      urlSearchParams.set("album", track.album.name);
-      urlSearchParams.set("track", track.title);
-      urlSearchParams.set("api_key", APIKEY);
-      urlSearchParams.set("format", "json");
-      urlSearchParams.set("user", user);
+      const params = {
+        method: "track.getInfo",
+        artist: track.trackArtist,
+        album: track.album.name,
+        track: track.title,
+        api_key: APIKEY,
+        format: "json",
+        user: user
+      };
 
-      const query: RequestOptionsArgs = {
-        search: urlSearchParams
+      const options = {
+        params
       };
 
       return this.http
-        .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
-        map(this.extractTrackInfo),
-        catchError(this.handleError),);
+        .get("https://ws.audioscrobbler.com/2.0/", options)
+        .pipe(catchError(this.handleError));
     } else {
       return observableThrowError(null);
     }
   }
 
   getTopArtists(user: string): Observable<any> {
-    const urlSearchParams: URLSearchParams = new URLSearchParams(
-      "",
-      new MyQueryEncoder()
-    );
-    urlSearchParams.set("api_key", APIKEY);
-    urlSearchParams.set("format", "json");
-    urlSearchParams.set("limit", "50");
-    urlSearchParams.set("method", "user.gettopartists");
-    urlSearchParams.set("period", "1month");
-    urlSearchParams.set("user", user);
-
-    const query: RequestOptionsArgs = {
-      search: urlSearchParams
+    const params = {
+      api_key: APIKEY,
+      format: "json",
+      limit: "50",
+      method: "user.gettopartists",
+      period: "1month",
+      user: user
+    };
+    const options = {
+      params
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
-      map(this.extractLastFMTop),
-      catchError(this.handleError),);
+      .get("https://ws.audioscrobbler.com/2.0/", options)
+      .pipe(catchError(this.handleError));
   }
 
   getSimilairArtists(artist: Artist): Observable<any> {
-    const urlSearchParams: URLSearchParams = new URLSearchParams(
-      "",
-      new MyQueryEncoder()
-    );
-    urlSearchParams.set("api_key", APIKEY);
-    urlSearchParams.set("format", "json");
-    urlSearchParams.set("limit", "20");
-    urlSearchParams.set("autocorrect", "1");
-    urlSearchParams.set("method", "artist.getSimilar");
-    urlSearchParams.set("artist", artist.name);
-
-    const query: RequestOptionsArgs = {
-      search: urlSearchParams
+    const params = {
+      api_key: APIKEY,
+      format: "json",
+      limit: "20",
+      autocorrect: "1",
+      method: "artist.getSimilar",
+      artist: artist.name
+    };
+    const options = {
+      params
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
-      map(this.extractLastFMSimilair),
-      catchError(this.handleError),);
+      .get("https://ws.audioscrobbler.com/2.0/", options)
+      .pipe(catchError(this.handleError));
   }
 
   authenticate(user: any): Observable<any> {
-    const urlSearchParams: URLSearchParams = new URLSearchParams(
-      "",
-      new MyQueryEncoder()
-    );
-    urlSearchParams.set("api_key", APIKEY);
-    urlSearchParams.set(
-      "api_sig",
-      this.signAuthentication(user.user, user.password)
-    );
-    urlSearchParams.set("username", user.user);
-    urlSearchParams.set("password", user.password);
+    const headers = new HttpHeaders({
+      "Content-Type": "application/x-www-form-urlencoded"
+    });
 
-    const headers = new Headers();
-    headers.append("Content-Type", "application/x-www-form-urlencoded");
-
+    const options = {
+      params: {
+        api_key: APIKEY,
+        api_sig: this.signAuthentication(user.user, user.password),
+        format: "json",
+        username: user.user,
+        password: user.password
+      },
+      headers: headers
+    };
     return this.http
       .post(
         "https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession",
-        urlSearchParams.toString(),
-        {
-          headers: headers
-        }
-      ).pipe(
-      map(this.extractAuthenticate),
-      catchError(this.handleError),);
+        null,
+        options
+      )
+      .pipe(catchError(this.handleError));
   }
 
   announceNowPlaying(track: Track): Observable<any> {
@@ -197,42 +171,35 @@ export class LastfmService {
           now.getSeconds()
         ) / 1000;
       const sk = localStorage.getItem("lastfm-token");
-      const urlSearchParams: URLSearchParams = new URLSearchParams(
-        "",
-        new MyQueryEncoder()
-      );
-      urlSearchParams.set("method", "track.updateNowPlaying");
-      urlSearchParams.set("api_key", APIKEY);
-      urlSearchParams.set(
-        "api_sig",
-        this.signTrack(
-          track.trackArtist,
-          track.album.name,
-          track.title,
-          timestamp,
-          sk,
-          "track.updateNowPlaying"
-        )
-      );
-      urlSearchParams.set("artist", track.trackArtist);
-      urlSearchParams.set("album", track.album.name);
-      urlSearchParams.set("track", track.title);
-      urlSearchParams.set("timestamp", timestamp.toString());
-      urlSearchParams.set("sk", sk);
 
-      const headers = new Headers();
-      headers.append("Content-Type", "application/x-www-form-urlencoded");
+      const headers = new HttpHeaders({
+        "Content-Type": "application/x-www-form-urlencoded"
+      });
+
+      const options = {
+        params: {
+          method: "track.updateNowPlaying",
+          api_key: APIKEY,
+          api_sig: this.signTrack(
+            track.trackArtist,
+            track.album.name,
+            track.title,
+            timestamp,
+            sk,
+            "track.updateNowPlaying"
+          ),
+          artist: track.trackArtist,
+          album: track.album.name,
+          track: track.title,
+          timestamp: timestamp.toString(),
+          sk: sk
+        },
+        headers: headers
+      };
 
       return this.http
-        .post(
-          "https://ws.audioscrobbler.com/2.0/",
-          urlSearchParams.toString(),
-          {
-            headers: headers
-          }
-        ).pipe(
-        map(this.noop),
-        catchError(this.handleError),);
+        .post("https://ws.audioscrobbler.com/2.0/", null, options)
+        .pipe(catchError(this.handleError));
     } else {
       return observableThrowError(null);
     }
@@ -252,44 +219,36 @@ export class LastfmService {
       ) / 1000;
     if (username !== "mdb-skipped") {
       const sk = localStorage.getItem("lastfm-token");
-      const urlSearchParams: URLSearchParams = new URLSearchParams(
-        "",
-        new MyQueryEncoder()
-      );
-      urlSearchParams.set("method", "track.scrobble");
-      urlSearchParams.set("api_key", APIKEY);
-      urlSearchParams.set(
-        "api_sig",
-        this.signTrack(
-          track.trackArtist,
-          track.album.name,
-          track.title,
-          timestamp,
-          sk,
-          "track.scrobble"
-        )
-      );
-      urlSearchParams.set("artist", track.trackArtist);
-      urlSearchParams.set("album", track.album.name);
-      urlSearchParams.set("track", track.title);
-      urlSearchParams.set("timestamp", timestamp.toString());
-      urlSearchParams.set("sk", sk);
-
-      const headers = new Headers();
-      headers.append("Content-Type", "application/x-www-form-urlencoded");
-
       const saveScrobble = this.booleanState("manual-scrobble-state");
+
       if (!saveScrobble) {
+        const headers = new HttpHeaders({
+          "Content-Type": "application/x-www-form-urlencoded"
+        });
+
+        const options = {
+          params: {
+            method: "track.scrobble",
+            api_key: APIKEY,
+            api_sig: this.signTrack(
+              track.trackArtist,
+              track.album.name,
+              track.title,
+              timestamp,
+              sk,
+              "track.scrobble"
+            ),
+            artist: track.trackArtist,
+            album: track.album.name,
+            track: track.title,
+            timestamp: timestamp.toString(),
+            sk: sk
+          },
+          headers: headers
+        };
         return this.http
-          .post(
-            "https://ws.audioscrobbler.com/2.0/",
-            urlSearchParams.toString(),
-            {
-              headers: headers
-            }
-          ).pipe(
-          map(this.noop),
-          catchError(this.handleError),);
+          .post("https://ws.audioscrobbler.com/2.0/", null, options)
+          .pipe(catchError(this.handleError));
       } else {
         // save details
         const offlineCache =
@@ -302,6 +261,7 @@ export class LastfmService {
         };
         offlineCache.unshift(cachedItem);
         this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
+        // TODO: move to idb-keyval!
         localStorage.setItem(
           "manual-scrobble-list",
           JSON.stringify(offlineCache)
@@ -358,38 +318,35 @@ export class LastfmService {
   }
   scrobbleCachedTrack(cachedTrack: any) {
     const sk = localStorage.getItem("lastfm-token");
-    const urlSearchParams: URLSearchParams = new URLSearchParams(
-      "",
-      new MyQueryEncoder()
-    );
-    urlSearchParams.set("method", "track.scrobble");
-    urlSearchParams.set("api_key", APIKEY);
-    urlSearchParams.set(
-      "api_sig",
-      this.signTrack(
-        cachedTrack.artist,
-        cachedTrack.album,
-        cachedTrack.track,
-        cachedTrack.timestamp,
-        sk,
-        "track.scrobble"
-      )
-    );
-    urlSearchParams.set("artist", cachedTrack.artist);
-    urlSearchParams.set("album", cachedTrack.album);
-    urlSearchParams.set("track", cachedTrack.track);
-    urlSearchParams.set("timestamp", cachedTrack.timestamp);
-    urlSearchParams.set("sk", sk);
 
-    const headers = new Headers();
-    headers.append("Content-Type", "application/x-www-form-urlencoded");
+    const headers = new HttpHeaders({
+      "Content-Type": "application/x-www-form-urlencoded"
+    });
+
+    const options = {
+      params: {
+        method: "track.scrobble",
+        api_key: APIKEY,
+        api_sig: this.signTrack(
+          cachedTrack.artist,
+          cachedTrack.album,
+          cachedTrack.track,
+          cachedTrack.timestamp,
+          sk,
+          "track.scrobble"
+        ),
+        artist: cachedTrack.artist,
+        album: cachedTrack.album,
+        track: cachedTrack.track,
+        timestamp: cachedTrack.timestamp.toString(),
+        sk: sk
+      },
+      headers: headers
+    };
 
     return this.http
-      .post("https://ws.audioscrobbler.com/2.0/", urlSearchParams.toString(), {
-        headers: headers
-      }).pipe(
-      map(this.noop),
-      catchError(this.handleError),);
+      .post("https://ws.audioscrobbler.com/2.0/", null, options)
+      .pipe(catchError(this.handleError));
   }
 
   private booleanState(key: string): boolean {
@@ -398,27 +355,6 @@ export class LastfmService {
       return true;
     }
     return false;
-  }
-
-  private extractAuthenticate(response: Response) {
-    const responseText = response.text();
-    const responseXml = new DOMParser().parseFromString(
-      responseText,
-      "text/xml"
-    );
-    return responseXml.getElementsByTagName("key")[0].textContent;
-  }
-
-  private extractTrackInfo(response: Response) {
-    const json = response.json();
-    if (json.track && json.track.userloved && json.track.userloved === "1") {
-      return true;
-    }
-    return false;
-  }
-
-  private noop(response: Response) {
-    return true;
   }
 
   private signAuthentication(user: string, password: string): string {
@@ -443,35 +379,6 @@ export class LastfmService {
       return this.hex_md5(
         `album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}track${track}${SECRET}`
       );
-    }
-  }
-
-  private extractLastFMLoved(res: Response): Array<any> {
-    const json = res.json();
-    if (json.lovedtracks) {
-      return json.lovedtracks.track;
-    } else {
-      return [];
-    }
-  }
-
-  private extractLastFMTop(res: Response): Array<any> {
-    const json = res.json();
-
-    if (json.topartists) {
-      return json.topartists.artist;
-    } else {
-      return [];
-    }
-  }
-
-  private extractLastFMSimilair(res: Response): Array<any> {
-    const json = res.json();
-
-    if (json.similarartists) {
-      return json.similarartists.artist;
-    } else {
-      return [];
     }
   }
 

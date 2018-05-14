@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Subject ,  Subscription } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Subject, Subscription } from "rxjs";
 
-import { musicdbcore } from './../org/arielext/musicdb/core';
-import { CoreService } from './../utils/core.service';
-import Album from './../org/arielext/musicdb/models/Album';
-import Track from './../org/arielext/musicdb/models/Track';
-import { LastfmService } from './../utils/lastfm.service';
-import { Playlist } from './../playlist/playlist';
-import { PlaylistService } from './../playlist/playlist.service';
+import { musicdbcore } from "./../org/arielext/musicdb/core";
+import { CoreService } from "./../utils/core.service";
+import Album from "./../org/arielext/musicdb/models/Album";
+import Track from "./../org/arielext/musicdb/models/Track";
+import { LastfmService } from "./../utils/lastfm.service";
+import { Playlist } from "./../playlist/playlist";
+import { PlaylistService } from "./../playlist/playlist.service";
 
 @Injectable()
 export class PlayerService {
@@ -27,14 +27,18 @@ export class PlayerService {
 
   private position: number;
 
-  private lastfmUserName: string = localStorage.getItem('lastfm-username'); // should be subscriber?
+  private lastfmUserName: string = localStorage.getItem("lastfm-username"); // should be subscriber?
 
   private hideVolumeWindowAsSource = new Subject<any>();
   public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
 
   private subscription: Subscription;
 
-  constructor(private lastFMService: LastfmService, private coreService: CoreService, private playlistService: PlaylistService) {
+  constructor(
+    private lastFMService: LastfmService,
+    private coreService: CoreService,
+    private playlistService: PlaylistService
+  ) {
     this.subscription = this.playlistService.playlistAnnounced$.subscribe(
       nextPlaylist => {
         // a new radio playlist has been generated; let's play
@@ -45,7 +49,7 @@ export class PlayerService {
 
   private booleanState(key: string): boolean {
     const raw = localStorage.getItem(key);
-    if (raw && raw === 'true') {
+    if (raw && raw === "true") {
       return true;
     }
     return false;
@@ -57,33 +61,54 @@ export class PlayerService {
     this.position = null;
   }
 
-  doPlayAlbum(album: Album, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
+  doPlayAlbum(
+    album: Album,
+    startIndex: number,
+    forceRestart: boolean = false,
+    isShuffled: boolean = false
+  ) {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
     }
-    this.setPlaylist(album, startIndex, forceRestart, isShuffled, 'album');
+    this.setPlaylist(album, startIndex, forceRestart, isShuffled, "album");
     this.announce();
   }
-  doPlayPlaylist(playlist: Playlist, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
+  doPlayPlaylist(
+    playlist: Playlist,
+    startIndex: number,
+    forceRestart: boolean = false,
+    isShuffled: boolean = false
+  ) {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
     }
-    this.setPlaylist(playlist, startIndex, forceRestart, isShuffled, 'playlist');
+    this.setPlaylist(
+      playlist,
+      startIndex,
+      forceRestart,
+      isShuffled,
+      "playlist"
+    );
     this.announce();
   }
 
-  private setPlaylist(playlist: any, startIndex: number = 0, forceRestart: boolean = true, isShuffled: boolean = false,
-    type: string = 'album'): void {
+  private setPlaylist(
+    playlist: any,
+    startIndex: number = 0,
+    forceRestart: boolean = true,
+    isShuffled: boolean = false,
+    type: string = "album"
+  ): void {
     this.currentPlaylist = {
       playlist: playlist,
       startIndex: startIndex,
-      isPlaying: this.isPlaying = true,
-      isPaused: this.isPaused = false,
-      isShuffled: this.isShuffled = isShuffled,
-      forceRestart: this.forceRestart = forceRestart,
-      isContinues: playlist.isContinues || type === 'album',
+      isPlaying: (this.isPlaying = true),
+      isPaused: (this.isPaused = false),
+      isShuffled: (this.isShuffled = isShuffled),
+      forceRestart: (this.forceRestart = forceRestart),
+      isContinues: playlist.isContinues || type === "album",
       type: playlist.type
     };
   }
@@ -100,18 +125,18 @@ export class PlayerService {
     this.currentPlaylist = {
       playlist: playlist,
       startIndex: 0,
-      isPlaying: this.isPlaying = true,
-      isPaused: this.isPaused = false,
+      isPlaying: (this.isPlaying = true),
+      isPaused: (this.isPaused = false),
       isShuffled: false,
-      forceRestart: this.forceRestart = true,
-      isContinues: false,
+      forceRestart: (this.forceRestart = true),
+      isContinues: false
     };
     this.announce();
   }
 
   nextPlaylist(type: string): void {
-    if (this.booleanState('continues-play')) {
-      if (type === 'random') {
+    if (this.booleanState("continues-play")) {
+      if (type === "random") {
         const nextPlaylist = this.playlistService.generateRandom();
         this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled);
       } else {
@@ -123,12 +148,12 @@ export class PlayerService {
   }
 
   nextAlbum(album: Album): void {
-    if (this.booleanState('continues-play')) {
+    if (this.booleanState("continues-play")) {
       const nextAlbum = this.coreService.getCore().getNextAlbum(album);
       if (nextAlbum) {
         this.doPlayAlbum(nextAlbum, 0, true, this.isShuffled);
       } else {
-        console.warn('no new album found, stopping playback');
+        console.warn("no new album found, stopping playback");
         this.stop();
       }
     } else {
@@ -157,9 +182,13 @@ export class PlayerService {
     this.isShuffled = shuffled;
     this.currentPlaylist.playlist.tracks.sort(this.sortPlaylist);
     if (shuffled) {
-      this.currentPlaylist.playlist.tracks = this.shuffle(this.currentPlaylist.playlist.tracks);
+      this.currentPlaylist.playlist.tracks = this.shuffle(
+        this.currentPlaylist.playlist.tracks
+      );
     }
-    this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(this.currentTrack);
+    this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(
+      this.currentTrack
+    );
     this.currentPlaylist.forceRestart = false;
     this.announce();
   }
@@ -231,8 +260,8 @@ export class PlayerService {
     this.isPlaying = false;
     this.isPaused = false;
     this.currentPlaylist = null;
-    localStorage.removeItem('current-playlist');
-    localStorage.removeItem('current-time');
+    localStorage.removeItem("current-playlist");
+    localStorage.removeItem("current-time");
     this.playlistSource.next(this.currentPlaylist);
   }
   togglePlayPause() {
@@ -244,13 +273,15 @@ export class PlayerService {
   }
   announce() {
     if (this.currentPlaylist) {
-      this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
+      this.currentTrack = this.currentPlaylist.playlist.tracks[
+        this.currentPlaylist.startIndex
+      ];
       if (this.lastfmUserName) {
-        this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(
-          status => {
-            this.currentTrack.isLoved = status;
-          }
-        );
+        this.lastFMService
+          .getTrackInfo(this.currentTrack, this.lastfmUserName)
+          .subscribe(status => {
+            this.currentTrack.isLoved = status.track.userloved === "1";
+          });
       }
       if (this.currentTrack) {
         this.currentTrack.isPaused = this.isPaused;
@@ -264,7 +295,7 @@ export class PlayerService {
         this.currentPlaylist.position = this.position;
 
         // TODO: idb-keyval?
-        localStorage.setItem('current-playlist', this.playlistToString());
+        localStorage.setItem("current-playlist", this.playlistToString());
         this.playlistSource.next(this.currentPlaylist);
       }
     }

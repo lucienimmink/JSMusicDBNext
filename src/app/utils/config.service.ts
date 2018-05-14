@@ -1,9 +1,9 @@
+import { throwError as observableThrowError, Subject, Observable } from "rxjs";
 
-import {throwError as observableThrowError,  Subject ,  Observable } from 'rxjs';
-
-import {catchError, map} from 'rxjs/operators';
+import { catchError, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import { Http, Response } from "@angular/http";
+//import { Http, Response } from "@angular/http";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class ConfigService {
@@ -21,30 +21,20 @@ export class ConfigService {
   public startDate: Date;
   public stopDate: Date;
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   public getSunriseInfo(lat: number = 51, lng: number = 5): Observable<any> {
     return (
       this.http
         // would like to get the lat/lng from the browser but don't want to bother the user
         .get(
-          "https://api.sunrise-sunset.org/json?lat=" +
-            lat +
-            "&lng=" +
-            lng +
-            "&formatted=0"
-        ).pipe(
-        map(this.getSunriseSunset),
-        catchError(this.handleError),)
+          `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`
+        )
+        .pipe(catchError(this.handleError))
     );
   }
   private handleError(error: any) {
     return observableThrowError(null);
-  }
-
-  private getSunriseSunset(res: Response): void {
-    const body = res.json();
-    return body;
   }
 
   private setStyleSheet(style: string) {
@@ -107,7 +97,7 @@ export class ConfigService {
   }
   checkTheme() {
     const d: Date = new Date();
-    if ((d < this.stopDate && d > this.startDate) && this._mode !== "dark") {
+    if (d < this.stopDate && d > this.startDate && this._mode !== "dark") {
       this._mode = "dark";
       this.setStyleSheet(this._mode);
     } else if (

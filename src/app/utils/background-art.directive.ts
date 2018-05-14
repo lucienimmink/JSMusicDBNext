@@ -2,7 +2,7 @@ import { Directive, ElementRef, Input } from "@angular/core";
 import { set, get } from "idb-keyval";
 import { BackgroundArtService } from "./background-art.service";
 
-import { Observable ,  Subscription } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import "rxjs/add/observable/fromEvent";
 import "rxjs/add/operator/debounceTime";
 
@@ -81,6 +81,9 @@ export class BackgroundArtDirective {
         this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
           // tslint:disable-next-line:no-shadowed-variable
           data => {
+            data = this.backgroundArtService.returnImageUrlFromLastFMResponse(
+              data
+            );
             if (data && data !== this.NOIMAGE) {
               this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(
                 data
@@ -94,7 +97,7 @@ export class BackgroundArtDirective {
 
             const item = {
               _id: `art-${this.media.name}`,
-              url: data
+              url: data || this.NOIMAGE
             };
             if (this.media.artist) {
               item._id = `art-${this.media.artist.name}-${this.media.name}`;
@@ -104,13 +107,20 @@ export class BackgroundArtDirective {
           error => (this.el.style.backgroundImage = `url(${this.NOIMAGE})`)
         );
       } else {
-        this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(
-          data
-        )})`;
+        data = this.backgroundArtService.returnImageUrlFromLastFMResponse(data);
+        if (data) {
+          const imageUrl = (this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(
+            data
+          )})`);
+        } else {
+          const imageUrl = (this.el.style.backgroundImage = `url(${
+            this.NOIMAGE
+          })`);
+        }
 
         const item = {
           _id: `art-${this.media.name}`,
-          url: data
+          url: data || this.NOIMAGE
         };
         if (this.media.artist) {
           item._id = `art-${this.media.artist.name}-${this.media.name}`;

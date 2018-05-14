@@ -85,6 +85,7 @@ export class AlbumArtComponent implements OnInit, OnChanges {
         .subscribe(
           // tslint:disable-next-line:no-shadowed-variable
           data => {
+            data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
             if (data && data !== "global/images/no-cover.png") {
               this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
             } else {
@@ -95,17 +96,18 @@ export class AlbumArtComponent implements OnInit, OnChanges {
             }
             const item = {
               _id: `art-${this.searchArtist}-${this.searchAlbum}`,
-              url: data
+              url: data || this.NOIMAGE
             };
             set(item._id, item.url);
           },
           error => (this.albumart.url = this.NOIMAGE)
         );
     } else {
+      data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
       this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
       const item = {
         _id: `art-${this.searchArtist}-${this.searchAlbum}`,
-        url: data
+        url: data || this.NOIMAGE
       };
       set(item._id, item.url);
     }

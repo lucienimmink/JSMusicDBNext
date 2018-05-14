@@ -3,7 +3,7 @@ import {
   EVENT_MANAGER_PLUGINS
 } from "@angular/platform-browser";
 import { NgModule, LOCALE_ID } from "@angular/core";
-import { HttpModule } from "@angular/http";
+import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { YoutubePlayerModule } from "ngx-youtube-player";
@@ -71,7 +71,7 @@ import { PlayerComponent } from "./player/player/player.component";
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     routing,
     YoutubePlayerModule,

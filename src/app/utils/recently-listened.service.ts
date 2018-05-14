@@ -1,51 +1,28 @@
-
-import {throwError as observableThrowError,  Observable } from 'rxjs';
-
-import {catchError, map} from 'rxjs/operators';
+import { throwError as observableThrowError, Observable } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
-import {
-  Http,
-  Response,
-  RequestOptionsArgs,
-  URLSearchParams
-} from "@angular/http";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
-
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class RecentlyListenedService {
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
-  getRecentlyListened(user: string): Observable<any[]> {
-    const urlSearchParams: URLSearchParams = new URLSearchParams();
-    urlSearchParams.set("user", user);
-    urlSearchParams.set("method", "user.getrecenttracks");
-    urlSearchParams.set("api_key", "956c1818ded606576d6941de5ff793a5");
-    urlSearchParams.set("format", "json");
-    urlSearchParams.set("limit", "6");
-
-    const query: RequestOptionsArgs = {
-      search: urlSearchParams
+  getRecentlyListened(user: string) {
+    const options = {
+      params: {
+        user: user,
+        method: "user.getrecenttracks",
+        api_key: "956c1818ded606576d6941de5ff793a5",
+        format: "json",
+        limit: "6"
+      }
     };
-
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
-      map(this.extractData),
-      catchError(this.handleError),);
+      .get("https://ws.audioscrobbler.com/2.0/", options)
+      .pipe(catchError(this.handleError));
   }
 
-  private extractData(res: Response): any {
-    const json: any = res.json();
-    if (json.recenttracks) {
-      return json.recenttracks.track;
-    }
-    return null;
-  }
-
-  private handleError(error: any): ErrorObservable<any> {
-    // tslint:disable-next-line:max-line-length
+  private handleError(error: any): Observable<any> {
     const errorMessage: string = error.message
       ? error.message
       : error.status
