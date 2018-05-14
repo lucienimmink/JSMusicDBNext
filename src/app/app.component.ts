@@ -5,8 +5,7 @@ import {
   OnDestroy,
   ViewContainerRef
 } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable ,  Subscription } from "rxjs";
 
 import { musicdbcore } from "./org/arielext/musicdb/core";
 import { CollectionService } from "./utils/collection.service";

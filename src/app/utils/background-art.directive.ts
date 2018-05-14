@@ -2,8 +2,7 @@ import { Directive, ElementRef, Input } from "@angular/core";
 import { set, get } from "idb-keyval";
 import { BackgroundArtService } from "./background-art.service";
 
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
+import { Observable ,  Subscription } from "rxjs";
 import "rxjs/add/observable/fromEvent";
 import "rxjs/add/operator/debounceTime";
 

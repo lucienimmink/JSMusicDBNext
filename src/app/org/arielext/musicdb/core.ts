@@ -3,7 +3,7 @@ import Album from './models/Album';
 import Track from './models/Track';
 import Letter from './models/Letter';
 import Year from './models/Year';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 const VERSION = '1.3.0';
 

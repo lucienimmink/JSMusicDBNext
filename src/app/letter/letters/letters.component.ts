@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { LetterComponent } from './../letter/letter.component';
 import { musicdbcore } from './../../org/arielext/musicdb/core';
 import Letter from './../../org/arielext/musicdb/models/letter';

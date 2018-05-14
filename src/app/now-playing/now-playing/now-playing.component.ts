@@ -1,8 +1,10 @@
+
+import {throwError as observableThrowError,  Observable ,  Subscription } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Component, OnDestroy, ViewChild, OnInit, HostListener } from '@angular/core';
 import { Http, Response, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 
 import { PlayerService } from './../../player/player.service';
 import { PathService } from './../../utils/path.service';
@@ -303,9 +305,9 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     const query: RequestOptionsArgs = {
       search: urlSearchParams
     };
-    return this.http.get(this.youtubeSearchBase, query)
-      .map(this.extractData)
-      .catch(this.handleError);
+    return this.http.get(this.youtubeSearchBase, query).pipe(
+      map(this.extractData),
+      catchError(this.handleError),);
   }
   extractData(res: Response): string {
     const json = res.json();
@@ -316,7 +318,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     return videoid;
   }
   handleError(error: Response) {
-    return Observable.throw(`no video`);
+    return observableThrowError(`no video`);
   }
   toggleVideo(): void {
     this.videoMode = !this.videoMode;

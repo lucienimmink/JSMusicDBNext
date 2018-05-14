@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 import { LastfmService } from './../utils/lastfm.service';
 import { CoreService } from './../utils/core.service';

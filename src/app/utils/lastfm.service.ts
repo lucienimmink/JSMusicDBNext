@@ -1,3 +1,7 @@
+
+import {throwError as observableThrowError,  Observable ,  Subject } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import {
   Http,
@@ -6,8 +10,6 @@ import {
   RequestOptionsArgs,
   Headers
 } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
 import { set, get } from "idb-keyval";
 
 import { MyQueryEncoder } from "./my-query-encoder";
@@ -45,9 +47,9 @@ export class LastfmService {
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query)
-      .map(this.extractLastFMLoved)
-      .catch(this.handleError);
+      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
+      map(this.extractLastFMLoved),
+      catchError(this.handleError),);
   }
   toggleLoved(track: Track): Observable<any> {
     const sk = localStorage.getItem("lastfm-token");
@@ -77,9 +79,9 @@ export class LastfmService {
     return this.http
       .post("https://ws.audioscrobbler.com/2.0/", urlSearchParams.toString(), {
         headers: headers
-      })
-      .map(this.noop)
-      .catch(this.handleError);
+      }).pipe(
+      map(this.noop),
+      catchError(this.handleError),);
   }
 
   getTrackInfo(track: Track, user: string): Observable<any> {
@@ -101,11 +103,11 @@ export class LastfmService {
       };
 
       return this.http
-        .get("https://ws.audioscrobbler.com/2.0/", query)
-        .map(this.extractTrackInfo)
-        .catch(this.handleError);
+        .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
+        map(this.extractTrackInfo),
+        catchError(this.handleError),);
     } else {
-      return Observable.throw(null);
+      return observableThrowError(null);
     }
   }
 
@@ -126,9 +128,9 @@ export class LastfmService {
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query)
-      .map(this.extractLastFMTop)
-      .catch(this.handleError);
+      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
+      map(this.extractLastFMTop),
+      catchError(this.handleError),);
   }
 
   getSimilairArtists(artist: Artist): Observable<any> {
@@ -148,9 +150,9 @@ export class LastfmService {
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query)
-      .map(this.extractLastFMSimilair)
-      .catch(this.handleError);
+      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
+      map(this.extractLastFMSimilair),
+      catchError(this.handleError),);
   }
 
   authenticate(user: any): Observable<any> {
@@ -176,9 +178,9 @@ export class LastfmService {
         {
           headers: headers
         }
-      )
-      .map(this.extractAuthenticate)
-      .catch(this.handleError);
+      ).pipe(
+      map(this.extractAuthenticate),
+      catchError(this.handleError),);
   }
 
   announceNowPlaying(track: Track): Observable<any> {
@@ -228,11 +230,11 @@ export class LastfmService {
           {
             headers: headers
           }
-        )
-        .map(this.noop)
-        .catch(this.handleError);
+        ).pipe(
+        map(this.noop),
+        catchError(this.handleError),);
     } else {
-      return Observable.throw(null);
+      return observableThrowError(null);
     }
   }
 
@@ -285,9 +287,9 @@ export class LastfmService {
             {
               headers: headers
             }
-          )
-          .map(this.noop)
-          .catch(this.handleError);
+          ).pipe(
+          map(this.noop),
+          catchError(this.handleError),);
       } else {
         // save details
         const offlineCache =
@@ -385,9 +387,9 @@ export class LastfmService {
     return this.http
       .post("https://ws.audioscrobbler.com/2.0/", urlSearchParams.toString(), {
         headers: headers
-      })
-      .map(this.noop)
-      .catch(this.handleError);
+      }).pipe(
+      map(this.noop),
+      catchError(this.handleError),);
   }
 
   private booleanState(key: string): boolean {
@@ -474,7 +476,7 @@ export class LastfmService {
   }
 
   private handleError(error: any) {
-    return Observable.throw(null);
+    return observableThrowError(null);
   }
 
   /* These functions implement a RSA encryption in JavaScript */

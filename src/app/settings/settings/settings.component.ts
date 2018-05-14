@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import { PathService } from "./../../utils/path.service";
 import { CoreService } from "./../../utils/core.service";

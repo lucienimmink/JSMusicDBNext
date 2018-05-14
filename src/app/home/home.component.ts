@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgClass } from "@angular/common";
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 import { get } from "idb-keyval";
 
 import { musicdbcore } from "./../org/arielext/musicdb/core";

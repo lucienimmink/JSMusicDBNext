@@ -1,7 +1,9 @@
+
+import {throwError as observableThrowError,  Subject ,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs/Subject";
 import { Http, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class ConfigService {
@@ -31,13 +33,13 @@ export class ConfigService {
             "&lng=" +
             lng +
             "&formatted=0"
-        )
-        .map(this.getSunriseSunset)
-        .catch(this.handleError)
+        ).pipe(
+        map(this.getSunriseSunset),
+        catchError(this.handleError),)
     );
   }
   private handleError(error: any) {
-    return Observable.throw(null);
+    return observableThrowError(null);
   }
 
   private getSunriseSunset(res: Response): void {

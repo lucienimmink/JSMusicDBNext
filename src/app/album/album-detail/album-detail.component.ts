@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 // import { ModalDirective } from 'ngx-bootstrap';
 
 import { musicdbcore } from './../../org/arielext/musicdb/core';

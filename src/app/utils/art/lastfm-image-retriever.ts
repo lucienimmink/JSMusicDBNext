@@ -1,3 +1,7 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { AbstractImageRetriever } from "./../abstract-image-retriever";
 import {
   Http,
@@ -5,7 +9,6 @@ import {
   RequestOptionsArgs,
   URLSearchParams
 } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 import { UrlEncoder } from "./url-encoder";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -37,9 +40,9 @@ export class LastfmImageRetriever implements AbstractImageRetriever {
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query)
-      .map(this.extractData)
-      .catch(this.handleError);
+      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
+      map(this.extractData),
+      catchError(this.handleError),);
   }
 
   extractData(res: Response): string {
@@ -61,6 +64,6 @@ export class LastfmImageRetriever implements AbstractImageRetriever {
     return image || this.NOIMAGE;
   }
   handleError(error: Response) {
-    return Observable.throw(this.NOIMAGE);
+    return observableThrowError(this.NOIMAGE);
   }
 }

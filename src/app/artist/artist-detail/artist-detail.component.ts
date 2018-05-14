@@ -6,7 +6,7 @@ import { CoreService } from './../../utils/core.service';
 import { AlbumComponent } from './../../album/album/album.component';
 import { BackgroundArtDirective } from './../../utils/background-art.directive';
 import { PathService } from './../../utils/path.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './artist-detail.component.html',

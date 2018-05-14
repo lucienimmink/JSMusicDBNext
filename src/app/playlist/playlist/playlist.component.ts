@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 // import { ModalDirective } from 'ngx-bootstrap';
 
 import { PlayerService } from './../../player/player.service';

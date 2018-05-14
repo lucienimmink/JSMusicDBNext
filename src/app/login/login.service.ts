@@ -1,6 +1,9 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { Http, Response, RequestOptions, Headers } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 import { KJUR } from "jsrsasign";
 
 @Injectable()
@@ -30,9 +33,9 @@ export class LoginService {
     requestOptions.headers = headers;
 
     return this.http
-      .post(`${localStorage.getItem("dsm")}/login`, {}, requestOptions)
-      .map(this.handleLogin)
-      .catch(this.handleError);
+      .post(`${localStorage.getItem("dsm")}/login`, {}, requestOptions).pipe(
+      map(this.handleLogin),
+      catchError(this.handleError),);
   }
   autoLogin() {
     const cred = localStorage.getItem("jwt");
@@ -40,7 +43,7 @@ export class LoginService {
       return this.doLogin(cred, true);
     } else {
       localStorage.removeItem("jwt");
-      return Observable.throw(null);
+      return observableThrowError(null);
     }
   }
   encode(payload: any): string {
@@ -57,6 +60,6 @@ export class LoginService {
   }
 
   private handleError(error: any) {
-    return Observable.throw(null);
+    return observableThrowError(null);
   }
 }

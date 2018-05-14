@@ -1,3 +1,7 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import {
   Http,
@@ -5,7 +9,6 @@ import {
   RequestOptionsArgs,
   URLSearchParams
 } from "@angular/http";
-import { Observable } from "rxjs/Observable";
 import { ErrorObservable } from "rxjs/observable/ErrorObservable";
 
 import "rxjs/add/operator/map";
@@ -28,9 +31,9 @@ export class RecentlyListenedService {
     };
 
     return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", query)
-      .map(this.extractData)
-      .catch(this.handleError);
+      .get("https://ws.audioscrobbler.com/2.0/", query).pipe(
+      map(this.extractData),
+      catchError(this.handleError),);
   }
 
   private extractData(res: Response): any {
@@ -48,6 +51,6 @@ export class RecentlyListenedService {
       : error.status
         ? `${error.status} - ${error.statusText}`
         : "Server error";
-    return Observable.throw(errorMessage);
+    return observableThrowError(errorMessage);
   }
 }

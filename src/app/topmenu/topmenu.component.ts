@@ -1,6 +1,6 @@
 import { Component, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 // import { TooltipModule } from 'ngx-bootstrap';
 
 import { PathService } from './../utils/path.service';
