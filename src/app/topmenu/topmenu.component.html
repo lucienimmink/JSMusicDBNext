@@ -38,7 +38,7 @@
   <h1>
     <span *ngIf="path && path.album">
       <span (click)="selectArtist(path)" class="clickable">{{path.artist.albumArtist || path.artist.name}}</span>
-      <span class="hidden-xs">&bull; {{path.album.name}}</span>
+      <span class="hidden-xs"> &bull; {{path.album.name}}</span>
     </span>
     <span *ngIf="path && path.artist && !path.album">{{path.artist.albumArtist || path.artist.name}}</span>
     <span *ngIf="path && !path.artist">JSMusicDB Next</span>

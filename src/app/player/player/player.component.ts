@@ -4,6 +4,7 @@ declare const MediaMetadata: any;
 import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { get } from "idb-keyval";
 
 import { PlayerService } from "./../player.service";
 import { AlbumArtComponent } from "./../../utils/album-art/album-art.component";
@@ -269,29 +270,31 @@ export class PlayerComponent implements OnDestroy {
     }
   }
   readCurrentPlaylist() {
-    const current = JSON.parse(localStorage.getItem("current-playlist"));
-    if (current) {
-      const core = this.coreService.getCore();
-      const list: Array<Track> = [];
-      current.ids.forEach(id => {
-        const track = core.tracks[id];
-        list.push(track);
-      });
-      const playlist = new Playlist();
-      playlist.tracks = list;
-      playlist.name = "Current Playlist";
-      playlist.isContinues = current.isContinues || false;
-      playlist.type = current.type;
+    get("current-playlist").then(c => {
+      const current: any = c; // bah bah bah!
+      if (current) {
+        const core = this.coreService.getCore();
+        const list: Array<Track> = [];
+        current.ids.forEach(id => {
+          const track = core.tracks[id];
+          list.push(track);
+        });
+        const playlist = new Playlist();
+        playlist.tracks = list;
+        playlist.name = "Current Playlist";
+        playlist.isContinues = current.isContinues || false;
+        playlist.type = current.type;
 
-      this.isShuffled = current.isShuffled;
-      this.isCurrentPlaylistLoaded = true;
-      this.playerService.doPlayPlaylist(
-        playlist,
-        current.current,
-        false,
-        current.isShuffled
-      );
-    }
+        this.isShuffled = current.isShuffled;
+        this.isCurrentPlaylistLoaded = true;
+        this.playerService.doPlayPlaylist(
+          playlist,
+          current.current,
+          false,
+          current.isShuffled
+        );
+      }
+    });
   }
   ngOnDestroy() {
     this.subscription.unsubscribe(); // prevent memory leakage

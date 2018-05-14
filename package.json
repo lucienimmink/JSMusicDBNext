@@ -8,10 +8,8 @@
     "sass": "node-sass",
     "sass:dark":
       "node-sass --output-style compressed --omit-source-map-url ./src/sass/dark.scss > ./src/global/css/dark.css",
-    "sass:dark:minimal":
-      "node-sass --output-style compressed --omit-source-map-url ./src/sass/dark.scss > ./src/global/css/dark.css",
     "prod":
-      "npm run --silent sass:dark:minimal && ng build --prod --i18n-locale=\"en-GB\""
+      "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\""
   },
   "author": "Lucien Immink",
   "description": "Web version of musicdb next",

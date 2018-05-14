@@ -9,6 +9,7 @@ import {
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { get, set } from "idb-keyval";
 
 import { PathService } from "./../../utils/path.service";
 import { CoreService } from "./../../utils/core.service";
@@ -43,9 +44,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   );
   public isContinuesplay: boolean = this.booleanState("continues-play");
   private smallArt: boolean = this.booleanState("small-art");
-  private manualScrobblingList: Array<any> = JSON.parse(
-    localStorage.getItem("manual-scrobble-list")
-  ) || [];
+  private manualScrobblingList: any;
   public isReloading = false;
   public scanperc = 0;
   public version: String = "__dev__";
@@ -100,6 +99,10 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.poll();
 
     this.version = appVersion;
+
+    get("manual-scrobble-list").then(msl => {
+      this.manualScrobblingList = msl || [];
+    });
   }
 
   private booleanState(key: string): boolean {
@@ -132,9 +135,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.totals = this.core.totals;
     this.lastfmusername = localStorage.getItem("lastfm-username") || "";
     this.connectiondetails = localStorage.getItem("dsm");
-    this.manualScrobblingList = JSON.parse(
-      localStorage.getItem("manual-scrobble-list")
-    );
+    get("manual-scrobble-list").then(msl => {
+      this.manualScrobblingList = msl || [];
+    });
     this.lastParsed = Number(localStorage.getItem("lastParsed"));
 
     // before the call; generic data
@@ -182,9 +185,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       "manual-scrobble-state",
       this.manualScrobbling.toString()
     );
-    this.manualScrobblingList = JSON.parse(
-      localStorage.getItem("manual-scrobble-list")
-    );
+    get("manual-scrobble-list").then(msl => {
+      this.manualScrobblingList = msl || [];
+    });
   }
   toggleVisualisation() {
     this.visualisation = !this.visualisation;
@@ -204,35 +207,29 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     localStorage.setItem("small-art", this.smallArt.toString());
   }
   scrobbleNow() {
-    this.manualScrobblingList = JSON.parse(
-      localStorage.getItem("manual-scrobble-list")
-    );
-    const track = this.manualScrobblingList.pop();
-    this.lastFMService.scrobbleCachedTrack(track).subscribe(data => {
-      localStorage.setItem(
-        "manual-scrobble-list",
-        JSON.stringify(this.manualScrobblingList)
-      );
-      if (this.manualScrobblingList.length > 0) {
-        this.scrobbleNow();
-      }
+    get("manual-scrobble-list").then(msl => {
+      this.manualScrobblingList = msl || [];
+      const track = this.manualScrobblingList.pop();
+      this.lastFMService.scrobbleCachedTrack(track).subscribe(data => {
+        set("manual-scrobble-list", this.manualScrobblingList);
+        if (this.manualScrobblingList.length > 0) {
+          this.scrobbleNow();
+        }
+      });
     });
   }
   removeFromScrobbleList(item: any) {
-    this.manualScrobblingList = JSON.parse(
-      localStorage.getItem("manual-scrobble-list")
-    );
-    let index = -1;
-    this.manualScrobblingList.forEach(function(value, i) {
-      if (Object.is(value, item)) {
-        index = i;
-      }
+    get("manual-scrobble-list").then(msl => {
+      this.manualScrobblingList = msl || [];
+      let index = -1;
+      this.manualScrobblingList.forEach(function(value, i) {
+        if (Object.is(value, item)) {
+          index = i;
+        }
+      });
+      this.manualScrobblingList.splice(index, 1);
+      set("manual-scrobble-list", this.manualScrobblingList);
     });
-    this.manualScrobblingList.splice(index, 1);
-    localStorage.setItem(
-      "manual-scrobble-list",
-      JSON.stringify(this.manualScrobblingList)
-    );
   }
   reloadCollection() {
     this.isReloading = true;

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgClass } from "@angular/common";
 import { Subscription } from "rxjs";
-import { get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 
 import { musicdbcore } from "./../org/arielext/musicdb/core";
 import Artist from "../org/arielext/musicdb/models/Artist";
@@ -93,13 +93,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.startPolling();
     }
     this.recentlyAdded = this.core.getLatestAdditions();
-    // the cachedlist is just an array of strings; even without the info to really populate the list here; drop for now.
-    /*
-    let cachedlist = localStorage.getItem('cached-recently-listened');
-    if (cachedlist && this.core.isCoreParsed) {
-      this.recentlyListenedTracks = JSON.parse(cachedlist);
-    }
-    */
+    get("cached-recently-listened").then((data: any) => {
+      if (data) {
+        this.populate(data);
+      }
+      this.loading = false;
+    });
   }
 
   ngOnDestroy(): void {
@@ -154,6 +153,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   populate(json: any): void {
+    this.newListenedTracks = [];
     json.forEach(fmtrack => {
       const track: Track = new Track({});
       track.artist = fmtrack.artist["#text"];
@@ -174,8 +174,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     if (this.recentlyListenedTracks !== this.newListenedTracks) {
       this.recentlyListenedTracks = this.newListenedTracks;
-      const cachedlist: string = JSON.stringify(this.newListenedTracks);
-      localStorage.setItem("cached-recently-listened", cachedlist);
     }
     this.loading = false;
   }

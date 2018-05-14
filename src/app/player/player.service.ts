@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
+import { del, set } from "idb-keyval";
 
 import { musicdbcore } from "./../org/arielext/musicdb/core";
 import { CoreService } from "./../utils/core.service";
@@ -175,6 +176,21 @@ export class PlayerService {
       type: this.currentPlaylist.type
     });
   }
+  playlistSync(): any {
+    const list: Array<string> = [];
+    this.currentPlaylist.playlist.tracks.forEach((track: Track) => {
+      if (track) {
+        list.push(track.id);
+      }
+    });
+    return {
+      ids: list,
+      isShuffled: this.isShuffled,
+      isContinues: this.currentPlaylist.isContinues,
+      current: this.currentPlaylist.startIndex,
+      type: this.currentPlaylist.type
+    };
+  }
   getCurrentPlaylist() {
     return this.currentPlaylist;
   }
@@ -260,7 +276,7 @@ export class PlayerService {
     this.isPlaying = false;
     this.isPaused = false;
     this.currentPlaylist = null;
-    localStorage.removeItem("current-playlist");
+    del("current-playlist");
     localStorage.removeItem("current-time");
     this.playlistSource.next(this.currentPlaylist);
   }
@@ -294,8 +310,7 @@ export class PlayerService {
 
         this.currentPlaylist.position = this.position;
 
-        // TODO: idb-keyval?
-        localStorage.setItem("current-playlist", this.playlistToString());
+        set("current-playlist", this.playlistSync());
         this.playlistSource.next(this.currentPlaylist);
       }
     }

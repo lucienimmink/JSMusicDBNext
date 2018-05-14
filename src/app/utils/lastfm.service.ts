@@ -250,22 +250,18 @@ export class LastfmService {
           .post("https://ws.audioscrobbler.com/2.0/", null, options)
           .pipe(catchError(this.handleError));
       } else {
-        // save details
-        const offlineCache =
-          JSON.parse(localStorage.getItem("manual-scrobble-list")) || [];
-        const cachedItem = {
-          artist: track.trackArtist,
-          album: track.album.name,
-          track: track.title,
-          timestamp: timestamp.toString()
-        };
-        offlineCache.unshift(cachedItem);
-        this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
-        // TODO: move to idb-keyval!
-        localStorage.setItem(
-          "manual-scrobble-list",
-          JSON.stringify(offlineCache)
-        );
+        get("manual-scrobble-list").then(oc => {
+          const offlineCache: any = oc || [];
+          const cachedItem = {
+            artist: track.trackArtist,
+            album: track.album.name,
+            track: track.title,
+            timestamp: timestamp.toString()
+          };
+          offlineCache.unshift(cachedItem);
+          this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
+          set("manual-scrobble-list", offlineCache);
+        });
       }
     } else {
       const key = `art-${track.trackArtist}-${track.album.name}`;
@@ -323,29 +319,28 @@ export class LastfmService {
       "Content-Type": "application/x-www-form-urlencoded"
     });
 
-    const options = {
-      params: {
-        method: "track.scrobble",
-        api_key: APIKEY,
-        api_sig: this.signTrack(
-          cachedTrack.artist,
-          cachedTrack.album,
-          cachedTrack.track,
-          cachedTrack.timestamp,
-          sk,
-          "track.scrobble"
-        ),
-        artist: cachedTrack.artist,
-        album: cachedTrack.album,
-        track: cachedTrack.track,
-        timestamp: cachedTrack.timestamp.toString(),
-        sk: sk
-      },
-      headers: headers
-    };
-
     return this.http
-      .post("https://ws.audioscrobbler.com/2.0/", null, options)
+      .post("https://ws.audioscrobbler.com/2.0/", null, {
+        params: {
+          method: "track.scrobble",
+          api_key: APIKEY,
+          api_sig: this.signTrack(
+            cachedTrack.artist,
+            cachedTrack.album,
+            cachedTrack.track,
+            cachedTrack.timestamp,
+            sk,
+            "track.scrobble"
+          ),
+          artist: cachedTrack.artist,
+          album: cachedTrack.album,
+          track: cachedTrack.track,
+          timestamp: cachedTrack.timestamp.toString(),
+          sk: sk
+        },
+        headers: headers,
+        responseType: "text"
+      })
       .pipe(catchError(this.handleError));
   }
 
