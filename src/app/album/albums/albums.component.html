@@ -1,17 +1,12 @@
 <div class="animated-page">
   <div class="container container-longlist" imageLazyLoadArea>
-    <div class="row">
-      <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body'; excess: 2">
-        <div class="col-xs-24" *ngFor="let artist of _items">
-          <h4 sticky style="top: 49px;" class="visible-xs visible-sm header-seperator">
-            <a (click)="toggleJumpList()">{{artist.albumArtist || artist.name}}
-              <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span>
-            </a>
-          </h4>
-          <h4 sticky style="top: 99px;" class="visible-md visible-lg header-seperator">
-            <a (click)="toggleJumpList()">{{artist.albumArtist || artist.name}}
-              <span class="small color-type-secondary">({{artist.albums && artist.albums.length}})</span>
-            </a>
+    <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body'; excess: 2">
+      <div class="row" *ngFor="let artist of _items">
+        <div class="col">
+          <h4>
+            <a (click)="toggleJumpList()">{{artist.albumArtist || artist.name}}</a>
+            &nbsp;
+            <span class="small">({{artist.albums && artist.albums.length}})</span>
           </h4>
           <ul>
             <li *ngFor="let album of artist.albums" (click)="navigateToAlbum(album)">
@@ -20,7 +15,7 @@
               </div>
               <div class="text-wrapper">
                 <span class="text">{{album.name}}</span>
-                <span class="small color-type-secondary" *ngIf="album.year">Year: {{album.year}}</span>
+                <span class="small" *ngIf="album.year">Year: {{album.year}}</span>
               </div>
             </li>
           </ul>

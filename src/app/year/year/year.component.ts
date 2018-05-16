@@ -1,20 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AlbumComponent } from './../../album/album/album.component';
-import { musicdbcore } from './../../org/arielext/musicdb/core';
-import { CoreService } from './../../utils/core.service';
-import { PathService } from './../../utils/path.service';
-import { VsForDirective } from './../../utils/vs-for.directive';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { AlbumComponent } from "./../../album/album/album.component";
+import { musicdbcore } from "./../../org/arielext/musicdb/core";
+import { CoreService } from "./../../utils/core.service";
+import { PathService } from "./../../utils/path.service";
+import { VsForDirective } from "./../../utils/vs-for.directive";
 
-import Album from './../../org/arielext/musicdb/models/album';
+import Album from "./../../org/arielext/musicdb/models/album";
 
 @Component({
-  templateUrl: './year.component.html',
-  styleUrls: ['./year.component.css']
+  templateUrl: "./year.component.html"
 })
 export class YearComponent implements OnInit, OnDestroy {
-
   public items: Array<any> = [];
   public years: Array<any> = [];
   public showJumpList = false;
@@ -22,24 +20,26 @@ export class YearComponent implements OnInit, OnDestroy {
   private core: musicdbcore;
   private subscription: Subscription;
 
-  constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
+  constructor(
+    private coreService: CoreService,
+    private pathService: PathService,
+    private router: Router
+  ) {
     this.core = this.coreService.getCore();
-    this.subscription = this.core.coreParsed$.subscribe(
-      data => {
-        this.ngOnInit();
-      }
-    );
+    this.subscription = this.core.coreParsed$.subscribe(data => {
+      this.ngOnInit();
+    });
   }
 
   ngOnInit() {
-    this.pathService.announcePage('Years');
+    this.pathService.announcePage("Years");
     const yearsobject = this.core.years;
-    const sorted = Object.keys(yearsobject).sort(function (a, b) {
-      return (parseInt(a, 10) < parseInt(b, 10)) ? 1 : -1;
+    const sorted = Object.keys(yearsobject).sort(function(a, b) {
+      return parseInt(a, 10) < parseInt(b, 10) ? 1 : -1;
     });
     const tmp: Array<any> = [];
-    sorted.forEach((year) => {
-      if (year !== 'undefined') {
+    sorted.forEach(year => {
+      if (year !== "undefined") {
         tmp.push(this.core.years[year]);
         this.years.push(year);
       }
@@ -67,10 +67,17 @@ export class YearComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
   navigateToAlbum(album: Album) {
-    this.router.navigate(['/letter', album.artist.letter.escapedLetter, 'artist', album.artist.sortName, 'album', album.sortName]);
+    this.router.navigate([
+      "/letter",
+      album.artist.letter.escapedLetter,
+      "artist",
+      album.artist.sortName,
+      "album",
+      album.sortName
+    ]);
   }
   getSize(item: any, index: number) {
-    return (item.albums.length * 90) + 39;
+    return item.albums.length * 90 + 39;
   }
   toggleJumpList() {
     this.showJumpList = !this.showJumpList;
@@ -81,7 +88,7 @@ export class YearComponent implements OnInit, OnDestroy {
     this.items.some((item, i) => {
       let ret = false;
       if (item.year === parseInt(year, 10)) {
-        const jump = (i > 0) ? i - 1 : 0;
+        const jump = i > 0 ? i - 1 : 0;
         if (jump === 0) {
           window.scrollTo(0, 0);
         } else {

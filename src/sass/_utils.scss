@@ -1,3 +1,7 @@
 .small {
     opacity: 0.6;
 }
+a {
+    cursor: pointer;
+    color: theme-color('primary') !important;
+}

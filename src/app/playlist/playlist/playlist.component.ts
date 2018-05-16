@@ -18,8 +18,7 @@ import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 
 @Component({
-  templateUrl: "./playlist.component.html",
-  styleUrls: ["./playlist.component.css"]
+  templateUrl: "./playlist.component.html"
 })
 export class PlaylistComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

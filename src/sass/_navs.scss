@@ -8,7 +8,7 @@
         a {
             cursor: pointer;
             display: block;
-            color: gray('100');
+            color: gray('100') !important;
             padding: 13px 0;
             background: transparent;
             will-change: background;

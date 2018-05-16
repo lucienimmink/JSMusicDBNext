@@ -1,6 +1,6 @@
-<ol class="list-items">
-  <li class="list-group-item" *ngFor="let track of playlist.tracks" (click)="select(track)" [ngClass]="{'active': track.isPlaying || track.isPaused}">
-    <div class="col-xs-20 track-info">
+<ol class="list-group list-tracks">
+  <li class="list-group-item row" *ngFor="let track of playlist.tracks" (click)="select(track)" [ngClass]="{'active': track.isPlaying || track.isPaused}">
+    <div class="col track-info">
       <span *ngIf="!track.isPlaying && track.isPaused">
         <span class="glyph glyph-pause"></span>
       </span>
@@ -12,7 +12,7 @@
         {{track.trackArtist}} &bull; {{track.album.name}}
       </span>
     </div>
-    <div class="col-xs-4 text-right">
+    <div class="col text-right">
       {{track.duration | timeFormat }}
       <br/>
       <span class="small color-type-secondary">{{track.type}}</span>

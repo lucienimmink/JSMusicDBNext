@@ -39,6 +39,7 @@
     list-style: none;
     overflow: hidden;
     border-bottom: 1px solid gray('300');
+    height: 90px;
     &:last-child {
         border-bottom: none;
     }
@@ -53,6 +54,7 @@
     width: 60px;
     height: 60px;
     box-shadow: none;
+    background-size: contain;
 }
 
 .container-longlist /deep/ .panel-info {
@@ -86,4 +88,22 @@
 /deep/ .vsFor-before,
 /deep/ .vsFor-after {
     float: left;
+}
+
+.list-tracks {
+    margin: 0;
+    padding: 0;
+
+    li {
+        padding: 10px 5px;
+        list-style: none;
+        overflow: hidden;
+        border-bottom: 1px solid gray('300');
+        &:hover {
+            background: gray('200');
+        }
+        &:last-child {
+            border-bottom: none;
+        }
+    }
 }
