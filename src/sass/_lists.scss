@@ -2,6 +2,29 @@
     list-style: none;
     margin: 0;
     padding: 0;
+
+    li {
+        margin: 0 -15px;
+        padding: 10px 5px;
+        list-style: none;
+        overflow: hidden;
+        border-bottom: 1px solid gray('300');
+        cursor: pointer;
+
+        img {
+            width: 100%;
+        }
+        .now-playing {
+            color: theme-color('primary');
+        }
+        .small {
+            display: block;
+        }
+
+        &:hover {
+            background: gray('200');
+        }
+    }
 }
 
 .container-longlist ul {
@@ -11,19 +34,19 @@
 }
 
 .container-longlist li {
-    margin: 0;
-    padding: 13px 10px 7px;
+    margin: 0 -15px;
+    padding: 10px;
     list-style: none;
     overflow: hidden;
-    height: 90px;
+    border-bottom: 1px solid gray('300');
+    &:last-child {
+        border-bottom: none;
+    }
+    cursor: pointer;
+    &:hover {
+        background: gray('200');
+    }
 }
-
-h4:before,
-h4:after {
-    content: '';
-    display: table;
-}
-
 .container-longlist /deep/ .panel-background {
     display: inline-block;
     margin: 0 10px 0 0;

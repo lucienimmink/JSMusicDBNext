@@ -20,18 +20,23 @@
         position: relative;
         left: 0;
         background: transparent;
+        top: -17px;
+        &:active, &:focus {
+            box-shadow: none;
+            outline: none;
+        }
     }
 
-    .btn-menu:active {
-        box-shadow: none;
-        outline: none;
-    }
 
     .btn-search {
         position: absolute;
         right: 0;
         top: 0;
         left: auto;
+
+        .glyph {
+            vertical-align: baseline;
+        }
     }
 
     form {

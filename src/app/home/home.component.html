@@ -6,27 +6,27 @@
           <h4>Recently listened</h4>
           <ol class="list-group list-recently">
             <li class="list-group-item d-flex" *ngFor="let track of recentlyListenedTracks" (click)="playTrack(track)">
-              <div class="image-wrapper col-4">
+              <div class="image-wrapper col-3 col-md-2 col-lg-1">
                 <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
                 <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{track.image}}">
               </div>
-              <div class="details-wrapper col-6">
+              <div class="details-wrapper col-6 col-md-7 col-lg-8">
                 {{track.artist}} &bull; {{track.title}}
                 <br />
-                <span class="color-type-secondary small">{{track.album}} </span>
+                <span class="small">{{track.album}} </span>
               </div>
-              <div class="time-wrapper text-right col-2" [ngClass]="{'now-playing': track.nowPlaying}">
+              <div class="time-wrapper text-right col-3">
                 <span *ngIf="!track.nowPlaying">
                   {{track.date | date:'shortTime' }}
-                  <span class="color-type-secondary small">
+                  <span class="small">
                     <span *ngIf="!track.nowPlaying">{{track.date | date:'mediumDate' }}</span>
                   </span>
                 </span>
-                <span *ngIf="track.nowPlaying">
+                <span *ngIf="track.nowPlaying" [ngClass]="{'now-playing': track.nowPlaying}">
                   Playing
-                  <span class="color-type-secondary small">
-                    right now
-                  </span>
+                </span>
+                <span class="small" *ngIf="track.nowPlaying">
+                  right now
                 </span>
               </div>
             </li>
