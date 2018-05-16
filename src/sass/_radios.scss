@@ -1,0 +1,80 @@
+//
+// Checkbox / Radio
+//
+.form-group {
+  .checkbox:first-of-type,
+  .radio:first-of-type {
+    margin-top: 5px;
+  }
+
+  .checkbox:last-of-type,
+  .radio:last-of-type {
+    margin-bottom: 27px;
+  }
+
+  label,
+  .form-group-label {
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 0;
+    line-height: 1em;
+    vertical-align: top;
+  }
+
+  margin-bottom: 22px;
+}
+
+// Common checkbox and radio styles
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: initial;
+}
+
+.checkbox,
+.radio {
+  margin: 22px 0;
+
+  & input[type="checkbox"],
+  & input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-left: -28px;
+    margin-top: 0;
+    opacity: 0;
+  }
+
+  & label {
+    padding-left: 0px;
+    font-weight: 400;
+    margin-left: 28px;
+    min-height: initial;
+    line-height: 20px;
+
+    span::before {
+      border-width: 1px;
+      border-style: solid;
+      content: "";
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      left: -5px;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+  }
+}
+// Radio only
+.radio {
+  & label {
+    span::before {
+      border-radius: 100%;
+    }
+
+    input:checked ~ span::before {
+      text-indent: 0px;
+      line-height: 6px;
+      padding-top: 2px;
+      font-size: 45px;
+    }
+  }
+}

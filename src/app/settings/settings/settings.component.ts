@@ -25,8 +25,7 @@ const { version: appVersion } = require("../../../../package.json");
 
 @Component({
   selector: "app-settings",
-  templateUrl: "./settings.component.html",
-  styleUrls: ["./settings.component.css"]
+  templateUrl: "./settings.component.html"
 })
 export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public totals: any;
