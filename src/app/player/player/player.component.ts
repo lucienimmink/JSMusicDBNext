@@ -22,7 +22,6 @@ import { Playlist } from "./../../playlist/playlist";
   // tslint:disable-next-line:component-selector
   selector: "mdb-player",
   templateUrl: "./player.component.html",
-  styleUrls: ["./player.component.css"],
   providers: [AlbumArtService]
 })
 export class PlayerComponent implements OnDestroy {
