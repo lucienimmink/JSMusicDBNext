@@ -23,7 +23,6 @@ import { User } from "./user";
   // tslint:disable-next-line:component-selector
   selector: "mdb-home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.css"],
   providers: [RecentlyListenedService]
 })
 export class HomeComponent implements OnInit, OnDestroy {

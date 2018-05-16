@@ -14,8 +14,7 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "mdb-topmenu",
-  templateUrl: "./topmenu.component.html",
-  styleUrls: ["./topmenu.component.css"]
+  templateUrl: "./topmenu.component.html"
 })
 export class TopmenuComponent implements OnDestroy, OnInit {
   path: any;

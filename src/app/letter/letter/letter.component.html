@@ -1,11 +1,5 @@
-<div class="navbar-local color-accent theme-dark">
-  <div class="container-fluid">
-    <div class="visible-md visible-lg">
-      <ul class="nav navbar-nav">
-        <li *ngFor="let letter of letters" [ngClass]="{'active': letter.active}">
-          <a class="color-type-secondary" (click)="onSelect(letter)">{{letter.letter}}</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<ul class="nav d-none d-md-flex nav-letters">
+  <li *ngFor="let letter of letters" class="nav-item align-self-stretch flex-grow-1 text-center">
+    <a (click)="onSelect(letter)" [ngClass]="{'active': letter.active}">{{letter.letter}}</a>
+  </li>
+</ul>

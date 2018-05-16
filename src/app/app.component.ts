@@ -22,7 +22,6 @@ import { ConfigService } from "./utils/config.service";
   // tslint:disable-next-line:component-selector
   selector: "mdb-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
   providers: [
     CollectionService,
     CoreService,

@@ -1,7 +1,7 @@
 <div *ngIf="isReloading" id="reloading">
   <div class="container">
     <div class="row">
-      <div class="col-12">
+      <div class="col">
         Collection is being reloaded, please wait.
         <div *ngIf="scanperc">
           progress: {{scanperc}}%
@@ -19,11 +19,11 @@
   </div>
 </div>
 
-<div class="container-fluid fixed" (click)="hideVolumeWindow" [ngClass]="{'isPlaying': isPlaying}">
+<div class="fixed-top" (click)="hideVolumeWindow" [ngClass]="{'isPlaying': isPlaying}">
   <mdb-topmenu></mdb-topmenu>
 </div>
 
-<div class="container-fluid fixed" (click)="hideVolumeWindow">
+<div class="fixed-top" (click)="hideVolumeWindow">
   <mdb-letters></mdb-letters>
 </div>
 
