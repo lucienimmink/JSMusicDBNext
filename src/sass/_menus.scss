@@ -76,11 +76,15 @@
 
 
 }
-
-
-
+.side-nav__content {
+    overflow-y: none;
+}
+.side-nav__content li {
+    width: 100%;
+}
 .side-nav__content li a {
     padding: 20px 17px;
+    display: block;
 }
 
 .side-nav__content li a .glyph {
@@ -155,8 +159,6 @@
     max-width: 350px;
     height: calc(100% - 50px);
     transform: translateX(-102%);
-    display: flex;
-    flex-direction: column;
     will-change: transform;
     top: -1px;
     overflow-y: auto;
@@ -192,21 +194,21 @@
 
   .side-nav__container,
   .side-nav-xl {
-    background-color: $tertiary-color;
+    background-color: gray('200');
     .side-nav__content li a {
-      color: $primary-color;
+      color: theme-color('primary');
       outline: none;
     }
     .side-nav__content li:hover,
     .side-nav__content li.active {
-      background-color: $hover-color;
+      background-color: gray('300');
     }
     .side-nav__content .search-bar input {
-      color: $primary-color;
-      background: $background-color;
-      border: 1px solid $primary-color;
+      color: theme-color('primary');
+      background: gray('200');
+      border: 1px solid theme-color('primary');
     }
     .side-nav__content .search-bar .input-group-addon {
-      color: $primary-color;
+      color: theme-color('primary');
     }
   }

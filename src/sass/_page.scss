@@ -1,9 +1,9 @@
 body {
-    padding-top: 75px;
+    padding-top: 50px;
     background: gray('100');
     color: gray('900');
     @include media-breakpoint-up(md) {
-        padding-top: 125px;
+        padding-top: 100px;
     }
 
     .animated-page {
