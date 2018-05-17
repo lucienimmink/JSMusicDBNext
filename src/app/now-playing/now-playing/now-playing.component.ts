@@ -28,8 +28,7 @@ import { AnimationService } from "./../../utils/animation.service";
 import Track from "./../../org/arielext/musicdb/models/Track";
 
 @Component({
-  templateUrl: "./now-playing.component.html",
-  styleUrls: ["./now-playing.component.css"]
+  templateUrl: "./now-playing.component.html"
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {
   private subscription: Subscription;

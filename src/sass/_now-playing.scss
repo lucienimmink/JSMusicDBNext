@@ -1,54 +1,79 @@
 #nowPlaying {
-    z-index: 15;
+    z-index: 1029;
     position: absolute;
     left: 0;
     right: 0;
     top: 50px;
     bottom: 0;
-    overflow: hidden;
-}
-
-#nowPlaying .top,
-#nowPlaying .bottom {
-    transition: 0.3s ease-out;
-    position: absolute;
-    overflow: hidden;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-#nowPlaying .top {
-    z-index: 1;
-    will-change: transform;
-}
-
-#nowPlaying .bottom {
-    height: calc(100% - 200px);
-    overflow: auto;
-    margin-top: 200px;
-}
-
-#nowPlaying .image-wrapper,
-#nowPlaying .youtube-wrapper {
-    position: relative;
-    height: calc(100% - 160px);
-    z-index: 0;
-    margin: 0 auto;
     width: 100%;
-    text-align: center;
-    transition: -webkit-transform 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    opacity: 1;
-    will-change: transform, opacity;
-}
-#nowPlaying .image-wrapper canvas,
-#nowPlaying .youtube-wrapper canvas {
-    display: none;
-}
-#nowPlaying .youtube-wrapper {
-    z-index: 1;
+    margin-left: 0;
+    padding: 0;
+    overflow: hidden;
+    background: gray('100');
+
+    .top, .bottom {
+        transition: 0.3s ease-out;
+        position: absolute;
+        overflow: hidden;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: gray('100');
+    }
+    .top {
+        z-index: 1;
+        will-change: transform;
+    }
+    .bottom {
+        height: calc(100% - 200px);
+        overflow: auto;
+        margin-top: 200px;
+    }
+    .image-wrapper,
+    .youtube-wrapper {
+        position: relative;
+        height: calc(100% - 160px);
+        z-index: 0;
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+        transition: -webkit-transform 0.3s ease-out;
+        transition: all 0.3s ease-out;
+        opacity: 1;
+        will-change: transform, opacity;
+
+        canvas {
+            display: none;
+        }
+    }
+    .youtube-wrapper {
+        z-index: 1;
+    }
+    .control-wrapper-wrapper {
+        text-shadow: 0px 0px 1px gray('100');
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          gray('100') 100%
+        );
+      }
+    &.small-art.no-focus .control-wrapper-wrapper {
+        background: linear-gradient(
+          to bottom,
+          transparent 90%,
+          gray('100') 100%
+        );
+      }
+      .controls-wrapper h4 {
+        top: auto;
+        border-bottom: none;
+        background: transparent;
+        padding: 0;
+      }
+      .controls-wrapper h5 a {
+        color: gray('900') !important;
+      }
 }
 
 @media screen and (min-width: 768px) {
@@ -157,6 +182,7 @@
         left: 215px;
         width: calc(100% - 240px);
         margin: 0;
+        line-height: 1.5;
     }
 }
 #nowPlaying .controls-wrapper h4 {
@@ -250,6 +276,7 @@
     margin: 0 auto;
     overflow: visible;
     position: relative;
+    height: 6px;
 }
 
 #nowPlaying .time {
@@ -312,13 +339,13 @@ footer.hidePlayer {
 #position-indicator {
     width: 18px;
     height: 18px;
-    border-color: rgba(0, 120, 215, 1);
+    border-color: theme-color('primary');
     border-width: 3px;
     border-radius: 50%;
     border-style: solid;
     position: relative;
     z-index: 10;
-    top: -7px;
+    top: -11px;
     left: -8px;
     cursor: pointer;
     display: block;
@@ -333,6 +360,7 @@ footer.hidePlayer {
     /* Required to make elements draggable in old WebKit */
     -khtml-user-drag: element;
     -webkit-user-drag: element;
+    background: gray('100');
 }
 
 #position-indicator.dragging {

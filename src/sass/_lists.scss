@@ -109,5 +109,9 @@
             padding: 10px 15px;
             border-bottom-color: theme-color('primary');
         }
+        &.active {
+            color: gray('100');
+            background-color: theme-color('primary');
+        }
     }
 }

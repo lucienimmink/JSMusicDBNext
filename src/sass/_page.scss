@@ -4,6 +4,9 @@ body {
   @include media-breakpoint-up(md) {
     padding-top: 100px;
   }
+  .main-content.isPlaying {
+    padding-bottom: 81px;
+  }
 
   .animated-page {
     @include media-breakpoint-up(lg) {

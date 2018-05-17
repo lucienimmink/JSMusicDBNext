@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ) {
       this.startPolling();
     }
-    this.recentlyAdded = this.core.getLatestAdditions();
+    this.recentlyAdded = this.core.getLatestAdditions(12);
     get("cached-recently-listened").then((data: any) => {
       if (data) {
         this.populate(data);

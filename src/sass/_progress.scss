@@ -3,3 +3,10 @@
   display: block;
   width: 100%;
 }
+
+.progress-bar {
+  height: 6px;
+  display: block;
+  transition: width 0.1s linear;
+  will-change: width;
+}

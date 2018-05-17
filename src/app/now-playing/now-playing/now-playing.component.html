@@ -21,7 +21,7 @@
         <span class="time start" *ngIf="!videoMode">{{track.position | timeFormat}}</span>
         <span class="time stop" *ngIf="!videoMode">{{track.duration | timeFormat}}</span>
 
-        <div class="col-xs-24">
+        <div>
           <h4>{{track.title}}</h4>
           <h5>
             <a (click)="navigateToArtist()">{{track.trackArtist}}</a>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="row icons">
-        <div class="col-xs-24">
+        <div class="col-12">
           <button class="btn btn-link" (click)="prev()">
             <i class="glyph glyph-previous"></i>
           </button>
@@ -61,7 +61,7 @@
           <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()">
         </div>
 
-        <div class="col-xs-24">
+        <div class="col-12">
           <button class="btn btn-link btn-updown" (click)="toggleSlide()">
             <i class="glyph glyph-chevron-up" id="upordown"></i>
           </button>
@@ -72,7 +72,7 @@
   <div class="bottom ">
     <div class="container">
       <div class="row">
-        <div class="col-xs-24">
+        <div class="col-12">
           <mdb-tracklist [playlist]="playlist"></mdb-tracklist>
         </div>
       </div>
@@ -84,7 +84,7 @@
   <div class="jumbotron theme-light">
     <div class="container">
       <div class="row albumdetail">
-        <div class="col-xs-24">
+        <div class="col-12">
           <h3>Nothing is playing</h3>
           <p>This is where you'll see the song you're playing and songs that are coming up.</p>
           <p>Find an

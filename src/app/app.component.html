@@ -19,15 +19,15 @@
   </div>
 </div>
 
-<div class="fixed-top" (click)="hideVolumeWindow" [ngClass]="{'isPlaying': isPlaying}">
+<div (click)="hideVolumeWindow" [ngClass]="{'isPlaying': isPlaying}">
   <mdb-topmenu></mdb-topmenu>
 </div>
 
-<div class="fixed-top" (click)="hideVolumeWindow">
+<div class="fixed-top" (click)="hideVolumeWindow" style="z-index: 1029;">
   <mdb-letters></mdb-letters>
 </div>
 
-<div class="main-content" (click)="hideVolumeWindow">
+<div class="main-content" (click)="hideVolumeWindow" [ngClass]="{'isPlaying': isPlaying}">
   <router-outlet></router-outlet>
 </div>
 

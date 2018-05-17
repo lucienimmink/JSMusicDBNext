@@ -111,8 +111,8 @@
   border: 0;
   background: none;
   position: absolute;
-  right: 36px;
-  top: 7px;
+  right: 4px;
+  top: 4px;
   z-index: 3;
 }
 
@@ -221,7 +221,7 @@
   }
   .side-nav__content .search-bar input {
     color: theme-color("primary");
-    background: gray("200");
+    background: gray("100");
     border: 1px solid theme-color("primary");
   }
   .side-nav__content .search-bar .input-group-addon {
