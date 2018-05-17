@@ -12,6 +12,7 @@
 }
 .player .progress .progress-bar {
   height: 6px;
+  background-color: theme-color("primary");
 }
 
 .player mdb-album-art {
@@ -35,6 +36,10 @@
     background: transparent;
     border: none;
     padding: 0;
+
+    &:hover {
+      background: transparent !important;
+    }
   }
 
   .row h5 {
@@ -85,7 +90,7 @@
 
 .col-player-special {
   width: calc(100% - 75px - 150px);
-  padding: 8px 0 0 15px;
+  padding: 2px 0 0 15px;
 }
 @media screen and (min-width: 768px) {
   .col-player-special {

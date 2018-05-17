@@ -11,8 +11,7 @@ import { ConfigService } from './../utils/config.service';
 import { User } from './user';
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public user: User;

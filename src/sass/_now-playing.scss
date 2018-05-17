@@ -1,375 +1,373 @@
 #nowPlaying {
-    z-index: 1029;
+  z-index: 1029;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+  bottom: 0;
+  width: 100%;
+  margin-left: 0;
+  padding: 0;
+  overflow: hidden;
+  background: gray("100");
+
+  .top,
+  .bottom {
+    transition: 0.3s ease-out;
     position: absolute;
+    overflow: hidden;
     left: 0;
     right: 0;
-    top: 50px;
+    top: 0;
     bottom: 0;
+    background: gray("100");
+  }
+  .top {
+    z-index: 1;
+    will-change: transform;
+  }
+  .bottom {
+    height: calc(100% - 200px);
+    overflow: auto;
+    margin-top: 200px;
+  }
+  .image-wrapper,
+  .youtube-wrapper {
+    position: relative;
+    height: calc(100% - 160px);
+    z-index: 0;
+    margin: 0 auto;
     width: 100%;
-    margin-left: 0;
+    text-align: center;
+    transition: -webkit-transform 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+    will-change: transform, opacity;
+
+    canvas {
+      display: none;
+    }
+  }
+  .youtube-wrapper {
+    z-index: 1;
+  }
+  .control-wrapper-wrapper {
+    text-shadow: 0px 0px 1px gray("100");
+    background: linear-gradient(to bottom, transparent 0%, gray("100") 100%);
+  }
+  &.small-art.no-focus .control-wrapper-wrapper {
+    background: linear-gradient(to bottom, transparent 90%, gray("100") 100%);
+  }
+  .controls-wrapper h4 {
+    top: auto;
+    border-bottom: none;
+    background: transparent;
     padding: 0;
-    overflow: hidden;
-    background: gray('100');
 
-    .top, .bottom {
-        transition: 0.3s ease-out;
-        position: absolute;
-        overflow: hidden;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: gray('100');
+    &:hover {
+      background: transparent !important;
     }
-    .top {
-        z-index: 1;
-        will-change: transform;
-    }
-    .bottom {
-        height: calc(100% - 200px);
-        overflow: auto;
-        margin-top: 200px;
-    }
-    .image-wrapper,
-    .youtube-wrapper {
-        position: relative;
-        height: calc(100% - 160px);
-        z-index: 0;
-        margin: 0 auto;
-        width: 100%;
-        text-align: center;
-        transition: -webkit-transform 0.3s ease-out;
-        transition: all 0.3s ease-out;
-        opacity: 1;
-        will-change: transform, opacity;
-
-        canvas {
-            display: none;
-        }
-    }
-    .youtube-wrapper {
-        z-index: 1;
-    }
-    .control-wrapper-wrapper {
-        text-shadow: 0px 0px 1px gray('100');
-        background: linear-gradient(
-          to bottom,
-          transparent 0%,
-          gray('100') 100%
-        );
-      }
-    &.small-art.no-focus .control-wrapper-wrapper {
-        background: linear-gradient(
-          to bottom,
-          transparent 90%,
-          gray('100') 100%
-        );
-      }
-      .controls-wrapper h4 {
-        top: auto;
-        border-bottom: none;
-        background: transparent;
-        padding: 0;
-      }
-      .controls-wrapper h5 a {
-        color: gray('900') !important;
-      }
+  }
+  .controls-wrapper h5 a {
+    color: gray("900") !important;
+  }
 }
 
 @media screen and (min-width: 768px) {
-    #nowPlaying.small-art .image-wrapper>div {
-        width: 180px;
-        height: 180px;
-        top: auto;
-        left: 0;
-        bottom: 20px;
-        background-position: center;
-        background-size: cover;
-        transition: all 0.2s ease-out;
-    }
-    #nowPlaying.small-art.no-focus .image-wrapper>div {
-        transform: translateY(130px);
-    }
+  #nowPlaying.small-art .image-wrapper > div {
+    width: 180px;
+    height: 180px;
+    top: auto;
+    left: 0;
+    bottom: 20px;
+    background-position: center;
+    background-size: cover;
+    transition: all 0.2s ease-out;
+  }
+  #nowPlaying.small-art.no-focus .image-wrapper > div {
+    transform: translateY(130px);
+  }
 }
 
 @media screen and (min-width: 768px) {
-    #nowPlaying .image-wrapper canvas,
-    #nowPlaying .youtube-wrapper canvas {
-        display: inline-block;
-        position: absolute;
-        left: 10px;
-        width: calc(100% - 20px);
-        height: calc(100% - 30px);
-        bottom: 20px;
-    }
-    #nowPlaying.small-art .image-wrapper canvas {
-        left: 0;
-        width: 100%;
-        height: calc(100% + 175px);
-        bottom: -175px;
-    }
+  #nowPlaying .image-wrapper canvas,
+  #nowPlaying .youtube-wrapper canvas {
+    display: inline-block;
+    position: absolute;
+    left: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 30px);
+    bottom: 20px;
+  }
+  #nowPlaying.small-art .image-wrapper canvas {
+    left: 0;
+    width: 100%;
+    height: calc(100% + 175px);
+    bottom: -175px;
+  }
 }
 
 @media screen and (min-width: 1200px) {
-    #nowPlaying .image-wrapper,
-    #nowPlaying .youtube-wrapper {
-        height: calc(100% - 115px);
-    }
-    #nowPlaying.small-art .image-wrapper canvas {
-        height: calc(100% + 115px);
-        bottom: -115px;
-    }
+  #nowPlaying .image-wrapper,
+  #nowPlaying .youtube-wrapper {
+    height: calc(100% - 115px);
+  }
+  #nowPlaying.small-art .image-wrapper canvas {
+    height: calc(100% + 115px);
+    bottom: -115px;
+  }
 }
 
 #nowPlaying .image-wrapper div.current-album-art {
-    z-index: 0;
+  z-index: 0;
 }
 
 #nowPlaying .image-wrapper div.previous-album-art {
-    z-index: 1;
+  z-index: 1;
 }
 
 #nowPlaying .image-wrapper div {
-    height: calc(100% - 30px);
-    width: calc(100% - 20px);
-    display: block;
-    margin: 10px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    position: absolute;
-    top: 0;
+  height: calc(100% - 30px);
+  width: calc(100% - 20px);
+  display: block;
+  margin: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  top: 0;
 }
 
 #nowPlaying .youtube-wrapper /deep/ iframe {
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    margin-top: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  margin-top: 10px;
 }
 @media screen and (min-width: 768px) {
-    #nowPlaying.small-art .control-wrapper-wrapper {
-        position: relative;
-        margin: -150px -10px 0;
-        padding: 150px 10px 0;
-        bottom: 0;
-        position: absolute;
-        left: 0;
-        right: 0;
-        transition: all 0.2s ease-out;
-    }
-    #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
-        transform: translateY(130px);
-    }
+  #nowPlaying.small-art .control-wrapper-wrapper {
+    position: relative;
+    margin: -150px -10px 0;
+    padding: 150px 10px 0;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    transition: all 0.2s ease-out;
+  }
+  #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
+    transform: translateY(130px);
+  }
 }
 #nowPlaying .controls-wrapper {
-    position: relative;
+  position: relative;
 }
 
 #nowPlaying .controls-wrapper h4,
 #nowPlaying .controls-wrapper h5 {
-    padding-top: 0;
-    margin-left: 10px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  padding-top: 0;
+  margin-left: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 @media screen and (min-width: 768px) {
-    #nowPlaying.small-art .controls-wrapper h4,
-    #nowPlaying.small-art .controls-wrapper h5 {
-        position: absolute;
-        bottom: 70px;
-        font-size: 36px;
-        left: 215px;
-        width: calc(100% - 240px);
-        margin: 0;
-        line-height: 1.5;
-    }
+  #nowPlaying.small-art .controls-wrapper h4,
+  #nowPlaying.small-art .controls-wrapper h5 {
+    position: absolute;
+    bottom: 70px;
+    font-size: 36px;
+    left: 215px;
+    width: calc(100% - 240px);
+    margin: 0;
+    line-height: 1.5;
+  }
 }
 #nowPlaying .controls-wrapper h4 {
-    padding-top: 10px
-
+  padding-top: 10px;
 }
 @media screen and (min-width: 768px) {
-    #nowPlaying.small-art .controls-wrapper h4 {
-        bottom: 125px;
-        font-size: 72px;
-        left: 212px;
-    }
+  #nowPlaying.small-art .controls-wrapper h4 {
+    bottom: 125px;
+    font-size: 72px;
+    left: 212px;
+  }
 }
 
 #nowPlaying .icons {
-    text-align: center;
+  text-align: center;
 }
 
 @media screen and (min-width: 1200px) {
-    #nowPlaying .icons {
-        top: -55px;
-        position: relative;
-        pointer-events: none;
-    }
-    #nowPlaying .icons button,
-    #nowPlaying .icons input {
-        pointer-events: all;
-    }
-    #nowPlaying.small-art .icons {
-        top: 13px;
-        margin-top: 8px;
-
-    }
+  #nowPlaying .icons {
+    top: -55px;
+    position: relative;
+    pointer-events: none;
+  }
+  #nowPlaying .icons button,
+  #nowPlaying .icons input {
+    pointer-events: all;
+  }
+  #nowPlaying.small-art .icons {
+    top: 13px;
+    margin-top: 8px;
+  }
 }
 
 #nowPlaying .icons button {
-    display: inline-block;
-    min-width: 65px;
-    outline: none;
-    font-size: 32px;
-    margin-top: 0;
-    transition: all 0.1s linear;
-    border-radius: 50%;
-    height: 65px;
+  display: inline-block;
+  min-width: 65px;
+  outline: none;
+  font-size: 32px;
+  margin-top: 0;
+  transition: all 0.1s linear;
+  border-radius: 50%;
+  height: 65px;
 }
 
 #nowPlaying .icons button .glyph {
-    display: block;
-    position: relative;
-    margin: -1px 0 0 6px;
+  display: block;
+  position: relative;
+  margin: -1px 0 0 6px;
 }
 
 #nowPlaying .icons button.active {
-    background: rgba(0, 120, 215, 1);
-    color: #ffffff;
+  background: rgba(0, 120, 215, 1);
+  color: #ffffff;
 }
 
 #nowPlaying .icons button:active {
-    background: #e1e1e1;
-    color: rgba(0, 120, 215, 1);
+  background: #e1e1e1;
+  color: rgba(0, 120, 215, 1);
 }
 
 #nowPlaying .icons .btn-updown {
-    margin-top: -7px;
-    min-width: 45px;
-    height: 45px;
+  margin-top: -7px;
+  min-width: 45px;
+  height: 45px;
 }
 
 #nowPlaying .icons .btn-love {
-    position: absolute;
-    right: 10px;
+  position: absolute;
+  right: 10px;
 }
 
 #nowPlaying .icons .btn-volume {
-    position: absolute;
-    right: 90px;
+  position: absolute;
+  right: 90px;
 }
 
 #nowPlaying .icons .btn-shuffle {
-    position: absolute;
-    right: 170px;
+  position: absolute;
+  right: 170px;
 }
 
 #nowPlaying .icons .btn-youtube {
-    position: absolute;
-    right: 250px;
+  position: absolute;
+  right: 250px;
 }
 
 #nowPlaying .progress {
-    width: calc(100% - 150px);
-    margin: 0 auto;
-    overflow: visible;
-    position: relative;
-    height: 6px;
+  width: calc(100% - 150px);
+  margin: 0 auto;
+  overflow: visible;
+  position: relative;
+  height: 6px;
+  .progress-bar {
+    background-color: theme-color("primary");
+  }
 }
 
 #nowPlaying .time {
-    position: absolute;
-    top: -10px;
-    left: 20px;
+  position: absolute;
+  top: -10px;
+  left: 20px;
 }
 
 #nowPlaying .time.stop {
-    left: auto;
-    right: 20px;
+  left: auto;
+  right: 20px;
 }
 
 footer.hidePlayer {
-    height: 0;
+  height: 0;
 }
 
 #nowPlaying.slided .top {
-    transform: translateY(calc(-100% + 185px));
+  transform: translateY(calc(-100% + 185px));
 }
 
 @media screen and (min-width: 1200px) {
-    #nowPlaying.slided .top {
-        transform: translateY(calc(-100% + 125px));
-    }
+  #nowPlaying.slided .top {
+    transform: translateY(calc(-100% + 125px));
+  }
 }
 
 #nowPlaying.slided .top .image-wrapper {
-    opacity: 0;
+  opacity: 0;
 }
 
 #nowPlaying #upordown {
-    transition: 0.3s ease-out 0.15s;
-    margin-left: 5px;
-    font-size: 14px;
+  transition: 0.3s ease-out 0.15s;
+  margin-left: 5px;
+  font-size: 14px;
 }
 
 #nowPlaying.slided #upordown {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 #nowPlaying .volume-control {
-    position: absolute;
-    z-index: 1000;
-    width: 270px;
-    right: 20px;
-    bottom: 90px;
-    padding: 10px;
+  position: absolute;
+  z-index: 1000;
+  width: 270px;
+  right: 20px;
+  bottom: 90px;
+  padding: 10px;
 }
 
 #progress-pusher {
-    position: relative;
-    width: calc(100% - 150px);
-    height: 60px;
-    left: 70px;
-    top: -30px;
-    margin-bottom: -60px;
+  position: relative;
+  width: calc(100% - 150px);
+  height: 60px;
+  left: 70px;
+  top: -30px;
+  margin-bottom: -60px;
 }
 
 #position-indicator {
-    width: 18px;
-    height: 18px;
-    border-color: theme-color('primary');
-    border-width: 3px;
-    border-radius: 50%;
-    border-style: solid;
-    position: relative;
-    z-index: 10;
-    top: -11px;
-    left: -8px;
-    cursor: pointer;
-    display: block;
-    transform-origin: center;
-    transition: all 0.1s linear;
-    pointer-events: none;
-    will-change: margin;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
-    /* Required to make elements draggable in old WebKit */
-    -khtml-user-drag: element;
-    -webkit-user-drag: element;
-    background: gray('100');
+  width: 18px;
+  height: 18px;
+  border-color: theme-color("primary");
+  border-width: 3px;
+  border-radius: 50%;
+  border-style: solid;
+  position: relative;
+  z-index: 10;
+  top: -11px;
+  left: -8px;
+  cursor: pointer;
+  display: block;
+  transform-origin: center;
+  transition: all 0.1s linear;
+  pointer-events: none;
+  will-change: margin;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+  background: gray("100");
 }
 
 #position-indicator.dragging {
-    transform: scale(2);
-    border-width: 2px;
-    transition: none !important;
+  transform: scale(2);
+  border-width: 2px;
+  transition: none !important;
 }
 
 .buffered-bar {
-    position: absolute;
-    opacity: 0.25;
+  position: absolute;
+  opacity: 0.25;
 }
