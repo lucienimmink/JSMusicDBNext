@@ -76,7 +76,7 @@
       border-color: transparent;
 
       &::before {
-        background-color: gray("100");
+        background-color: $white;
       }
 
       &:hover {

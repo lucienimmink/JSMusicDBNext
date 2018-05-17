@@ -55,6 +55,7 @@ export class ConfigService {
     }
     document.getElementsByTagName("head")[0].appendChild(stylesheet);
     localStorage.setItem("theme", this._theme);
+    localStorage.setItem("style", style);
     this.themeSource.next(this._theme);
     this.modeSource.next(style);
   }

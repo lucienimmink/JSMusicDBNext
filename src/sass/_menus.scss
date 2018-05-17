@@ -6,6 +6,12 @@
   height: 50px;
   background: gray("200");
 
+  .logo {
+    path {
+      fill: gray("900");
+    }
+  }
+
   .menu-toggle {
     top: -7px;
     position: relative;

@@ -32,6 +32,19 @@
   <noscript>
     Unfortunately JavaScript is needed for this JavaScript based client webaudio based music database.
   </noscript>
+
+  <script>
+    var style = localStorage.getItem('style');
+    if (style && style === "dark") {
+      // already add the dark sheet
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css"
+      link.href = "global/css/dark.css";
+      link.id = "customStylesheet";
+      document.querySelector("head").appendChild(link);
+    }
+  </script>
 </body>
 
 </html>
