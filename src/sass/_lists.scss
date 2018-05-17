@@ -24,6 +24,9 @@
         &:hover {
             background: gray('200');
         }
+        &:last-child {
+            border-bottom-color: transparent;
+        }
     }
 }
 
