@@ -105,5 +105,9 @@
         &:last-child {
             border-bottom: none;
         }
+        &.header-seperator {
+            padding: 10px 15px;
+            border-bottom-color: theme-color('primary');
+        }
     }
 }

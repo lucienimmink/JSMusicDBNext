@@ -38,7 +38,7 @@
   <h1>
     <span *ngIf="path && path.album">
       <span (click)="selectArtist(path)" class="clickable">{{path.artist.albumArtist || path.artist.name}}</span>
-      <span class="hidden-xs"> &bull; {{path.album.name}}</span>
+      <span class="d-none d-sm-inline"> &bull; {{path.album.name}}</span>
     </span>
     <span *ngIf="path && path.artist && !path.album">{{path.artist.albumArtist || path.artist.name}}</span>
     <span *ngIf="path && !path.artist">JSMusicDB Next</span>
@@ -58,7 +58,7 @@
 <aside class="js-side-nav side-nav" [ngClass]="{'side-nav--visible': menuVisible}">
   <nav class="js-side-nav-container side-nav__container">
     <ul class="side-nav__content nav flex-column">
-      <li class="hidden-xs hidden-sm search-bar">
+      <li class="d-none d-md-block search-bar">
         <div class="form-group">
           <div class="input-group">
             <form role="form" (ngSubmit)="onSubmit()" #searchForm="ngForm">

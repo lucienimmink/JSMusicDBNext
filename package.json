@@ -6,10 +6,8 @@
     "ng": "ng",
     "start": "npm run --silent sass:dark && ng serve",
     "sass": "node-sass",
-    "sass:dark":
-      "node-sass --output-style compressed --omit-source-map-url ./src/sass/dark.scss > ./src/global/css/dark.css",
-    "prod":
-      "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\""
+    "sass:dark": "node-sass --output-style compressed --omit-source-map-url ./src/sass/dark.scss > ./src/global/css/dark.css",
+    "prod": "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\""
   },
   "author": "Lucien Immink",
   "description": "Web version of musicdb next",
@@ -37,6 +35,7 @@
     "ngx-bootstrap": "^2.0.5",
     "ngx-youtube-player": "^0.1.0",
     "node-sass": "^4.9.0",
+    "npm": "^6.0.1",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",
     "winstrap": "^0.5.11",

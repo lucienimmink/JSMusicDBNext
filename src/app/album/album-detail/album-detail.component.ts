@@ -1,27 +1,26 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 // import { ModalDirective } from 'ngx-bootstrap';
 
-import { musicdbcore } from './../../org/arielext/musicdb/core';
-import Album from './../../org/arielext/musicdb/models/Album';
-import Track from './../../org/arielext/musicdb/models/Track';
-import { CoreService } from './../../utils/core.service';
-import { AlbumArtComponent } from './../../utils/album-art/album-art.component';
-import { BackgroundArtDirective } from './../../utils/background-art.directive';
-import { TimeFormatPipe } from './../../utils/time-format.pipe';
-import { PathService } from './../../utils/path.service';
-import { PlayerService } from './../../player/player.service';
-import { Playlist } from './../../playlist/playlist';
-import { ConfigService } from './../../utils/config.service';
+import { musicdbcore } from "./../../org/arielext/musicdb/core";
+import Album from "./../../org/arielext/musicdb/models/Album";
+import Track from "./../../org/arielext/musicdb/models/Track";
+import { CoreService } from "./../../utils/core.service";
+import { AlbumArtComponent } from "./../../utils/album-art/album-art.component";
+import { BackgroundArtDirective } from "./../../utils/background-art.directive";
+import { TimeFormatPipe } from "./../../utils/time-format.pipe";
+import { PathService } from "./../../utils/path.service";
+import { PlayerService } from "./../../player/player.service";
+import { Playlist } from "./../../playlist/playlist";
+import { ConfigService } from "./../../utils/config.service";
 
 @Component({
-  templateUrl: './album-detail.component.html',
-  styleUrls: ['./album-detail.component.css']
+  templateUrl: "./album-detail.component.html"
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
-  private albumName = '';
-  private artistName = '';
+  private albumName = "";
+  private artistName = "";
   public album: Album;
   private core: musicdbcore;
   private subscription: Subscription;
@@ -34,20 +33,24 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   private isFlacSupported = true;
   // @ViewChild('editModal') private editModal: ModalDirective;
 
-  constructor(private coreService: CoreService, private router: Router, private pathService: PathService,
-    private playerService: PlayerService, private route: ActivatedRoute, private configService: ConfigService) {
+  constructor(
+    private coreService: CoreService,
+    private router: Router,
+    private pathService: PathService,
+    private playerService: PlayerService,
+    private route: ActivatedRoute,
+    private configService: ConfigService
+  ) {
     this.core = this.coreService.getCore();
-    this.subscription = this.core.coreParsed$.subscribe(
-      data => {
-        this.ngOnInit();
-      }
-    );
-    this.artistName = decodeURIComponent(this.route.snapshot.params['artist']);
-    this.albumName = decodeURIComponent(this.route.snapshot.params['album']);
+    this.subscription = this.core.coreParsed$.subscribe(data => {
+      this.ngOnInit();
+    });
+    this.artistName = decodeURIComponent(this.route.snapshot.params["artist"]);
+    this.albumName = decodeURIComponent(this.route.snapshot.params["album"]);
 
     this.route.params.subscribe(data => {
-      this.artistName = decodeURIComponent(data['artist']);
-      this.albumName = decodeURIComponent(data['album']);
+      this.artistName = decodeURIComponent(data["artist"]);
+      this.albumName = decodeURIComponent(data["album"]);
       this.ngOnInit();
     });
 
@@ -55,7 +58,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.album = this.core.albums[this.artistName + '|' + this.albumName];
+    this.album = this.core.albums[this.artistName + "|" + this.albumName];
     if (this.album) {
       this.album.sortedDiscs = []; // reset
 
@@ -68,7 +71,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
           id: name
         });
       });
-      discnrs = discnrs.sort(function (a, b) {
+      discnrs = discnrs.sort(function(a, b) {
         if (a.nr < b.nr) {
           return -1;
         }
@@ -77,13 +80,19 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
       discnrs.forEach(disc => {
         this.album.sortedDiscs.push(this.album.discs[disc.id]);
       });
-      this.pathService.announcePath({ artist: this.album.artist, album: this.album, letter: this.album.artist.letter });
+      this.pathService.announcePath({
+        artist: this.album.artist,
+        album: this.album,
+        letter: this.album.artist.letter
+      });
     }
 
     // TODO this should a call from the backend
     this.ownPlaylists = [];
-    if (localStorage.getItem('customlisttest')) {
-      const list: Array<Playlist> = JSON.parse(localStorage.getItem('customlisttest'));
+    if (localStorage.getItem("customlisttest")) {
+      const list: Array<Playlist> = JSON.parse(
+        localStorage.getItem("customlisttest")
+      );
       if (list) {
         list.forEach(item => {
           const playlist = new Playlist();
@@ -96,9 +105,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
       }
     }
 
-    const mediaObject = document.querySelector('audio');
-    const canPlayType = mediaObject.canPlayType('audio/flac');
-    this.isFlacSupported = (canPlayType === 'probably' || canPlayType === 'maybe');
+    const mediaObject = document.querySelector("audio");
+    const canPlayType = mediaObject.canPlayType("audio/flac");
+    this.isFlacSupported =
+      canPlayType === "probably" || canPlayType === "maybe";
   }
 
   ngOnDestroy() {
@@ -107,11 +117,19 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
 
   onSelect(track: any, event: Event) {
     if (!this.isSwiping) {
-      this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track), true, false);
+      this.playerService.doPlayAlbum(
+        this.album,
+        this.album.tracks.indexOf(track),
+        true,
+        false
+      );
     }
   }
   navigateToArtist(artist: any) {
-    this.router.navigate(['Artist', { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
+    this.router.navigate([
+      "Artist",
+      { letter: artist.letter.escapedLetter, artist: artist.sortName }
+    ]);
   }
   swipe(track: Track, state: boolean, event: Event): void {
     event.preventDefault();
@@ -141,7 +159,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   */
   totalRunningTime(): number {
     let total = 0;
-    this.album.tracks.forEach((track) => {
+    this.album.tracks.forEach(track => {
       total += track.duration;
     });
     return total;
