@@ -2,7 +2,6 @@
     list-style: none;
     margin: 0;
     padding: 0;
-
     li {
         margin: 0 -15px;
         padding: 10px 5px;
@@ -10,7 +9,6 @@
         overflow: hidden;
         border-bottom: 1px solid gray('300');
         cursor: pointer;
-
         img {
             width: 100%;
         }
@@ -20,7 +18,6 @@
         .small {
             display: block;
         }
-
         &:hover {
             background: gray('200');
         }
@@ -29,13 +26,11 @@
         }
     }
 }
-
 .container-longlist ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
-
 .container-longlist li {
     margin: 0 -15px;
     padding: 10px;
@@ -43,15 +38,15 @@
     overflow: hidden;
     border-bottom: 1px solid gray('300');
     height: 90px;
-    &:last-child {
-        border-bottom: none;
-    }
     cursor: pointer;
+    &:last-child {
+        border-bottom: 0;
+    }
     &:hover {
         background: gray('200');
     }
 }
-.container-longlist /deep/ .panel-background {
+.container-longlist .panel-background {
     display: inline-block;
     margin: 0 10px 0 0;
     width: 60px;
@@ -59,15 +54,12 @@
     box-shadow: none;
     background-size: contain;
 }
-
-.container-longlist /deep/ .panel-info {
+.container-longlist .panel-info {
     display: none;
 }
-
 .container-longlist .image-wrapper {
     float: left;
 }
-
 .container-longlist .text-wrapper {
     float: left;
     width: calc(100% - 70px);
@@ -78,25 +70,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
 .container-longlist h4 {
     padding-left: 10px;
     margin-bottom: 10px;
 }
-
 .container-longlist h4 a:hover {
     text-decoration: none;
 }
-
-/deep/ .vsFor-before,
-/deep/ .vsFor-after {
-    float: left;
-}
-
 .list-tracks {
     margin: 0;
     padding: 0;
-
     li {
         padding: 10px 5px;
         list-style: none;
@@ -106,7 +89,7 @@
             background: gray('200');
         }
         &:last-child {
-            border-bottom: none;
+            border-bottom: 0;
         }
         &.header-seperator {
             padding: 10px 15px;

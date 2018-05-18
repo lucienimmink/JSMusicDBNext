@@ -1,4 +1,4 @@
-.jumpList {
+.jump-list {
     position: fixed;
     left: 0;
     top: 50px;
@@ -10,46 +10,41 @@
     transform: scale(0);
     transition: transform 0.25s ease-in-out;
     @include media-breakpoint-up(sm) {
-      top: 100px;
+        top: 100px;
     }
     ol {
-      list-style: none;
-      padding: 3vh 3vw;
-      margin: 0;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-content: flex-start;
-      align-items: stretch;
-      display: flex;
+        list-style: none;
+        padding: 3vh 3vw;
+        margin: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: flex-start;
+        align-items: stretch;
+        display: flex;
     }
     li {
-      font-size: 2em;
-      font-weight: bold;
-      display: inline-block;
-      text-align: center;
-      width: 25%;
-      @include media-breakpoint-up(sm) {
-        font-size: 3em;
-        width: 16.6%;
-      }
-    }
-    a:hover {
-      text-decoration: none;
-      color: #dddddd;
+        font-size: 2em;
+        font-weight: bold;
+        display: inline-block;
+        text-align: center;
+        width: 25%;
+        @include media-breakpoint-up(sm) {
+            font-size: 3em;
+            width: 16.6%;
+        }
     }
     &.visible {
-      display: block;
-      transform: scale(1);
+        display: block;
+        transform: scale(1);
     }
-  }
-
-  .jumpList-years li {
+}
+.jump-list-years li {
     font-size: 1.4em;
     width: 25%;
-    margin: 5px 0 0 0;
+    margin: 5px 0 0;
     @include media-breakpoint-up(sm) {
-      font-size: 1.5em;
-      width: 16.6%;
+        font-size: 1.5em;
+        width: 16.6%;
     }
-  }
+}

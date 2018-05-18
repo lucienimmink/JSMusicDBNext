@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="jumpList" [ngClass]="{'visible': showJumpList}">
+  <div class="jump-list" [ngClass]="{'visible': showJumpList}">
     <ol>
       <li *ngFor="let letter of letters">
         <a (click)="jumpToLetter(letter)">{{letter.letter}}</a>

@@ -1,7 +1,8 @@
 .small {
     opacity: 0.6;
 }
-a, .clickable {
+a,
+.clickable {
     cursor: pointer;
     color: theme-color('primary') !important;
 }

@@ -1,0 +1,259 @@
+// _buttons
+.btn[data-toggle='button'].btn-toggle-switch {
+    border-color: gray('800');
+    &::before {
+        background-color: gray('800');
+    }
+    .state-label {
+        color: gray('900');
+    }
+    &:hover {
+        border-color: gray('900');
+        &::before {
+            background-color: gray('900');
+        }
+    }
+    &.active {
+        background-color: theme-color('primary');
+        &:hover {
+            background-color: theme-color('primary');
+        }
+    }
+}
+.btn-link:hover {
+    color: lighten(theme-color('primary'), 10%);
+}
+
+// _headers
+h3,
+h4,
+.header-seperator {
+    border-bottom: 1px solid theme-color('primary');
+    background: gray('100');
+    color: gray('900');
+    &:hover {
+        background: gray('100') !important;
+    }
+}
+
+// jumbotrons
+.jumbotron {
+    background: gray('200');
+    img {
+        border: 1px solid gray('200');
+    }
+}
+
+// jump-list
+.jump-list {
+    background: gray('100');
+}
+
+// lists
+.list-recently {
+    li {
+        border-bottom: 1px solid gray('300');
+        .now-playing {
+            color: theme-color('primary');
+        }
+        &:hover {
+            background: gray('200');
+        }
+    }
+}
+.container-longlist li {
+    border-bottom: 1px solid gray('300');
+    &:hover {
+        background: gray('200');
+    }
+}
+.list-tracks {
+    li {
+        border-bottom: 1px solid gray('300');
+        &:hover {
+            background: gray('200');
+        }
+        &.header-seperator {
+            border-bottom-color: theme-color('primary');
+        }
+        &.active {
+            background-color: theme-color('primary');
+        }
+    }
+}
+
+// menus
+.menu-top {
+    background: gray('200');
+    .logo {
+        path {
+            fill: gray('900');
+        }
+    }
+}
+.side-nav__container,
+.side-nav-xl {
+    background-color: gray('200');
+    .side-nav__content li {
+        a {
+            color: gray('900') !important;
+        }
+        &:hover {
+            border-left-color: theme-color('primary');
+        }
+        &.active {
+            background-color: gray('300');
+            border-left-color: theme-color('primary');
+        }
+        &:focus,
+        &:active {
+            background-color: gray('400');
+        }
+    }
+    .side-nav__content .search-bar input {
+        color: theme-color('primary');
+        background: gray('100');
+        border: 1px solid theme-color('primary');
+    }
+    .side-nav__content .search-bar .input-group-addon {
+        color: theme-color('primary');
+    }
+}
+
+// navs
+.nav-letters {
+    background: theme-color('primary');
+    .nav-item {
+        a {
+            &:hover,
+            &:focus,
+            &.active {
+                color: gray('100');
+                background: darken(theme-color('primary'), 10%);
+            }
+        }
+    }
+}
+
+// now-playing
+#nowPlaying {
+    background: gray('100');
+    .top,
+    .bottom {
+        background: gray('100');
+    }
+    .control-wrapper-wrapper {
+        text-shadow: 0 0 1px gray('100');
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            gray('100') 100%
+        );
+    }
+    &.small-art.no-focus .control-wrapper-wrapper {
+        background: linear-gradient(
+            to bottom,
+            transparent 90%,
+            gray('100') 100%
+        );
+    }
+    .controls-wrapper h5 a {
+        color: gray('900') !important;
+    }
+}
+#nowPlaying .icons button.active {
+    background: theme-color('primary');
+}
+#nowPlaying .icons button:active {
+    background: gray('100');
+    color: theme-color('primary');
+}
+#nowPlaying .progress {
+    .progress-bar {
+        background-color: theme-color('primary');
+    }
+}
+#position-indicator {
+    border-color: theme-color('primary');
+    background: gray('100');
+}
+
+// page
+body {
+    background: gray('100');
+    color: gray('900');
+}
+
+// player
+.player {
+    background: gray('200');
+}
+.player .progress .progress-bar {
+    background-color: theme-color('primary');
+}
+.player {
+    .row .btn.active {
+        background: theme-color('primary');
+        color: gray('100') !important;
+    }
+    .row .btn:active {
+        background: gray('100');
+        color: theme-color('primary');
+    }
+}
+.volume-control {
+    border: 1px solid gray('400');
+    background: gray('100');
+}
+
+// preloader
+.preloader {
+    background: gray('100');
+}
+
+// progress
+.progress {
+    background: gray('400');
+}
+.progress-bar {
+    .progress-circle {
+        &::after {
+            color: theme-color('primary');
+        }
+    }
+}
+
+// reload
+#reloading {
+    background: gray('100');
+}
+
+// titlebars
+#title-bar-btns button {
+    color: gray('900');
+    &:hover {
+        background-color: gray('400');
+    }
+}
+
+// tooltips
+.tooltip-inner {
+    border: 1px solid gray('900');
+}
+
+// utils
+a,
+.clickable {
+    color: theme-color('primary') !important;
+    &:hover {
+        color: lighten(theme-color('primary'), 10%) !important;
+    }
+}
+
+// webkit
+::-webkit-scrollbar-track {
+    background-color: gray('400');
+}
+::-webkit-scrollbar-thumb {
+    background-color: theme-color('primary');
+}

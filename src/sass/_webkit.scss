@@ -1,14 +1,12 @@
 ::-webkit-scrollbar {
-  width: 6px;
-  /* for vertical scrollbars */
-  height: 6px;
-  /* for horizontal scrollbars */
+    width: 6px;
+    /* for vertical scrollbars */
+    height: 6px;
+    /* for horizontal scrollbars */
 }
-
 ::-webkit-scrollbar-track {
-  background-color: gray("400");
+    background-color: gray('400');
 }
-
 ::-webkit-scrollbar-thumb {
-  background-color: theme-color("primary");
+    background-color: theme-color('primary');
 }

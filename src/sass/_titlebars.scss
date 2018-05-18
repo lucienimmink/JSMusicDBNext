@@ -6,16 +6,14 @@
     height: 24px;
     z-index: 1001;
     right: 150px;
-  }
-
-  #title-bar-btns {
+}
+#title-bar-btns {
     -webkit-app-region: no-drag;
     position: fixed;
-    top: 0px;
+    top: 0;
     right: 6px;
-  }
-
-  #title-bar-btns button {
+}
+#title-bar-btns button {
     height: 32px;
     width: 32px;
     background-color: transparent;
@@ -23,10 +21,10 @@
     color: gray('900');
     font-size: 16px;
     &:hover {
-      background-color: gray('400');
+        background-color: gray('400');
     }
     &:active,
     &:focus {
-      outline: none;
+        outline: none;
     }
-  }
+}

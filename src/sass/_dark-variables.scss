@@ -1,11 +1,4 @@
-$icon-font-path: "../../node_modules/winstrap/src/fonts/glyphs/";
 $blue: lighten(rgba(0, 120, 215, 1), 15%);
-$enable-rounded: false;
-$enable-caret: false;
-$enable-print-styles: false;
-$headings-font-weight: 100;
-
-$white: #fff !default;
 $gray-900: #f8f9fa !default;
 $gray-800: #e9ecef !default;
 $gray-700: #dee2e6 !default;
@@ -15,4 +8,5 @@ $gray-400: #6c757d !default;
 $gray-300: #495057 !default;
 $gray-200: #343a40 !default;
 $gray-100: #212529 !default;
-$black: #000 !default;
+
+$link-hover-color: lighten($blue, 15);

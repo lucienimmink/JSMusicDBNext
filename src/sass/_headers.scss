@@ -1,21 +1,21 @@
 h3,
 h4,
 .header-seperator {
-  overflow: hidden;
-  border-bottom: 1px solid theme-color("primary");
-  border-top: none;
-  background: gray("100");
-  color: gray("900");
-  z-index: 2;
-  padding: 6px 15px 3px;
-  margin: 0 -15px 15px;
-  top: 48px;
-  position: sticky;
-  line-height: 1.5;
-  @include media-breakpoint-up(lg) {
-    top: 100px;
-  }
-  &:hover {
-    background: gray("100") !important;
-  }
+    overflow: hidden;
+    border-bottom: 1px solid theme-color('primary');
+    border-top: 0;
+    background: gray('100');
+    color: gray('900');
+    z-index: 2;
+    padding: 6px 15px 3px;
+    margin: 0 -15px 15px;
+    top: 48px;
+    position: sticky;
+    line-height: 1.5;
+    @include media-breakpoint-up(lg) {
+        top: 100px;
+    }
+    &:hover {
+        background: gray('100') !important;
+    }
 }

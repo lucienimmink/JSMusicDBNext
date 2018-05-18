@@ -3,7 +3,7 @@
     <div *vsFor="items; size:getSize; let _items = vsCollection; scrollParent:'body'; excess: 2">
       <div class="row" *ngFor="let year of _items">
         <div class="col">
-          <h4 sticky style="top: 99px;" class="visible-md visible-lg header-seperator">
+          <h4>
             <a (click)="toggleJumpList()">{{year.year}}</a>
             &nbsp;
             <span class="small color-type-secondary">({{year.albums && year.albums.length}})</span>
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="jumpList jumpList-years" [ngClass]="{'visible': showJumpList}">
+  <div class="jump-list jump-list-years" [ngClass]="{'visible': showJumpList}">
     <ol>
       <li *ngFor="let year of years">
         <a (click)="jumpToLetter(year)">{{year}}</a>
