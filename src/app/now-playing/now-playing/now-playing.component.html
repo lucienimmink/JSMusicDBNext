@@ -21,7 +21,7 @@
         <span class="time start" *ngIf="!videoMode">{{track.position | timeFormat}}</span>
         <span class="time stop" *ngIf="!videoMode">{{track.duration | timeFormat}}</span>
 
-        <div>
+        <div class="track-info">
           <h4>{{track.title}}</h4>
           <h5>
             <a (click)="navigateToArtist()">{{track.trackArtist}}</a>

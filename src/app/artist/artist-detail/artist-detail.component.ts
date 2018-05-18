@@ -9,8 +9,7 @@ import { PathService } from './../../utils/path.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  templateUrl: './artist-detail.component.html',
-  styleUrls: ['./artist-detail.component.css']
+  templateUrl: './artist-detail.component.html'
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
   private artistName: string;

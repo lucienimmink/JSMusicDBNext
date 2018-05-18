@@ -113,7 +113,7 @@
             border-bottom-color: theme-color('primary');
         }
         &.active {
-            color: gray('100');
+            color: $white;
             background-color: theme-color('primary');
         }
     }
