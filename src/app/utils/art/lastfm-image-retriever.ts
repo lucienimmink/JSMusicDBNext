@@ -3,9 +3,6 @@ import { throwError as observableThrowError, Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { AbstractImageRetriever } from "./../abstract-image-retriever";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { UrlEncoder } from "./url-encoder";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
 
 export class LastfmImageRetriever implements AbstractImageRetriever {
   NOIMAGE: "global/images/no-cover.png";
@@ -32,26 +29,6 @@ export class LastfmImageRetriever implements AbstractImageRetriever {
       .pipe(catchError(this.handleError));
   }
 
-  /*
-  extractData(res: Response): string {
-    const json = res.json();
-    let image = this.NOIMAGE;
-    if (json && json.album) {
-      json.album.image.some(e => {
-        if (e.size === "mega") {
-          image = e["#text"];
-        }
-      });
-    } else if (json && json.artist) {
-      json.artist.image.some(e => {
-        if (e.size === "mega") {
-          image = e["#text"];
-        }
-      });
-    }
-    return image || this.NOIMAGE;
-  }
-  */
   handleError(error: Response) {
     return observableThrowError(this.NOIMAGE);
   }

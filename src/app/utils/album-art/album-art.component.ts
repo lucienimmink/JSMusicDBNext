@@ -10,7 +10,6 @@ import { AlbumArt } from "./album-art";
   // tslint:disable-next-line:component-selector
   selector: "mdb-album-art",
   templateUrl: "./album-art.component.html",
-  styleUrls: ["./album-art.component.css"],
   providers: [AlbumArtService]
 })
 export class AlbumArtComponent implements OnInit, OnChanges {

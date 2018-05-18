@@ -11,8 +11,7 @@ import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 import { LastfmService } from "./../../utils/lastfm.service";
 
 @Component({
-  templateUrl: "./scrobble-cache.component.html",
-  styleUrls: ["./scrobble-cache.component.css"]
+  templateUrl: "./scrobble-cache.component.html"
 })
 export class ScrobbleCacheComponent implements OnInit, OnDestroy {
   private core: musicdbcore;

@@ -6,8 +6,7 @@ import Artist from './../../org/arielext/musicdb/models/Artist';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'mdb-artist',
-  templateUrl: './artist.component.html',
-  styleUrls: ['./artist.component.css']
+  templateUrl: './artist.component.html'
 })
 export class ArtistComponent {
   @Input() artist: Artist;
