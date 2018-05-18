@@ -23,6 +23,9 @@
 .btn-link:hover {
     color: lighten(theme-color('primary'), 10%);
 }
+.btn-primary:hover {
+    background-color: lighten(theme-color('primary'), 10%);
+}
 
 // _headers
 h3,

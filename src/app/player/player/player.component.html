@@ -29,19 +29,19 @@
         <a class="btn btn-link" (click)="next()">
           <span class="glyph glyph-next"></span>
         </a>
-        <a class="btn btn-link d-none d-md-inline" (click)="toggleVolumeWindow($event)">
+        <a class="btn btn-link d-none d-md-inline-block" (click)="toggleVolumeWindow($event)">
           <span class="glyph" [ngClass]="{'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span>
         </a>
-        <a class="btn btn-link d-none d-md-inline btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}">
+        <a class="btn btn-link d-none d-md-inline-block btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}">
           <i class="glyph glyph-star-outline"></i>
         </a>
-        <a class="btn btn-link d-none d-md-inline btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}">
+        <a class="btn btn-link d-none d-md-inline-block btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}">
           <i class="glyph glyph-shuffle"></i>
         </a>
       </div>
     </div>
   </div>
-  <div class="volume-control d-none d-md-inline" [hidden]="!showVolumeWindow">
+  <div class="volume-control" [hidden]="!showVolumeWindow">
     <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()">
   </div>
 </div>

@@ -8,8 +8,7 @@ import Track from './../../org/arielext/musicdb/models/track';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'mdb-tracklist',
-  templateUrl: './track.component.html',
-  styleUrls: ['./track.component.css']
+  templateUrl: './track.component.html'
 })
 export class TrackComponent {
   @Input() playlist: any = {};

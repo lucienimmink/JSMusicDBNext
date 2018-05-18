@@ -4,31 +4,35 @@
       <div class="settings-page-p">
         <h4>User Information</h4>
         <div class="settings-page-p" *ngIf="lastfmusername && lastfmusername.length > 0 && lastfmusername !== 'mdb-skipped'">
-          <span class="small">Connected to last.fm: </span>
+          <span class="">Connected to last.fm: </span>
           <span>{{lastfmusername && lastfmusername.length > 0}}
             <span class="small">({{lastfmusername}})</span>
           </span>
           <a (click)="removeLastfm()">
+            &nbsp;
             <i class="glyph glyph-delete"></i> remove token</a>
         </div>
         <div class="settings-page-p" *ngIf="lastfmusername && lastfmusername === 'mdb-skipped'">
-          <span class="small">Local last played tracking: </span>
+          <span class="">Local last played tracking: </span>
           <span>true</span>
           <a (click)="removeLastfm()">
+            &nbsp;
             <i class="glyph glyph-delete"></i> remove token</a>
         </div>
         <div class="settings-page-p">
-          <span class="small">Connected to: </span>
+          <span class="">Connected to: </span>
           <span>{{connectiontype}}
             <span class="small">({{connectiondetails}})</span>
           </span>
           <a (click)="removeConnection()" *ngIf="connectiondetails">
+            &nbsp;
             <i class="glyph glyph-delete"></i> remove token</a>
           <a routerLink="/login" *ngIf="!connectiondetails">
+            &nbsp;
             <i class="glyph glyph-admin"></i> login</a>
         </div>
         <div class="settings-page-p">
-          <span class="small">Reload collection: </span>
+          <span class="">Reload collection: </span>&nbsp;
           <button (click)="reloadCollection()" [disabled]="isReloading" *ngIf="!isReloading" class="btn btn-primary">
             <i class="glyph glyph-sync"></i> now</button>
           <span *ngIf="!scanperc && isReloading">
@@ -40,7 +44,7 @@
               <div class="progress-circle"></div>
             </div>
           </span>
-          <span *ngIf="scanperc && isReloading">{{scanperc}}% done</span>
+          <span *ngIf="scanperc && isReloading"> {{scanperc}}% done</span>
         </div>
       </div>
     </div>
@@ -48,7 +52,7 @@
       <div class="settings-page-p">
         <h4>Player settings</h4>
         <div class="settings-page-p">
-          <span class="small">Save playliststate: </span>
+          <span class="">Save playliststate: </span>
           <div class="btn-group">
             <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': savePlaylistState, 'theme-alt': mode === 'dark'}"
               (click)="toggleSavePlaylistState()">
@@ -58,7 +62,7 @@
           </div>
         </div>
         <div class="settings-page-p" *ngIf="lastfmusername && lastfmusername.length > 0 && lastfmusername !== 'mdb-skipped'">
-          <span class="small">Manual scrobbling: </span>
+          <span class="">Manual scrobbling: </span>
           <div class="btn-group">
             <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': manualScrobbling, 'theme-alt': mode === 'dark'}"
               (click)="toggleManualScrobbling()">
@@ -75,7 +79,7 @@
           </span>
         </div>
         <div class="settings-page-p">
-          <span class="small">Continues play: </span>
+          <span class="">Continues play: </span>
           <div class="btn-group">
             <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': isContinuesplay, 'theme-alt': mode === 'dark'}"
               (click)="toggleContinuesPlay()">
@@ -116,8 +120,9 @@
               </div>
             </div>
             <div class="form-group" *ngIf="isVisualCapable">
-              <span class="small">Show visualisation on now playing screen: </span>
+              <span class="">Show visualisation on now playing screen: </span>
               <div class="btn-group">
+                &nbsp;
                 <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': visualisation, 'theme-alt': mode === 'dark'}"
                   (click)="toggleVisualisation()">
                   <span class="state-label state-label-on">Yes</span>
@@ -126,8 +131,9 @@
               </div>
             </div>
             <div class="form-group" *ngIf="visualisation && isVisualCapable">
-              <span class="small">Show smaller album-art on now playing screen: </span>
+              <span class="">Show smaller album-art on now playing screen: </span>
               <div class="btn-group">
+                &nbsp;
                 <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': smallArt, 'theme-alt': mode === 'dark'}"
                   (click)="toggleSmallArt()">
                   <span class="state-label state-label-on">Yes</span>
@@ -136,8 +142,9 @@
               </div>
             </div>
             <div class="form-group">
-              <span class="small">Prefer video if available: </span>
+              <span class="">Prefer video if available: </span>
               <div class="btn-group">
+                &nbsp;
                 <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': preferVideo, 'theme-alt': mode === 'dark'}"
                   (click)="togglePreferVideo()">
                   <span class="state-label state-label-on">On</span>
@@ -151,34 +158,29 @@
     </div>
     <div class="setting-page-block">
       <div class="settings-page-p">
-        <h4 class="header-seperator" sticky>Collection Information</h4>
+        <h4>Information</h4>
         <div class="settings-page-p">
-          <span class="small">Artists: </span>
+          <span class="">Artists: </span>
           <span>{{totals.artists}}</span>
         </div>
         <div class="settings-page-p">
-          <span class="small">Albums: </span>
+          <span class="">Albums: </span>
           <span>{{totals.albums}}</span>
         </div>
         <div class="settings-page-p">
-          <span class="small">Tracks: </span>
+          <span class="">Tracks: </span>
           <span>{{totals.tracks}}</span>
         </div>
         <div class="settings-page-p" *ngIf="totals.playingTime">
-          <span class="small">Playing time: </span>
+          <span class="">Playing time: </span>
           <span>{{totals.playingTime | timeFormat }}</span>
         </div>
         <div class="settings-page-p">
-          <span class="small">Last parsed: </span>
+          <span class="">Last parsed: </span>
           <span>{{lastParsed | date: 'medium'}}</span>
         </div>
-      </div>
-    </div>
-    <div class="setting-page-block">
-      <div class="settings-page-p">
-        <h4 class="header-seperator" sticky>Build</h4>
         <div class="settings-page-p">
-          <span class="small">version: </span>
+          <span class="">Build version: </span>
           <span>{{version }}</span>
         </div>
       </div>
