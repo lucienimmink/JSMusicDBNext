@@ -57,7 +57,7 @@
           </button>
         </div>
 
-        <div class="volume-control d-none d-md-inline" [hidden]="!showVolumeWindow">
+        <div class="volume-control" [hidden]="!showVolumeWindow">
           <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()">
         </div>
 
