@@ -119,12 +119,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.newListenedTracks = [];
     this.loading = true;
     if (this.username !== "mdb-skipped") {
-      this.recentlyListened
-        .getRecentlyListened(this.username)
-        .subscribe(
-          data => this.populate(data.recenttracks.track),
-          error => console.log(error)
-        );
+      this.recentlyListened.getRecentlyListened(this.username).subscribe(
+        data => {
+          set("cached-recently-listened", data.recenttracks.track);
+          this.populate(data.recenttracks.track);
+        },
+        error => console.log(error)
+      );
     } else {
       get("recentlyListened").then((data: any) => {
         if (data) {
