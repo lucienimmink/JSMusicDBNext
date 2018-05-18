@@ -5,4 +5,7 @@ a,
 .clickable {
     cursor: pointer;
     color: theme-color('primary') !important;
+    &:hover {
+        color: darken(theme-color('primary'), 10%) !important;
+    }
 }
