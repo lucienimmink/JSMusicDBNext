@@ -85,6 +85,9 @@ h4,
 // menus
 .menu-top {
     background: gray('200');
+    .btn-menu {
+        color: gray('900');
+    }
     .logo {
         path {
             fill: gray('900');

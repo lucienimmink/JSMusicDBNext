@@ -46,18 +46,18 @@
           <button class="btn btn-link btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}" *ngIf="lastfmusername !== 'mdb-skipped'">
             <i class="glyph glyph-star-outline"></i>
           </button>
-          <button class="btn btn-link btn-volume hidden-xs hidden-sm" (click)="toggleVolumeWindow($event)" [disabled]="videoMode">
+          <button class="btn btn-link btn-volume d-none d-md-inline" (click)="toggleVolumeWindow($event)" [disabled]="videoMode">
             <span class="glyph" [ngClass]="{'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span>
           </button>
-          <button class="btn btn-link hidden-xs hidden-sm btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}">
+          <button class="btn btn-link d-none d-md-inline btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}">
             <i class="glyph glyph-shuffle"></i>
           </button>
-          <button class="btn btn-link hidden-xs hidden-sm btn-youtube" (click)="toggleVideo()" *ngIf="youtubeVideoId">
+          <button class="btn btn-link d-none d-md-inline btn-youtube" (click)="toggleVideo()" *ngIf="youtubeVideoId">
             <i class="glyph glyph-video"></i>
           </button>
         </div>
 
-        <div class="volume-control hidden-xs hidden-sm" [hidden]="!showVolumeWindow">
+        <div class="volume-control d-none d-md-inline" [hidden]="!showVolumeWindow">
           <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()">
         </div>
 
