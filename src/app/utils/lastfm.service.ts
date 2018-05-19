@@ -259,8 +259,8 @@ export class LastfmService {
             timestamp: timestamp.toString()
           };
           offlineCache.unshift(cachedItem);
-          this.manualScrobbleListSource.next(offlineCache); // set the subscribers know that the list is updated
           set("manual-scrobble-list", offlineCache);
+          this.manualScrobbleListSource.next(offlineCache);
         });
       }
     } else {
@@ -274,6 +274,12 @@ export class LastfmService {
         }
       });
     }
+  }
+  updateManualScrobbleList(): void {
+    get("manual-scrobble-list").then(oc => {
+      const offlineCache: any = oc || [];
+      this.manualScrobbleListSource.next(offlineCache);
+    });
   }
   saveInLocal(track: Track, timestamp: number, imageurl: string): void {
     const c = this;

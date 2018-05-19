@@ -1,36 +1,34 @@
-<div class="container animated-page">
-  <div class="row">
-    <div class="col-xs-24" *ngIf="manualScrobblingList && manualScrobbling">
-      <h4 sticky style="top: 49px;" class="visible-xs visible-sm header-seperator">Tracks in cache
-        <span class="small color-type-secondary">({{manualScrobblingList.length}})</span>
-        <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a>
-      </h4>
-      <h4 sticky style="top: 90px;" class="visible-md visible-lg header-seperator">Tracks in scrobble cache
-        <span class="small color-type-secondary">({{manualScrobblingList.length}})</span>
-        <a class="pull-right" (click)="scrobbleNow()">Scrobble now</a>
-      </h4>
-      <ol class="list-items">
-        <li class="list-items-row" *ngFor="let item of manualScrobblingList">
-          <div class="row">
-            <div class="col-lg-1 text-right pull-right">
-              <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
+<div class="animated-page">
+  <div class="container">
+    <div class="row">
+      <div class="col" *ngIf="manualScrobblingList && manualScrobbling">
+        <h4>Tracks in scrobble cache
+          <span class="small color-type-secondary">({{manualScrobblingList.length}})</span>
+          <a class="float-right d-none d-sm-inline" (click)="scrobbleNow()">Scrobble now</a>
+        </h4>
+        <ol class="list-items list-tracks">
+          <li class="list-items-row list-tracks-no-hover" *ngFor="let item of manualScrobblingList">
+            <div class="row">
+              <div class="col-4 col-sm-3">
+                {{item.artist}}
+              </div>
+              <div class="col-4 col-sm-3 small d-none d-sm-block">
+                {{item.album}}
+              </div>
+              <div class="col-8 col-sm-3">
+                {{item.track}}
+              </div>
+              <div class="col-6 col-sm-2 small">
+                {{item.timestamp*1000 | date:'mediumDate' }} {{item.timestamp*1000 | date:'shortTime' }}
+              </div>
+              <div class="col-6 col-sm-1 text-right">
+                <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
+              </div>
             </div>
-            <div class="col-lg-6">
-              {{item.artist}}
-            </div>
-            <div class="col-lg-6 color-type-secondary hidden-xs">
-              {{item.album}}
-            </div>
-            <div class="col-lg-7">
-              {{item.track}}
-            </div>
-            <div class="col-lg-4 color-type-secondary">
-              {{item.timestamp*1000 | date:'mediumDate' }} {{item.timestamp*1000 | date:'shortTime' }}
-            </div>
-          </div>
-        </li>
-      </ol>
-      <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0 && !isBusy">Scrobble now</button>
+          </li>
+        </ol>
+        <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0 && !isBusy">Scrobble now</button>
+      </div>
     </div>
   </div>
 </div>

@@ -70,6 +70,7 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
       const track = this.manualScrobblingList.pop();
       this.lastFMService.scrobbleCachedTrack(track).subscribe(data => {
         set("manual-scrobble-list", this.manualScrobblingList);
+        this.lastFMService.updateManualScrobbleList();
         if (this.manualScrobblingList.length > 0) {
           this.scrobbleNow();
         } else {

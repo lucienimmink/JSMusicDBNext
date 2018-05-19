@@ -70,13 +70,12 @@
               <span class="state-label state-label-off">Off</span>
             </button>
           </div>
-          <span class="small" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">({{manualScrobblingList.length}} item
-            <span *ngIf="manualScrobblingList.length > 1">s</span> in list)
+          <div class="small" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">items in list: {{manualScrobblingList.length}}
             <br>
             <a (click)="scrobbleNow()">Scrobble now</a>
             <br />
             <a (click)="viewList()">View tracks in scrobble cache</a>
-          </span>
+          </div>
         </div>
         <div class="settings-page-p">
           <span class="">Continues play: </span>

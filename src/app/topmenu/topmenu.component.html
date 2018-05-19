@@ -99,7 +99,7 @@
       </li>
       <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}">
         <a routerLink="/scrobble-cache">
-          <span class="glyph glyph-upload"></span> Scrobble cache</a>
+          <span class="glyph glyph-upload"></span> Scrobble cache ({{manualScrobblingList.length}})</a>
       </li>
       <li [ngClass]="{'active': page === 'Settings'}">
         <a routerLink="/settings">
@@ -147,7 +147,8 @@
       </a>
     </li>
     <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{'active': page === 'Scrobble cache'}" class="nav-item">
-      <a routerLink="/scrobble-cache" tooltip="Scrobble cache" triggers="hover" placement="right" container="body">
+      <a routerLink="/scrobble-cache" tooltip="Scrobble cache ({{manualScrobblingList.length}})" triggers="hover" placement="right"
+        container="body">
         <span class="glyph glyph-upload"></span>
       </a>
     </li>
