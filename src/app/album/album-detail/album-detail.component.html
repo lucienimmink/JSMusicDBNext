@@ -10,8 +10,7 @@
           <h3 class="d-none d-sm-block">{{album.artist.albumArtist || album.artist.name}}</h3>
           <h4>
             <span *ngIf="album.year && album.year !== 0">{{album.year}} &bull; </span>
-            {{album.tracks.length}} song
-            <span *ngIf="album.tracks.length !== 1">s</span>
+            songs: {{album.tracks.length}}
             <span class="d-none d-sm-inline"> &bull; {{totalRunningTime() | timeFormat}} &bull; {{album.type}}</span>
           </h4>
         </div>

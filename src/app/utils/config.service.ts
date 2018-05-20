@@ -51,9 +51,11 @@ export class ConfigService {
 
     const current = document.getElementById("customStylesheet");
     if (current) {
+      console.log("remove child", current);
       document.getElementsByTagName("head")[0].removeChild(current);
     }
     document.getElementsByTagName("head")[0].appendChild(stylesheet);
+    console.log("add child", stylesheet);
     localStorage.setItem("theme", this._theme);
     localStorage.setItem("style", style);
     this.themeSource.next(this._theme);
