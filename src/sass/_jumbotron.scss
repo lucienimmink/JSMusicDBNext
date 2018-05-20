@@ -1,6 +1,8 @@
 .jumbotron {
   background: gray("200");
   @include media-breakpoint-up(lg) {
+    padding-top: 2em;
+    padding-bottom: 2em;
     margin: 0 -50px 0 -30px;
   }
   .container {
