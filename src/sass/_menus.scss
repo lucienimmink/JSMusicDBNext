@@ -1,211 +1,212 @@
 .menu-top {
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 13;
+  height: 50px;
+  background: gray("200");
+  .logo {
+    path {
+      fill: gray("900");
+    }
+  }
+  .menu-toggle {
+    top: -7px;
+    position: relative;
+  }
+  .btn-menu {
+    margin: 0;
+    min-width: 50px;
+    max-width: 50px;
+    width: 50px;
+    height: 50px;
+    position: relative;
     left: 0;
+    background: transparent;
+    top: -17px;
+    &:active,
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+  .btn-search {
+    position: absolute;
     right: 0;
     top: 0;
-    z-index: 13;
-    height: 50px;
-    background: gray('200');
-    .logo {
-        path {
-            fill: gray('900');
-        }
+    left: auto;
+    .glyph {
+      vertical-align: baseline;
     }
-    .menu-toggle {
-        top: -7px;
-        position: relative;
-    }
-    .btn-menu {
-        margin: 0;
-        min-width: 50px;
-        max-width: 50px;
-        width: 50px;
-        height: 50px;
-        position: relative;
-        left: 0;
-        background: transparent;
-        top: -17px;
-        &:active,
-        &:focus {
-            box-shadow: none;
-            outline: none;
-        }
-    }
-    .btn-search {
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: auto;
-        .glyph {
-            vertical-align: baseline;
-        }
-    }
-    form {
-        position: absolute;
-        left: 10px;
-        top: 4px;
-        right: 50px;
-        display: none;
-    }
-    form.visible {
-        display: block;
-    }
-    form input {
-        max-width: 100%;
-    }
-    .logo {
-        position: relative;
-        top: -1px;
-        left: 25px;
-        margin-right: 39px;
-        width: 35px;
-        height: 35px;
-        display: inline-block;
-    }
-    h1 {
-        display: inline-block;
-        font-size: 30px;
-        line-height: 1.4;
-        padding: 0;
-        position: relative;
-        top: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        max-width: calc(100% - 105px);
-        text-overflow: ellipsis;
-        margin-left: 10px;
-    }
+  }
+  form {
+    position: absolute;
+    left: 10px;
+    top: 4px;
+    right: 50px;
+    display: none;
+  }
+  form.visible {
+    display: block;
+  }
+  form input {
+    max-width: 100%;
+  }
+  .logo {
+    position: relative;
+    top: -1px;
+    left: 25px;
+    margin-right: 39px;
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+  }
+  h1 {
+    display: inline-block;
+    font-size: 30px;
+    line-height: 1.4;
+    padding: 0;
+    position: relative;
+    top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: calc(100% - 105px);
+    text-overflow: ellipsis;
+    margin-left: 10px;
+  }
 }
 .side-nav__content {
-    overflow-y: none;
+  overflow-y: none;
 }
 .side-nav__content li {
-    width: 100%;
+  width: 100%;
 }
 .side-nav__content li a {
-    padding: 20px 17px;
-    display: block;
+  padding: 20px 17px;
+  display: block;
 }
 .side-nav__content li a .glyph {
-    margin-right: 10px;
-    font-size: 1.6em;
-    position: relative;
-    top: -2px;
+  margin-right: 10px;
+  font-size: 1.6em;
+  position: relative;
+  top: -2px;
 }
 .side-nav__content .search-bar .form-group {
-    margin: 0;
-    padding: 10px 15px;
+  margin: 0;
+  padding: 10px 15px;
 }
 .side-nav__content .search-bar .input-group {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 }
 .side-nav__content .search-bar .input-group-addon {
-    border: 0;
-    background: none;
-    position: absolute;
-    right: 4px;
-    top: 4px;
-    z-index: 3;
+  border: 0;
+  background: none;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  z-index: 3;
 }
 .side-nav__content .search-bar .input-group-addon:focus,
 .side-nav__content .search-bar .input-group-addon:active {
-    outline: none;
+  outline: none;
 }
 .side-nav__content .search-bar:hover {
-    border-left-color: transparent;
-    background-color: transparent;
+  border-left-color: transparent;
+  background-color: transparent;
 }
 .side-nav {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1100;
-    top: 50px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1100;
+  top: 50px;
 }
 .side-nav--visible {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 .side-nav::before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    will-change: opacity;
-    transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
 }
 .side-nav__container {
-    position: relative;
-    width: 90%;
-    max-width: 350px;
-    height: calc(100% - 50px);
-    transform: translateX(-102%);
-    will-change: transform;
-    top: -1px;
-    overflow-y: auto;
+  position: relative;
+  width: 90%;
+  max-width: 350px;
+  height: calc(100% - 50px);
+  transform: translateX(-102%);
+  will-change: transform;
+  top: -1px;
+  overflow-y: auto;
 }
 .side-nav--animatable .side-nav__container {
-    transition: transform 0.13s cubic-bezier(0, 0, 0.3, 1);
+  transition: transform 0.13s cubic-bezier(0, 0, 0.3, 1);
 }
 .side-nav--visible.side-nav--animatable .side-nav__container {
-    transition: transform 0.33s cubic-bezier(0, 0, 0.3, 1);
+  transition: transform 0.33s cubic-bezier(0, 0, 0.3, 1);
 }
 .side-nav--visible::before {
-    opacity: 1;
+  opacity: 1;
 }
 .side-nav--visible .side-nav__container {
-    transform: none;
+  transform: none;
 }
 .side-nav-xl {
-    position: fixed;
-    left: 0;
-    top: 100px;
-    height: calc(100% - 100px);
-    z-index: 13;
-    overflow-y: auto;
-    overflow-x: hidden;
-    .isPlaying & {
-        height: calc(100% - 100px - 80px);
-    }
+  position: fixed;
+  left: 0;
+  top: 100px;
+  height: calc(100% - 100px);
+  z-index: 13;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 75px;
+  .isPlaying & {
+    height: calc(100% - 100px - 80px);
+  }
 }
 .side-nav__container,
 .side-nav-xl {
-    background-color: gray('200');
-    .side-nav__content li {
-        border-left: 3px solid transparent;
-        transition: background 0.15s ease-in-out;
-        will-change: background;
-        a {
-            color: gray('900') !important;
-            outline: none;
-            text-decoration: none;
-        }
-        &:hover {
-            border-left-color: theme-color('primary');
-        }
-        &.active {
-            background-color: gray('300');
-            border-left-color: theme-color('primary');
-        }
-        &:focus,
-        &:active {
-            background-color: gray('400');
-        }
+  background-color: gray("200");
+  .side-nav__content li {
+    border-left: 3px solid transparent;
+    transition: background 0.15s ease-in-out;
+    will-change: background;
+    a {
+      color: gray("900") !important;
+      outline: none;
+      text-decoration: none;
     }
-    .side-nav__content .search-bar input {
-        color: theme-color('primary');
-        background: gray('100');
-        border: 1px solid theme-color('primary');
+    &:hover {
+      border-left-color: theme-color("primary");
     }
-    .side-nav__content .search-bar .input-group-addon {
-        color: theme-color('primary');
+    &.active {
+      background-color: gray("300");
+      border-left-color: theme-color("primary");
     }
+    &:focus,
+    &:active {
+      background-color: gray("400");
+    }
+  }
+  .side-nav__content .search-bar input {
+    color: theme-color("primary");
+    background: gray("100");
+    border: 1px solid theme-color("primary");
+  }
+  .side-nav__content .search-bar .input-group-addon {
+    color: theme-color("primary");
+  }
 }

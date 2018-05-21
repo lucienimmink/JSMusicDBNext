@@ -51,11 +51,9 @@ export class ConfigService {
 
     const current = document.getElementById("customStylesheet");
     if (current) {
-      console.log("remove child", current);
       document.getElementsByTagName("head")[0].removeChild(current);
     }
     document.getElementsByTagName("head")[0].appendChild(stylesheet);
-    console.log("add child", stylesheet);
     localStorage.setItem("theme", this._theme);
     localStorage.setItem("style", style);
     this.themeSource.next(this._theme);
@@ -93,12 +91,12 @@ export class ConfigService {
           this.checkTheme();
         }, this.COUNTERTIMER);
       }
-      this.checkTheme();
+      this.checkTheme(true);
     } else {
       this.setStyleSheet(this._theme);
     }
   }
-  checkTheme() {
+  checkTheme(firstRun: boolean = false) {
     const d: Date = new Date();
     if (d < this.stopDate && d > this.startDate && this._mode !== "dark") {
       this._mode = "dark";
@@ -108,6 +106,9 @@ export class ConfigService {
       this._mode !== "light"
     ) {
       this._mode = "light";
+      this.setStyleSheet(this._mode);
+    }
+    if (firstRun) {
       this.setStyleSheet(this._mode);
     }
   }
