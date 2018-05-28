@@ -381,15 +381,13 @@ export class PlayerComponent implements OnDestroy {
       .announceNowPlaying(this.track)
       .subscribe(data => {}, error => {}, () => {});
     if ("mediaSession" in navigator) {
-      this.albumartService
-        .getAlbumArt(this.track.trackArtist, this.track.album.name, "album")
-        .subscribe(data => {
-          // use mediaSession if available
+      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
+        url => {
           (navigator as any).mediaSession.metadata = new MediaMetadata({
             title: this.track.title,
             artist: this.track.trackArtist,
             album: this.track.album.name,
-            artwork: [{ src: `${data}`, sizes: "500x500", type: "image/png" }]
+            artwork: [{ src: url, sizes: "500x500", type: "image/png" }]
           });
 
           (navigator as any).mediaSession.setActionHandler("play", () => {
@@ -407,15 +405,15 @@ export class PlayerComponent implements OnDestroy {
           (navigator as any).mediaSession.setActionHandler("nexttrack", () => {
             this.next();
           });
-        });
+        }
+      );
     }
     if (this.isHostedApp) {
       this.systemMediaControls.playbackStatus =
         Windows.Media.MediaPlaybackStatus.playing;
       this.displayUpdater.type = Windows.Media.MediaPlaybackType.music;
-      this.albumartService
-        .getAlbumArt(this.track.trackArtist, this.track.album.name, "album")
-        .subscribe(data => {
+      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
+        url => {
           // update system transport
           try {
             if (this.displayUpdater !== undefined) {
@@ -423,10 +421,10 @@ export class PlayerComponent implements OnDestroy {
               this.displayUpdater.musicProperties.artist = this.track.trackArtist;
               this.displayUpdater.musicProperties.albumTitle = this.track.album.name;
               this.displayUpdater.musicProperties.title = this.track.title;
-              if (data) {
+              if (url) {
                 // tslint:disable-next-line:max-line-length
                 this.displayUpdater.thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
-                  new Windows.Foundation.Uri(data)
+                  new Windows.Foundation.Uri(url)
                 );
               }
               this.displayUpdater.update();
@@ -447,9 +445,9 @@ export class PlayerComponent implements OnDestroy {
           textNode.innerText = this.track.title;
           textNode = tileXml.getElementsByTagName("text")[1];
           textNode.innerText = this.track.trackArtist;
-          if (data) {
+          if (url) {
             const imageNode = tileXml.getElementsByTagName("image")[0];
-            imageNode.attributes[1].value = data;
+            imageNode.attributes[1].value = url;
           }
           const currentTime = new Date();
           const expiryTime = new Date(
@@ -460,7 +458,8 @@ export class PlayerComponent implements OnDestroy {
           Notifications.TileUpdateManager.createTileUpdaterForApplication(
             "App"
           ).update(tileNotification);
-        });
+        }
+      );
     }
     document
       .querySelector("mdb-player")
