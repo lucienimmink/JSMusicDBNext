@@ -2,7 +2,6 @@
 // Checkbox / Radio
 //
 .form-group {
-
     margin-bottom: 22px;
     .checkbox:first-of-type,
     .radio:first-of-type {
@@ -29,7 +28,7 @@
 }
 .checkbox,
 .radio {
-    margin: 22px 0;
+    margin: 22px 0 22px 10px;
     & input[type='checkbox'],
     & input[type='radio'] {
         width: 20px;
@@ -51,8 +50,8 @@
             height: 20px;
             width: 20px;
             position: absolute;
-            left: -5px;
             margin-top: 4px;
+            left: 0;
             cursor: pointer;
         }
     }

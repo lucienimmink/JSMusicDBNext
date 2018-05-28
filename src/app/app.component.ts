@@ -5,7 +5,8 @@ import {
   OnDestroy,
   ViewContainerRef
 } from "@angular/core";
-import { Observable ,  Subscription } from "rxjs";
+import { get } from "idb-keyval";
+import { Observable, Subscription } from "rxjs";
 
 import { musicdbcore } from "./org/arielext/musicdb/core";
 import { CollectionService } from "./utils/collection.service";
@@ -66,35 +67,55 @@ export class AppComponent implements OnInit, OnDestroy {
         this.isPlaying = playerData ? true : false; // stopped playlist return a null
       }
     );
+    if (this.booleanState("tracking-state")) {
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          this.configService
+            .getSunriseInfo(pos.coords.latitude, pos.coords.longitude)
+            .subscribe(data => {
+              // set this info back in the service
+              this.configService.startDate = new Date(data.results.sunset);
+              this.configService.stopDate = new Date(data.results.sunrise);
+              this.configService.stopDate.setDate(
+                this.configService.stopDate.getDate() + 1
+              );
+              this.configService.geoSource.next();
+              this.configService.applyTheme();
+            });
+        },
+        err => {
+          this.configService.startDate = new Date();
+          this.configService.startDate.setHours(21, 0, 0);
 
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        this.configService
-          .getSunriseInfo(pos.coords.latitude, pos.coords.longitude)
-          .subscribe(data => {
-            // set this info back in the service
-            this.configService.startDate = new Date(data.results.sunset);
-            this.configService.stopDate = new Date(data.results.sunrise);
-            this.configService.stopDate.setDate(
-              this.configService.stopDate.getDate() + 1
-            );
-            this.configService.geoSource.next();
-            this.configService.applyTheme();
-          });
-      },
-      err => {
-        this.configService.startDate = new Date();
-        this.configService.startDate.setHours(21, 0, 0);
+          this.configService.stopDate = new Date();
+          this.configService.stopDate.setDate(
+            this.configService.stopDate.getDate() + 1
+          );
+          this.configService.stopDate.setHours(7, 0, 0);
+          this.configService.geoSource.next();
+          this.configService.applyTheme();
+        }
+      );
+    } else {
+      this.configService.startDate = new Date();
+      this.configService.startDate.setHours(21, 0, 0);
 
-        this.configService.stopDate = new Date();
-        this.configService.stopDate.setDate(
-          this.configService.stopDate.getDate() + 1
-        );
-        this.configService.stopDate.setHours(7, 0, 0);
-        this.configService.geoSource.next();
-        this.configService.applyTheme();
-      }
-    );
+      this.configService.stopDate = new Date();
+      this.configService.stopDate.setDate(
+        this.configService.stopDate.getDate() + 1
+      );
+      this.configService.stopDate.setHours(7, 0, 0);
+      this.configService.geoSource.next();
+      this.configService.applyTheme();
+    }
+  }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();

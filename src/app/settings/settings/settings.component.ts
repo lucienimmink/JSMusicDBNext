@@ -52,6 +52,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public lastParsed: number = Number(localStorage.getItem("lastParsed"));
 
   public visualisation: boolean = this.booleanState("visualisation-state");
+  public tracking: boolean = this.booleanState("tracking-state");
   public preferVideo: boolean = this.booleanState("preferVideo-state");
 
   public startDate: Date;
@@ -204,6 +205,55 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   toggleSmallArt() {
     this.smallArt = !this.smallArt;
     localStorage.setItem("small-art", this.smallArt.toString());
+  }
+  toggleTracking() {
+    this.tracking = !this.tracking;
+    localStorage.setItem("tracking-state", this.tracking.toString());
+    if (this.tracking) {
+      this.getLocation();
+    } else {
+      this.configService.startDate = new Date();
+      this.configService.startDate.setHours(21, 0, 0);
+
+      this.configService.stopDate = new Date();
+      this.configService.stopDate.setDate(
+        this.configService.stopDate.getDate() + 1
+      );
+      this.configService.stopDate.setHours(7, 0, 0);
+      this.configService.geoSource.next();
+      this.configService.applyTheme();
+    }
+  }
+  private getLocation(): void {
+    navigator.geolocation.getCurrentPosition(pos => {
+      set("coords", pos);
+
+      if (pos) {
+        this.configService
+          .getSunriseInfo(pos.coords.latitude, pos.coords.longitude)
+          .subscribe(data => {
+            // set this info back in the service
+            this.configService.startDate = new Date(data.results.sunset);
+            this.configService.stopDate = new Date(data.results.sunrise);
+            this.configService.stopDate.setDate(
+              this.configService.stopDate.getDate() + 1
+            );
+            this.configService.geoSource.next();
+            this.configService.applyTheme();
+          });
+      } else {
+        this.configService.startDate = new Date();
+        this.configService.startDate.setHours(21, 0, 0);
+
+        this.configService.stopDate = new Date();
+        this.configService.stopDate.setDate(
+          this.configService.stopDate.getDate() + 1
+        );
+        this.configService.stopDate.setHours(7, 0, 0);
+        this.configService.geoSource.next();
+        this.configService.applyTheme();
+      }
+    });
   }
   scrobbleNow() {
     get("manual-scrobble-list").then(msl => {
