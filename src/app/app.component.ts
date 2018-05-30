@@ -5,7 +5,7 @@ import {
   OnDestroy,
   ViewContainerRef
 } from "@angular/core";
-import { get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 import { Observable, Subscription } from "rxjs";
 
 import { musicdbcore } from "./org/arielext/musicdb/core";
@@ -183,3 +183,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.playerService.stop();
   }
 }
+
+window.addEventListener("beforeinstallprompt", e => {
+  console.log("beforeinstall", e);
+  e.preventDefault();
+  window["deferredPrompt"] = e;
+});

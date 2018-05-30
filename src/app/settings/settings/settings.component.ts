@@ -9,7 +9,7 @@ import {
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { get, set } from "idb-keyval";
+import { get, set, del } from "idb-keyval";
 
 import { PathService } from "./../../utils/path.service";
 import { CoreService } from "./../../utils/core.service";
@@ -54,6 +54,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public visualisation: boolean = this.booleanState("visualisation-state");
   public tracking: boolean = this.booleanState("tracking-state");
   public preferVideo: boolean = this.booleanState("preferVideo-state");
+
+  public addToHomescreen: boolean = false;
 
   public startDate: Date;
   public stopDate: Date;
@@ -149,6 +151,10 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.startDate = this.configService.startDate;
       this.stopDate = this.configService.stopDate;
     });
+
+    if (window["deferredPrompt"]) {
+      this.addToHomescreen = true;
+    }
   }
 
   ngOnDestroy() {
@@ -332,5 +338,15 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   viewList() {
     this.router.navigate(["/scrobble-cache"]);
+  }
+
+  doAddToHomescreen() {
+    if (window["deferredPrompt"]) {
+      const e: any = window["deferredPrompt"];
+      e.prompt();
+      e.userChoice.then(result => {
+        del("defferedPrompt");
+      });
+    }
   }
 }

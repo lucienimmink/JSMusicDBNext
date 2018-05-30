@@ -4,7 +4,7 @@ import { catchError, map } from "rxjs/operators";
 import { AbstractImageRetriever } from "./../abstract-image-retriever";
 import { HttpClient, HttpParams } from "@angular/common/http";
 
-import { CustomEncoder } from "./CustomEncoder";
+import { CustomEncoder } from "./../CustomEncoder";
 
 export class LastfmImageRetriever implements AbstractImageRetriever {
   NOIMAGE: "global/images/no-cover.png";
