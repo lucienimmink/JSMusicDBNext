@@ -3,10 +3,10 @@ import { throwError as observableThrowError, Observable, Subject } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
 
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { set, get } from "idb-keyval";
 
-import { MyQueryEncoder } from "./my-query-encoder";
+import { CustomEncoder } from "./CustomEncoder";
 import Artist from "./../org/arielext/musicdb/models/Artist";
 import Track from "./../org/arielext/musicdb/models/Track";
 
@@ -44,22 +44,26 @@ export class LastfmService {
     const sk = localStorage.getItem("lastfm-token");
     const urlSearchParams: URLSearchParams = new URLSearchParams();
     const method: string = track.isLoved ? "track.love" : "track.unlove";
-    const params = {
-      method: method,
-      api_key: APIKEY,
-      api_sig: this.signTrack(
-        track.trackArtist,
-        track.album.name,
-        track.title,
-        null,
-        sk,
-        method
-      ),
-      artist: track.trackArtist,
-      album: track.album.name,
-      track: track.title,
-      sk: sk
-    };
+
+    let params = new HttpParams({ encoder: new CustomEncoder() })
+      .set("method", method)
+      .set("api_key", APIKEY)
+      .set(
+        "api_sig",
+        this.signTrack(
+          track.trackArtist,
+          track.album.name,
+          track.title,
+          null,
+          sk,
+          method
+        )
+      )
+      .set("artist", track.trackArtist)
+      .set("album", track.album.name)
+      .set("track", track.title)
+      .set("sk", sk);
+
     const headers = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded"
     });
@@ -75,15 +79,14 @@ export class LastfmService {
 
   getTrackInfo(track: Track, user: string): Observable<any> {
     if (track) {
-      const params = {
-        method: "track.getInfo",
-        artist: track.trackArtist,
-        album: track.album.name,
-        track: track.title,
-        api_key: APIKEY,
-        format: "json",
-        user: user
-      };
+      let params = new HttpParams({ encoder: new CustomEncoder() })
+        .set("method", "track.getInfo")
+        .set("artist", track.trackArtist)
+        .set("album", track.album.name)
+        .set("track", track.title)
+        .set("api_key", APIKEY)
+        .set("format", "json")
+        .set("user", user);
 
       const options = {
         params
@@ -98,14 +101,14 @@ export class LastfmService {
   }
 
   getTopArtists(user: string): Observable<any> {
-    const params = {
-      api_key: APIKEY,
-      format: "json",
-      limit: "50",
-      method: "user.gettopartists",
-      period: "1month",
-      user: user
-    };
+    let params = new HttpParams({ encoder: new CustomEncoder() })
+      .set("api_key", APIKEY)
+      .set("format", "json")
+      .set("limit", "50")
+      .set("method", "user.gettopartists")
+      .set("period", "1month")
+      .set("user", user);
+
     const options = {
       params
     };
@@ -116,14 +119,14 @@ export class LastfmService {
   }
 
   getSimilairArtists(artist: Artist): Observable<any> {
-    const params = {
-      api_key: APIKEY,
-      format: "json",
-      limit: "20",
-      autocorrect: "1",
-      method: "artist.getSimilar",
-      artist: artist.name
-    };
+    let params = new HttpParams({ encoder: new CustomEncoder() })
+      .set("api_key", APIKEY)
+      .set("format", "json")
+      .set("limit", "20")
+      .set("autocorrect", "1")
+      .set("method", "artist.getSimilar")
+      .set("artist", artist.name);
+
     const options = {
       params
     };
@@ -134,18 +137,19 @@ export class LastfmService {
   }
 
   authenticate(user: any): Observable<any> {
+    let params = new HttpParams({ encoder: new CustomEncoder() })
+      .set("api_key", APIKEY)
+      .set("api_sig", this.signAuthentication(user.user, user.password))
+      .set("format", "json")
+      .set("username", user.user)
+      .set("password", user.password);
+
     const headers = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded"
     });
 
     const options = {
-      params: {
-        api_key: APIKEY,
-        api_sig: this.signAuthentication(user.user, user.password),
-        format: "json",
-        username: user.user,
-        password: user.password
-      },
+      params: params,
       headers: headers
     };
     return this.http
@@ -176,24 +180,28 @@ export class LastfmService {
         "Content-Type": "application/x-www-form-urlencoded"
       });
 
-      const options = {
-        params: {
-          method: "track.updateNowPlaying",
-          api_key: APIKEY,
-          api_sig: this.signTrack(
+      let params = new HttpParams({ encoder: new CustomEncoder() })
+        .set("method", "track.updateNowPlaying")
+        .set("api_key", APIKEY)
+        .set(
+          "api_sig",
+          this.signTrack(
             track.trackArtist,
             track.album.name,
             track.title,
             timestamp,
             sk,
             "track.updateNowPlaying"
-          ),
-          artist: track.trackArtist,
-          album: track.album.name,
-          track: track.title,
-          timestamp: timestamp.toString(),
-          sk: sk
-        },
+          )
+        )
+        .set("artist", track.trackArtist)
+        .set("album", track.album.name)
+        .set("track", track.title)
+        .set("timestamp", timestamp.toString())
+        .set("sk", sk);
+
+      const options = {
+        params: params,
         headers: headers
       };
 
@@ -226,24 +234,28 @@ export class LastfmService {
           "Content-Type": "application/x-www-form-urlencoded"
         });
 
-        const options = {
-          params: {
-            method: "track.scrobble",
-            api_key: APIKEY,
-            api_sig: this.signTrack(
+        let params = new HttpParams({ encoder: new CustomEncoder() })
+          .set("method", "track.scrobble")
+          .set("api_key", APIKEY)
+          .set(
+            "api_sig",
+            this.signTrack(
               track.trackArtist,
               track.album.name,
               track.title,
               timestamp,
               sk,
               "track.scrobble"
-            ),
-            artist: track.trackArtist,
-            album: track.album.name,
-            track: track.title,
-            timestamp: timestamp.toString(),
-            sk: sk
-          },
+            )
+          )
+          .set("artist", track.trackArtist)
+          .set("album", track.album.name)
+          .set("track", track.title)
+          .set("timestamp", timestamp.toString())
+          .set("sk", sk);
+
+        const options = {
+          params: params,
           headers: headers
         };
         return this.http
@@ -325,25 +337,29 @@ export class LastfmService {
       "Content-Type": "application/x-www-form-urlencoded"
     });
 
+    let params = new HttpParams({ encoder: new CustomEncoder() })
+      .set("method", "track.scrobble")
+      .set("api_key", APIKEY)
+      .set(
+        "api_sig",
+        this.signTrack(
+          cachedTrack.artist,
+          cachedTrack.album,
+          cachedTrack.track,
+          cachedTrack.timestamp,
+          sk,
+          "track.scrobble"
+        )
+      )
+      .set("artist", cachedTrack.artist)
+      .set("album", cachedTrack.album)
+      .set("track", cachedTrack.track)
+      .set("timestamp", cachedTrack.timestamp.toString())
+      .set("sk", sk);
+
     return this.http
       .post("https://ws.audioscrobbler.com/2.0/", null, {
-        params: {
-          method: "track.scrobble",
-          api_key: APIKEY,
-          api_sig: this.signTrack(
-            cachedTrack.artist,
-            cachedTrack.album,
-            cachedTrack.track,
-            cachedTrack.timestamp,
-            sk,
-            "track.scrobble"
-          ),
-          artist: cachedTrack.artist,
-          album: cachedTrack.album,
-          track: cachedTrack.track,
-          timestamp: cachedTrack.timestamp.toString(),
-          sk: sk
-        },
+        params: params,
         headers: headers,
         responseType: "text"
       })
