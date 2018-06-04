@@ -183,9 +183,3 @@ export class AppComponent implements OnInit, OnDestroy {
     this.playerService.stop();
   }
 }
-
-window.addEventListener("beforeinstallprompt", e => {
-  console.log("beforeinstall", e);
-  e.preventDefault();
-  window["deferredPrompt"] = e;
-});
