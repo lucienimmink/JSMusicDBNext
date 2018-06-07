@@ -433,31 +433,7 @@ export class PlayerComponent implements OnDestroy {
             console.error("error occurred", e);
           }
           // update live tile
-          const Notifications = Windows.UI.Notifications;
-          Notifications.TileUpdateManager.createTileUpdaterForApplication(
-            "App"
-          ).clear();
-          // tslint:disable-next-line:max-line-length
-          const tileXml = Notifications.TileUpdateManager.getTemplateContent(
-            Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02
-          );
-          let textNode = tileXml.getElementsByTagName("text")[0];
-          textNode.innerText = this.track.title;
-          textNode = tileXml.getElementsByTagName("text")[1];
-          textNode.innerText = this.track.trackArtist;
-          if (url) {
-            const imageNode = tileXml.getElementsByTagName("image")[0];
-            imageNode.attributes[1].value = url;
-          }
-          const currentTime = new Date();
-          const expiryTime = new Date(
-            currentTime.getTime() + Number(this.track.duration)
-          );
-          const tileNotification = new Notifications.TileNotification(tileXml);
-          tileNotification.expirationTime = expiryTime;
-          Notifications.TileUpdateManager.createTileUpdaterForApplication(
-            "App"
-          ).update(tileNotification);
+          this.updateWinTile(url);
         }
       );
     }
@@ -470,6 +446,84 @@ export class PlayerComponent implements OnDestroy {
       this.audioCtx.resume();
     }
   }
+  private updateWinTile(url: {}) {
+    const Notifications = Windows.UI.Notifications;
+    Notifications.TileUpdateManager.createTileUpdaterForApplication(
+      "App"
+    ).clear();
+    // tslint:disable-next-line:max-line-length
+    const tileXml = Notifications.TileUpdateManager.getTemplateContent(
+      Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02
+    );
+    let textNode = tileXml.getElementsByTagName("text")[0];
+    textNode.innerText = this.track.title;
+    textNode = tileXml.getElementsByTagName("text")[1];
+    textNode.innerText = this.track.trackArtist;
+    if (url) {
+      const imageNode = tileXml.getElementsByTagName("image")[0];
+      imageNode.attributes[1].value = url;
+    }
+    const currentTime = new Date();
+    const expiryTime = new Date(
+      currentTime.getTime() + Number(this.track.duration)
+    );
+    let node = tileXml.importNode(
+      this.getTileContent(url, "tileSquare310x310ImageAndText02")
+        .getElementsByTagName("binding")
+        .item(0),
+      true
+    );
+    tileXml
+      .getElementsByTagName("visual")
+      .item(0)
+      .appendChild(node);
+    node = tileXml.importNode(
+      this.getTileContent(url, "tileWide310x150PeekImage02")
+        .getElementsByTagName("binding")
+        .item(0),
+      true
+    );
+    tileXml
+      .getElementsByTagName("visual")
+      .item(0)
+      .appendChild(node);
+    node = tileXml.importNode(
+      this.getTileContent(url, "tileSquare71x71Image")
+        .getElementsByTagName("binding")
+        .item(0),
+      true
+    );
+    tileXml
+      .getElementsByTagName("visual")
+      .item(0)
+      .appendChild(node);
+    const tileNotification = new Notifications.TileNotification(tileXml);
+    tileNotification.expirationTime = expiryTime;
+    Notifications.TileUpdateManager.createTileUpdaterForApplication(
+      "App"
+    ).update(tileNotification);
+  }
+
+  private getTileContent(url: {}, tiletype: string): any {
+    const Notifications = Windows.UI.Notifications;
+    const tileXml = Notifications.TileUpdateManager.getTemplateContent(
+      Notifications.TileTemplateType[tiletype]
+    );
+    try {
+      let textNode = tileXml.getElementsByTagName("text")[0];
+      textNode.innerText = this.track.title;
+    } catch (e) {}
+    try {
+      let textNode = tileXml.getElementsByTagName("text")[1];
+      textNode.innerText = this.track.trackArtist;
+    } catch (e) {}
+    if (url) {
+      const imageNode = tileXml.getElementsByTagName("image")[0];
+      imageNode.attributes[1].value = url;
+    }
+    return tileXml;
+  }
+
   onstop() {
     document
       .querySelector("mdb-player")
