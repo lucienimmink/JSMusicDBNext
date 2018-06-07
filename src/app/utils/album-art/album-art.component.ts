@@ -85,6 +85,10 @@ export class AlbumArtComponent implements OnInit, OnChanges {
           // tslint:disable-next-line:no-shadowed-variable
           data => {
             data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
+            // TODO: perhaps we'd like to store the complete object in the future to have the ability to load smaller images over a metered line
+            if (data instanceof Object) {
+              data = this.NOIMAGE;
+            }
             if (data && data !== "global/images/no-cover.png") {
               this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
             } else {
@@ -103,7 +107,13 @@ export class AlbumArtComponent implements OnInit, OnChanges {
         );
     } else {
       data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
-      this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
+      // TODO: perhaps we'd like to store the complete object in the future to have the ability to load smaller images over a metered line
+      if (data instanceof Object) {
+        data = this.NOIMAGE;
+        this.albumart.url = this.NOIMAGE;
+      } else {
+        this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
+      }
       const item = {
         _id: `art-${this.searchArtist}-${this.searchAlbum}`,
         url: data || this.NOIMAGE
