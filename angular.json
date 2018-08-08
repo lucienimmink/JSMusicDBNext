@@ -19,7 +19,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules"]
             },
-            "assets": ["src/global", "src/manifest.json"],
+            "assets": ["src/global", "src/manifest.webmanifest"],
             "styles": ["src/sass/base.scss", "src/sass/animations.scss"],
             "scripts": []
           },
