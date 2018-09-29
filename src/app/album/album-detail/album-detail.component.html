@@ -21,7 +21,8 @@
     <div class="row">
       <div class="col">
         <ol class="list-group list-tracks" *ngFor="let disc of album.sortedDiscs">
-          <li class="list-items-row disc-row header-seperator" *ngIf="album.sortedDiscs.length > 1" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc {{disc[0].disc}}</li>
+          <li class="list-items-row disc-row header-seperator" *ngIf="album.sortedDiscs.length > 1" [ngClass]="{'first-disc': disc[0].disc == 1}">Disc
+            {{disc[0].disc}}</li>
           <li class="list-group-item" *ngFor="let track of disc" [ngClass]="{'active': track.isPlaying || track.isPaused, 'showActions': track.showActions, 'hq': track.type === 'flac'}">
             <div class="details row" (click)="onSelect(track, $event)">
               <div class="col-1">
@@ -42,9 +43,15 @@
               </div>
               <div class="col-2 col-sm-1 text-right">
                 {{track.duration | timeFormat }}
-                <span *ngIf="album.type === 'mixed'">
-                  <br/>
+                <span *ngIf="album.type === 'mixed' && !track.isPlaying">
+                  <br />
                   <span class="small color-type-secondary">{{track.type}}</span>
+                </span>
+                <span *ngIf="track.isPlaying">
+                  <br />
+                  <span class="small color-type-secondary">
+                    {{track.position | timeFormat}} &nbsp;
+                  </span>
                 </span>
               </div>
             </div>

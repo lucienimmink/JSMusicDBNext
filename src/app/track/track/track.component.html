@@ -14,8 +14,13 @@
     </div>
     <div class="col text-right">
       {{track.duration | timeFormat }}
-      <br/>
-      <span class="small color-type-secondary">{{track.type}}</span>
+      <br />
+      <span *ngIf="!track.isPlaying">
+        <span class="small color-type-secondary">{{track.type}}</span>
+      </span>
+      <span *ngIf="track.isPlaying">
+        <span class="small color-type-secondary">{{track.position | timeFormat}} &nbsp;</span>
+      </span>
     </div>
   </li>
 </ol>
