@@ -1,0 +1,7 @@
+{
+  "extends": "@isaac.frontend/stylelint-config-scss",
+  "ignoreFiles": ["**/**.svg", "**/**.xml"],
+  "rules": {
+    "indentation": 2
+  }
+}
