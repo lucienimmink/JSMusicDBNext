@@ -22,7 +22,7 @@ export default class Artist {
     });
     return fullname;
   };
-  url = () => `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.albumArtist || this.name)}/`;
+  url = () => `/letter/{escapedLetter}/artist/${encodeURIComponent(this.albumArtist || this.name)}/`;
   sortAlbumsBy(sortkey = 'name', direction = 'asc') {
     this.albums.sort((a, b) => {
       if (sortkey.indexOf('.') !== -1) {

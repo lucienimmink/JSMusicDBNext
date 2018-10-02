@@ -8,6 +8,7 @@
         <header>
           <letter-panel v-for="letter in collection.sortedLetters" v-bind:key="letter.letter" :letter="letter"/>
         </header>
+        <router-view :key="$route.path"></router-view>
       </div>
     </transition>
   </div>

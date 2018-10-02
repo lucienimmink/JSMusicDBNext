@@ -1,7 +1,7 @@
 <template>
-  <a :href="letter.url()" :class="{'active': (activeLetter) ? letter.letter === activeLetter.letter: false}" @click.prevent="selectLetter()">
+  <router-link :to="letter.url()" :class="{'active': (activeLetter) ? letter.letter === activeLetter.letter: false}">
     {{letter.letter}}
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -13,12 +13,7 @@ export default {
     ...mapGetters('collection', {collection: 'collection', loading: 'loading'}),
     ...mapGetters('letter', { activeLetter: 'activeLetter'})
   },
-  props: [ 'letter' ],
-  methods: {
-    selectLetter() {
-      this.$store.dispatch("letter/setActive", this.letter);
-    }
-  }
+  props: [ 'letter' ]
 }
 </script>
 

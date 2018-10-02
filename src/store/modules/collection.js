@@ -7,7 +7,9 @@ const state = {
 };
 const getters = {
   collection: s => s.collection,
-  loading: s => s.loading
+  loading: s => s.loading,
+  getActiveLetterById: s => id => s.collection.letters[id],
+  getActiveArtistById: s => id => s.collection.artists[id.toUpperCase()]
 };
 const actions = {
   get({ commit }) {
