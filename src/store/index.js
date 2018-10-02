@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import collection from '@/store/modules/collection';
-import letter from '@/store/modules/letter';
+import collection from './modules/collection';
+import letter from './modules/letter';
 
 Vue.use(Vuex);
 

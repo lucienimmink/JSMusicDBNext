@@ -1,5 +1,5 @@
-import rest from '@/rest/gateway';
-import core from '@/shared/js/db';
+import rest from './../../rest/gateway';
+import core from './../../shared/js/db';
 
 const state = {
   collection: {},
@@ -21,8 +21,8 @@ const actions = {
         const parsedCollection = core.getCollection(collection);
         commit('setCollection', parsedCollection);
       })
-      .catch((e) => {
-        console.log('error getting collection', e);
+      .catch(() => {
+        // console.log('error getting collection', e);
       });
   }
 };
