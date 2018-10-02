@@ -6,7 +6,11 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  created() {
+      // get all data
+      this.$store.dispatch("collection/get");
+  }
 }
 </script>
 
