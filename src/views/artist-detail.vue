@@ -1,7 +1,7 @@
 <template>
   <div>
     {{$route.params.artistId}} <br />
-    {{getActiveArtist($route.params.artistId)}}
+    {{getActiveArtist($route.params.artistId).albums.length}}
   </div>
 </template>
 

@@ -33,7 +33,7 @@ const parseLine = (line) => {
   if (letter.letter) {
     const coreLetter = instanceIfPresent(letter.letter, letters, letter, () => true);
     const artist = new Artist(line);
-    const coreArtist = instanceIfPresent(artist.sortName, artists, artist, () => {
+    const coreArtist = instanceIfPresent(artist.name.toUpperCase(), artists, artist, () => {
       coreLetter.artists.push(artist);
       totals.artists += 1;
     });
