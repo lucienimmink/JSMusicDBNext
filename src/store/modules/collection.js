@@ -6,11 +6,12 @@ const state = {
   loading: true
 };
 const getters = {
-  getCollection: s => s.collection,
+  collection: s => s.collection,
   loading: s => s.loading
 };
 const actions = {
   get({ commit }) {
+    commit('setCollection', {});
     rest
       .getCollection()
       .then((collection) => {

@@ -35,12 +35,10 @@ const parseLine = (line) => {
     const artist = new Artist(line);
     const coreArtist = instanceIfPresent(artist.sortName, artists, artist, () => {
       coreLetter.artists.push(artist);
-      artist.letter = letter;
       totals.artists += 1;
     });
     const album = new Album(line);
     const coreAlbum = instanceIfPresent(`${artist.sortName}|${album.sortName}`, albums, album, () => {
-      album.artist = coreArtist;
       coreArtist.albums.push(album);
       coreArtist.sortAndReturnAlbumsBy('year', 'asc');
       totals.albums += 1;
@@ -51,14 +49,12 @@ const parseLine = (line) => {
     });
     const track = new Track(line);
     if (coreAlbum.type && coreAlbum.type !== track.type) {
-      album.type = 'mixed';
+      coreAlbum.type = 'mixed';
     } else {
-      album.type = track.type;
+      coreAlbum.type = track.type;
     }
     totals.tracks += 1;
     totals.playingtime += track.duration;
-    track.artist = coreArtist;
-    track.abum = coreAlbum;
     coreAlbum.tracks.push(track);
     const { disc } = track;
     coreAlbum.discs[`disc-${disc}`] = coreAlbum.discs[disc] || [];
