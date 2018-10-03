@@ -2,7 +2,8 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
-import 'primer-base/index.scss';
+import AtComponents from 'at-ui';
+import 'at-ui-style/css/at.min.css';
 
 import App from '@/app.vue';
 import store from '@/store';
@@ -30,6 +31,7 @@ const router = new VueRouter({
 
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
+Vue.use(AtComponents);
 
 new Vue({
   render: h => h(App),

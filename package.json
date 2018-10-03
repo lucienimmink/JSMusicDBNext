@@ -17,7 +17,10 @@
     "url": "git+https://github.com/lucienimmink/JSMusicDBNext"
   },
   "dependencies": {
+    "at-ui": "^1.3.3",
+    "at-ui-style": "^1.5.1",
     "axios": "^0.18.0",
+    "date-fns": "^1.29.0",
     "es6-promise": "^4.2.5",
     "idb-keyval": "^3.1.0",
     "primer-base": "^1.7.4",

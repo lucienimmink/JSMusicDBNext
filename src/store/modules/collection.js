@@ -9,7 +9,8 @@ const getters = {
   collection: s => s.collection,
   loading: s => s.loading,
   getActiveLetterById: s => id => s.collection.letters[id],
-  getActiveArtistById: s => id => s.collection.artists[id.toUpperCase()]
+  getActiveArtistById: s => id => s.collection.artists[id],
+  getActiveAlbumById: s => id => s.collection.albums[id]
 };
 const actions = {
   get({ commit }) {

@@ -6,9 +6,11 @@
     <transition>
       <div v-if="!loading && collection.letters">
         <header>
-          <letter-panel v-for="letter in collection.sortedLetters" v-bind:key="letter.letter" :letter="letter"/>
+          <at-menu mode="horizontal" router>
+            <at-menu-item v-for="letter in collection.sortedLetters" v-bind:key="letter.letter" :to="{name: 'letter-detail', params: { letterId: letter.letter }}">{{letter.letter}}</at-menu-item>
+          </at-menu>
         </header>
-        <router-view :key="$route.path"></router-view>
+        <router-view :key="$route.path" class="view"></router-view>
       </div>
     </transition>
   </div>
@@ -18,7 +20,6 @@
 import { mapGetters } from 'vuex';
 
 import styles from '@/shared/js/styles';
-import letterPanel from '@/shared/components/letters/letter-panel.vue';
 
 export default {
   name: 'app',
@@ -27,23 +28,18 @@ export default {
   },
   computed: {
     ...mapGetters('collection', {collection: 'collection', loading: 'loading'})
-  },
-  components: {
-    letterPanel
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-@import './styles/colors.css';
-.app {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-size: 100%;
-}
-header {
-  display: flex;
-  height: 50px;
-  width: 100%;
-  background: var(--primary);
-}
+  header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+  }
+  .view {
+    margin-top: 50px;
+  }
 </style>
