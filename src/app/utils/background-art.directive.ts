@@ -2,9 +2,9 @@ import { Directive, ElementRef, Input } from "@angular/core";
 import { set, get } from "idb-keyval";
 import { BackgroundArtService } from "./background-art.service";
 
-import { Observable, Subscription } from "rxjs";
-import "rxjs/add/observable/fromEvent";
-import "rxjs/add/operator/debounceTime";
+// import { Observable, Subscription } from "rxjs";
+// import "rxjs/add/observable/fromEvent";
+// import "rxjs/add/operator/debounceTime";
 
 @Directive({
   // tslint:disable-next-line:directive-selector
@@ -24,7 +24,8 @@ export class BackgroundArtDirective {
   private errorClass = "error";
 
   // tslint:disable-next-line:no-input-rename
-  @Input("mdb-BackgroundArt") media: any;
+  @Input("mdb-BackgroundArt")
+  media: any;
 
   constructor(
     el: ElementRef,

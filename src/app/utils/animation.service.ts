@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const ANIMATIONDURATION: Number = 0.15 * 1000;
+const ANIMATIONDURATION: number = 0.15 * 1000;
 
 @Injectable()
 export class AnimationService {
