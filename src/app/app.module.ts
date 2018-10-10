@@ -8,6 +8,7 @@ import { FormsModule } from "@angular/forms";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { YoutubePlayerModule } from "ngx-youtube-player";
 import { TooltipModule, ModalModule } from "ngx-bootstrap";
+import { ColorPickerModule } from "ngx-color-picker";
 
 import { environment } from "../environments/environment";
 
@@ -75,6 +76,7 @@ import { PlayerComponent } from "./player/player/player.component";
     FormsModule,
     routing,
     YoutubePlayerModule,
+    ColorPickerModule,
     TooltipModule.forRoot(),
     // , ModalModule.forRoot()
     ServiceWorkerModule.register("/ngsw-worker.js", {

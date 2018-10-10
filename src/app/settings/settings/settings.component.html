@@ -54,8 +54,8 @@
         <div class="settings-page-p">
           <span class="">Save playliststate: </span>
           <div class="btn-group">
-            <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': savePlaylistState, 'theme-alt': mode === 'dark'}"
-              (click)="toggleSavePlaylistState()">
+            <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false"
+              [ngClass]="{'active': savePlaylistState, 'theme-alt': mode === 'dark'}" (click)="toggleSavePlaylistState()">
               <span class="state-label state-label-on">On</span>
               <span class="state-label state-label-off">Off</span>
             </button>
@@ -64,13 +64,14 @@
         <div class="settings-page-p" *ngIf="lastfmusername && lastfmusername.length > 0 && lastfmusername !== 'mdb-skipped'">
           <span class="">Manual scrobbling: </span>
           <div class="btn-group">
-            <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': manualScrobbling, 'theme-alt': mode === 'dark'}"
-              (click)="toggleManualScrobbling()">
+            <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false"
+              [ngClass]="{'active': manualScrobbling, 'theme-alt': mode === 'dark'}" (click)="toggleManualScrobbling()">
               <span class="state-label state-label-on">On</span>
               <span class="state-label state-label-off">Off</span>
             </button>
           </div>
-          <div class="small" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">items in list: {{manualScrobblingList.length}}
+          <div class="small" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">items in list:
+            {{manualScrobblingList.length}}
             <br>
             <a (click)="scrobbleNow()">Scrobble now</a>
             <br />
@@ -80,8 +81,8 @@
         <div class="settings-page-p">
           <span class="">Continues play: </span>
           <div class="btn-group">
-            <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': isContinuesplay, 'theme-alt': mode === 'dark'}"
-              (click)="toggleContinuesPlay()">
+            <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false"
+              [ngClass]="{'active': isContinuesplay, 'theme-alt': mode === 'dark'}" (click)="toggleContinuesPlay()">
               <span class="state-label state-label-on">On</span>
               <span class="state-label state-label-off">Off</span>
             </button>
@@ -97,6 +98,10 @@
             <div class="form-group" *ngIf="addToHomescreen">
               <span class="">Add a link to your homescreen/desktop: </span>&nbsp;
               <button (click)="doAddToHomescreen()" class="btn btn-primary">add</button>
+            </div>
+            <div class="form-group">
+              <span>Pick custom accent colour:</span> <input [(colorPicker)]="color" [style.background]="color"
+                cpOutputFormat="rgba" class="color-picker-input" (colorPickerChange)="changeAccentColor(color)" />
             </div>
             <div class="form-group">
               <div class="radio">
@@ -118,7 +123,8 @@
                   <input type="radio" name='theme' value="auto" [(ngModel)]="settings.theme" #name="ngModel" name="theme">
                   <span>Auto</span>
                   <span class="small"> theme</span>
-                  <span class="small"> (Dark mode between {{startDate | date: 'mediumTime'}} and {{stopDate | date: 'mediumTime'}})</span>
+                  <span class="small"> (Dark mode between {{startDate | date: 'mediumTime'}} and {{stopDate | date:
+                    'mediumTime'}})</span>
                 </label>
               </div>
             </div>
@@ -126,8 +132,8 @@
               <span class="">Track location for more accurate theme switching: </span>
               <div class="btn-group">
                 &nbsp;
-                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': tracking, 'theme-alt': mode === 'dark'}"
-                  (click)="toggleTracking()">
+                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off"
+                  aria-pressed="false" [ngClass]="{'active': tracking, 'theme-alt': mode === 'dark'}" (click)="toggleTracking()">
                   <span class="state-label state-label-on">Yes</span>
                   <span class="state-label state-label-off">No</span>
                 </button>
@@ -137,8 +143,8 @@
               <span class="">Show visualisation on now playing screen: </span>
               <div class="btn-group">
                 &nbsp;
-                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': visualisation, 'theme-alt': mode === 'dark'}"
-                  (click)="toggleVisualisation()">
+                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off"
+                  aria-pressed="false" [ngClass]="{'active': visualisation, 'theme-alt': mode === 'dark'}" (click)="toggleVisualisation()">
                   <span class="state-label state-label-on">Yes</span>
                   <span class="state-label state-label-off">No</span>
                 </button>
@@ -148,8 +154,8 @@
               <span class="">Show smaller album-art on now playing screen: </span>
               <div class="btn-group">
                 &nbsp;
-                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': smallArt, 'theme-alt': mode === 'dark'}"
-                  (click)="toggleSmallArt()">
+                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off"
+                  aria-pressed="false" [ngClass]="{'active': smallArt, 'theme-alt': mode === 'dark'}" (click)="toggleSmallArt()">
                   <span class="state-label state-label-on">Yes</span>
                   <span class="state-label state-label-off">No</span>
                 </button>
@@ -159,8 +165,8 @@
               <span class="">Prefer video if available: </span>
               <div class="btn-group">
                 &nbsp;
-                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off" aria-pressed="false" [ngClass]="{'active': preferVideo, 'theme-alt': mode === 'dark'}"
-                  (click)="togglePreferVideo()">
+                <button type="button" data-toggle="button" class="btn btn-toggle-switch" autocomplete="off"
+                  aria-pressed="false" [ngClass]="{'active': preferVideo, 'theme-alt': mode === 'dark'}" (click)="togglePreferVideo()">
                   <span class="state-label state-label-on">On</span>
                   <span class="state-label state-label-off">Off</span>
                 </button>

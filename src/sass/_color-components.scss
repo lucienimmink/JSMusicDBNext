@@ -21,13 +21,16 @@
   }
 }
 .btn-link {
-  color: var(--primary) !important;
+  color: var(--primary);
 }
 .btn-link:hover {
-  color: lighten(theme-color("primary"), 10%);
+  color: var(--lighten);
+}
+.btn-primary {
+  background-color: var(--primary);
 }
 .btn-primary:hover {
-  background-color: lighten(theme-color("primary"), 10%);
+  background-color: var(--lighten);
 }
 
 // _headers
@@ -138,7 +141,7 @@ h4,
       &:focus,
       &.active {
         color: gray("100");
-        background: darken(theme-color("primary"), 10%);
+        background: var(--darken);
       }
     }
   }
@@ -248,7 +251,7 @@ a,
 .clickable {
   color: var(--primary) !important;
   &:hover {
-    color: lighten(theme-color("primary"), 10%) !important;
+    color: var(--lighten) !important;
   }
 }
 

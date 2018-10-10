@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { get, set } from "idb-keyval";
 import { Observable, Subscription } from "rxjs";
+import { tinycolor } from "@thebespokepixel/es-tinycolor";
 
 import { musicdbcore } from "./org/arielext/musicdb/core";
 import { CollectionService } from "./utils/collection.service";
@@ -20,6 +21,12 @@ import { LastfmService } from "./utils/lastfm.service";
 import { LoginService } from "./login/login.service";
 import { AnimationService } from "./utils/animation.service";
 import { ConfigService } from "./utils/config.service";
+import {
+  getColorsFromRGB,
+  addCustomCss,
+  getAccentColor
+} from "./utils/colorutil";
+import { ColorService } from "./utils/color.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -33,7 +40,8 @@ import { ConfigService } from "./utils/config.service";
     LastfmService,
     AnimationService,
     ConfigService,
-    PlaylistService
+    PlaylistService,
+    ColorService
   ]
 })
 export class AppComponent implements OnInit, OnDestroy {
@@ -111,41 +119,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.configService.geoSource.next();
       this.configService.applyTheme();
     }
-    if (this.isHostedApp) {
-      const uiSettings = new Windows.UI.ViewManagement.UISettings();
-      const rgba = uiSettings.getColorValue(
-        Windows.UI.ViewManagement.UIColorType.accent
-      );
-      set("customColor", rgba);
-      const accentCSSOverrideNode: HTMLElement = document.createElement(
-        "style"
-      );
-      accentCSSOverrideNode.setAttribute("type", "text/css");
-      accentCSSOverrideNode.textContent = `{
-        :root {
-          --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.a}, ${rgba.a});
-        }
-      }`;
-      document.querySelector("body").appendChild(accentCSSOverrideNode);
-    } else {
-      const rgba: any = {
-        r: 255,
-        g: 0,
-        b: 255,
-        a: 1
-      };
-      set("customColor", rgba);
-      const accentCSSOverrideNode: HTMLElement = document.createElement(
-        "style"
-      );
-      accentCSSOverrideNode.setAttribute("type", "text/css");
-      accentCSSOverrideNode.textContent = `
-      @charset "UTF-8";
-      :root {
-        --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a});
-      }`;
-      document.querySelector("body").appendChild(accentCSSOverrideNode);
-    }
+    getAccentColor().then(rgba => {
+      if (rgba) {
+        const colors = getColorsFromRGB(rgba);
+        addCustomCss(colors);
+      }
+    });
   }
 
   private booleanState(key: string): boolean {

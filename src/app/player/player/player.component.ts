@@ -16,6 +16,8 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { AnimationService } from "./../../utils/animation.service";
 import { PathService } from "./../../utils/path.service";
 import { AlbumArtService } from "./../../utils/album-art.service";
+import { getAccentColor } from "./../../utils/colorutil";
+import { ColorService } from "../../utils/color.service";
 import { Playlist } from "./../../playlist/playlist";
 
 @Component({
@@ -30,6 +32,7 @@ export class PlayerComponent implements OnDestroy {
   private subscription3: Subscription;
   private subscription4: Subscription;
   private subscription5: Subscription;
+  private subscription6: Subscription;
   private playlist: Playlist;
   private trackIndex: any;
   private track: Track;
@@ -62,7 +65,8 @@ export class PlayerComponent implements OnDestroy {
     private lastFMService: LastfmService,
     private coreService: CoreService,
     private animationService: AnimationService,
-    private albumartService: AlbumArtService
+    private albumartService: AlbumArtService,
+    private colorService: ColorService
   ) {
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
@@ -131,8 +135,9 @@ export class PlayerComponent implements OnDestroy {
         this.showVolumeWindow = false;
       }
     });
-    get("customColor").then(color => {
-      this.rgba = color;
+    getAccentColor().then(rgba => {
+      console.log("rgba set to ", rgba);
+      this.rgba = rgba;
     });
     if (this.isHostedApp) {
       this.systemMediaControls = Windows.Media.SystemMediaTransportControls.getForCurrentView();
@@ -234,6 +239,11 @@ export class PlayerComponent implements OnDestroy {
         }
       };
     }
+    console.log(this.colorService, this.colorService.color$);
+    this.subscription6 = this.colorService.color$.subscribe(rgba => {
+      console.log("rgba updated to", rgba);
+      this.rgba = rgba;
+    });
   }
 
   setTrack(position: any) {
@@ -311,6 +321,9 @@ export class PlayerComponent implements OnDestroy {
     this.subscription.unsubscribe(); // prevent memory leakage
     this.subscription2.unsubscribe(); // prevent memory leakage
     this.subscription3.unsubscribe(); // prevent memory leakage
+    this.subscription4.unsubscribe();
+    this.subscription5.unsubscribe();
+    this.subscription6.unsubscribe();
     this.mediaObject.removeEventListener("ended");
     this.mediaObject.removeEventListener("timeupdate");
     this.mediaObject.removeEventListener("play");

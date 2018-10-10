@@ -17,7 +17,7 @@
       &:focus,
       &.active {
         color: gray("100");
-        background: darken(theme-color("primary"), 10%);
+        background: var(--darken);
       }
     }
   }

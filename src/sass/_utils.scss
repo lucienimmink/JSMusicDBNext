@@ -6,6 +6,6 @@ a,
   cursor: pointer;
   color: var(--primary) !important;
   &:hover {
-    color: darken(theme-color("primary"), 10%) !important;
+    color: var(--darken) !important;
   }
 }

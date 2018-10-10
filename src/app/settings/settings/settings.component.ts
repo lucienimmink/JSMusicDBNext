@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { Subscription } from "rxjs";
+import { Subscription, Subject } from "rxjs";
 import { get, set, del } from "idb-keyval";
 
 import { PathService } from "./../../utils/path.service";
@@ -18,6 +18,13 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { ConfigService } from "./../../utils/config.service";
+import getColors, {
+  saveColors,
+  addCustomCss,
+  getAccentColor,
+  convertRGBtoString
+} from "./../../utils/colorutil";
+import { ColorService } from "../../utils/color.service";
 import { Settings } from "./../settings";
 
 declare function require(moduleName: string): any;
@@ -66,6 +73,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public mode: string;
 
   public isVisualCapable: boolean = navigator.userAgent.indexOf("Mobi") === -1;
+  public color: string;
 
   constructor(
     private pathService: PathService,
@@ -73,7 +81,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private lastFMService: LastfmService,
     private collectionService: CollectionService,
     private router: Router,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private colorService: ColorService
   ) {
     this.settings = new Settings();
     this.core = this.coreService.getCore();
@@ -104,6 +113,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
+    });
+    getAccentColor().then(rgba => {
+      this.color = convertRGBtoString(rgba);
     });
   }
 
@@ -348,5 +360,12 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
         del("defferedPrompt");
       });
     }
+  }
+
+  changeAccentColor(color: string) {
+    const colors = getColors(color);
+    saveColors(colors);
+    addCustomCss(colors);
+    this.colorService.setColor(colors.rgba);
   }
 }
