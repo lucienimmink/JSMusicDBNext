@@ -14,11 +14,14 @@
     }
   }
   &.active {
-    background-color: theme-color("primary");
+    background-color: var(--primary);
     &:hover {
-      background-color: theme-color("primary");
+      background-color: var(--primary);
     }
   }
+}
+.btn-link {
+  color: var(--primary) !important;
 }
 .btn-link:hover {
   color: lighten(theme-color("primary"), 10%);
@@ -31,7 +34,7 @@
 h3,
 h4,
 .header-seperator {
-  border-bottom: 1px solid theme-color("primary");
+  border-bottom: 1px solid var(--primary);
   background: gray("100");
   color: gray("900");
   &:hover {
@@ -57,7 +60,7 @@ h4,
   li {
     border-bottom: 1px solid gray("300");
     .now-playing {
-      color: theme-color("primary");
+      color: var(--primary);
     }
     &:hover {
       background: gray("200");
@@ -77,10 +80,10 @@ h4,
       background: gray("200");
     }
     &.header-seperator {
-      border-bottom-color: theme-color("primary");
+      border-bottom-color: var(--primary);
     }
     &.active {
-      background-color: theme-color("primary");
+      background-color: var(--primary);
     }
   }
 }
@@ -105,11 +108,11 @@ h4,
       color: gray("900") !important;
     }
     &:hover {
-      border-left-color: theme-color("primary");
+      border-left-color: var(--primary);
     }
     &.active {
       background-color: gray("300");
-      border-left-color: theme-color("primary");
+      border-left-color: var(--primary);
     }
     &:focus,
     &:active {
@@ -117,18 +120,18 @@ h4,
     }
   }
   .side-nav__content .search-bar input {
-    color: theme-color("primary");
+    color: var(--primary);
     background: gray("100");
-    border: 1px solid theme-color("primary");
+    border: 1px solid var(--primary);
   }
   .side-nav__content .search-bar .input-group-addon {
-    color: theme-color("primary");
+    color: var(--primary);
   }
 }
 
 // navs
 .nav-letters {
-  background: theme-color("primary");
+  background: var(--primary);
   .nav-item {
     a {
       &:hover,
@@ -160,19 +163,19 @@ h4,
   }
 }
 #nowPlaying .icons button.active {
-  background: theme-color("primary");
+  background: var(--primary);
 }
 #nowPlaying .icons button:active {
   background: gray("100");
-  color: theme-color("primary");
+  color: var(--primary);
 }
 #nowPlaying .progress {
   .progress-bar {
-    background-color: theme-color("primary");
+    background-color: var(--primary);
   }
 }
 #position-indicator {
-  border-color: theme-color("primary");
+  border-color: var(--primary);
   background: gray("100");
 }
 
@@ -187,16 +190,16 @@ body {
   background: gray("200");
 }
 .player .progress .progress-bar {
-  background-color: theme-color("primary");
+  background-color: var(--primary);
 }
 .player {
   .row .btn.active {
-    background: theme-color("primary");
+    background: var(--primary);
     color: gray("100") !important;
   }
   .row .btn:active {
     background: gray("100");
-    color: theme-color("primary");
+    color: var(--primary);
   }
 }
 .volume-control {
@@ -216,7 +219,7 @@ body {
 .progress-bar {
   .progress-circle {
     &::after {
-      color: theme-color("primary");
+      color: var(--primary);
     }
   }
 }
@@ -243,7 +246,7 @@ body {
 // utils
 a,
 .clickable {
-  color: theme-color("primary") !important;
+  color: var(--primary) !important;
   &:hover {
     color: lighten(theme-color("primary"), 10%) !important;
   }
@@ -254,5 +257,5 @@ a,
   background-color: gray("400");
 }
 ::-webkit-scrollbar-thumb {
-  background-color: theme-color("primary");
+  background-color: var(--primary);
 }

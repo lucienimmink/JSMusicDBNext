@@ -229,12 +229,12 @@
   margin: -1px 0 0 6px;
 }
 #nowPlaying .icons button.active {
-  background: theme-color("primary");
+  background: var(--primary);
   color: $white;
 }
 #nowPlaying .icons button:active {
   background: gray("100");
-  color: theme-color("primary");
+  color: var(--primary);
 }
 #nowPlaying .icons .btn-updown {
   margin-top: -20px;
@@ -264,7 +264,7 @@
   position: relative;
   height: 6px;
   .progress-bar {
-    background-color: theme-color("primary");
+    background-color: var(--primary);
   }
 }
 #nowPlaying .time {
@@ -318,7 +318,7 @@ footer.hidePlayer {
 #position-indicator {
   width: 18px;
   height: 18px;
-  border-color: theme-color("primary");
+  border-color: var(--primary);
   border-width: 3px;
   border-radius: 50%;
   border-style: solid;

@@ -51,6 +51,7 @@ export class PlayerComponent implements OnDestroy {
   private systemMediaControls: any;
   private displayUpdater: any;
   private audioCtx: AudioContext;
+  private rgba: any;
 
   @ViewChild(AlbumArtComponent) albumart: AlbumArtComponent;
 
@@ -130,6 +131,9 @@ export class PlayerComponent implements OnDestroy {
         this.showVolumeWindow = false;
       }
     });
+    get("customColor").then(color => {
+      this.rgba = color;
+    });
     if (this.isHostedApp) {
       this.systemMediaControls = Windows.Media.SystemMediaTransportControls.getForCurrentView();
       this.displayUpdater = this.systemMediaControls.displayUpdater;
@@ -196,9 +200,15 @@ export class PlayerComponent implements OnDestroy {
       analyser.connect(javascriptNode);
 
       source.connect(this.audioCtx.destination);
-      javascriptNode.onaudioprocess = function() {
+      javascriptNode.onaudioprocess = () => {
         // tslint:disable-next-line:no-shadowed-variable
         const canvas = document.querySelector("canvas");
+        const color = this.rgba || {
+          r: 0,
+          g: 120,
+          b: 215,
+          a: 1
+        };
         WIDTH = canvas.offsetWidth;
         HEIGHT = canvas.offsetHeight;
         canvas.width = WIDTH;
@@ -216,7 +226,9 @@ export class PlayerComponent implements OnDestroy {
           barHeight = dataArray[i] * y;
           // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
           // rgba(0, 120, 215, 1);
-          ctx.fillStyle = `rgba(0,120,215,${dataArray[i] / 255})`;
+          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[
+            i
+          ] / 255})`;
           ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
           x += barWidth + 1;
         }

@@ -12,7 +12,7 @@
 }
 .player .progress .progress-bar {
   height: 6px;
-  background-color: theme-color("primary");
+  background-color: var(--primary);
 }
 .player mdb-album-art {
   cursor: pointer;
@@ -73,12 +73,12 @@
     margin: -1px 0 0 4px;
   }
   .row .btn.active {
-    background: theme-color("primary");
+    background: var(--primary);
     color: gray("100") !important;
   }
   .row .btn:active {
     background: gray("100");
-    color: theme-color("primary");
+    color: var(--primary);
   }
   .col-player-art {
     width: 75px;

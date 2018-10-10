@@ -1,3 +1,5 @@
+declare const Windows: any;
+
 import {
   Component,
   OnInit,
@@ -47,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public scanperc = 0;
   public isReloading = false;
   private hasBeenReloading = false;
+  private isHostedApp: boolean = typeof Windows !== "undefined";
   // tslint:disable-next-line:max-line-length
   constructor(
     private collectionService: CollectionService,
@@ -107,6 +110,41 @@ export class AppComponent implements OnInit, OnDestroy {
       this.configService.stopDate.setHours(7, 0, 0);
       this.configService.geoSource.next();
       this.configService.applyTheme();
+    }
+    if (this.isHostedApp) {
+      const uiSettings = new Windows.UI.ViewManagement.UISettings();
+      const rgba = uiSettings.getColorValue(
+        Windows.UI.ViewManagement.UIColorType.accent
+      );
+      set("customColor", rgba);
+      const accentCSSOverrideNode: HTMLElement = document.createElement(
+        "style"
+      );
+      accentCSSOverrideNode.setAttribute("type", "text/css");
+      accentCSSOverrideNode.textContent = `{
+        :root {
+          --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.a}, ${rgba.a});
+        }
+      }`;
+      document.querySelector("body").appendChild(accentCSSOverrideNode);
+    } else {
+      const rgba: any = {
+        r: 255,
+        g: 0,
+        b: 255,
+        a: 1
+      };
+      set("customColor", rgba);
+      const accentCSSOverrideNode: HTMLElement = document.createElement(
+        "style"
+      );
+      accentCSSOverrideNode.setAttribute("type", "text/css");
+      accentCSSOverrideNode.textContent = `
+      @charset "UTF-8";
+      :root {
+        --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a});
+      }`;
+      document.querySelector("body").appendChild(accentCSSOverrideNode);
     }
   }
 
