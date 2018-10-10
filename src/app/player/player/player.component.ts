@@ -136,7 +136,6 @@ export class PlayerComponent implements OnDestroy {
       }
     });
     getAccentColor().then(rgba => {
-      console.log("rgba set to ", rgba);
       this.rgba = rgba;
     });
     if (this.isHostedApp) {
@@ -239,9 +238,7 @@ export class PlayerComponent implements OnDestroy {
         }
       };
     }
-    console.log(this.colorService, this.colorService.color$);
     this.subscription6 = this.colorService.color$.subscribe(rgba => {
-      console.log("rgba updated to", rgba);
       this.rgba = rgba;
     });
   }
