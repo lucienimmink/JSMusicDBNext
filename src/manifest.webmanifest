@@ -6,16 +6,32 @@
   "display": "standalone",
   "theme_color": "#0078D7",
   "background_color": "#000000",
+  "orientation": "portrait-primary",
+  "description": "Music database and player built with webtechnology",
   "icons": [
     {
-      "src": "global/images/icon-512-white.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "/global/images/icon-512-white.png",
+      "sizes": "48x48"
     },
     {
-      "src": "global/images/icon-512-white.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/global/images/icon-512-white.png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/global/images/icon-512-white.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "/global/images/icon-512-white.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/global/images/icon-512-white.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/global/images/icon-512-white.png",
+      "sizes": "512x512"
     }
   ]
 }
