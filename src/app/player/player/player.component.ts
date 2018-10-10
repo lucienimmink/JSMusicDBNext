@@ -208,10 +208,10 @@ export class PlayerComponent implements OnDestroy {
         const dataArray = new Uint8Array(bufferLength);
         analyser.getByteFrequencyData(dataArray);
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        const barWidth = Math.floor(WIDTH / bufferLength * 1.1);
+        const barWidth = Math.floor((WIDTH / bufferLength) * 1.1);
         let barHeight;
         let x = 0;
-        const y = HEIGHT / 150 * 1.17;
+        const y = (HEIGHT / 150) * 1.17;
         for (let i = 0; i < bufferLength; i++) {
           barHeight = dataArray[i] * y;
           // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
@@ -380,6 +380,7 @@ export class PlayerComponent implements OnDestroy {
     this.lastFMService
       .announceNowPlaying(this.track)
       .subscribe(data => {}, error => {}, () => {});
+    document.title = `${this.track.title} by ${this.track.trackArtist}`;
     if ("mediaSession" in navigator) {
       get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
         url => {
@@ -528,6 +529,7 @@ export class PlayerComponent implements OnDestroy {
     document
       .querySelector("mdb-player")
       .dispatchEvent(new Event("external.mdbstopped"));
+    document.title = `JSMusicDB Next`;
     if (this.isHostedApp) {
       this.systemMediaControls.playbackStatus =
         Windows.Media.MediaPlaybackStatus.stopped;
@@ -542,6 +544,7 @@ export class PlayerComponent implements OnDestroy {
       .dispatchEvent(
         new CustomEvent("external.mdbpaused", { detail: this.track })
       );
+    document.title = `JSMusicDB Next`;
     if (this.isHostedApp) {
       this.systemMediaControls.playbackStatus =
         Windows.Media.MediaPlaybackStatus.paused;
@@ -582,7 +585,7 @@ export class PlayerComponent implements OnDestroy {
     const clientX = e.clientX || e.changedTouches[0].clientX;
     const left = clientX,
       perc = left / document.querySelector(".player").clientWidth;
-    const pos = this.track.duration / 1000 * perc;
+    const pos = (this.track.duration / 1000) * perc;
     this.playerService.setPosition(pos);
   }
 }
