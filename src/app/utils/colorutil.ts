@@ -1,19 +1,27 @@
 import { tinycolor } from "@thebespokepixel/es-tinycolor";
 import { set, get } from "idb-keyval";
 
+const convertToStrict = (color): any => {
+  color.r = Math.floor(color.r);
+  color.g = Math.floor(color.g);
+  color.b = Math.floor(color.b);
+  // don't round down the alpha channel, silly :)
+  return color;
+};
+
 export default (rgbstring: string): any => {
   const rgba = new tinycolor(rgbstring);
-  const lighten = new tinycolor(rgba).lighten().toRgb();
-  const darken = new tinycolor(rgba).darken().toRgb();
+  const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
+  const darken = convertToStrict(new tinycolor(rgba).darken().toRgb());
   return {
-    rgba: rgba.toRgb(),
+    rgba: convertToStrict(rgba.toRgb()),
     lighten,
     darken
   };
 };
 export function getColorsFromRGB(rgba: any): any {
-  const lighten = new tinycolor(rgba).lighten().toRgb();
-  const darken = new tinycolor(rgba).darken().toRgb();
+  const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
+  const darken = convertToStrict(new tinycolor(rgba).darken().toRgb());
   return {
     rgba,
     lighten,
