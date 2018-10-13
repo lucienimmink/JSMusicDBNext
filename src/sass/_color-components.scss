@@ -249,9 +249,9 @@ body {
 // utils
 a,
 .clickable {
-  color: var(--primary) !important;
+  color: var(--primary);
   &:hover {
-    color: var(--lighten) !important;
+    color: var(--lighten);
   }
 }
 

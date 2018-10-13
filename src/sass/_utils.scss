@@ -4,8 +4,8 @@
 a,
 .clickable {
   cursor: pointer;
-  color: var(--primary) !important;
+  color: var(--primary);
   &:hover {
-    color: var(--darken) !important;
+    color: var(--darken);
   }
 }

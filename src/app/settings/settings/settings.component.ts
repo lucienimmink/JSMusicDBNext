@@ -21,7 +21,7 @@ import { ConfigService } from "./../../utils/config.service";
 import getColors, {
   saveColors,
   addCustomCss,
-  getAccentColor,
+  getCustomColors,
   convertRGBtoString
 } from "./../../utils/colorutil";
 import { ColorService } from "../../utils/color.service";
@@ -114,8 +114,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
     });
-    getAccentColor().then(rgba => {
-      this.color = convertRGBtoString(rgba);
+    getCustomColors().then(colors => {
+      this.color = convertRGBtoString(colors.rgba);
     });
   }
 

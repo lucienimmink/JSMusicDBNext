@@ -9,47 +9,55 @@ const convertToStrict = (color): any => {
   return color;
 };
 
+const getReadableColor = (rgba, bgcolor): any => {
+  if (!tinycolor.isReadable(rgba, bgcolor)) {
+    if (bgcolor === "#000") {
+      return getReadableColor(new tinycolor(rgba).lighten(), bgcolor);
+    }
+    return getReadableColor(new tinycolor(rgba).darken(), bgcolor);
+  }
+  return convertToStrict(new tinycolor(rgba).toRgb());
+};
+
 export default (rgbstring: string): any => {
   const rgba = new tinycolor(rgbstring);
-  const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
-  const darken = convertToStrict(new tinycolor(rgba).darken().toRgb());
-  return {
-    rgba: convertToStrict(rgba.toRgb()),
-    lighten,
-    darken
-  };
+  return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
 export function getColorsFromRGB(rgba: any): any {
   const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
+  // textcolor: has to be readable -> use contrast
+  const textLight = getReadableColor(rgba, "#fff");
+  const textDark = getReadableColor(rgba, "#000");
   const darken = convertToStrict(new tinycolor(rgba).darken().toRgb());
   return {
     rgba,
+    textLight,
+    textDark,
     lighten,
     darken
   };
 }
 export function saveColors(colors: any): void {
-  const { rgba, darken, lighten } = colors;
-  set("customColor", rgba);
-  set("customColor-light", lighten);
-  set("customColor-dark", darken);
+  set("customColors", colors);
 }
-export function getAccentColor(): Promise<any> {
-  return get("customColor");
+export function getCustomColors(): Promise<any> {
+  return get("customColors");
 }
 export function convertRGBtoString(rgba: any): string {
   return new tinycolor(rgba).toRgbString();
 }
 export function addCustomCss(colors: any): void {
   const accentCSSOverrideNode: HTMLElement = document.createElement("style");
-  const { rgba, darken, lighten } = colors;
+  const { rgba, darken, lighten, textLight, textDark } = colors;
   accentCSSOverrideNode.setAttribute("type", "text/css");
   accentCSSOverrideNode.textContent = `
       @charset "UTF-8";
       :root {
-        --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a});
-        --darken: rgba(${darken.r}, ${darken.g}, ${darken.b}, ${darken.a});
-        --lighten: rgba(${lighten.r}, ${lighten.g}, ${lighten.b}, ${lighten.a});
+        --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, 1);
+        --darken: rgba(${darken.r}, ${darken.g}, ${darken.b}, 1);
+        --lighten: rgba(${lighten.r}, ${lighten.g}, ${lighten.b}, 1);
+        --textLight: rgba(${textLight.r}, ${textLight.g}, ${textLight.b}, 1);
+        --textDark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
       }`;
   document.querySelector("body").appendChild(accentCSSOverrideNode);
 }

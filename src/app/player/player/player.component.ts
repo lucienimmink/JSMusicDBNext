@@ -16,7 +16,7 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { AnimationService } from "./../../utils/animation.service";
 import { PathService } from "./../../utils/path.service";
 import { AlbumArtService } from "./../../utils/album-art.service";
-import { getAccentColor } from "./../../utils/colorutil";
+import { getCustomColors } from "./../../utils/colorutil";
 import { ColorService } from "../../utils/color.service";
 import { Playlist } from "./../../playlist/playlist";
 
@@ -135,8 +135,10 @@ export class PlayerComponent implements OnDestroy {
         this.showVolumeWindow = false;
       }
     });
-    getAccentColor().then(rgba => {
-      this.rgba = rgba;
+    getCustomColors().then(colors => {
+      if (colors) {
+        this.rgba = colors.rgba;
+      }
     });
     if (this.isHostedApp) {
       this.systemMediaControls = Windows.Media.SystemMediaTransportControls.getForCurrentView();

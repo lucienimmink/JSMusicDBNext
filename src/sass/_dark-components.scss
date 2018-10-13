@@ -1,0 +1,64 @@
+.btn-link {
+  color: var(--textDark);
+}
+.btn-link:hover {
+  color: var(--textDark);
+}
+.btn-primary {
+  background-color: var(--textDark);
+}
+.btn-primary:hover {
+  background-color: var(--textDark);
+}
+
+// _headers
+h3,
+h4,
+.header-seperator {
+  border-bottom: 1px solid var(--primary);
+  background: gray("100");
+  color: gray("900");
+  &:hover {
+    background: gray("100") !important;
+  }
+}
+
+// lists
+.list-recently {
+  li {
+    border-bottom: 1px solid gray("300");
+    .now-playing {
+      color: var(--textDark);
+    }
+    &:hover {
+      background: gray("200");
+    }
+  }
+}
+// player
+.player {
+  .row .btn.active {
+    background: var(--primary);
+    color: gray("100") !important;
+  }
+  .row .btn:active {
+    background: gray("100");
+    color: var(--primary);
+  }
+}
+.progress-bar {
+  .progress-circle {
+    &::after {
+      color: var(--primary);
+    }
+  }
+}
+
+// utils
+a,
+.clickable {
+  color: var(--textDark);
+  &:hover {
+    color: var(--lighten);
+  }
+}

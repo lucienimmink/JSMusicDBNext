@@ -24,7 +24,7 @@ import { ConfigService } from "./utils/config.service";
 import {
   getColorsFromRGB,
   addCustomCss,
-  getAccentColor
+  getCustomColors
 } from "./utils/colorutil";
 import { ColorService } from "./utils/color.service";
 
@@ -119,10 +119,10 @@ export class AppComponent implements OnInit, OnDestroy {
       this.configService.geoSource.next();
       this.configService.applyTheme();
     }
-    getAccentColor().then(rgba => {
-      if (rgba) {
-        const colors = getColorsFromRGB(rgba);
-        addCustomCss(colors);
+    getCustomColors().then(colors => {
+      if (colors) {
+        const customeColors = getColorsFromRGB(colors.rgba);
+        addCustomCss(customeColors);
       }
     });
   }

@@ -59,13 +59,9 @@
     }
   }
   &.active {
-    background-color: theme-color("primary");
     border-color: transparent;
     &::before {
       background-color: $white;
-    }
-    &:hover {
-      background-color: theme-color("primary");
     }
   }
 }
