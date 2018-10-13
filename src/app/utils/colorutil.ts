@@ -56,8 +56,8 @@ export function addCustomCss(colors: any): void {
         --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, 1);
         --darken: rgba(${darken.r}, ${darken.g}, ${darken.b}, 1);
         --lighten: rgba(${lighten.r}, ${lighten.g}, ${lighten.b}, 1);
-        --textLight: rgba(${textLight.r}, ${textLight.g}, ${textLight.b}, 1);
-        --textDark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
+        --text-light: rgba(${textLight.r}, ${textLight.g}, ${textLight.b}, 1);
+        --text-dark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
       }`;
   document.querySelector("body").appendChild(accentCSSOverrideNode);
 }
