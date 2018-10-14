@@ -230,7 +230,7 @@
 }
 #nowPlaying .icons button.active {
   background: var(--primary);
-  color: $white;
+  color: var(--letter-color);
 }
 #nowPlaying .icons button:active {
   background: gray("100");

@@ -16,7 +16,6 @@
       &:hover,
       &:focus,
       &.active {
-        color: gray("100");
         background: var(--darken);
       }
     }

@@ -104,7 +104,7 @@
       border-bottom-color: var(--primary);
     }
     &.active {
-      color: $white;
+      color: var(--letter-color);
       background-color: var(--primary);
     }
     .glyph {
