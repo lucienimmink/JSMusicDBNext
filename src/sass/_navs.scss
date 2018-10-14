@@ -8,7 +8,7 @@
     a {
       cursor: pointer;
       display: block;
-      color: $white !important;
+      color: var(--letter-color) !important;
       padding: 13px 0;
       background: transparent;
       will-change: background;

@@ -248,6 +248,7 @@ body {
 
 // utils
 a,
+a:not([href]):not([tabindex]),
 .clickable {
   color: var(--text-light);
   &:hover {

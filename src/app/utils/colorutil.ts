@@ -12,12 +12,16 @@ const convertToStrict = (color): any => {
 const getReadableColor = (rgba, bgcolor): any => {
   if (!tinycolor.isReadable(rgba, bgcolor)) {
     if (bgcolor === "#000") {
-      return getReadableColor(new tinycolor(rgba).lighten(), bgcolor);
+      return getReadableColor(new tinycolor(rgba).lighten(3), bgcolor);
     }
-    return getReadableColor(new tinycolor(rgba).darken(), bgcolor);
+    return getReadableColor(new tinycolor(rgba).darken(3), bgcolor);
   }
   return convertToStrict(new tinycolor(rgba).toRgb());
 };
+
+const isReadableIfUsedAsBackgroundWithWhiteForeground = (rgba): any => {
+  return tinycolor.isReadable('#fff', rgba);
+}
 
 export default (rgbstring: string): any => {
   const rgba = new tinycolor(rgbstring);
@@ -34,7 +38,8 @@ export function getColorsFromRGB(rgba: any): any {
     textLight,
     textDark,
     lighten,
-    darken
+    darken,
+    letterColor : (isReadableIfUsedAsBackgroundWithWhiteForeground(rgba) ? '#fff' : '#000');
   };
 }
 export function saveColors(colors: any): void {
@@ -48,7 +53,7 @@ export function convertRGBtoString(rgba: any): string {
 }
 export function addCustomCss(colors: any): void {
   const accentCSSOverrideNode: HTMLElement = document.createElement("style");
-  const { rgba, darken, lighten, textLight, textDark } = colors;
+  const { rgba, darken, lighten, textLight, textDark, letterColor } = colors;
   accentCSSOverrideNode.setAttribute("type", "text/css");
   accentCSSOverrideNode.textContent = `
       @charset "UTF-8";
@@ -58,6 +63,7 @@ export function addCustomCss(colors: any): void {
         --lighten: rgba(${lighten.r}, ${lighten.g}, ${lighten.b}, 1);
         --text-light: rgba(${textLight.r}, ${textLight.g}, ${textLight.b}, 1);
         --text-dark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
+        --letter-color: ${letterColor};
       }`;
   document.querySelector("body").appendChild(accentCSSOverrideNode);
 }
