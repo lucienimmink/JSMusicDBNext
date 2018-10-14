@@ -20,8 +20,8 @@ const getReadableColor = (rgba, bgcolor): any => {
 };
 
 const isReadableIfUsedAsBackgroundWithWhiteForeground = (rgba): any => {
-  return tinycolor.isReadable('#fff', rgba);
-}
+  return tinycolor.isReadable("#fff", rgba);
+};
 
 export default (rgbstring: string): any => {
   const rgba = new tinycolor(rgbstring);
@@ -39,7 +39,9 @@ export function getColorsFromRGB(rgba: any): any {
     textDark,
     lighten,
     darken,
-    letterColor : (isReadableIfUsedAsBackgroundWithWhiteForeground(rgba) ? '#fff' : '#000');
+    letterColor: isReadableIfUsedAsBackgroundWithWhiteForeground(rgba)
+      ? "#fff"
+      : "#000"
   };
 }
 export function saveColors(colors: any): void {
