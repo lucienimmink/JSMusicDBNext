@@ -56,6 +56,8 @@ export function getDominantColor(img, cb): any {
   }
   clone.src = img.src;
 
+  console.log(clone);
+
   import("node-vibrant").then(Vibrant => {
     Vibrant.from(clone)
       .getPalette()
