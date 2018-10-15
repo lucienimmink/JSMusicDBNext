@@ -46,9 +46,10 @@ export default (rgbstring: string): any => {
   return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
 export function getDominantColor(img, cb): any {
+  img.crossOrigin = "anonymous";
   import("node-vibrant").then(vibrant => {
     vibrant
-      .from(img.src)
+      .from(img)
       .quality(1)
       .getPalette()
       .then(palette => {

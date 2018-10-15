@@ -296,7 +296,9 @@ export class PlayerService {
         this.lastFMService
           .getTrackInfo(this.currentTrack, this.lastfmUserName)
           .subscribe(status => {
-            this.currentTrack.isLoved = status.track.userloved === "1";
+            if (this.currentTrack && status.track) {
+              this.currentTrack.isLoved = status.track.userloved === "1";
+            }
           });
       }
       if (this.currentTrack) {
