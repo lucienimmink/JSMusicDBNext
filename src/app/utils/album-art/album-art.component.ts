@@ -1,4 +1,14 @@
-import { Component, OnInit, Input, OnChanges, ElementRef } from "@angular/core";
+declare const window: any;
+
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  ElementRef,
+  OnDestroy
+} from "@angular/core";
+import { Subscription } from "rxjs";
 import { set, get } from "idb-keyval";
 
 import Album from "./../../org/arielext/musicdb/models/Album";
@@ -19,7 +29,8 @@ import { ColorService } from "./../color.service";
   templateUrl: "./album-art.component.html",
   providers: [AlbumArtService]
 })
-export class AlbumArtComponent implements OnInit, OnChanges {
+export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
+  private subscription: Subscription;
   public albumart: AlbumArt = new AlbumArt();
 
   @Input() album: Album;
@@ -37,10 +48,30 @@ export class AlbumArtComponent implements OnInit, OnChanges {
     private elementRef: ElementRef,
     private colorService: ColorService
   ) {
+    const c = this;
     this.albumart.name = "Unknown album";
     this.albumart.url = this.NOIMAGE;
+    this.subscription = this.colorService.blob$.subscribe(() => {
+      const blob = new Blob([window.externalBlob], { type: "image/png" });
+      // build a url from the blob
+      const objectURL = URL.createObjectURL(blob);
+      const image = new Image();
+      image.src = objectURL;
+      // now let's set that color!
+      getDominantColor(
+        image,
+        rgba => {
+          const colors = getColorsFromRGB(rgba);
+          c.colorService.setColor(colors.rgba);
+          addCustomCss(colors);
+        },
+        true
+      );
+    });
   }
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   ngOnInit() {
     let key = "";
     if (this.album) {
@@ -85,11 +116,15 @@ export class AlbumArtComponent implements OnInit, OnChanges {
       this.elementRef.nativeElement.childNodes[0].addEventListener(
         "load",
         function() {
-          getDominantColor(this, rgba => {
-            const colors = getColorsFromRGB(rgba);
-            c.colorService.setColor(colors.rgba);
-            addCustomCss(colors);
-          });
+          getDominantColor(
+            this,
+            rgba => {
+              const colors = getColorsFromRGB(rgba);
+              c.colorService.setColor(colors.rgba);
+              addCustomCss(colors);
+            },
+            false
+          );
         },
         { passive: true }
       );

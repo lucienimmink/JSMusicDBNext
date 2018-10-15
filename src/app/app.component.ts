@@ -65,6 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private configService: ConfigService,
     private playerService: PlayerService,
+    private colorService: ColorService,
     viewContainerRef: ViewContainerRef
   ) {
     if (this.loginService.hasToken) {
@@ -198,5 +199,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   onExternalStop(event: Event): void {
     this.playerService.stop();
+  }
+  onExternalBlob(): void {
+    // we received a blob; tell the colorserivce to do it's magic with it
+    this.colorService.setBlob();
   }
 }

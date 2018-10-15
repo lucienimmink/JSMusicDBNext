@@ -47,24 +47,27 @@ export default (rgbstring: string): any => {
   const rgba = new tinycolor(rgbstring);
   return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
-export function getDominantColor(img, cb): any {
-  // clone the img object
-  const clone = new Image();
-  clone.crossOrigin = "Anonymous";
-  if (runningInElectron) {
-    clone.removeAttribute("crossorigin");
+export function getDominantColor(img, cb, override): any {
+  if (runningInElectron && !override) {
+    // send an event to download this image
+    document.querySelector("mdb-player").dispatchEvent(
+      new CustomEvent("external.mdbuntaint", {
+        detail: { url: img.src }
+      })
+    );
+  } else {
+    // clone the img object
+    const clone = new Image();
+    clone.crossOrigin = "Anonymous";
+    clone.src = img.src;
+    import("node-vibrant").then(Vibrant => {
+      Vibrant.from(clone)
+        .getPalette()
+        .then(palette => {
+          cb(convertToStrict(convertSwatchToRGB(palette.Vibrant)));
+        });
+    });
   }
-  clone.src = img.src;
-
-  console.log(clone);
-
-  import("node-vibrant").then(Vibrant => {
-    Vibrant.from(clone)
-      .getPalette()
-      .then(palette => {
-        cb(convertToStrict(convertSwatchToRGB(palette.Vibrant)));
-      });
-  });
 }
 export function getColorsFromRGB(rgba: any): any {
   const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
