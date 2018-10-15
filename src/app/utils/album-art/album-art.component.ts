@@ -8,8 +8,10 @@ import { AlbumArt } from "./album-art";
 import {
   getDominantColor,
   getColorsFromRGB,
-  addCustomCss
+  addCustomCss,
+  saveColors
 } from "./../colorutil";
+import { ColorService } from "./../color.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -32,7 +34,8 @@ export class AlbumArtComponent implements OnInit, OnChanges {
 
   constructor(
     private albumArtService: AlbumArtService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private colorService: ColorService
   ) {
     this.albumart.name = "Unknown album";
     this.albumart.url = this.NOIMAGE;
@@ -78,11 +81,13 @@ export class AlbumArtComponent implements OnInit, OnChanges {
       // add loader to this.elementRef if not present
       // onload = colorthief
       // then save custom color using colorutil
+      const c = this;
       this.elementRef.nativeElement.childNodes[0].addEventListener(
         "load",
         function() {
           getDominantColor(this, rgba => {
             const colors = getColorsFromRGB(rgba);
+            c.colorService.setColor(colors.rgba);
             addCustomCss(colors);
           });
         },
