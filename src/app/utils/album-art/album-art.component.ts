@@ -1,10 +1,15 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import { Component, OnInit, Input, OnChanges, ElementRef } from "@angular/core";
 import { set, get } from "idb-keyval";
 
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AlbumArtService } from "./../album-art.service";
 import { AlbumArt } from "./album-art";
+import {
+  getDominantColor,
+  getColorsFromRGB,
+  addCustomCss
+} from "./../colorutil";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,13 +22,18 @@ export class AlbumArtComponent implements OnInit, OnChanges {
 
   @Input() album: Album;
   @Input() track: Track;
+  @Input() colorthief: boolean = false;
 
   private searchArtist: string;
   private searchAlbum: string;
   private searchType = "album";
   private NOIMAGE = "global/images/no-cover.png";
+  private hasEvent: boolean = false;
 
-  constructor(private albumArtService: AlbumArtService) {
+  constructor(
+    private albumArtService: AlbumArtService,
+    private elementRef: ElementRef
+  ) {
     this.albumart.name = "Unknown album";
     this.albumart.url = this.NOIMAGE;
   }
@@ -64,6 +74,22 @@ export class AlbumArtComponent implements OnInit, OnChanges {
           );
       }
     });
+    if (this.colorthief && !this.hasEvent) {
+      // add loader to this.elementRef if not present
+      // onload = colorthief
+      // then save custom color using colorutil
+      this.elementRef.nativeElement.childNodes[0].addEventListener(
+        "load",
+        function() {
+          getDominantColor(this, rgba => {
+            const colors = getColorsFromRGB(rgba);
+            addCustomCss(colors);
+          });
+        },
+        { passive: true }
+      );
+      this.hasEvent = true;
+    }
   }
 
   ngOnChanges(changes) {

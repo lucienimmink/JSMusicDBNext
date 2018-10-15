@@ -37,8 +37,8 @@
     "ngx-color-picker": "^6.7.0",
     "ngx-youtube-player": "^6.0.0",
     "node-sass": "^4.9.3",
+    "node-vibrant": "^3.0.0",
     "rxjs": "^6.3.3",
-    "rxjs-compat": "^6.3.3",
     "winstrap": "^0.5.12",
     "zone.js": "~0.8.26"
   },

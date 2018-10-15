@@ -2,10 +2,6 @@ import { Directive, ElementRef, Input } from "@angular/core";
 import { set, get } from "idb-keyval";
 import { BackgroundArtService } from "./background-art.service";
 
-import { Observable, Subscription } from "rxjs";
-import "rxjs/add/observable/fromEvent";
-import "rxjs/add/operator/debounceTime";
-
 @Directive({
   // tslint:disable-next-line:directive-selector
   selector: "[mdb-BackgroundArt]",
@@ -18,7 +14,6 @@ export class BackgroundArtDirective {
   public loading = false;
   public loaded = false;
   public error = false;
-  private tagName: string;
   private loadingClass = "loading";
   private loadedClass = "loaded";
   private errorClass = "error";

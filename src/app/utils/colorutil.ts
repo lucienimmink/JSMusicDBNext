@@ -22,11 +22,48 @@ const getReadableColor = (rgba, bgcolor): any => {
 const isReadableIfUsedAsBackgroundWithWhiteForeground = (rgba): any => {
   return tinycolor.isReadable("#fff", rgba);
 };
+const convertSwatchToRGB = (swatch): any => {
+  if (swatch) {
+    const arr = swatch._rgb;
+    return {
+      r: arr[0],
+      g: arr[1],
+      b: arr[2],
+      a: 1
+    };
+  }
+  // if no swatch is found, use our default color
+  return {
+    r: 0,
+    g: 120,
+    b: 215,
+    a: 1
+  };
+};
 
 export default (rgbstring: string): any => {
   const rgba = new tinycolor(rgbstring);
   return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
+export function getDominantColor(img, cb): any {
+  import("node-vibrant").then(vibrant => {
+    vibrant
+      .from(img.src)
+      .quality(1)
+      .getPalette()
+      .then(palette => {
+        // console.log(palette);
+        cb(convertToStrict(convertSwatchToRGB(palette.Vibrant)));
+      });
+  });
+  return {
+    r: 255,
+    g: 0,
+    b: 128,
+    a: 1
+  };
+  // TODO
+}
 export function getColorsFromRGB(rgba: any): any {
   const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
   // textcolor: has to be readable -> use contrast
@@ -57,6 +94,7 @@ export function addCustomCss(colors: any): void {
   const accentCSSOverrideNode: HTMLElement = document.createElement("style");
   const { rgba, darken, lighten, textLight, textDark, letterColor } = colors;
   accentCSSOverrideNode.setAttribute("type", "text/css");
+  accentCSSOverrideNode.id = "custom-css-node";
   accentCSSOverrideNode.textContent = `
       @charset "UTF-8";
       :root {
@@ -67,5 +105,8 @@ export function addCustomCss(colors: any): void {
         --text-dark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
         --letter-color: ${letterColor};
       }`;
+  if (document.querySelector("#custom-css-node")) {
+    document.querySelector("#custom-css-node").remove();
+  }
   document.querySelector("body").appendChild(accentCSSOverrideNode);
 }
