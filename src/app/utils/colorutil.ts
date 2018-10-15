@@ -1,5 +1,6 @@
 import { tinycolor } from "@thebespokepixel/es-tinycolor";
 import { set, get } from "idb-keyval";
+import * as Vibrant from "node-vibrant";
 
 const convertToStrict = (color): any => {
   color.r = Math.floor(color.r);
@@ -46,24 +47,15 @@ export default (rgbstring: string): any => {
   return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
 export function getDominantColor(img, cb): any {
-  img.crossOrigin = "anonymous";
-  import("node-vibrant").then(vibrant => {
-    vibrant
-      .from(img)
-      .quality(1)
-      .getPalette()
-      .then(palette => {
-        // console.log(palette);
-        cb(convertToStrict(convertSwatchToRGB(palette.Vibrant)));
-      });
-  });
-  return {
-    r: 255,
-    g: 0,
-    b: 128,
-    a: 1
-  };
-  // TODO
+  // clone the img object
+  const clone = new Image();
+  clone.crossOrigin = "Anonymous";
+  clone.src = img.src;
+  Vibrant.from(clone)
+    .getPalette()
+    .then(palette => {
+      cb(convertToStrict(convertSwatchToRGB(palette.Vibrant)));
+    });
 }
 export function getColorsFromRGB(rgba: any): any {
   const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
