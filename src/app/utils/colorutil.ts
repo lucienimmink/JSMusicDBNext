@@ -111,8 +111,15 @@ export function addCustomCss(colors: any): void {
         --text-dark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
         --letter-color: ${letterColor};
       }`;
+  removeCustomCss();
+  document.querySelector("body").appendChild(accentCSSOverrideNode);
+}
+export function addCustomCssBasedOnRGBA(rgba: any): void {
+  const colors = getColorsFromRGB(rgba);
+  addCustomCss(colors);
+}
+export function removeCustomCss(): void {
   if (document.querySelector("#custom-css-node")) {
     document.querySelector("#custom-css-node").remove();
   }
-  document.querySelector("body").appendChild(accentCSSOverrideNode);
 }

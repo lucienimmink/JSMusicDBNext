@@ -16,7 +16,11 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { AnimationService } from "./../../utils/animation.service";
 import { PathService } from "./../../utils/path.service";
 import { AlbumArtService } from "./../../utils/album-art.service";
-import { getCustomColors } from "./../../utils/colorutil";
+import {
+  getCustomColors,
+  removeCustomCss,
+  addCustomCssBasedOnRGBA
+} from "./../../utils/colorutil";
 import { ColorService } from "../../utils/color.service";
 import { Playlist } from "./../../playlist/playlist";
 
@@ -481,6 +485,7 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.resume();
     }
+    addCustomCssBasedOnRGBA(this.rgba);
   }
   private updateWinTile(url: {}) {
     const Notifications = Windows.UI.Notifications;
@@ -572,6 +577,7 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.suspend();
     }
+    removeCustomCss();
   }
   onpause() {
     document
@@ -587,6 +593,7 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.suspend();
     }
+    removeCustomCss();
   }
 
   toggleShuffle() {
