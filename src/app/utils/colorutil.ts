@@ -21,8 +21,11 @@ const getReadableColor = (rgba, bgcolor): any => {
   return convertToStrict(new tinycolor(rgba).toRgb());
 };
 
-const isReadableIfUsedAsBackgroundWithWhiteForeground = (rgba): any => {
-  return tinycolor.isReadable("#fff", rgba);
+const getHighestContrast = (color): any => {
+  return tinycolor.readability("#000", color) >
+    tinycolor.readability("#fff", color)
+    ? "#000"
+    : "#fff";
 };
 const convertSwatchToRGB = (swatch): any => {
   if (swatch) {
@@ -81,9 +84,7 @@ export function getColorsFromRGB(rgba: any): any {
     textDark,
     lighten,
     darken,
-    letterColor: isReadableIfUsedAsBackgroundWithWhiteForeground(rgba)
-      ? "#fff"
-      : "#000"
+    letterColor: getHighestContrast(new tinycolor(rgba))
   };
 }
 export function saveColors(colors: any): void {
