@@ -17,7 +17,6 @@ import { AnimationService } from "./../../utils/animation.service";
 import { PathService } from "./../../utils/path.service";
 import { AlbumArtService } from "./../../utils/album-art.service";
 import {
-  getCustomColors,
   removeCustomCss,
   addCustomCssBasedOnRGBA
 } from "./../../utils/colorutil";
@@ -140,11 +139,6 @@ export class PlayerComponent implements OnDestroy {
     this.subscription4 = pathService.pageAnnounced$.subscribe(page => {
       if (page.page === "Now playing") {
         this.showVolumeWindow = false;
-      }
-    });
-    getCustomColors().then(colors => {
-      if (colors) {
-        this.rgba = colors.rgba;
       }
     });
     if (this.isHostedApp) {

@@ -18,12 +18,6 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { ConfigService } from "./../../utils/config.service";
-import getColors, {
-  saveColors,
-  addCustomCss,
-  getCustomColors,
-  convertRGBtoString
-} from "./../../utils/colorutil";
 import { ColorService } from "../../utils/color.service";
 import { Settings } from "./../settings";
 
@@ -116,9 +110,6 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
-    });
-    getCustomColors().then(colors => {
-      this.color = convertRGBtoString(colors.rgba);
     });
   }
 

@@ -18,8 +18,7 @@ import { AlbumArt } from "./album-art";
 import {
   getDominantColor,
   getColorsFromRGB,
-  addCustomCss,
-  saveColors
+  addCustomCss
 } from "./../colorutil";
 import { ColorService } from "./../color.service";
 

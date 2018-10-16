@@ -1,7 +1,6 @@
 declare const window: any;
 
 import { tinycolor } from "@thebespokepixel/es-tinycolor";
-import { set, get } from "idb-keyval";
 
 const convertToStrict = (color): any => {
   color.r = Math.floor(color.r);
@@ -87,12 +86,6 @@ export function getColorsFromRGB(rgba: any): any {
     letterColor: getHighestContrast(new tinycolor(rgba))
   };
 }
-export function saveColors(colors: any): void {
-  set("customColors", colors);
-}
-export function getCustomColors(): Promise<any> {
-  return get("customColors");
-}
 export function convertRGBtoString(rgba: any): string {
   return new tinycolor(rgba).toRgbString();
 }
@@ -115,8 +108,10 @@ export function addCustomCss(colors: any): void {
   document.querySelector("body").appendChild(accentCSSOverrideNode);
 }
 export function addCustomCssBasedOnRGBA(rgba: any): void {
-  const colors = getColorsFromRGB(rgba);
-  addCustomCss(colors);
+  if (rgba) {
+    const colors = getColorsFromRGB(rgba);
+    addCustomCss(colors);
+  }
 }
 export function removeCustomCss(): void {
   if (document.querySelector("#custom-css-node")) {

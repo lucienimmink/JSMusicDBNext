@@ -21,11 +21,6 @@ import { LastfmService } from "./utils/lastfm.service";
 import { LoginService } from "./login/login.service";
 import { AnimationService } from "./utils/animation.service";
 import { ConfigService } from "./utils/config.service";
-import {
-  getColorsFromRGB,
-  addCustomCss,
-  getCustomColors
-} from "./utils/colorutil";
 import { ColorService } from "./utils/color.service";
 
 @Component({
@@ -120,12 +115,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.configService.geoSource.next();
       this.configService.applyTheme();
     }
-    getCustomColors().then(colors => {
-      if (colors) {
-        const customeColors = getColorsFromRGB(colors.rgba);
-        addCustomCss(customeColors);
-      }
-    });
   }
 
   private booleanState(key: string): boolean {
