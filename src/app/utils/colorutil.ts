@@ -39,8 +39,8 @@ const convertSwatchToRGB = (swatch): any => {
   // if no swatch is found, use our default color
   return {
     r: 0,
-    g: 120,
-    b: 215,
+    g: 110,
+    b: 205,
     a: 1
   };
 };

@@ -212,8 +212,8 @@ export class PlayerComponent implements OnDestroy {
         const canvas = document.querySelector("canvas");
         const color = this.rgba || {
           r: 0,
-          g: 120,
-          b: 215,
+          g: 110,
+          b: 205,
           a: 1
         };
         WIDTH = canvas.offsetWidth;
