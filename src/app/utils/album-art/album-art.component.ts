@@ -35,7 +35,7 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() album: Album;
   @Input() track: Track;
-  @Input() colorthief: boolean = false;
+  @Input("dynamic-accent-color") dynamicAccentColor: boolean = false;
 
   private searchArtist: string;
   private searchAlbum: string;
@@ -108,7 +108,7 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
           );
       }
     });
-    if (this.colorthief && !this.hasEvent) {
+    if (this.dynamicAccentColor && !this.hasEvent) {
       // add loader to this.elementRef if not present
       // onload = colorthief
       // then save custom color using colorutil

@@ -49,6 +49,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     "manual-scrobble-state"
   );
   public isContinuesplay: boolean = this.booleanState("continues-play");
+  public hasDynamicAccentColor: boolean = this.booleanState(
+    "dynamic-accent-color"
+  );
   private smallArt: boolean = this.booleanState("small-art");
   private manualScrobblingList: any;
   public isReloading = false;
@@ -224,6 +227,13 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.smallArt = !this.smallArt;
     localStorage.setItem("small-art", this.smallArt.toString());
   }
+  toggleDynamicAccentColor() {
+    this.hasDynamicAccentColor = !this.hasDynamicAccentColor;
+    localStorage.setItem(
+      "dynamic-accent-color",
+      this.hasDynamicAccentColor.toString()
+    );
+  }
   toggleTracking() {
     this.tracking = !this.tracking;
     localStorage.setItem("tracking-state", this.tracking.toString());
@@ -360,12 +370,5 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
         del("defferedPrompt");
       });
     }
-  }
-
-  changeAccentColor(color: string) {
-    const colors = getColors(color);
-    saveColors(colors);
-    addCustomCss(colors);
-    this.colorService.setColor(colors.rgba);
   }
 }

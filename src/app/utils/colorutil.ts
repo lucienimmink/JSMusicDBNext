@@ -1,4 +1,4 @@
-declare const runningInElectron: boolean;
+declare const window: any;
 
 import { tinycolor } from "@thebespokepixel/es-tinycolor";
 import { set, get } from "idb-keyval";
@@ -48,7 +48,7 @@ export default (rgbstring: string): any => {
   return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
 export function getDominantColor(img, cb, override): any {
-  if (runningInElectron && !override) {
+  if (window.runningInElectron && !override) {
     // send an event to download this image
     document.querySelector("mdb-player").dispatchEvent(
       new CustomEvent("external.mdbuntaint", {

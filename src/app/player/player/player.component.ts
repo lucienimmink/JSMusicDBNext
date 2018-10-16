@@ -55,6 +55,9 @@ export class PlayerComponent implements OnDestroy {
   private displayUpdater: any;
   private audioCtx: AudioContext;
   private rgba: any;
+  public usesDynamicAccentColor: boolean = this.booleanState(
+    "dynamic-accent-color"
+  );
 
   @ViewChild(AlbumArtComponent) albumart: AlbumArtComponent;
 
@@ -243,6 +246,14 @@ export class PlayerComponent implements OnDestroy {
     this.subscription6 = this.colorService.color$.subscribe(rgba => {
       this.rgba = rgba;
     });
+  }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
   }
 
   setTrack(position: any) {

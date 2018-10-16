@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row row-sm">
             <div class="col-xs-4 col-player-art" (click)="navigateToNowPlaying()">
-                <mdb-album-art [track]="track" [colorthief]="true"></mdb-album-art>
+                <mdb-album-art [track]="track" [dynamic-accent-color]="usesDynamicAccentColor"></mdb-album-art>
             </div>
             <div class="col-xs-11 col-player-special">
                 <h4>{{track.title}}</h4>
