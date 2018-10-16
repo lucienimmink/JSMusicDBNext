@@ -7,3 +7,12 @@ $gray-400: #6c757d !default;
 $gray-300: #495057 !default;
 $gray-200: #343a40 !default;
 $gray-100: #212529 !default;
+
+:root {
+  --primary: rgba(0, 130, 225, 1);
+  --darken: rgba(0, 146, 253, 1);
+  --lighten: rgba(0, 113, 196, 1);
+  --text-light: rgba(0, 130, 225, 1);
+  --text-dark: rgba(0, 130, 225, 1);
+  --letter-color: rgba(255, 255, 255, 1);
+}
