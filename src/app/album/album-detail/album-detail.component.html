@@ -37,7 +37,7 @@
               <div class="col-9 col-sm-10">
                 {{track.title}}
                 <br />
-                <span class="small color-type-secondary">
+                <span class="small muted color-type-secondary">
                   {{track.trackArtist}}
                 </span>
               </div>
@@ -45,11 +45,11 @@
                 {{track.duration | timeFormat }}
                 <span *ngIf="album.type === 'mixed' && !track.isPlaying">
                   <br />
-                  <span class="small color-type-secondary">{{track.type}}</span>
+                  <span class="small muted color-type-secondary">{{track.type}}</span>
                 </span>
                 <span *ngIf="track.isPlaying">
                   <br />
-                  <span class="small color-type-secondary">
+                  <span class="small muted color-type-secondary">
                     {{track.position | timeFormat}} &nbsp;
                   </span>
                 </span>

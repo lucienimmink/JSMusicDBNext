@@ -4,7 +4,7 @@
       <div class="col">
         <div *ngIf="artists.list && artists.list.length > 0">
           <h4>Artists
-            <span class="small color-type-secondary">({{artists.list.length}})</span>
+            <span class="small muted color-type-secondary">({{artists.list.length}})</span>
           </h4>
           <div class="alert alert-info" *ngIf="artists.overflow">
             More artists are found. Refine search for less results
@@ -17,7 +17,7 @@
         </div>
         <div *ngIf="albums.list && albums.list.length > 0">
           <h4>Albums
-            <span class="small color-type-secondary">({{albums.list.length}})</span>
+            <span class="small muted color-type-secondary">({{albums.list.length}})</span>
           </h4>
           <div class="alert alert-info" *ngIf="albums.overflow">
             More albums are found. Refine search for less results
@@ -30,7 +30,7 @@
         </div>
         <div *ngIf="tracks.list && tracks.list.length > 0">
           <h4>Tracks
-            <span class="small color-type-secondary">({{tracks.list.length}})</span>
+            <span class="small muted color-type-secondary">({{tracks.list.length}})</span>
           </h4>
           <div class="alert alert-info" *ngIf="tracks.overflow">
             More tracks are found. Refine search for less results
@@ -46,7 +46,7 @@
                   <span class="glyph glyph-play"></span>
                 </span>{{track.title}}
                 <br />
-                <span class="small">
+                <span class="small muted">
                   {{track.trackArtist}} &bull; {{track.album.name}}
                 </span>
               </div>

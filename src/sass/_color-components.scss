@@ -27,9 +27,11 @@
   color: var(--lighten);
 }
 .btn-primary {
+  border-color: var(--primary);
   background-color: var(--primary);
 }
 .btn-primary:hover {
+  border-color: var(--primary);
   background-color: var(--lighten);
 }
 

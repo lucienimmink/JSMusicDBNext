@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col" *ngIf="manualScrobblingList && manualScrobbling">
         <h4>Tracks in scrobble cache
-          <span class="small color-type-secondary">({{manualScrobblingList.length}})</span>
+          <span class="small muted color-type-secondary">({{manualScrobblingList.length}})</span>
           <a class="float-right d-none d-sm-inline" (click)="scrobbleNow()">Scrobble now</a>
         </h4>
         <ol class="list-items list-tracks">
@@ -12,14 +12,15 @@
               <div class="col-4 col-sm-3">
                 {{item.artist}}
               </div>
-              <div class="col-4 col-sm-3 small d-none d-sm-block">
-                {{item.album}}
+              <div class="col-4 col-sm-3 d-none d-sm-block">
+                <span class="small muted">{{item.album}}</span>
               </div>
               <div class="col-8 col-sm-3">
                 {{item.track}}
               </div>
-              <div class="col-6 col-sm-2 small">
-                {{item.timestamp*1000 | date:'mediumDate' }} {{item.timestamp*1000 | date:'shortTime' }}
+              <div class="col-6 col-sm-2">
+                <span class="small muted">{{item.timestamp*1000 | date:'mediumDate' }} {{item.timestamp*1000 |
+                  date:'shortTime' }}</span>
               </div>
               <div class="col-6 col-sm-1 text-right">
                 <a (click)="removeFromScrobbleList(item)" class="glyph glyph-delete"></a>
@@ -27,7 +28,8 @@
             </div>
           </li>
         </ol>
-        <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0 && !isBusy">Scrobble now</button>
+        <button class="btn btn-primary" (click)="scrobbleNow()" *ngIf="manualScrobblingList.length > 0 && !isBusy">Scrobble
+          now</button>
       </div>
     </div>
   </div>

@@ -154,8 +154,11 @@
     right: 0;
     transition: all 0.2s ease-out;
   }
+  #nowPlaying.small-art.no-focus .image-wrapper {
+    transform: translateY(35px);
+  }
   #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
-    transform: translateY(110px);
+    transform: translateY(150px);
   }
 }
 #nowPlaying .controls-wrapper {

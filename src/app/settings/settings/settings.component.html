@@ -6,7 +6,7 @@
                 <div class="settings-page-p" *ngIf="lastfmusername && lastfmusername.length > 0 && lastfmusername !== 'mdb-skipped'">
                     <span class="">Connected to last.fm: </span>
                     <span>{{lastfmusername && lastfmusername.length > 0}}
-                        <span class="small">({{lastfmusername}})</span>
+                        <span class="small muted">({{lastfmusername}})</span>
                     </span>
                     <a (click)="removeLastfm()">
                         &nbsp;
@@ -22,7 +22,7 @@
                 <div class="settings-page-p">
                     <span class="">Connected to: </span>
                     <span>{{connectiontype}}
-                        <span class="small">({{connectiondetails}})</span>
+                        <span class="small muted">({{connectiondetails}})</span>
                     </span>
                     <a (click)="removeConnection()" *ngIf="connectiondetails">
                         &nbsp;
@@ -72,7 +72,9 @@
                             <span class="state-label state-label-off">Off</span>
                         </button>
                     </div>
-                    <div class="small" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">items in list:
+                    <div class="small" *ngIf="manualScrobblingList && manualScrobblingList.length > 0">
+                        <span class="muted">items in
+                            list:</span>
                         {{manualScrobblingList.length}}
                         <br>
                         <a (click)="scrobbleNow()">Scrobble now</a>
@@ -120,7 +122,7 @@
                                     <input type="radio" name='theme' value="light" [(ngModel)]="settings.theme" #name="ngModel"
                                         name="theme">
                                     <span>Light</span>
-                                    <span class="small"> theme</span>
+                                    <span class="small muted"> theme</span>
                                 </label>
                             </div>
                             <div class="radio">
@@ -128,7 +130,7 @@
                                     <input type="radio" name='theme' value="dark" [(ngModel)]="settings.theme" #name="ngModel"
                                         name="theme">
                                     <span>Dark</span>
-                                    <span class="small"> theme</span>
+                                    <span class="small muted"> theme</span>
                                 </label>
                             </div>
                             <div class="radio">
@@ -136,8 +138,9 @@
                                     <input type="radio" name='theme' value="auto" [(ngModel)]="settings.theme" #name="ngModel"
                                         name="theme">
                                     <span>Auto</span>
-                                    <span class="small"> theme</span>
-                                    <span class="small"> (Dark mode between {{startDate | date: 'mediumTime'}} and
+                                    <span class="small muted"> theme</span>
+                                    <span class="small muted"> (Dark mode between {{startDate | date: 'mediumTime'}}
+                                        and
                                         {{stopDate | date:
                                         'mediumTime'}})</span>
                                 </label>
