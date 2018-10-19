@@ -479,7 +479,8 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.resume();
     }
-    addCustomCssBasedOnRGBA(this.rgba);
+    this.usesDynamicAccentColor = this.booleanState("dynamic-accent-color");
+    if (this.usesDynamicAccentColor) addCustomCssBasedOnRGBA(this.rgba);
   }
   private updateWinTile(url: {}) {
     const Notifications = Windows.UI.Notifications;
