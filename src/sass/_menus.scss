@@ -190,11 +190,11 @@
       text-decoration: none;
     }
     &:hover {
-      border-left-color: theme-color("primary");
+      border-left-color: var(--primary);
     }
     &.active {
       background-color: gray("300");
-      border-left-color: theme-color("primary");
+      border-left-color: var(--primary);
     }
     &:focus,
     &:active {
@@ -202,11 +202,11 @@
     }
   }
   .side-nav__content .search-bar input {
-    color: theme-color("primary");
+    color: var(--primary);
     background: gray("100");
-    border: 1px solid theme-color("primary");
+    border: 1px solid var(--primary);
   }
   .side-nav__content .search-bar .input-group-addon {
-    color: theme-color("primary");
+    color: var(--primary);
   }
 }

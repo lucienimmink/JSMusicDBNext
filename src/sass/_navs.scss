@@ -1,24 +1,23 @@
 .nav-letters {
-    height: 50px;
-    top: 50px;
-    position: fixed;
-    width: 100%;
-    background: theme-color('primary');
-    .nav-item {
-        a {
-            cursor: pointer;
-            display: block;
-            color: $white !important;
-            padding: 13px 0;
-            background: transparent;
-            will-change: background;
-            transition: background 0.2s ease-in;
-            &:hover,
-            &:focus,
-            &.active {
-                color: gray('100');
-                background: darken(theme-color('primary'), 10%);
-            }
-        }
+  height: 50px;
+  top: 50px;
+  position: fixed;
+  width: 100%;
+  background: var(--primary);
+  .nav-item {
+    a {
+      cursor: pointer;
+      display: block;
+      color: var(--letter-color) !important;
+      padding: 13px 0;
+      background: transparent;
+      will-change: background;
+      transition: background 0.2s ease-in;
+      &:hover,
+      &:focus,
+      &.active {
+        background: var(--darken);
+      }
     }
+  }
 }

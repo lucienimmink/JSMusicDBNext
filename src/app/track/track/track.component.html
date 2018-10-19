@@ -8,7 +8,7 @@
         <span class="glyph glyph-play"></span>
       </span>{{track.title}}
       <br />
-      <span class="small color-type-secondary">
+      <span class="small muted color-type-secondary">
         {{track.trackArtist}} &bull; {{track.album.name}}
       </span>
     </div>
@@ -16,10 +16,10 @@
       {{track.duration | timeFormat }}
       <br />
       <span *ngIf="!track.isPlaying">
-        <span class="small color-type-secondary">{{track.type}}</span>
+        <span class="small muted color-type-secondary">{{track.type}}</span>
       </span>
       <span *ngIf="track.isPlaying">
-        <span class="small color-type-secondary">{{track.position | timeFormat}} &nbsp;</span>
+        <span class="small muted color-type-secondary">{{track.position | timeFormat}} &nbsp;</span>
       </span>
     </div>
   </li>

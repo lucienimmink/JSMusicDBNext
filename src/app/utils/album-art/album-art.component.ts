@@ -1,10 +1,26 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+declare const window: any;
+
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  ElementRef,
+  OnDestroy
+} from "@angular/core";
+import { Subscription } from "rxjs";
 import { set, get } from "idb-keyval";
 
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AlbumArtService } from "./../album-art.service";
 import { AlbumArt } from "./album-art";
+import {
+  getDominantColor,
+  getColorsFromRGB,
+  addCustomCss
+} from "./../colorutil";
+import { ColorService } from "./../color.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,22 +28,49 @@ import { AlbumArt } from "./album-art";
   templateUrl: "./album-art.component.html",
   providers: [AlbumArtService]
 })
-export class AlbumArtComponent implements OnInit, OnChanges {
+export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
+  private subscription: Subscription;
   public albumart: AlbumArt = new AlbumArt();
 
   @Input() album: Album;
   @Input() track: Track;
+  @Input("dynamic-accent-color") dynamicAccentColor: boolean = false;
 
   private searchArtist: string;
   private searchAlbum: string;
   private searchType = "album";
   private NOIMAGE = "global/images/no-cover.png";
+  private hasEvent: boolean = false;
 
-  constructor(private albumArtService: AlbumArtService) {
+  constructor(
+    private albumArtService: AlbumArtService,
+    private elementRef: ElementRef,
+    private colorService: ColorService
+  ) {
+    const c = this;
     this.albumart.name = "Unknown album";
     this.albumart.url = this.NOIMAGE;
+    this.subscription = this.colorService.blob$.subscribe(() => {
+      const blob = new Blob([window.externalBlob], { type: "image/png" });
+      // build a url from the blob
+      const objectURL = URL.createObjectURL(blob);
+      const image = new Image();
+      image.src = objectURL;
+      // now let's set that color!
+      getDominantColor(
+        image,
+        rgba => {
+          const colors = getColorsFromRGB(rgba);
+          c.colorService.setColor(colors.rgba);
+          addCustomCss(colors);
+        },
+        true
+      );
+    });
   }
-
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   ngOnInit() {
     let key = "";
     if (this.album) {
@@ -64,6 +107,28 @@ export class AlbumArtComponent implements OnInit, OnChanges {
           );
       }
     });
+    if (this.dynamicAccentColor && !this.hasEvent) {
+      // add loader to this.elementRef if not present
+      // onload = colorthief
+      // then save custom color using colorutil
+      const c = this;
+      this.elementRef.nativeElement.childNodes[0].addEventListener(
+        "load",
+        function() {
+          getDominantColor(
+            this,
+            rgba => {
+              const colors = getColorsFromRGB(rgba);
+              c.colorService.setColor(colors.rgba);
+              addCustomCss(colors);
+            },
+            false
+          );
+        },
+        { passive: true }
+      );
+      this.hasEvent = true;
+    }
   }
 
   ngOnChanges(changes) {

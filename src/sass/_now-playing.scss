@@ -111,7 +111,7 @@
 @media screen and (min-width: 1200px) {
   #nowPlaying .image-wrapper,
   #nowPlaying .youtube-wrapper {
-    height: calc(100% - 70px);
+    height: calc(100% - 115px);
   }
   #nowPlaying.small-art .image-wrapper canvas {
     height: calc(100% + 115px);
@@ -154,8 +154,11 @@
     right: 0;
     transition: all 0.2s ease-out;
   }
+  #nowPlaying.small-art.no-focus .image-wrapper {
+    transform: translateY(35px);
+  }
   #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
-    transform: translateY(110px);
+    transform: translateY(150px);
   }
 }
 #nowPlaying .controls-wrapper {
@@ -229,12 +232,12 @@
   margin: -1px 0 0 6px;
 }
 #nowPlaying .icons button.active {
-  background: theme-color("primary");
-  color: $white;
+  background: var(--primary);
+  color: var(--letter-color);
 }
 #nowPlaying .icons button:active {
   background: gray("100");
-  color: theme-color("primary");
+  color: var(--primary);
 }
 #nowPlaying .icons .btn-updown {
   margin-top: -20px;
@@ -264,7 +267,7 @@
   position: relative;
   height: 6px;
   .progress-bar {
-    background-color: theme-color("primary");
+    background-color: var(--primary);
   }
 }
 #nowPlaying .time {
@@ -318,7 +321,7 @@ footer.hidePlayer {
 #position-indicator {
   width: 18px;
   height: 18px;
-  border-color: theme-color("primary");
+  border-color: var(--primary);
   border-width: 3px;
   border-radius: 50%;
   border-style: solid;

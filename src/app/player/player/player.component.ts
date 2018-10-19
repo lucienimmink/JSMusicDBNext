@@ -16,6 +16,11 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { AnimationService } from "./../../utils/animation.service";
 import { PathService } from "./../../utils/path.service";
 import { AlbumArtService } from "./../../utils/album-art.service";
+import {
+  removeCustomCss,
+  addCustomCssBasedOnRGBA
+} from "./../../utils/colorutil";
+import { ColorService } from "../../utils/color.service";
 import { Playlist } from "./../../playlist/playlist";
 
 @Component({
@@ -30,6 +35,7 @@ export class PlayerComponent implements OnDestroy {
   private subscription3: Subscription;
   private subscription4: Subscription;
   private subscription5: Subscription;
+  private subscription6: Subscription;
   private playlist: Playlist;
   private trackIndex: any;
   private track: Track;
@@ -51,6 +57,10 @@ export class PlayerComponent implements OnDestroy {
   private systemMediaControls: any;
   private displayUpdater: any;
   private audioCtx: AudioContext;
+  private rgba: any;
+  public usesDynamicAccentColor: boolean = this.booleanState(
+    "dynamic-accent-color"
+  );
 
   @ViewChild(AlbumArtComponent) albumart: AlbumArtComponent;
 
@@ -61,7 +71,8 @@ export class PlayerComponent implements OnDestroy {
     private lastFMService: LastfmService,
     private coreService: CoreService,
     private animationService: AnimationService,
-    private albumartService: AlbumArtService
+    private albumartService: AlbumArtService,
+    private colorService: ColorService
   ) {
     this.subscription = this.playerService.playlistAnnounced$.subscribe(
       playerData => {
@@ -196,9 +207,15 @@ export class PlayerComponent implements OnDestroy {
       analyser.connect(javascriptNode);
 
       source.connect(this.audioCtx.destination);
-      javascriptNode.onaudioprocess = function() {
+      javascriptNode.onaudioprocess = () => {
         // tslint:disable-next-line:no-shadowed-variable
         const canvas = document.querySelector("canvas");
+        const color = this.rgba || {
+          r: 0,
+          g: 110,
+          b: 205,
+          a: 1
+        };
         WIDTH = canvas.offsetWidth;
         HEIGHT = canvas.offsetHeight;
         canvas.width = WIDTH;
@@ -216,12 +233,25 @@ export class PlayerComponent implements OnDestroy {
           barHeight = dataArray[i] * y;
           // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
           // rgba(0, 120, 215, 1);
-          ctx.fillStyle = `rgba(0,120,215,${dataArray[i] / 255})`;
+          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[
+            i
+          ] / 255})`;
           ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
           x += barWidth + 1;
         }
       };
     }
+    this.subscription6 = this.colorService.color$.subscribe(rgba => {
+      this.rgba = rgba;
+    });
+  }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
   }
 
   setTrack(position: any) {
@@ -299,6 +329,9 @@ export class PlayerComponent implements OnDestroy {
     this.subscription.unsubscribe(); // prevent memory leakage
     this.subscription2.unsubscribe(); // prevent memory leakage
     this.subscription3.unsubscribe(); // prevent memory leakage
+    this.subscription4.unsubscribe();
+    this.subscription5.unsubscribe();
+    this.subscription6.unsubscribe();
     this.mediaObject.removeEventListener("ended");
     this.mediaObject.removeEventListener("timeupdate");
     this.mediaObject.removeEventListener("play");
@@ -446,6 +479,8 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.resume();
     }
+    this.usesDynamicAccentColor = this.booleanState("dynamic-accent-color");
+    if (this.usesDynamicAccentColor) addCustomCssBasedOnRGBA(this.rgba);
   }
   private updateWinTile(url: {}) {
     const Notifications = Windows.UI.Notifications;
@@ -537,6 +572,7 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.suspend();
     }
+    removeCustomCss();
   }
   onpause() {
     document
@@ -552,6 +588,7 @@ export class PlayerComponent implements OnDestroy {
     if (this.audioCtx) {
       this.audioCtx.suspend();
     }
+    removeCustomCss();
   }
 
   toggleShuffle() {

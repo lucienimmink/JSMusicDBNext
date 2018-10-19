@@ -1,11 +1,11 @@
-.small {
-    opacity: 0.6;
+.muted {
+  opacity: 0.6;
 }
 a,
 .clickable {
-    cursor: pointer;
-    color: theme-color('primary') !important;
-    &:hover {
-        color: darken(theme-color('primary'), 10%) !important;
-    }
+  cursor: pointer;
+  color: var(--primary);
+  &:hover {
+    color: var(--darken);
+  }
 }

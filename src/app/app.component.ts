@@ -1,3 +1,5 @@
+declare const Windows: any;
+
 import {
   Component,
   OnInit,
@@ -7,6 +9,7 @@ import {
 } from "@angular/core";
 import { get, set } from "idb-keyval";
 import { Observable, Subscription } from "rxjs";
+import { tinycolor } from "@thebespokepixel/es-tinycolor";
 
 import { musicdbcore } from "./org/arielext/musicdb/core";
 import { CollectionService } from "./utils/collection.service";
@@ -18,6 +21,7 @@ import { LastfmService } from "./utils/lastfm.service";
 import { LoginService } from "./login/login.service";
 import { AnimationService } from "./utils/animation.service";
 import { ConfigService } from "./utils/config.service";
+import { ColorService } from "./utils/color.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -31,7 +35,8 @@ import { ConfigService } from "./utils/config.service";
     LastfmService,
     AnimationService,
     ConfigService,
-    PlaylistService
+    PlaylistService,
+    ColorService
   ]
 })
 export class AppComponent implements OnInit, OnDestroy {
@@ -47,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public scanperc = 0;
   public isReloading = false;
   private hasBeenReloading = false;
+  private isHostedApp: boolean = typeof Windows !== "undefined";
   // tslint:disable-next-line:max-line-length
   constructor(
     private collectionService: CollectionService,
@@ -54,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private configService: ConfigService,
     private playerService: PlayerService,
+    private colorService: ColorService,
     viewContainerRef: ViewContainerRef
   ) {
     if (this.loginService.hasToken) {
@@ -181,5 +188,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   onExternalStop(event: Event): void {
     this.playerService.stop();
+  }
+  onExternalBlob(): void {
+    // we received a blob; tell the colorserivce to do it's magic with it
+    this.colorService.setBlob();
   }
 }

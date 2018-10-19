@@ -14,7 +14,7 @@
       width: 100%;
     }
     .now-playing {
-      color: theme-color("primary");
+      color: var(--primary);
     }
     .small {
       display: block;
@@ -101,11 +101,11 @@
     }
     &.header-seperator {
       padding: 10px 15px;
-      border-bottom-color: theme-color("primary");
+      border-bottom-color: var(--primary);
     }
     &.active {
-      color: $white;
-      background-color: theme-color("primary");
+      color: var(--letter-color);
+      background-color: var(--primary);
     }
     .glyph {
       margin: -2px 5px 0 0;

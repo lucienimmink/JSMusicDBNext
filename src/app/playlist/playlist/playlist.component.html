@@ -8,13 +8,16 @@
             <a class="btn btn-link px-0" (click)="setPlaylist('current')">Current playlist</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved tracks on last.fm</a>
+            <a class="btn btn-link px-0" (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved
+              tracks on last.fm</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('random')">{{playlistService.numberOfTracksInAPlaylist}} random tracks</a>
+            <a class="btn btn-link px-0" (click)="setPlaylist('random')">{{playlistService.numberOfTracksInAPlaylist}}
+              random tracks</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">{{playlistService.numberOfTracksInAPlaylist}} tracks by preference</a>
+            <a class="btn btn-link px-0" (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">{{playlistService.numberOfTracksInAPlaylist}}
+              tracks by preference</a>
           </li>
           <li class="nav-item">
             <a class="btn btn-link px-0" (click)="setPlaylist('artist')">Artist radio</a>
@@ -30,7 +33,7 @@
       </div>
       <div class="col-12 col-lg-9 offset-lg-3" *ngIf="loading">
         <br />
-        <p class="small" *ngIf="playlist && playlist.tracks && playlist.tracks.length > 0">
+        <p class="small muted" *ngIf="playlist && playlist.tracks && playlist.tracks.length > 0">
           Tracks found: {{ playlist.tracks.length}}
         </p>
         <div class="progress-bar">
@@ -44,7 +47,7 @@
       <div class="col-12 col-lg-9 offset-lg-3" *ngIf="playlist && !loading && !showStartingArtist">
         <h4>
           {{playlist.name}}
-          <span class="small color-type-secondary">({{playlist.tracks.length}})</span> &nbsp;
+          <span class="small muted color-type-secondary">({{playlist.tracks.length}})</span> &nbsp;
           <a (click)="updatePlaylist(playlist)" *ngIf="playlist.isOwn">
             <span class="glyph glyph-edit small"></span>
           </a> &nbsp;
@@ -77,7 +80,8 @@
           <div class="form-group row">
             <label for="sort" class="col-12 col-sm-3 col-form-label">Select an artist</label>
             <div class="col col-sm-9">
-              <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName" (ngModelChange)="onChange($event)">
+              <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName"
+                (ngModelChange)="onChange($event)">
                 <option *ngFor="let artist of artists">{{artist.name}}</option>
               </select>
             </div>

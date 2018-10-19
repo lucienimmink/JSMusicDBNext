@@ -1,4 +1,3 @@
-$blue: lighten(rgba(0, 120, 215, 1), 15%);
 $gray-900: #f8f9fa !default;
 $gray-800: #e9ecef !default;
 $gray-700: #dee2e6 !default;
@@ -9,4 +8,11 @@ $gray-300: #495057 !default;
 $gray-200: #343a40 !default;
 $gray-100: #212529 !default;
 
-$link-hover-color: lighten($blue, 15);
+:root {
+  --primary: rgba(0, 130, 225, 1);
+  --darken: rgba(0, 146, 253, 1);
+  --lighten: rgba(0, 113, 196, 1);
+  --text-light: rgba(0, 130, 225, 1);
+  --text-dark: rgba(0, 130, 225, 1);
+  --letter-color: rgba(255, 255, 255, 1);
+}

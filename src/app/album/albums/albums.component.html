@@ -6,7 +6,7 @@
           <h4>
             <a (click)="toggleJumpList()">{{artist.albumArtist || artist.name}}</a>
             &nbsp;
-            <span class="small">({{artist.albums && artist.albums.length}})</span>
+            <span class="small muted">({{artist.albums && artist.albums.length}})</span>
           </h4>
           <ul>
             <li *ngFor="let album of artist.albums" (click)="navigateToAlbum(album)">
@@ -15,7 +15,7 @@
               </div>
               <div class="text-wrapper">
                 <span class="text">{{album.name}}</span>
-                <span class="small" *ngIf="album.year">Year: {{album.year}}</span>
+                <span class="small muted" *ngIf="album.year">Year: {{album.year}}</span>
               </div>
             </li>
           </ul>
