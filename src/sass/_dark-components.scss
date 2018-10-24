@@ -1,8 +1,8 @@
 .btn-link {
-  color: var(--textDark);
+  color: var(--text-dark);
 }
 .btn-link:hover {
-  color: var(--textDark);
+  color: var(--text-dark);
 }
 
 // _headers
@@ -22,7 +22,7 @@ h4,
   li {
     border-bottom: 1px solid gray("300");
     .now-playing {
-      color: var(--textDark);
+      color: var(--text-dark);
     }
     &:hover {
       background: gray("200");
@@ -59,11 +59,9 @@ a:not([href]):not([tabindex]),
 }
 
 // now-playing
-
-// now-playing
 #nowPlaying {
   .controls-wrapper h4,
   .controls-wrapper h5 a {
-    color: var(--text-dark);
+    text-shadow: 0 0 1px var(--lighten);
   }
 }
