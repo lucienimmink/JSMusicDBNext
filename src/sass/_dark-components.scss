@@ -57,3 +57,13 @@ a:not([href]):not([tabindex]),
     color: var(--lighten);
   }
 }
+
+// now-playing
+
+// now-playing
+#nowPlaying {
+  .controls-wrapper h4,
+  .controls-wrapper h5 a {
+    color: var(--text-dark);
+  }
+}

@@ -163,8 +163,9 @@ h4,
   &.small-art.no-focus .control-wrapper-wrapper {
     background: linear-gradient(to bottom, transparent 90%, gray("100") 100%);
   }
+  .controls-wrapper h4,
   .controls-wrapper h5 a {
-    color: gray("900") !important;
+    color: var(--text-light);
   }
 }
 #nowPlaying .icons button.active {
