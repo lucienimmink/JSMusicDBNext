@@ -180,6 +180,9 @@
     width: calc(100% - 240px);
     margin: 0;
   }
+  #nowPlaying.small-art .controls-wrapper h5 {
+    font-weight: 400;
+  }
 }
 #nowPlaying .controls-wrapper h4 {
   padding-top: 10px;
