@@ -1,6 +1,7 @@
 declare const window: any;
 
 import { tinycolor } from "@thebespokepixel/es-tinycolor";
+import FastAverageColor from "fast-average-color/dist/index.es6";
 
 const convertToStrict = (color): any => {
   color.r = Math.floor(color.r);
@@ -62,12 +63,9 @@ export function getDominantColor(img, cb, override): any {
     const clone = new Image();
     clone.crossOrigin = "Anonymous";
     clone.src = img.src;
-    import("node-vibrant").then(Vibrant => {
-      Vibrant.from(clone)
-        .getPalette()
-        .then(palette => {
-          cb(convertToStrict(convertSwatchToRGB(palette.Vibrant)));
-        });
+    const fac = new FastAverageColor();
+    fac.getColorAsync(clone, color => {
+      cb(convertToStrict(new tinycolor(color.rgba).toRgb()));
     });
   }
 }
