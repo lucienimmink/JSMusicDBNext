@@ -62,6 +62,6 @@ a:not([href]):not([tabindex]),
 #nowPlaying {
   .controls-wrapper h4,
   .controls-wrapper h5 a {
-    text-shadow: 0 0 1px var(--lighten);
+    text-shadow: 0 0 5px var(--lighten);
   }
 }
