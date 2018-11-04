@@ -31,13 +31,8 @@ h4,
 }
 // player
 .player {
-  .row .btn.active {
-    background: var(--primary);
-    color: gray("100") !important;
-  }
   .row .btn:active {
-    background: gray("100");
-    color: var(--primary);
+    background: var(--text-dark);
   }
 }
 .progress-bar {

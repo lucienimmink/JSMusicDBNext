@@ -1,6 +1,6 @@
 {
   "name": "jsmusicdb-next",
-  "version": "2.9.3",
+  "version": "2.9.4",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -36,7 +36,7 @@
     "jsrsasign": "^8.0.12",
     "ngx-bootstrap": "^3.1.1",
     "ngx-youtube-player": "^6.0.0",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.10.0",
     "rxjs": "^6.3.3",
     "winstrap": "^0.5.12",
     "zone.js": "^0.8.26"

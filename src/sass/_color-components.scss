@@ -202,10 +202,10 @@ body {
 .player {
   .row .btn.active {
     background: var(--primary);
-    color: gray("100") !important;
+    color: var(--letter-color);
   }
   .row .btn:active {
-    background: gray("100");
+    background: var(--text-light);
     color: var(--primary);
   }
 }

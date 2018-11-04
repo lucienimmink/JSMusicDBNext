@@ -157,6 +157,9 @@
   #nowPlaying.small-art.no-focus .control-wrapper-wrapper {
     transform: translateY(150px);
   }
+  #nowPlaying.small-art.no-focus .image-wrapper canvas {
+    bottom: -80px;
+  }
 }
 #nowPlaying .controls-wrapper {
   position: relative;
