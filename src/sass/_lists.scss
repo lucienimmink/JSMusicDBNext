@@ -12,6 +12,7 @@
     cursor: pointer;
     img {
       width: 100%;
+      border: 1px solid transparent;
     }
     .now-playing {
       color: var(--primary);
@@ -56,6 +57,7 @@
   height: 60px;
   box-shadow: none;
   background-size: contain;
+  border: 1px solid transparent;
 }
 .container-longlist .panel-info {
   display: none;
