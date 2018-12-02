@@ -58,6 +58,10 @@ export class ConfigService {
     localStorage.setItem("style", style);
     this.themeSource.next(this._theme);
     this.modeSource.next(style);
+    // emit event for external usage
+    document
+      .querySelector("mdb-player")
+      .dispatchEvent(new CustomEvent("external.mdbtheme", { detail: style }));
   }
 
   get theme(): string {

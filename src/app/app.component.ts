@@ -1,4 +1,5 @@
 declare const Windows: any;
+declare const window: any;
 
 import {
   Component,
@@ -132,6 +133,9 @@ export class AppComponent implements OnInit, OnDestroy {
     const canPlayType = this.mediaObject.canPlayType("audio/flac");
     this.isFlacSupported =
       canPlayType === "probably" || canPlayType === "maybe";
+    if (window.runningInElectron) {
+      document.querySelector("body").classList.add("electron");
+    }
   }
 
   getCollection() {
