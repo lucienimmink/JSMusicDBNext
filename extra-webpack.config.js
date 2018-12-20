@@ -11,7 +11,7 @@ module.exports = {
       ]),
       minimize: true,
       purifyOptions: {
-        whitelist: ["title-bar*", "*tooltip*"]
+        whitelist: ["title-bar*", "title-bar-btns", "*tooltip*"]
       }
     })
   ]
