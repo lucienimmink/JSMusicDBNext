@@ -237,7 +237,7 @@ body {
 }
 
 // titlebars
-#title-bar-btns button {
+.title-bar-btns button {
   color: gray("900");
   &:hover {
     background-color: gray("400");

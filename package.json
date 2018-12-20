@@ -7,7 +7,8 @@
     "start": "npm run --silent sass:dark && ng serve",
     "sass": "node-sass",
     "sass:dark": "node-sass --output-style compressed --omit-source-map-url ./src/sass/dark.scss > ./src/global/css/dark.css",
-    "build": "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\" --subresource-integrity"
+    "build": "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\" --subresource-integrity",
+    "postversion": "npm run --silent build && npm run --silent publish"
   },
   "author": "Lucien Immink",
   "description": "Web version of musicdb next",
@@ -42,13 +43,17 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^7.1.1",
     "@angular-devkit/build-angular": "^0.10.7",
     "@angular/cli": "^7.1.3",
     "@angular/compiler-cli": "7.1.3",
     "@angular/language-service": "7.1.3",
     "@isaac.frontend/stylelint-config-scss": "^1.1.1",
-    "@types/node": "^10.12.12",
+    "@types/node": "^10.12.15",
+    "glob-all": "^3.1.0",
     "prettier-stylelint": "^0.4.2",
+    "purify-css": "^1.2.5",
+    "purifycss-webpack": "^0.7.0",
     "stylelint": "^9.9.0",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
