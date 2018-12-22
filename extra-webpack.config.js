@@ -1,4 +1,5 @@
 const PurifyCSSPlugin = require("purifycss-webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const glob = require("glob-all");
 
@@ -13,6 +14,16 @@ module.exports = {
       purifyOptions: {
         whitelist: ["title-bar*", "title-bar-btns", "*tooltip*"]
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: "./src/app/sw.js",
+        to: "sw.js"
+      },
+      {
+        from: "./src/global",
+        to: "global"
+      }
+    ])
   ]
 };

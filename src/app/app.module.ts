@@ -5,7 +5,6 @@ import {
 import { NgModule, LOCALE_ID } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
-import { ServiceWorkerModule } from "@angular/service-worker";
 import { YoutubePlayerModule } from "ngx-youtube-player";
 import { TooltipModule, ModalModule } from "ngx-bootstrap";
 
@@ -75,11 +74,8 @@ import { PlayerComponent } from "./player/player/player.component";
     FormsModule,
     routing,
     YoutubePlayerModule,
-    TooltipModule.forRoot(),
+    TooltipModule.forRoot()
     // , ModalModule.forRoot()
-    ServiceWorkerModule.register("/ngsw-worker.js", {
-      enabled: true || environment.production
-    })
   ],
   providers: [
     appRoutingProviders,
@@ -88,4 +84,19 @@ import { PlayerComponent } from "./player/player/player.component";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("sw.js")
+        .then(function(reg) {
+          // registration worked
+          // console.log('Registration succeeded. Scope is ' + reg.scope);
+        })
+        .catch(function(error) {
+          // registration failed
+          console.log("Registration failed with " + error);
+        });
+    }
+  }
+}

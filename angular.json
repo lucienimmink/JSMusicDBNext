@@ -23,7 +23,11 @@
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules"]
             },
-            "assets": ["src/global", "src/manifest.webmanifest"],
+            "assets": [
+              "src/global",
+              "src/manifest.webmanifest",
+              "src/app/sw.js"
+            ],
             "styles": ["src/sass/base.scss", "src/sass/animations.scss"],
             "scripts": []
           },
@@ -38,7 +42,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": true,
+              "serviceWorker": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
