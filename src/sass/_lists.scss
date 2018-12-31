@@ -4,7 +4,7 @@
   padding: 0;
   li {
     margin: 0 -15px;
-    padding: 10px 5px;
+    padding: 10px 0;
     list-style: none;
     overflow: hidden;
     border-bottom: 1px solid gray("300");
@@ -83,10 +83,10 @@
   text-decoration: none;
 }
 .list-tracks {
-  margin: 0;
+  margin: 0 -10px;
   padding: 0;
   li {
-    padding: 10px 20px;
+    padding: 10px 15px;
     margin: 0 -15px;
     list-style: none;
     overflow: hidden;
@@ -111,6 +111,45 @@
     }
     .glyph {
       margin: -2px 5px 0 0;
+    }
+  }
+}
+
+.list-recently-added {
+  .album-panel:nth-child(13) {
+    display: none;
+  }
+  .album-panel:nth-child(14) {
+    display: none;
+  }
+  @include media-breakpoint-up(sm) {
+    .album-panel:nth-child(11) {
+      display: none;
+    }
+    .album-panel:nth-child(12) {
+      display: none;
+    }
+  }
+  @include media-breakpoint-up(lg) {
+    .album-panel:nth-child(13) {
+      display: block;
+    }
+    .album-panel:nth-child(14) {
+      display: block;
+    }
+    .album-panel:nth-child(11) {
+      display: block;
+    }
+    .album-panel:nth-child(12) {
+      display: block;
+    }
+  }
+  @include media-breakpoint-up(xl) {
+    .album-panel:nth-child(13) {
+      display: none;
+    }
+    .album-panel:nth-child(14) {
+      display: none;
     }
   }
 }

@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ) {
       this.startPolling();
     }
-    this.recentlyAdded = this.core.getLatestAdditions(12);
+    this.recentlyAdded = this.core.getLatestAdditions(14);
     get("cached-recently-listened").then((data: any) => {
       if (data) {
         this.populate(data);
@@ -144,12 +144,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
   setImage(track: any): String {
-    // last one is the best possible quality
     if (track.image) {
-      return track.image[track.image.length - 1]["#text"];
-    } else {
-      return "";
+      return (
+        track.image[track.image.length - 1]["#text"] ||
+        "/global/images/no-cover.png"
+      );
     }
+    return "/global/images/no-cover.png";
   }
 
   populate(json: any): void {
