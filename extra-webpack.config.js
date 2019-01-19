@@ -1,19 +1,18 @@
-const PurifyCSSPlugin = require("purifycss-webpack");
+const PurgecssPlugin = require("purgecss-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const glob = require("glob-all");
 
+const PATHS = {
+  src: path.join(__dirname, "src")
+};
+
 module.exports = {
   plugins: [
-    new PurifyCSSPlugin({
-      paths: glob.sync([
-        path.join(__dirname, "src/**/*.html"),
-        path.join(__dirname, "src/**/*.ts")
-      ]),
-      minimize: true,
-      purifyOptions: {
-        whitelist: ["title-bar*", "title-bar-btns", "*tooltip*"]
-      }
+    new PurgecssPlugin({
+      whitelist: ["tooltip"],
+      whitelistPatterns: [/^tooltip-/],
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
     }),
     new CopyWebpackPlugin([
       {
