@@ -245,8 +245,6 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
   private getLocation(): void {
     navigator.geolocation.getCurrentPosition(pos => {
-      set("coords", pos);
-
       if (pos) {
         this.configService
           .getSunriseInfo(pos.coords.latitude, pos.coords.longitude)
