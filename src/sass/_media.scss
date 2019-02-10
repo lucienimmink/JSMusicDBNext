@@ -51,7 +51,7 @@
   }
   .panel-info {
     position: absolute;
-    padding: 5px 10px;
+    padding: 5px;
     bottom: -1px;
     left: -1px;
     right: -1px;
@@ -66,9 +66,6 @@
     overflow: hidden;
     text-align: center;
     text-shadow: 0 0 3px $black;
-    @include media-breakpoint-up(sm) {
-      padding: 10px;
-    }
     > span {
       display: block;
       overflow: hidden;

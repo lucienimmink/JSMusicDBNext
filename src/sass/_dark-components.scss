@@ -54,9 +54,16 @@ a:not([href]):not([tabindex]),
 }
 
 // now-playing
-#nowPlaying {
+#nowPlaying.small-art {
   .controls-wrapper h4,
   .controls-wrapper h5 a {
     text-shadow: 0 0 5px var(--lighten);
   }
+}
+
+.media-panel,
+.nowplaying-image,
+.jumbotron img,
+.container-longlist .panel-background {
+  border: 1px solid gray("100");
 }

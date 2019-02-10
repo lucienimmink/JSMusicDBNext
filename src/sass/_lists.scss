@@ -87,7 +87,9 @@
   padding: 0;
   li {
     padding: 10px 5px;
-    margin: 0 -15px;
+    @include media-breakpoint-up(sm) {
+      margin: 0 -15px;
+    }
     list-style: none;
     overflow: hidden;
     border-bottom: 1px solid gray("300");

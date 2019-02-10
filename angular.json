@@ -20,6 +20,7 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "es5BrowserSupport": true,
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules"]
             },
@@ -43,6 +44,7 @@
               "vendorChunk": false,
               "buildOptimizer": true,
               "serviceWorker": false,
+              "es5BrowserSupport": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

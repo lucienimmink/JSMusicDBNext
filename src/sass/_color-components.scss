@@ -163,10 +163,12 @@ h4,
   &.small-art.no-focus .control-wrapper-wrapper {
     background: linear-gradient(to bottom, transparent 90%, gray("100") 100%);
   }
-  .controls-wrapper h4,
-  .controls-wrapper h5 a {
-    color: var(--letter-color);
-    text-shadow: 0 0 5px var(--darken);
+  &.small-art {
+    .controls-wrapper h4,
+    .controls-wrapper h5 a {
+      color: var(--letter-color);
+      text-shadow: 0 0 5px var(--darken);
+    }
   }
 }
 #nowPlaying .icons button.active {
@@ -272,5 +274,6 @@ a:not([href]):not([tabindex]),
 .nowplaying-image,
 .jumbotron img,
 .container-longlist .panel-background {
+  border: 1px solid gray("100");
   box-shadow: 0px 0px 1px var(--primary);
 }
