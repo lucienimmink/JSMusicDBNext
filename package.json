@@ -10,6 +10,9 @@
     "build": "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\"",
     "postversion": "npm run --silent build && npm publish"
   },
+  "files": [
+    "dist"
+  ],
   "author": "Lucien Immink",
   "description": "Web version of musicdb next",
   "repository": {
