@@ -5,25 +5,40 @@
         <h4>Playlists</h4>
         <ul class="nav flex-column">
           <li *ngIf="currentPlaylist" class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('current')">Current playlist</a>
+            <a class="btn btn-link px-0" (click)="setPlaylist('current')"
+              >Current playlist</a
+            >
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('last.fm')" *ngIf="username && username !=='mdb-skipped'">Loved
-              tracks on last.fm</a>
+            <a
+              class="btn btn-link px-0"
+              (click)="setPlaylist('last.fm')"
+              *ngIf="username && username !== 'mdb-skipped'"
+              >Loved tracks on last.fm</a
+            >
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('random')">{{playlistService.numberOfTracksInAPlaylist}}
-              random tracks</a>
+            <a class="btn btn-link px-0" (click)="setPlaylist('random')"
+              >{{ playlistService.numberOfTracksInAPlaylist }} random tracks</a
+            >
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('radio')" *ngIf="username && username !=='mdb-skipped'">{{playlistService.numberOfTracksInAPlaylist}}
-              tracks by preference</a>
+            <a
+              class="btn btn-link px-0"
+              (click)="setPlaylist('radio')"
+              *ngIf="username && username !== 'mdb-skipped'"
+              >{{ playlistService.numberOfTracksInAPlaylist }} tracks by
+              preference</a
+            >
           </li>
           <li class="nav-item">
-            <a class="btn btn-link px-0" (click)="setPlaylist('artist')">Artist radio</a>
+            <a class="btn btn-link px-0" (click)="setPlaylist('artist')"
+              >Artist radio</a
+            >
           </li>
           <li *ngFor="let playlist of ownPlaylists" class="nav-item">
-            <a (click)="setPlaylist(playlist)">{{playlist.name}}
+            <a (click)="setPlaylist(playlist)"
+              >{{ playlist.name }}
               <a (click)="removePlaylist(playlist)">
                 <span class="glyph glyph-delete"></span>
               </a>
@@ -33,8 +48,11 @@
       </div>
       <div class="col-12 col-lg-9 offset-lg-3" *ngIf="loading">
         <br />
-        <p class="small muted" *ngIf="playlist && playlist.tracks && playlist.tracks.length > 0">
-          Tracks found: {{ playlist.tracks.length}}
+        <p
+          class="small muted"
+          *ngIf="playlist && playlist.tracks && playlist.tracks.length > 0"
+        >
+          Tracks found: {{ playlist.tracks.length }}
         </p>
         <div class="progress-bar">
           <div class="progress-circle"></div>
@@ -44,45 +62,82 @@
           <div class="progress-circle"></div>
         </div>
       </div>
-      <div class="col-12 col-lg-9 offset-lg-3" *ngIf="playlist && !loading && !showStartingArtist">
-        <h4>
-          {{playlist.name}}
-          <span class="small muted color-type-secondary">({{playlist.tracks.length}})</span> &nbsp;
+      <div
+        class="col-12 col-lg-9 offset-lg-3"
+        *ngIf="playlist && !loading && !showStartingArtist"
+      >
+        <h4 class="playlists-header">
+          {{ playlist.name }}
+          <span class="small muted color-type-secondary"
+            >({{ playlist.tracks.length }})</span
+          >
+          &nbsp;
           <a (click)="updatePlaylist(playlist)" *ngIf="playlist.isOwn">
             <span class="glyph glyph-edit small"></span>
-          </a> &nbsp;
+          </a>
+          &nbsp;
           <a (click)="removePlaylist(playlist)" *ngIf="playlist.isOwn">
             <span class="glyph glyph-delete small"></span>
           </a>
         </h4>
-        <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length !== 0">
+        <div
+          class="animated-page"
+          *ngIf="playlist && playlist.tracks && playlist.tracks.length !== 0"
+        >
           <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
         </div>
-        <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length === 0">
+        <div
+          class="animated-page"
+          *ngIf="playlist && playlist.tracks && playlist.tracks.length === 0"
+        >
           <div class="row">
             <div class="col">
-              <p>Unfortunately this playlist is empty :(
-                <br />Find some tracks from an
+              <p>
+                Unfortunately this playlist is empty :( <br />Find some tracks
+                from an
                 <a routerLink="/artists">
-                  <span class="glyph glyph-people"></span> artist</a>,
+                  <span class="glyph glyph-people"></span> artist</a
+                >,
                 <a routerLink="/albums">
-                  <span class="glyph glyph-music-album"></span> album</a> or a
+                  <span class="glyph glyph-music-album"></span> album</a
+                >
+                or a
                 <a routerLink="/years">
-                  <span class="glyph glyph-calendar"></span> year</a>
+                  <span class="glyph glyph-calendar"></span> year</a
+                >
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-12 col-lg-9 offset-lg-3" *ngIf="showStartingArtist && !loading && !playlist">
-        <h4 sticky class="header-seperator">Select an artist as starting point</h4>
-        <form role="form" #sortForm="ngForm" [ngClass]="{'theme-alt': theme === 'dark'}">
+      <div
+        class="col-12 col-lg-9 offset-lg-3"
+        *ngIf="showStartingArtist && !loading && !playlist"
+      >
+        <h4 sticky class="header-seperator">
+          Select an artist as starting point
+        </h4>
+        <form
+          role="form"
+          #sortForm="ngForm"
+          [ngClass]="{ 'theme-alt': theme === 'dark' }"
+        >
           <div class="form-group row">
-            <label for="sort" class="col-12 col-sm-3 col-form-label">Select an artist</label>
+            <label for="sort" class="col-12 col-sm-3 col-form-label"
+              >Select an artist</label
+            >
             <div class="col col-sm-9">
-              <select class="form-control" #name="ngModel" name="sort" id="sort" [(ngModel)]="startingArtistName"
-                (ngModelChange)="onChange($event)">
-                <option *ngFor="let artist of artists">{{artist.name}}</option>
+              <select
+                class="form-control"
+                #name="ngModel"
+                name="sort"
+                id="sort"
+                [(ngModel)]="startingArtistName"
+                (ngModelChange)="onChange($event)"
+              >
+                <option *ngFor="let artist of artists">{{
+                  artist.name
+                }}</option>
               </select>
             </div>
           </div>

@@ -1,12 +1,20 @@
 .playlists-lg-fixed {
-    @include media-breakpoint-up(lg) {
-        position: fixed;
-        top: 100px;
-        overflow: hidden;
-        width: (1140px / 4);
-        h4 {
-            top: 0;
-            position: relative;
-        }
+  @include media-breakpoint-up(lg) {
+    position: fixed;
+    top: 100px;
+    overflow: hidden;
+    width: (1140px / 4);
+    h4 {
+      top: 0;
+      position: relative;
     }
+  }
+  .nav {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+}
+
+.playlists-header {
+  padding-left: 15px;
 }
