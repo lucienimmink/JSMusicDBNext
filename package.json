@@ -30,7 +30,7 @@
     "@angular/platform-browser-dynamic": "^7.2.8",
     "@angular/router": "^7.2.8",
     "@thebespokepixel/es-tinycolor": "^1.0.4",
-    "@types/youtube": "^0.0.34",
+    "@types/youtube": "^0.0.35",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
     "fast-average-color": "^4.3.0",
