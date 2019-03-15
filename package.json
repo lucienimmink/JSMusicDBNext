@@ -51,7 +51,7 @@
     "@angular/compiler-cli": "^7.2.8",
     "@angular/language-service": "^7.2.8",
     "@isaac.frontend/stylelint-config-scss": "^1.1.1",
-    "@types/node": "^10.12.30",
+    "@types/node": "^11.11.3",
     "copy-webpack-plugin": "^5.0.1",
     "glob-all": "^3.1.0",
     "prettier-stylelint": "^0.4.2",
