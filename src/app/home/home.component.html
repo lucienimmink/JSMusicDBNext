@@ -2,7 +2,7 @@
   <div class="container" *ngIf="recentlyListenedTracks && username">
     <div class="row">
       <div class="col">
-        <div *ngIf="recentlyListenedTracks.length > 0">
+        <div *ngIf="recentlyListenedTracks.length > 0" class="wrapper-home">
           <h4>Recently listened</h4>
           <ol class="list-group list-recently">
             <li
@@ -48,7 +48,7 @@
             </li>
           </ol>
         </div>
-        <div *ngIf="recentlyAdded.length > 0">
+        <div *ngIf="recentlyAdded.length > 0" class="wrapper-home">
           <h4>Recently added / modified</h4>
           <div class="row">
             <div class="media-container col list-recently-added">
