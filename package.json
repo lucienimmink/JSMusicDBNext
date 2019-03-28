@@ -38,7 +38,7 @@
     "idb-keyval": "^3.1.0",
     "jsrsasign": "^8.0.12",
     "ngx-bootstrap": "^3.2.0",
-    "ngx-youtube-player": "^6.0.0",
+    "ngx-youtube-player": "^7.1.1",
     "node-sass": "^4.11.0",
     "rxjs": "^6.4.0",
     "winstrap": "^0.5.12",
