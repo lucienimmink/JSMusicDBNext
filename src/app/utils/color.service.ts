@@ -3,11 +3,10 @@ import { Subject } from "rxjs";
 
 @Injectable()
 export class ColorService {
+  public colorSource = new Subject<any>();
+  public blobSource = new Subject<boolean>();
   public color$ = this.colorSource.asObservable();
   public blob$ = this.blobSource.asObservable();
-  private colorSource = new Subject<any>();
-
-  private blobSource = new Subject<boolean>();
 
   public setColor(rgba: any): void {
     this.colorSource.next(rgba);

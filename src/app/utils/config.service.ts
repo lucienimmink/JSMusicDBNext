@@ -7,7 +7,6 @@ import { catchError, map } from "rxjs/operators";
 
 @Injectable()
 export class ConfigService {
-
   get theme(): string {
     return this._theme;
   }
@@ -33,6 +32,8 @@ export class ConfigService {
     }
   }
   public geoSource = new Subject<any>();
+  public themeSource = new Subject<any>();
+  public modeSource = new Subject<any>();
   public theme$ = this.themeSource.asObservable();
   public mode$ = this.modeSource.asObservable();
   public geo$ = this.geoSource.asObservable();
@@ -41,8 +42,6 @@ export class ConfigService {
   public stopDate: Date;
   private _theme: string = localStorage.getItem("theme") || "light";
   private _mode = "light";
-  private themeSource = new Subject<any>();
-  private modeSource = new Subject<any>();
   private counter: any = 0;
   private COUNTERTIMER: number = 60 * 1000;
 
@@ -52,9 +51,7 @@ export class ConfigService {
     return (
       this.http
         // would like to get the lat/lng from the browser but don't want to bother the user
-        .get(
-          `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`
-        )
+        .get(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`)
         .pipe(catchError(this.handleError))
     );
   }
@@ -75,10 +72,7 @@ export class ConfigService {
     if (d < this.stopDate && d > this.startDate && this._mode !== "dark") {
       this._mode = "dark";
       this.setStyleSheet(this._mode);
-    } else if (
-      (d > this.stopDate || d < this.startDate) &&
-      this._mode !== "light"
-    ) {
+    } else if ((d > this.stopDate || d < this.startDate) && this._mode !== "light") {
       this._mode = "light";
       this.setStyleSheet(this._mode);
     }
@@ -94,12 +88,8 @@ export class ConfigService {
     const stylesheet = document.createElement("link");
     stylesheet.setAttribute("rel", "stylesheet");
     stylesheet.setAttribute("type", "text/css");
-    stylesheet.setAttribute(
-      "href",
-      window.ENV === "prod" || !window.ENV
-        ? `global/css/${style}.css`
-        : `/dist/sass/${style}.css`
-    );
+    // @ts-ignore
+    stylesheet.setAttribute("href", window.ENV === "prod" || !window.ENV ? `global/css/${style}.css` : `/dist/sass/${style}.css`);
     stylesheet.setAttribute("id", "customStylesheet");
 
     const current = document.getElementById("customStylesheet");

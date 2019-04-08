@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
-import { musicdbcore } from './../org/arielext/musicdb/core';
-import Album from './../org/arielext/musicdb/models/Album';
-import Artist from './../org/arielext/musicdb/models/Artist';
-import Track from './../org/arielext/musicdb/models/Track';
-import { CoreService } from './../utils/core.service';
-import { LastfmService } from './../utils/lastfm.service';
-import { Playlist } from './playlist';
+import { musicdbcore } from "./../org/arielext/musicdb/core";
+import Album from "./../org/arielext/musicdb/models/Album";
+import Artist from "./../org/arielext/musicdb/models/Artist";
+import Track from "./../org/arielext/musicdb/models/Track";
+import { CoreService } from "./../utils/core.service";
+import { LastfmService } from "./../utils/lastfm.service";
+import { Playlist } from "./playlist";
 
 @Injectable()
 export class PlaylistService {
+  public playlistSubject: Subject<any> = new Subject<any>();
   public playlistAnnounced$ = this.playlistSubject.asObservable();
   public numberOfTracksInAPlaylist = 100;
 
   private core: musicdbcore;
-  private username: string = localStorage.getItem('lastfm-username');
+  private username: string = localStorage.getItem("lastfm-username");
   private playlist: Playlist;
-  private playlistSubject: Subject<any> = new Subject<any>();
 
   constructor(private coreService: CoreService, private lastfmservice: LastfmService) {
     this.core = this.coreService.getCore();
@@ -28,24 +28,22 @@ export class PlaylistService {
     const randomTracks: string[] = this.shuffle(coretracknames).splice(0, this.numberOfTracksInAPlaylist);
     const tmpPlaylist: Playlist = new Playlist();
     tmpPlaylist.name = `${this.numberOfTracksInAPlaylist} random tracks`;
-    randomTracks.map((id) => {
+    randomTracks.map(id => {
       tmpPlaylist.tracks.push(this.core.tracks[id]);
     });
     return tmpPlaylist;
   }
 
   public generateRadio(): any {
-    this.lastfmservice.getTopArtists(this.username).subscribe(
-      data => {
-        this.playlistSubject.next(this.extractArtists(data));
-      }
-    );
+    this.lastfmservice.getTopArtists(this.username).subscribe(data => {
+      this.playlistSubject.next(this.extractArtists(data));
+    });
   }
 
   public extractTracks(data: any[]): any {
     const tmpPlaylist: Playlist = new Playlist();
-    tmpPlaylist.name = 'Loved tracks on Last.FM';
-    data.map((line) => {
+    tmpPlaylist.name = "Loved tracks on Last.FM";
+    data.map(line => {
       const artistName: string = line.artist.name;
       const trackName: string = line.name;
       const track: any = this.core.getTrackByArtistAndName(artistName, trackName);
@@ -118,7 +116,7 @@ export class PlaylistService {
     if (nextTrack) {
       const nextArtist = nextTrack.artist;
       // if the last added track is a track by the same artist we'd like a different artist (if we can!)
-      if (playlist.tracks.length > 1 && (playlist.tracks[playlist.tracks.length - 1].artist === nextArtist) && foundSimilair.length > 1) {
+      if (playlist.tracks.length > 1 && playlist.tracks[playlist.tracks.length - 1].artist === nextArtist && foundSimilair.length > 1) {
         // do stuff again with foundSimilair
         return this.getNextTrackForPlaylist(foundSimilair, playlist);
       }

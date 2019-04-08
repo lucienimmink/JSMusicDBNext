@@ -137,6 +137,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.stopDate = this.configService.stopDate;
     });
 
+    // @ts-ignore
     if (window.deferredPrompt) {
       this.addToHomescreen = true;
     }
@@ -282,7 +283,9 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   public doAddToHomescreen() {
+    // @ts-ignore
     if (window.deferredPrompt) {
+      // @ts-ignore
       const e: any = window.deferredPrompt;
       e.prompt();
       e.userChoice.then(result => {

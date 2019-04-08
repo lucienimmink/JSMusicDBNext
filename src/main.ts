@@ -9,6 +9,7 @@ if (environment.production) {
 
   window.addEventListener("beforeinstallprompt", e => {
     e.preventDefault();
+    // @ts-ignore
     window.deferredPrompt = e;
   });
 }

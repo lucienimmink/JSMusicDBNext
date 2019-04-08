@@ -16,10 +16,10 @@ const NOIMAGE = "global/images/no-cover.png";
 
 @Injectable()
 export class LastfmService {
+  public manualScrobbleListSource = new Subject<any>();
   public manualScrobbleList$: Observable<any> = this.manualScrobbleListSource.asObservable();
   private hexcase = 0;
   private b64pad = "";
-  private manualScrobbleListSource = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 

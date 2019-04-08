@@ -18,6 +18,7 @@ export class musicdbcore {
   public sortedAlbums: Album[] = [];
 
   public isCoreParsed = false;
+  public coreParsedSource = new Subject<any>();
   public coreParsed$ = this.coreParsedSource.asObservable();
 
   public totals: any = {
@@ -27,8 +28,6 @@ export class musicdbcore {
     playingTime: 0,
     parsingTime: 0
   };
-
-  private coreParsedSource = new Subject<any>();
 
   private latestAdditions: Album[] = [];
 

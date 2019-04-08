@@ -12,10 +12,12 @@ import { LastfmService } from "./../utils/lastfm.service";
 
 @Injectable()
 export class PlayerService {
+  public playlistSource = new Subject<any>();
+  public volumeSource = new Subject<any>();
+  public hideVolumeWindowAsSource = new Subject<any>();
   public playlistAnnounced$ = this.playlistSource.asObservable();
   public volumeAnnounced = this.volumeSource.asObservable();
   public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
-  private playlistSource = new Subject<any>();
   private currentPlaylist: any;
   private currentTrack: Track;
 
@@ -25,27 +27,18 @@ export class PlayerService {
   private forceRestart = false;
 
   private volume = 100;
-  private volumeSource = new Subject<any>();
 
   private position: number;
 
   private lastfmUserName: string = localStorage.getItem("lastfm-username"); // should be subscriber?
 
-  private hideVolumeWindowAsSource = new Subject<any>();
-
   private subscription: Subscription;
 
-  constructor(
-    private lastFMService: LastfmService,
-    private coreService: CoreService,
-    private playlistService: PlaylistService
-  ) {
-    this.subscription = this.playlistService.playlistAnnounced$.subscribe(
-      nextPlaylist => {
-        // a new radio playlist has been generated; let's play
-        this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled);
-      }
-    );
+  constructor(private lastFMService: LastfmService, private coreService: CoreService, private playlistService: PlaylistService) {
+    this.subscription = this.playlistService.playlistAnnounced$.subscribe(nextPlaylist => {
+      // a new radio playlist has been generated; let's play
+      this.doPlayPlaylist(nextPlaylist, 0, true, this.isShuffled);
+    });
   }
 
   public setPosition(position: number) {
@@ -54,12 +47,7 @@ export class PlayerService {
     this.position = null;
   }
 
-  public doPlayAlbum(
-    album: Album,
-    startIndex: number,
-    forceRestart: boolean = false,
-    isShuffled: boolean = false
-  ) {
+  public doPlayAlbum(album: Album, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
@@ -67,23 +55,12 @@ export class PlayerService {
     this.setPlaylist(album, startIndex, forceRestart, isShuffled, "album");
     this.announce();
   }
-  public doPlayPlaylist(
-    playlist: Playlist,
-    startIndex: number,
-    forceRestart: boolean = false,
-    isShuffled: boolean = false
-  ) {
+  public doPlayPlaylist(playlist: Playlist, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
     }
-    this.setPlaylist(
-      playlist,
-      startIndex,
-      forceRestart,
-      isShuffled,
-      "playlist"
-    );
+    this.setPlaylist(playlist, startIndex, forceRestart, isShuffled, "playlist");
     this.announce();
   }
 
@@ -171,13 +148,9 @@ export class PlayerService {
     this.isShuffled = shuffled;
     this.currentPlaylist.playlist.tracks.sort(this.sortPlaylist);
     if (shuffled) {
-      this.currentPlaylist.playlist.tracks = this.shuffle(
-        this.currentPlaylist.playlist.tracks
-      );
+      this.currentPlaylist.playlist.tracks = this.shuffle(this.currentPlaylist.playlist.tracks);
     }
-    this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(
-      this.currentTrack
-    );
+    this.currentPlaylist.startIndex = this.currentPlaylist.playlist.tracks.indexOf(this.currentTrack);
     this.currentPlaylist.forceRestart = false;
     this.announce();
   }
@@ -262,17 +235,13 @@ export class PlayerService {
   }
   public announce() {
     if (this.currentPlaylist) {
-      this.currentTrack = this.currentPlaylist.playlist.tracks[
-        this.currentPlaylist.startIndex
-      ];
+      this.currentTrack = this.currentPlaylist.playlist.tracks[this.currentPlaylist.startIndex];
       if (this.lastfmUserName) {
-        this.lastFMService
-          .getTrackInfo(this.currentTrack, this.lastfmUserName)
-          .subscribe(status => {
-            if (this.currentTrack && status.track) {
-              this.currentTrack.isLoved = status.track.userloved === "1";
-            }
-          });
+        this.lastFMService.getTrackInfo(this.currentTrack, this.lastfmUserName).subscribe(status => {
+          if (this.currentTrack && status.track) {
+            this.currentTrack.isLoved = status.track.userloved === "1";
+          }
+        });
       }
       if (this.currentTrack) {
         this.currentTrack.isPaused = this.isPaused;
@@ -309,13 +278,7 @@ export class PlayerService {
     return false;
   }
 
-  private setPlaylist(
-    playlist: any,
-    startIndex: number = 0,
-    forceRestart: boolean = true,
-    isShuffled: boolean = false,
-    type: string = "album"
-  ): void {
+  private setPlaylist(playlist: any, startIndex: number = 0, forceRestart: boolean = true, isShuffled: boolean = false, type: string = "album"): void {
     this.currentPlaylist = {
       playlist,
       startIndex,

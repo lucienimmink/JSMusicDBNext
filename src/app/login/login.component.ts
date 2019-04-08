@@ -12,7 +12,7 @@ import { User } from "./user";
   selector: "app-login",
   templateUrl: "./login.component.html"
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnDestroy {
   public user: User;
   public theme: string;
   public isLoading = false;

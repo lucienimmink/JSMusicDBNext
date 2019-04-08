@@ -135,7 +135,7 @@ export class BackgroundArtDirective {
     if (this.hasClassName(name)) {
       const container = this.getLoadingContainer();
       const c = container.className;
-      container.className = this.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
+      container.className = c.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
     }
   }
   public toggleLoaded(enable: boolean) {

@@ -25,7 +25,7 @@ import { User } from "./user";
   templateUrl: "./home.component.html",
   providers: [RecentlyListenedService]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnDestroy {
   public recentlyListenedTracks: Track[] = [];
   public username: string;
   private RECENTLYLISTENEDINTERVAL: number = 1000 * 60;
