@@ -1,24 +1,24 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
 import { get, set } from "idb-keyval";
+import { Subscription } from "rxjs";
 
-import { PathService } from "./../../utils/path.service";
-import { CoreService } from "./../../utils/core.service";
-import { CollectionService } from "./../../utils/collection.service";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
+import { CollectionService } from "./../../utils/collection.service";
+import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
+import { PathService } from "./../../utils/path.service";
+import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 
 @Component({
   templateUrl: "./scrobble-cache.component.html"
 })
 export class ScrobbleCacheComponent implements OnInit, OnDestroy {
+  public manualScrobbling: boolean = this.booleanState("manual-scrobble-state");
+  public manualScrobblingList: any;
   private core: musicdbcore;
   private subscription: Subscription;
   private subscription2: Subscription;
-  public manualScrobbling: boolean = this.booleanState("manual-scrobble-state");
-  public manualScrobblingList: any;
   private isReloading = false;
   private isBusy = false;
 
@@ -33,37 +33,27 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
     this.subscription = this.core.coreParsed$.subscribe(data => {
       this.ngOnInit();
     });
-    this.subscription2 = this.lastFMService.manualScrobbleList$.subscribe(
-      data => {
-        this.manualScrobblingList = data;
-      }
-    );
+    this.subscription2 = this.lastFMService.manualScrobbleList$.subscribe(data => {
+      this.manualScrobblingList = data;
+    });
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
     });
   }
 
-  private booleanState(key: string): boolean {
-    const raw = localStorage.getItem(key);
-    if (raw && raw === "true") {
-      return true;
-    }
-    return false;
-  }
-
-  ngOnInit() {
+  public ngOnInit() {
     this.pathService.announcePage("Scrobble cache");
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
     this.subscription2.unsubscribe();
   }
 
-  scrobbleNow() {
+  public scrobbleNow() {
     this.isBusy = true;
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
@@ -79,11 +69,11 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
       });
     });
   }
-  removeFromScrobbleList(item: any) {
+  public removeFromScrobbleList(item: any) {
     get("manual-scrobble-list").then(msl => {
       this.manualScrobblingList = msl || [];
       let index = -1;
-      this.manualScrobblingList.forEach(function(value, i) {
+      this.manualScrobblingList.forEach((value, i) => {
         if (Object.is(value, item)) {
           index = i;
         }
@@ -91,5 +81,13 @@ export class ScrobbleCacheComponent implements OnInit, OnDestroy {
       this.manualScrobblingList.splice(index, 1);
       set("manual-scrobble-list", this.manualScrobblingList);
     });
+  }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
   }
 }

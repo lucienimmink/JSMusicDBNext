@@ -1,41 +1,33 @@
-import {
-  throwError as observableThrowError,
-  Observable,
-  Subscription
-} from "rxjs";
+import { Observable, Subscription, throwError as observableThrowError } from "rxjs";
 
-import { catchError, map } from "rxjs/operators";
-import {
-  Component,
-  OnDestroy,
-  ViewChild,
-  OnInit,
-  HostListener
-} from "@angular/core";
 // import { Http, Response, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
+import { catchError, map } from "rxjs/operators";
 
-import { PlayerService } from "./../../player/player.service";
-import { PathService } from "./../../utils/path.service";
-import { CoreService } from "./../../utils/core.service";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import { BackgroundArtDirective } from "./../../utils/background-art.directive";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
-import { TrackComponent } from "./../../track/track/track.component";
-import { LastfmService } from "./../../utils/lastfm.service";
-import { AnimationService } from "./../../utils/animation.service";
 import Track from "./../../org/arielext/musicdb/models/Track";
+import { PlayerService } from "./../../player/player.service";
+import { TrackComponent } from "./../../track/track/track.component";
+import { AnimationService } from "./../../utils/animation.service";
+import { BackgroundArtDirective } from "./../../utils/background-art.directive";
+import { CoreService } from "./../../utils/core.service";
+import { LastfmService } from "./../../utils/lastfm.service";
+import { PathService } from "./../../utils/path.service";
+import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 
 @Component({
   templateUrl: "./now-playing.component.html"
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {
+  public track: Track;
+
+  @ViewChild(BackgroundArtDirective) public albumart: BackgroundArtDirective;
   private subscription: Subscription;
   private subscription2: Subscription;
   private subscription3: Subscription;
   private playlist: any;
-  public track: Track;
   private currentTrack: Track;
   private trackIndex: number;
   private previousTrack = {};
@@ -55,9 +47,6 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
   private preferVideo: boolean = this.booleanState("preferVideo-state");
   private smallArt: boolean = this.booleanState("small-art");
 
-  private youtubeSearchBase = "https://www.googleapis.com/youtube/v3/search";
-  private youtubeVideoId: string = null;
-
   private videoMode = false;
   private player;
   private ytEvent;
@@ -66,8 +55,6 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
   private noFocus = false;
   private timeoutTimer: any = null;
   private timeoutTime = 5000;
-
-  @ViewChild(BackgroundArtDirective) albumart: BackgroundArtDirective;
 
   constructor(
     private pathService: PathService,
@@ -102,49 +89,33 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         this.setTrack();
       }
     );
-    this.subscription2 = this.playerService.volumeAnnounced.subscribe(
-      volume => {
-        this.volume = volume;
-      }
-    );
-    this.subscription3 = this.playerService.hideVolumeWindowAnnounced$.subscribe(
-      () => {
-        this.showVolumeWindow = false;
-      }
-    );
+    this.subscription2 = this.playerService.volumeAnnounced.subscribe(volume => {
+      this.volume = volume;
+    });
+    this.subscription3 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
+      this.showVolumeWindow = false;
+    });
     this.pathService.announcePage("Now playing");
 
     if ("ontouchstart" in document.documentElement) {
-      document
-        .getElementsByTagName("body")[0]
-        .addEventListener("touchmove", this.drag);
-      document
-        .getElementsByTagName("body")[0]
-        .addEventListener("touchend", this.stopDrag);
+      document.getElementsByTagName("body")[0].addEventListener("touchmove", this.drag);
+      document.getElementsByTagName("body")[0].addEventListener("touchend", this.stopDrag);
     } else {
-      document
-        .getElementsByTagName("body")[0]
-        .addEventListener("mousemove", this.drag);
-      document
-        .getElementsByTagName("body")[0]
-        .addEventListener("mouseup", this.stopDrag);
+      document.getElementsByTagName("body")[0].addEventListener("mousemove", this.drag);
+      document.getElementsByTagName("body")[0].addEventListener("mouseup", this.stopDrag);
     }
 
     this.timeoutTimer = setTimeout(() => {
       this.onTimeout();
     }, this.timeoutTime);
   }
-  ngOnInit() {
+  public ngOnInit() {
     setTimeout(() => {
       if (this.track) {
         if ("ontouchstart" in document.documentElement) {
-          document
-            .getElementById("progress-pusher")
-            .addEventListener("touchstart", this.startDrag);
+          document.getElementById("progress-pusher").addEventListener("touchstart", this.startDrag);
         } else {
-          document
-            .getElementById("progress-pusher")
-            .addEventListener("mousedown", this.startDrag);
+          document.getElementById("progress-pusher").addEventListener("mousedown", this.startDrag);
         }
         this.isEventBound = true;
       }
@@ -152,15 +123,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     this.lastfmusername = localStorage.getItem("lastfm-username") || "";
   }
 
-  private booleanState(key: string): boolean {
-    const raw = localStorage.getItem(key);
-    if (raw && raw === "true") {
-      return true;
-    }
-    return false;
-  }
-
-  setTrack() {
+  public setTrack() {
     setTimeout(() => {
       if (this.albumart) {
         this.albumart.loadImage();
@@ -170,22 +133,8 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
 
     if (this.currentTrack !== this.track) {
       this.currentTrack = this.track;
-      this.animationService.requestAnimation(
-        "enter",
-        document.querySelector(".controls-wrapper h4")
-      );
-      this.animationService.requestAnimation(
-        "enter",
-        document.querySelector(".controls-wrapper h5")
-      );
-      this.youtubeVideoId = null; // reset videoid
-      this.checkYouTubeForVideo(this.track).subscribe(data => {
-        // this track has a youtube ID!
-        this.youtubeVideoId = data.items[0].id.videoId;
-        if (this.preferVideo) {
-          this.toggleVideo();
-        }
-      });
+      this.animationService.requestAnimation("enter", document.querySelector(".controls-wrapper h4"));
+      this.animationService.requestAnimation("enter", document.querySelector(".controls-wrapper h5"));
     }
 
     // we need to bind the event to the dragger when it is activated
@@ -193,53 +142,38 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       setTimeout(() => {
         try {
           if ("ontouchstart" in document.documentElement) {
-            document
-              .getElementById("progress-pusher")
-              .addEventListener("touchstart", this.startDrag);
+            document.getElementById("progress-pusher").addEventListener("touchstart", this.startDrag);
           } else {
-            document
-              .getElementById("progress-pusher")
-              .addEventListener("mousedown", this.startDrag);
+            document.getElementById("progress-pusher").addEventListener("mousedown", this.startDrag);
           }
           this.isEventBound = true;
-        } catch (e) {}
+        } catch (e) {
+          console.error(e);
+        }
       }, 250);
     }
   }
-  toggleSlide() {
+  public toggleSlide() {
     this.slided = !this.slided;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe(); // prevent memory leakage
     this.subscription2.unsubscribe();
     this.subscription3.unsubscribe();
     if ("ontouchstart" in document.documentElement) {
-      document
-        .getElementsByTagName("body")[0]
-        .removeEventListener("touchmove", this.drag);
-      document
-        .getElementsByTagName("body")[0]
-        .removeEventListener("touchend", this.stopDrag);
+      document.getElementsByTagName("body")[0].removeEventListener("touchmove", this.drag);
+      document.getElementsByTagName("body")[0].removeEventListener("touchend", this.stopDrag);
     } else {
-      document
-        .getElementsByTagName("body")[0]
-        .removeEventListener("mousemove", this.drag);
-      document
-        .getElementsByTagName("body")[0]
-        .removeEventListener("mouseup", this.stopDrag);
+      document.getElementsByTagName("body")[0].removeEventListener("mousemove", this.drag);
+      document.getElementsByTagName("body")[0].removeEventListener("mouseup", this.stopDrag);
     }
     clearTimeout(this.timeoutTime);
   }
-  navigateToArtist() {
-    this.router.navigate([
-      "/letter",
-      this.track.album.artist.letter.escapedLetter,
-      "artist",
-      this.track.album.artist.sortName
-    ]);
+  public navigateToArtist() {
+    this.router.navigate(["/letter", this.track.album.artist.letter.escapedLetter, "artist", this.track.album.artist.sortName]);
   }
-  navigateToAlbum() {
+  public navigateToAlbum() {
     // tslint:disable-next-line:max-line-length
     this.router.navigate([
       "/letter",
@@ -250,25 +184,17 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       this.track.album.sortName
     ]);
   }
-  next() {
+  public next() {
     if (this.videoMode) {
       this.playerService.resume();
     }
     this.videoMode = false;
     setTimeout(() => {
-      const previousAlbumArt = <HTMLElement>document.querySelector(
-        ".previous-album-art"
-      );
-      previousAlbumArt.style.backgroundImage = (<HTMLElement>document.querySelector(
-        ".current-album-art"
-      )).style.backgroundImage;
+      const previousAlbumArt = document.querySelector(".previous-album-art") as HTMLElement;
+      previousAlbumArt.style.backgroundImage = (document.querySelector(".current-album-art") as HTMLElement).style.backgroundImage;
       previousAlbumArt.classList.remove("slideRightOut");
       previousAlbumArt.classList.remove("slideLeftOut");
-      this.animationService.requestAnimation(
-        "slideLeftOut",
-        previousAlbumArt,
-        false
-      );
+      this.animationService.requestAnimation("slideLeftOut", previousAlbumArt, false);
       if (this.trackIndex < this.playlist.tracks.length - 1) {
         this.trackIndex++;
         this.playerService.next();
@@ -276,10 +202,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
         if (this.playlist.isContinues) {
           // generate a new playlist and start playing that one
           this.trackIndex = 0;
-          if (
-            this.playlist.type === "random" ||
-            this.playlist.type === "radio"
-          ) {
+          if (this.playlist.type === "random" || this.playlist.type === "radio") {
             this.playerService.nextPlaylist(this.playlist.type);
           } else {
             this.playerService.nextAlbum(this.track.album);
@@ -290,32 +213,24 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       }
     });
   }
-  prev() {
+  public prev() {
     if (this.videoMode) {
       this.playerService.resume();
     }
     this.videoMode = false;
     setTimeout(() => {
-      const previousAlbumArt = <HTMLElement>document.querySelector(
-        ".previous-album-art"
-      );
-      previousAlbumArt.style.backgroundImage = (<HTMLElement>document.querySelector(
-        ".current-album-art"
-      )).style.backgroundImage;
+      const previousAlbumArt = document.querySelector(".previous-album-art") as HTMLElement;
+      previousAlbumArt.style.backgroundImage = (document.querySelector(".current-album-art") as HTMLElement).style.backgroundImage;
       previousAlbumArt.classList.remove("slideRightOut");
       previousAlbumArt.classList.remove("slideLeftOut");
-      this.animationService.requestAnimation(
-        "slideRightOut",
-        previousAlbumArt,
-        false
-      );
+      this.animationService.requestAnimation("slideRightOut", previousAlbumArt, false);
       if (this.trackIndex > 0) {
         this.trackIndex--;
         this.playerService.prev();
       }
     });
   }
-  togglePlayPause() {
+  public togglePlayPause() {
     if (this.videoMode) {
       if (this.isPlaying) {
         this.player.pauseVideo();
@@ -330,68 +245,31 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       this.playerService.togglePlayPause();
     }
   }
-  toggleShuffle() {
+  public toggleShuffle() {
     this.isShuffled = !this.isShuffled;
     this.playerService.shufflePlaylist(this.isShuffled);
   }
-  toggleLoved() {
+  public toggleLoved() {
     this.track.isLoved = !this.track.isLoved;
-    this.lastFMService.toggleLoved(this.track).subscribe(data => {});
+    this.lastFMService.toggleLoved(this.track).subscribe(data => {
+      console.info(data);
+    });
   }
-  private startDrag = (e: any) => {
-    this.isDragging = true;
-  };
-  private drag = (e: any) => {
-    if (this.isDragging) {
-      const clientX = e.clientX || e.changedTouches[0].clientX;
-      const left = clientX - 60,
-        perc = left / document.getElementById("progress-pusher").clientWidth;
-      if (perc >= 0 && perc <= 1) {
-        this.setIndicatorPosition(perc);
-      }
-    }
-  };
-  setIndicatorPosition(perc: number): void {
-    document.getElementById("position-indicator").style.marginLeft =
-      perc * 100 + "%";
+  public setIndicatorPosition(perc: number): void {
+    document.getElementById("position-indicator").style.marginLeft = perc * 100 + "%";
   }
-  private stopDrag = (e: any) => {
-    if (this.isDragging) {
-      this.isDragging = false;
-      const clientX = e.clientX || e.changedTouches[0].clientX;
-      const left = clientX - 60,
-        perc = left / document.getElementById("progress-pusher").clientWidth;
-      const pos = this.track.duration / 1000 * perc;
-      this.playerService.setPosition(pos);
-    }
-  };
-  toggleVolumeWindow(e: Event) {
+  public toggleVolumeWindow(e: Event) {
     e.stopPropagation();
     e.stopImmediatePropagation();
     e.preventDefault();
     this.showVolumeWindow = !this.showVolumeWindow;
   }
-  setVolume() {
+  public setVolume() {
     // this.mediaObject.volume = this.volume / 100;
     this.playerService.setVolume(this.volume);
   }
-  round(nr: number) {
+  public round(nr: number) {
     return Math.floor(nr);
-  }
-  checkYouTubeForVideo(track: Track): any {
-    const params = {
-      q: `${track.trackArtist} - ${track.title}`,
-      key: "AIzaSyDNIncH70uAPgdUK_hZfQ9EQBDPwhuOYmM",
-      part: "id"
-    };
-
-    const options = {
-      params: params
-    };
-
-    return this.http
-      .get(this.youtubeSearchBase, options)
-      .pipe(catchError(this.handleError));
   }
   /*
   extractData(res: Response): string {
@@ -403,10 +281,10 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     return videoid;
   }
   */
-  handleError(error: Response) {
+  public handleError(error: Response) {
     return observableThrowError(`no video`);
   }
-  toggleVideo(): void {
+  public toggleVideo(): void {
     this.videoMode = !this.videoMode;
     if (this.videoMode) {
       this.playerService.pause();
@@ -414,13 +292,13 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       this.playerService.togglePlayPause();
     }
   }
-  savePlayer(player) {
+  public savePlayer(player) {
     this.player = player;
     this.player.playVideo();
     this.isPlaying = true;
     this.isPaused = false;
   }
-  onStateChange(event) {
+  public onStateChange(event) {
     if (event.data === 0) {
       // stopped
       this.videoMode = false;
@@ -428,18 +306,49 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
     }
   }
 
-  onTimeout() {
+  public onTimeout() {
     if (!this.slided && !this.videoMode) {
       this.noFocus = true;
     }
   }
 
   @HostListener("mousemove", ["$event"])
-  onMove(e): void {
+  public onMove(e): void {
     clearTimeout(this.timeoutTimer);
     this.noFocus = false;
     this.timeoutTimer = setTimeout(() => {
       this.onTimeout();
     }, this.timeoutTime);
   }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
+  }
+  private startDrag = (e: any) => {
+    this.isDragging = true;
+  };
+  private drag = (e: any) => {
+    if (this.isDragging) {
+      const clientX = e.clientX || e.changedTouches[0].clientX;
+      const left = clientX - 60;
+      const perc = left / document.getElementById("progress-pusher").clientWidth;
+      if (perc >= 0 && perc <= 1) {
+        this.setIndicatorPosition(perc);
+      }
+    }
+  };
+  private stopDrag = (e: any) => {
+    if (this.isDragging) {
+      this.isDragging = false;
+      const clientX = e.clientX || e.changedTouches[0].clientX;
+      const left = clientX - 60;
+      const perc = left / document.getElementById("progress-pusher").clientWidth;
+      const pos = (this.track.duration / 1000) * perc;
+      this.playerService.setPosition(pos);
+    }
+  };
 }

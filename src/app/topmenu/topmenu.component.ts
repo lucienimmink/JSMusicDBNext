@@ -1,15 +1,15 @@
-import { Component, OnDestroy, Input, ViewChild } from "@angular/core";
+import { Component, Input, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
 import { get } from "idb-keyval";
+import { Subscription } from "rxjs";
 // import { TooltipModule } from 'ngx-bootstrap';
 
-import { PathService } from "./../utils/path.service";
-import { LastfmService } from "./../utils/lastfm.service";
+import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { musicdbcore } from "./../org/arielext/musicdb/core";
 import { CoreService } from "./../utils/core.service";
+import { LastfmService } from "./../utils/lastfm.service";
+import { PathService } from "./../utils/path.service";
 import { Search } from "./search";
-import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,26 +17,21 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
   templateUrl: "./topmenu.component.html"
 })
 export class TopmenuComponent implements OnDestroy, OnInit {
-  path: any;
-  subscription: Subscription;
-  page: any;
-  subscription2: Subscription;
-  subscription3: Subscription;
-  subscription4: Subscription;
-  menuVisible = false;
+  public path: any;
+  public subscription: Subscription;
+  public page: any;
+  public subscription2: Subscription;
+  public subscription3: Subscription;
+  public subscription4: Subscription;
+  public menuVisible = false;
   public topSearchVisible = false;
   public manualScrobblingList: any = [];
-  private theme: String;
   public search: Search;
+  private theme: string;
   private core: musicdbcore;
-  private letters: Array<any>;
+  private letters: any[];
 
-  constructor(
-    private pathService: PathService,
-    private router: Router,
-    private lastFMService: LastfmService,
-    private coreService: CoreService
-  ) {
+  constructor(private pathService: PathService, private router: Router, private lastFMService: LastfmService, private coreService: CoreService) {
     this.core = this.coreService.getCore();
     // subscribe to a change in path; so we can display it
     this.subscription = pathService.pathAnnounced$.subscribe(path => {
@@ -53,11 +48,9 @@ export class TopmenuComponent implements OnDestroy, OnInit {
       this.disableActiveLetter();
       this.activateLetter(page.letter);
     });
-    this.subscription3 = this.lastFMService.manualScrobbleList$.subscribe(
-      data => {
-        this.manualScrobblingList = data;
-      }
-    );
+    this.subscription3 = this.lastFMService.manualScrobbleList$.subscribe(data => {
+      this.manualScrobblingList = data;
+    });
     this.subscription4 = this.core.coreParsed$.subscribe(data => {
       this.ngOnInit();
     });
@@ -67,28 +60,28 @@ export class TopmenuComponent implements OnDestroy, OnInit {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.letters = this.core.sortedLetters;
   }
 
-  disableActiveLetter() {
+  public disableActiveLetter() {
     this.letters.forEach(letter => {
       if (letter.active) {
         letter.active = false;
       }
     });
   }
-  activateLetter(letter: any) {
+  public activateLetter(letter: any) {
     if (letter) {
       letter.active = true;
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe(); // prevent memory leakage
     this.subscription2.unsubscribe();
   }
-  toggleMenu() {
+  public toggleMenu() {
     this.menuVisible = !this.menuVisible;
     if (this.menuVisible) {
       this.slideOut();
@@ -96,14 +89,14 @@ export class TopmenuComponent implements OnDestroy, OnInit {
       this.slideIn();
     }
   }
-  slideOut() {
+  public slideOut() {
     const sideNavEl = document.querySelector(".js-side-nav");
     sideNavEl.classList.add("side-nav--animatable");
     sideNavEl.classList.add("side-nav--visible");
     document.addEventListener("click", this.onDocumentClick);
     sideNavEl.addEventListener("transitionend", this.onTransitionEnd);
   }
-  slideIn() {
+  public slideIn() {
     const sideNavEl = document.querySelector(".js-side-nav");
     sideNavEl.classList.add("side-nav--animatable");
     sideNavEl.classList.remove("side-nav--visible");
@@ -111,48 +104,36 @@ export class TopmenuComponent implements OnDestroy, OnInit {
     // this.detabinator.inert = true;
     sideNavEl.addEventListener("transitionend", this.onTransitionEnd);
   }
-  onTransitionEnd(evt: Event) {
+  public onTransitionEnd(evt: Event) {
     const sideNavEl = document.querySelector(".js-side-nav");
     sideNavEl.classList.remove("side-nav--animatable");
     sideNavEl.removeEventListener("transitionend", this.onTransitionEnd);
   }
-  onSubmit() {
+  public onSubmit() {
     this.topSearchVisible = false;
     if (this.menuVisible) {
       this.toggleMenu();
     }
     this.router.navigate(["/search", this.search.query]);
   }
-  toggleSearch() {
+  public toggleSearch() {
     this.topSearchVisible = !this.topSearchVisible;
     if (this.topSearchVisible === true) {
-      setTimeout(function() {
+      setTimeout(() => {
         document.getElementById("mobileSearch").focus();
       }, 100);
     }
   }
+  public selectArtist(path: any): void {
+    this.router.navigate(["letter", path.artist.letter.escapedLetter, "artist", path.artist.sortName]);
+  }
+  public selectAlbum(path: any): void {
+    this.router.navigate(["letter", path.album.artist.letter.escapedLetter, "artist", path.album.artist.sortName, "album", path.album.sortName]);
+  }
   private onDocumentClick = (e: Event) => {
-    const target = <HTMLElement>e.target;
+    const target = e.target as HTMLElement;
     if (target.classList.contains("side-nav--visible")) {
       this.toggleMenu();
     }
   };
-  selectArtist(path: any): void {
-    this.router.navigate([
-      "letter",
-      path.artist.letter.escapedLetter,
-      "artist",
-      path.artist.sortName
-    ]);
-  }
-  selectAlbum(path: any): void {
-    this.router.navigate([
-      "letter",
-      path.album.artist.letter.escapedLetter,
-      "artist",
-      path.album.artist.sortName,
-      "album",
-      path.album.sortName
-    ]);
-  }
 }

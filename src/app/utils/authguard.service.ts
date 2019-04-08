@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { LoginService } from './../login/login.service';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
   constructor(private loginService: LoginService, private router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+  public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise((resolve) => {
       const url: string = state.url;
       window.scrollTo(0, 0); // scroll to top on every change;
@@ -14,7 +14,7 @@ export class AuthGuardService implements CanActivate {
     });
   }
 
-  checkLogin(url: string): boolean {
+  public checkLogin(url: string): boolean {
     if (localStorage.getItem('jwt')) {
       // we have either logged in via the login service ór we have a token and have logged in before
       return true;

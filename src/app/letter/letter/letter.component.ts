@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
@@ -11,7 +11,7 @@ import { CoreService } from "./../../utils/core.service";
   templateUrl: "./letter.component.html"
 })
 export class LetterComponent implements OnInit, OnDestroy {
-  public letters: Array<any>;
+  public letters: any[];
   private core: musicdbcore;
   private subscription: Subscription;
   private activeLetter: Letter = null;
@@ -23,11 +23,11 @@ export class LetterComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.letters = this.core.sortedLetters;
   }
 
-  onSelect(letter: any) {
+  public onSelect(letter: any) {
     if (this.activeLetter) {
       this.activeLetter.active = false;
     }
@@ -35,7 +35,7 @@ export class LetterComponent implements OnInit, OnDestroy {
     this.router.navigate(["/letter", letter.escapedLetter]);
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }

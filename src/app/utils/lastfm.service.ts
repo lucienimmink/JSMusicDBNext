@@ -1,14 +1,14 @@
-import { throwError as observableThrowError, Observable, Subject } from "rxjs";
+import { Observable, Subject, throwError as observableThrowError } from "rxjs";
 
-import { catchError, map } from "rxjs/operators";
 import { Injectable } from "@angular/core";
+import { catchError, map } from "rxjs/operators";
 
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { set, get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 
-import { CustomEncoder } from "./CustomEncoder";
 import Artist from "./../org/arielext/musicdb/models/Artist";
 import Track from "./../org/arielext/musicdb/models/Track";
+import { CustomEncoder } from "./CustomEncoder";
 
 const APIKEY = "956c1818ded606576d6941de5ff793a5";
 const SECRET = "4d183e73f7578dee78557665e9be3acc";
@@ -16,49 +16,35 @@ const NOIMAGE = "global/images/no-cover.png";
 
 @Injectable()
 export class LastfmService {
+  public manualScrobbleList$: Observable<any> = this.manualScrobbleListSource.asObservable();
   private hexcase = 0;
   private b64pad = "";
   private manualScrobbleListSource = new Subject<any>();
-  public manualScrobbleList$: Observable<
-    any
-  > = this.manualScrobbleListSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  getLovedTracks(user: string): Observable<any> {
+  public getLovedTracks(user: string): Observable<any> {
     const params = {
       api_key: APIKEY,
       format: "json",
       limit: "1000",
       method: "user.getlovedtracks",
-      user: user
+      user
     };
     const options = {
       params
     };
-    return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", options)
-      .pipe(catchError(this.handleError));
+    return this.http.get("https://ws.audioscrobbler.com/2.0/", options).pipe(catchError(this.handleError));
   }
-  toggleLoved(track: Track): Observable<any> {
+  public toggleLoved(track: Track): Observable<any> {
     const sk = localStorage.getItem("lastfm-token");
     const urlSearchParams: URLSearchParams = new URLSearchParams();
     const method: string = track.isLoved ? "track.love" : "track.unlove";
 
-    let params = new HttpParams({ encoder: new CustomEncoder() })
+    const params = new HttpParams({ encoder: new CustomEncoder() })
       .set("method", method)
       .set("api_key", APIKEY)
-      .set(
-        "api_sig",
-        this.signTrack(
-          track.trackArtist,
-          track.album.name,
-          track.title,
-          null,
-          sk,
-          method
-        )
-      )
+      .set("api_sig", this.signTrack(track.trackArtist, track.album.name, track.title, null, sk, method))
       .set("artist", track.trackArtist)
       .set("album", track.album.name)
       .set("track", track.title)
@@ -72,14 +58,12 @@ export class LastfmService {
       params,
       headers
     };
-    return this.http
-      .post("https://ws.audioscrobbler.com/2.0/", null, options)
-      .pipe(catchError(this.handleError));
+    return this.http.post("https://ws.audioscrobbler.com/2.0/", null, options).pipe(catchError(this.handleError));
   }
 
-  getTrackInfo(track: Track, user: string): Observable<any> {
+  public getTrackInfo(track: Track, user: string): Observable<any> {
     if (track) {
-      let params = new HttpParams({ encoder: new CustomEncoder() })
+      const params = new HttpParams({ encoder: new CustomEncoder() })
         .set("method", "track.getInfo")
         .set("artist", track.trackArtist)
         .set("album", track.album.name)
@@ -92,16 +76,14 @@ export class LastfmService {
         params
       };
 
-      return this.http
-        .get("https://ws.audioscrobbler.com/2.0/", options)
-        .pipe(catchError(this.handleError));
+      return this.http.get("https://ws.audioscrobbler.com/2.0/", options).pipe(catchError(this.handleError));
     } else {
       return observableThrowError(null);
     }
   }
 
-  getTopArtists(user: string): Observable<any> {
-    let params = new HttpParams({ encoder: new CustomEncoder() })
+  public getTopArtists(user: string): Observable<any> {
+    const params = new HttpParams({ encoder: new CustomEncoder() })
       .set("api_key", APIKEY)
       .set("format", "json")
       .set("limit", "50")
@@ -113,13 +95,11 @@ export class LastfmService {
       params
     };
 
-    return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", options)
-      .pipe(catchError(this.handleError));
+    return this.http.get("https://ws.audioscrobbler.com/2.0/", options).pipe(catchError(this.handleError));
   }
 
-  getSimilairArtists(artist: Artist): Observable<any> {
-    let params = new HttpParams({ encoder: new CustomEncoder() })
+  public getSimilairArtists(artist: Artist): Observable<any> {
+    const params = new HttpParams({ encoder: new CustomEncoder() })
       .set("api_key", APIKEY)
       .set("format", "json")
       .set("limit", "20")
@@ -131,13 +111,11 @@ export class LastfmService {
       params
     };
 
-    return this.http
-      .get("https://ws.audioscrobbler.com/2.0/", options)
-      .pipe(catchError(this.handleError));
+    return this.http.get("https://ws.audioscrobbler.com/2.0/", options).pipe(catchError(this.handleError));
   }
 
-  authenticate(user: any): Observable<any> {
-    let params = new HttpParams({ encoder: new CustomEncoder() })
+  public authenticate(user: any): Observable<any> {
+    const params = new HttpParams({ encoder: new CustomEncoder() })
       .set("api_key", APIKEY)
       .set("api_sig", this.signAuthentication(user.user, user.password))
       .set("format", "json")
@@ -149,51 +127,28 @@ export class LastfmService {
     });
 
     const options = {
-      params: params,
-      headers: headers
+      params,
+      headers
     };
-    return this.http
-      .post(
-        "https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession",
-        null,
-        options
-      )
-      .pipe(catchError(this.handleError));
+    return this.http.post("https://ws.audioscrobbler.com/2.0/?method=auth.getMobileSession", null, options).pipe(catchError(this.handleError));
   }
 
-  announceNowPlaying(track: Track): Observable<any> {
+  public announceNowPlaying(track: Track): Observable<any> {
     const username = localStorage.getItem("lastfm-username");
     if (username !== "mdb-skipped") {
       const now = new Date();
       const timestamp =
-        Date.UTC(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate(),
-          now.getHours(),
-          now.getMinutes() + now.getTimezoneOffset(),
-          now.getSeconds()
-        ) / 1000;
+        Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
       const sk = localStorage.getItem("lastfm-token");
 
       const headers = new HttpHeaders({
         "Content-Type": "application/x-www-form-urlencoded"
       });
 
-      let params = new HttpParams({ encoder: new CustomEncoder() })
+      const params = new HttpParams({ encoder: new CustomEncoder() })
         .set("method", "track.updateNowPlaying")
         .set("api_key", APIKEY)
-        .set(
-          "api_sig",
-          this.signTrack(
-            track.trackArtist,
-            track.album.name,
-            track.title,
-            timestamp,
-            sk,
-            "track.updateNowPlaying"
-          )
-        )
+        .set("api_sig", this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, "track.updateNowPlaying"))
         .set("artist", track.trackArtist)
         .set("album", track.album.name)
         .set("track", track.title)
@@ -201,30 +156,21 @@ export class LastfmService {
         .set("sk", sk);
 
       const options = {
-        params: params,
-        headers: headers
+        params,
+        headers
       };
 
-      return this.http
-        .post("https://ws.audioscrobbler.com/2.0/", null, options)
-        .pipe(catchError(this.handleError));
+      return this.http.post("https://ws.audioscrobbler.com/2.0/", null, options).pipe(catchError(this.handleError));
     } else {
       return observableThrowError(null);
     }
   }
 
-  scrobbleTrack(track: Track): any {
+  public scrobbleTrack(track: Track): any {
     const username = localStorage.getItem("lastfm-username");
     const now = new Date();
     const timestamp =
-      Date.UTC(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate(),
-        now.getHours(),
-        now.getMinutes() + now.getTimezoneOffset(),
-        now.getSeconds()
-      ) / 1000;
+      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + now.getTimezoneOffset(), now.getSeconds()) / 1000;
     if (username !== "mdb-skipped") {
       const sk = localStorage.getItem("lastfm-token");
       const saveScrobble = this.booleanState("manual-scrobble-state");
@@ -234,20 +180,10 @@ export class LastfmService {
           "Content-Type": "application/x-www-form-urlencoded"
         });
 
-        let params = new HttpParams({ encoder: new CustomEncoder() })
+        const params = new HttpParams({ encoder: new CustomEncoder() })
           .set("method", "track.scrobble")
           .set("api_key", APIKEY)
-          .set(
-            "api_sig",
-            this.signTrack(
-              track.trackArtist,
-              track.album.name,
-              track.title,
-              timestamp,
-              sk,
-              "track.scrobble"
-            )
-          )
+          .set("api_sig", this.signTrack(track.trackArtist, track.album.name, track.title, timestamp, sk, "track.scrobble"))
           .set("artist", track.trackArtist)
           .set("album", track.album.name)
           .set("track", track.title)
@@ -255,12 +191,10 @@ export class LastfmService {
           .set("sk", sk);
 
         const options = {
-          params: params,
-          headers: headers
+          params,
+          headers
         };
-        return this.http
-          .post("https://ws.audioscrobbler.com/2.0/", null, options)
-          .pipe(catchError(this.handleError));
+        return this.http.post("https://ws.audioscrobbler.com/2.0/", null, options).pipe(catchError(this.handleError));
       } else {
         get("manual-scrobble-list").then(oc => {
           const offlineCache: any = oc || [];
@@ -287,14 +221,13 @@ export class LastfmService {
       });
     }
   }
-  updateManualScrobbleList(): void {
+  public updateManualScrobbleList(): void {
     get("manual-scrobble-list").then(oc => {
       const offlineCache: any = oc || [];
       this.manualScrobbleListSource.next(offlineCache);
     });
   }
-  saveInLocal(track: Track, timestamp: number, imageurl: string): void {
-    const c = this;
+  public saveInLocal(track: Track, timestamp: number, imageurl: string): void {
     const cachedItem = {
       artist: {
         "#text": track.trackArtist
@@ -312,7 +245,7 @@ export class LastfmService {
         uts: timestamp
       }
     };
-    let tracks: Array<any> = [];
+    let tracks: any[] = [];
     let rev: string = null;
     get("recentlyListened").then((data: any) => {
       if (data) {
@@ -325,32 +258,22 @@ export class LastfmService {
       tracks.unshift(cachedItem);
       const item = {
         _id: `recentlyListened`,
-        tracks: tracks
+        tracks
       };
       set(item._id, item.tracks);
     });
   }
-  scrobbleCachedTrack(cachedTrack: any) {
+  public scrobbleCachedTrack(cachedTrack: any) {
     const sk = localStorage.getItem("lastfm-token");
 
     const headers = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded"
     });
 
-    let params = new HttpParams({ encoder: new CustomEncoder() })
+    const params = new HttpParams({ encoder: new CustomEncoder() })
       .set("method", "track.scrobble")
       .set("api_key", APIKEY)
-      .set(
-        "api_sig",
-        this.signTrack(
-          cachedTrack.artist,
-          cachedTrack.album,
-          cachedTrack.track,
-          cachedTrack.timestamp,
-          sk,
-          "track.scrobble"
-        )
-      )
+      .set("api_sig", this.signTrack(cachedTrack.artist, cachedTrack.album, cachedTrack.track, cachedTrack.timestamp, sk, "track.scrobble"))
       .set("artist", cachedTrack.artist)
       .set("album", cachedTrack.album)
       .set("track", cachedTrack.track)
@@ -359,8 +282,8 @@ export class LastfmService {
 
     return this.http
       .post("https://ws.audioscrobbler.com/2.0/", null, {
-        params: params,
-        headers: headers,
+        params,
+        headers,
         responseType: "text"
       })
       .pipe(catchError(this.handleError));
@@ -375,27 +298,14 @@ export class LastfmService {
   }
 
   private signAuthentication(user: string, password: string): string {
-    return this.hex_md5(
-      `api_key${APIKEY}methodauth.getMobileSessionpassword${password}username${user}${SECRET}`
-    );
+    return this.hex_md5(`api_key${APIKEY}methodauth.getMobileSessionpassword${password}username${user}${SECRET}`);
   }
 
-  private signTrack(
-    artist: string,
-    album: string,
-    track: string,
-    timestamp: number,
-    sk: string,
-    method: string
-  ): string {
+  private signTrack(artist: string, album: string, track: string, timestamp: number, sk: string, method: string): string {
     if (timestamp) {
-      return this.hex_md5(
-        `album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}timestamp${timestamp}track${track}${SECRET}`
-      );
+      return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}timestamp${timestamp}track${track}${SECRET}`);
     } else {
-      return this.hex_md5(
-        `album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}track${track}${SECRET}`
-      );
+      return this.hex_md5(`album${album}api_key${APIKEY}artist${artist}method${method}sk${sk}track${track}${SECRET}`);
     }
   }
 
@@ -429,7 +339,8 @@ export class LastfmService {
   private str2rstr_utf8(input: string) {
     let output = "";
     let i = -1;
-    let x: number, y: number;
+    let x: number;
+    let y: number;
 
     while (++i < input.length) {
       /* Decode utf-16 surrogate pairs */
@@ -446,25 +357,13 @@ export class LastfmService {
         output += String.fromCharCode(x);
       } else if (x <= 0x7ff) {
         // tslint:disable-next-line:no-bitwise
-        output += String.fromCharCode(
-          0xc0 | ((x >>> 6) & 0x1f),
-          0x80 | (x & 0x3f)
-        );
+        output += String.fromCharCode(0xc0 | ((x >>> 6) & 0x1f), 0x80 | (x & 0x3f));
       } else if (x <= 0xffff) {
         // tslint:disable-next-line:no-bitwise
-        output += String.fromCharCode(
-          0xe0 | ((x >>> 12) & 0x0f),
-          0x80 | ((x >>> 6) & 0x3f),
-          0x80 | (x & 0x3f)
-        );
+        output += String.fromCharCode(0xe0 | ((x >>> 12) & 0x0f), 0x80 | ((x >>> 6) & 0x3f), 0x80 | (x & 0x3f));
       } else if (x <= 0x1fffff) {
         // tslint:disable-next-line:no-bitwise
-        output += String.fromCharCode(
-          0xf0 | ((x >>> 18) & 0x07),
-          0x80 | ((x >>> 12) & 0x3f),
-          0x80 | ((x >>> 6) & 0x3f),
-          0x80 | (x & 0x3f)
-        );
+        output += String.fromCharCode(0xf0 | ((x >>> 18) & 0x07), 0x80 | ((x >>> 12) & 0x3f), 0x80 | ((x >>> 6) & 0x3f), 0x80 | (x & 0x3f));
       }
     }
     return output;
@@ -473,14 +372,14 @@ export class LastfmService {
     let output = "";
     for (let i = 0; i < input.length * 32; i += 8) {
       // tslint:disable-next-line:no-bitwise
-      output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xff);
+      output += String.fromCharCode((input[i >> 5] >>> i % 32) & 0xff);
     }
     return output;
   }
   private binl_md5(x: any, len: number) {
     /* append padding */
     // tslint:disable-next-line:no-bitwise
-    x[len >> 5] |= 0x80 << (len % 32);
+    x[len >> 5] |= 0x80 << len % 32;
     // tslint:disable-next-line:no-bitwise
     x[(((len + 64) >>> 9) << 4) + 14] = len;
 
@@ -578,16 +477,13 @@ export class LastfmService {
     }
     for (let i = 0; i < input.length * 8; i += 8) {
       // tslint:disable-next-line:no-bitwise
-      output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (i % 32);
+      output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << i % 32;
     }
     return output;
   }
 
   private md5_cmn(q: any, a: any, b: any, x: any, s: any, t: any) {
-    return this.safe_add(
-      this.bit_rol(this.safe_add(this.safe_add(a, q), this.safe_add(x, t)), s),
-      b
-    );
+    return this.safe_add(this.bit_rol(this.safe_add(this.safe_add(a, q), this.safe_add(x, t)), s), b);
   }
   private md5_ff(a: any, b: any, c: any, d: any, x: any, s: any, t: any) {
     // tslint:disable-next-line:no-bitwise

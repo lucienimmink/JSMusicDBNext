@@ -1,70 +1,64 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
-import { LoginService } from './login.service';
-import { CollectionService } from './../utils/collection.service';
-import { CoreService } from './../utils/core.service';
-import { ConfigService } from './../utils/config.service';
+import { CollectionService } from "./../utils/collection.service";
+import { ConfigService } from "./../utils/config.service";
+import { CoreService } from "./../utils/core.service";
+import { LoginService } from "./login.service";
 
-
-import { User } from './user';
+import { User } from "./user";
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html'
+  selector: "app-login",
+  templateUrl: "./login.component.html"
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public user: User;
-  private payLoad: any;
   public theme: string;
+  public isLoading = false;
+  private payLoad: any;
   private subscription: Subscription;
   private sid: string;
-  public isLoading = false;
 
-  constructor(private loginService: LoginService, private router: Router, private collectionService: CollectionService,
-    private coreService: CoreService, private configService: ConfigService) {
+  constructor(
+    private loginService: LoginService,
+    private router: Router,
+    private collectionService: CollectionService,
+    private coreService: CoreService,
+    private configService: ConfigService
+  ) {
     this.user = new User();
 
-    this.subscription = this.configService.mode$.subscribe(
-      data => {
-        this.theme = data;
-      }
-    );
+    this.subscription = this.configService.mode$.subscribe(data => {
+      this.theme = data;
+    });
     this.theme = configService.mode;
   }
 
-  ngOnInit() {
-
-  }
-
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  onSubmit() {
+  public onSubmit() {
     this.payLoad = JSON.stringify(this.user);
     this.loginService.doLogin(this.user).subscribe(
       data => {
         if (data.success) {
-          localStorage.setItem('jwt', this.loginService.encode(this.payLoad)); // save creds in storage
+          localStorage.setItem("jwt", this.loginService.encode(this.payLoad)); // save creds in storage
           this.getCollection();
         }
       },
       error => {
-        console.error('session failed; bah');
+        console.error("session failed; bah");
       }
     );
   }
 
-  getCollection() {
+  public getCollection() {
     this.isLoading = true;
-    this.collectionService.getCollection()
-      .subscribe(
-      data => this.fillCollection(data),
-      error => console.log(error)
-      );
+    this.collectionService.getCollection().subscribe(data => this.fillCollection(data), error => console.error(error));
   }
-  fillCollection(data: any): void {
+  public fillCollection(data: any): void {
     this.coreService.getCore().parseSourceJson(data);
-    this.router.navigate(['/home']);
+    this.router.navigate(["/home"]);
   }
 }

@@ -3,19 +3,19 @@ import { Subject } from 'rxjs';
 
 @Injectable()
 export class PathService {
+  public pathAnnounced$ = this.pathAnnouncementSource.asObservable();
+  public pageAnnounced$ = this.pageAnnouncementSource.asObservable();
   private pathAnnouncementSource = new Subject<any>();
-  pathAnnounced$ = this.pathAnnouncementSource.asObservable();
 
   private pageAnnouncementSource = new Subject<any>();
-  pageAnnounced$ = this.pageAnnouncementSource.asObservable();
 
-  announcePath(path: any) {
+  public announcePath(path: any) {
     this.pathAnnouncementSource.next(path);
   }
-  announcePage(page: any, letter: any = null) {
+  public announcePage(page: any, letter: any = null) {
     this.pageAnnouncementSource.next({
-      page: page,
-      letter: letter
+      page,
+      letter
     });
   }
 }

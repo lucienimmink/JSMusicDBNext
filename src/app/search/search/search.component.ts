@@ -1,63 +1,49 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { PathService } from "./../../utils/path.service";
-import { CoreService } from "./../../utils/core.service";
-import { CollectionService } from "./../../utils/collection.service";
-import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
-import { ArtistComponent } from "./../../artist/artist/artist.component";
 import { AlbumComponent } from "./../../album/album/album.component";
+import { ArtistComponent } from "./../../artist/artist/artist.component";
+import { musicdbcore } from "./../../org/arielext/musicdb/core";
+import Track from "./../../org/arielext/musicdb/models/Track";
 import { TrackComponent } from "./../../track/track/track.component";
-import Track from "./../../org/arielext/musicdb/models/track";
+import { CollectionService } from "./../../utils/collection.service";
+import { CoreService } from "./../../utils/core.service";
+import { PathService } from "./../../utils/path.service";
+import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 
 @Component({
   templateUrl: "./search.component.html"
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  private core: musicdbcore;
-  private subscription: Subscription;
   public artists: any;
   public albums: any;
   public tracks: any;
+  private core: musicdbcore;
+  private subscription: Subscription;
   private query: string;
   private MAXALLOWEDITEMS = 15;
 
-  constructor(
-    private pathService: PathService,
-    private coreService: CoreService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private route: ActivatedRoute) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(data => {
       this.ngOnInit();
     });
-    this.query = decodeURIComponent(this.route.snapshot.params["query"]);
+    this.query = decodeURIComponent(this.route.snapshot.params.query);
     this.route.params.subscribe(data => {
-      this.query = data["query"];
+      this.query = data.query;
       this.ngOnInit();
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.pathService.announcePage(`Results for "${this.query}"`);
-    this.artists = this.spliceList(
-      this.core.searchArtist(this.query),
-      this.MAXALLOWEDITEMS
-    );
-    this.albums = this.spliceList(
-      this.core.searchAlbum(this.query),
-      this.MAXALLOWEDITEMS
-    );
-    this.tracks = this.spliceList(
-      this.core.searchTrack(this.query),
-      this.MAXALLOWEDITEMS
-    );
+    this.artists = this.spliceList(this.core.searchArtist(this.query), this.MAXALLOWEDITEMS);
+    this.albums = this.spliceList(this.core.searchAlbum(this.query), this.MAXALLOWEDITEMS);
+    this.tracks = this.spliceList(this.core.searchTrack(this.query), this.MAXALLOWEDITEMS);
   }
 
-  spliceList(results: Array<any>, count: number) {
+  public spliceList(results: any[], count: number) {
     let ret = false;
     let view = results;
     if (results.length > count) {
@@ -70,18 +56,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     };
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  select(track: Track) {
-    this.router.navigate([
-      "/letter",
-      track.album.artist.letter.escapedLetter,
-      "artist",
-      track.album.artist.sortName,
-      "album",
-      track.album.sortName
-    ]);
+  public select(track: Track) {
+    this.router.navigate(["/letter", track.album.artist.letter.escapedLetter, "artist", track.album.artist.sortName, "album", track.album.sortName]);
   }
 }

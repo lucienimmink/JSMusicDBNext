@@ -1,6 +1,6 @@
 export class Playlist {
   public name: string;
-  public tracks: Array<any> = [];
+  public tracks: any[] = [];
   public isOwn = false;
   public isContinues = false;
   public type: string;

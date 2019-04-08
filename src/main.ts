@@ -9,10 +9,10 @@ if (environment.production) {
 
   window.addEventListener("beforeinstallprompt", e => {
     e.preventDefault();
-    window["deferredPrompt"] = e;
+    window.deferredPrompt = e;
   });
 }
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+  .catch(err => console.error(err));

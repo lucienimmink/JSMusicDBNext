@@ -1,20 +1,22 @@
 import { Injectable } from "@angular/core";
-import { Subject, Subscription } from "rxjs";
 import { del, set } from "idb-keyval";
+import { Subject, Subscription } from "rxjs";
 
 import { musicdbcore } from "./../org/arielext/musicdb/core";
-import { CoreService } from "./../utils/core.service";
 import Album from "./../org/arielext/musicdb/models/Album";
 import Track from "./../org/arielext/musicdb/models/Track";
-import { LastfmService } from "./../utils/lastfm.service";
 import { Playlist } from "./../playlist/playlist";
 import { PlaylistService } from "./../playlist/playlist.service";
+import { CoreService } from "./../utils/core.service";
+import { LastfmService } from "./../utils/lastfm.service";
 
 @Injectable()
 export class PlayerService {
+  public playlistAnnounced$ = this.playlistSource.asObservable();
+  public volumeAnnounced = this.volumeSource.asObservable();
+  public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
   private playlistSource = new Subject<any>();
   private currentPlaylist: any;
-  public playlistAnnounced$ = this.playlistSource.asObservable();
   private currentTrack: Track;
 
   private isPlaying = false;
@@ -24,14 +26,12 @@ export class PlayerService {
 
   private volume = 100;
   private volumeSource = new Subject<any>();
-  public volumeAnnounced = this.volumeSource.asObservable();
 
   private position: number;
 
   private lastfmUserName: string = localStorage.getItem("lastfm-username"); // should be subscriber?
 
   private hideVolumeWindowAsSource = new Subject<any>();
-  public hideVolumeWindowAnnounced$ = this.hideVolumeWindowAsSource.asObservable();
 
   private subscription: Subscription;
 
@@ -48,21 +48,13 @@ export class PlayerService {
     );
   }
 
-  private booleanState(key: string): boolean {
-    const raw = localStorage.getItem(key);
-    if (raw && raw === "true") {
-      return true;
-    }
-    return false;
-  }
-
-  setPosition(position: number) {
+  public setPosition(position: number) {
     this.position = position;
     this.announce();
     this.position = null;
   }
 
-  doPlayAlbum(
+  public doPlayAlbum(
     album: Album,
     startIndex: number,
     forceRestart: boolean = false,
@@ -75,7 +67,7 @@ export class PlayerService {
     this.setPlaylist(album, startIndex, forceRestart, isShuffled, "album");
     this.announce();
   }
-  doPlayPlaylist(
+  public doPlayPlaylist(
     playlist: Playlist,
     startIndex: number,
     forceRestart: boolean = false,
@@ -95,26 +87,7 @@ export class PlayerService {
     this.announce();
   }
 
-  private setPlaylist(
-    playlist: any,
-    startIndex: number = 0,
-    forceRestart: boolean = true,
-    isShuffled: boolean = false,
-    type: string = "album"
-  ): void {
-    this.currentPlaylist = {
-      playlist: playlist,
-      startIndex: startIndex,
-      isPlaying: (this.isPlaying = true),
-      isPaused: (this.isPaused = false),
-      isShuffled: (this.isShuffled = isShuffled),
-      forceRestart: (this.forceRestart = forceRestart),
-      isContinues: playlist.isContinues || type === "album",
-      type: playlist.type
-    };
-  }
-
-  doPlayTrack(track: Track) {
+  public doPlayTrack(track: Track) {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
@@ -124,7 +97,7 @@ export class PlayerService {
     playlist.name = track.title;
     playlist.tracks.push(track);
     this.currentPlaylist = {
-      playlist: playlist,
+      playlist,
       startIndex: 0,
       isPlaying: (this.isPlaying = true),
       isPaused: (this.isPaused = false),
@@ -135,7 +108,7 @@ export class PlayerService {
     this.announce();
   }
 
-  nextPlaylist(type: string): void {
+  public nextPlaylist(type: string): void {
     if (this.booleanState("continues-play")) {
       if (type === "random") {
         const nextPlaylist = this.playlistService.generateRandom();
@@ -148,7 +121,7 @@ export class PlayerService {
     }
   }
 
-  nextAlbum(album: Album): void {
+  public nextAlbum(album: Album): void {
     if (this.booleanState("continues-play")) {
       const nextAlbum = this.coreService.getCore().getNextAlbum(album);
       if (nextAlbum) {
@@ -161,8 +134,8 @@ export class PlayerService {
       this.stop();
     }
   }
-  playlistToString(): string {
-    const list: Array<string> = [];
+  public playlistToString(): string {
+    const list: string[] = [];
     this.currentPlaylist.playlist.tracks.forEach((track: Track) => {
       if (track) {
         list.push(track.id);
@@ -176,8 +149,8 @@ export class PlayerService {
       type: this.currentPlaylist.type
     });
   }
-  playlistSync(): any {
-    const list: Array<string> = [];
+  public playlistSync(): any {
+    const list: string[] = [];
     this.currentPlaylist.playlist.tracks.forEach((track: Track) => {
       if (track) {
         list.push(track.id);
@@ -191,10 +164,10 @@ export class PlayerService {
       type: this.currentPlaylist.type
     };
   }
-  getCurrentPlaylist() {
+  public getCurrentPlaylist() {
     return this.currentPlaylist;
   }
-  shufflePlaylist(shuffled: boolean) {
+  public shufflePlaylist(shuffled: boolean) {
     this.isShuffled = shuffled;
     this.currentPlaylist.playlist.tracks.sort(this.sortPlaylist);
     if (shuffled) {
@@ -208,7 +181,7 @@ export class PlayerService {
     this.currentPlaylist.forceRestart = false;
     this.announce();
   }
-  sortPlaylist(a: Track, b: Track) {
+  public sortPlaylist(a: Track, b: Track) {
     if (a.disc < b.disc) {
       return -1;
     } else if (a.disc > b.disc) {
@@ -222,7 +195,7 @@ export class PlayerService {
       return 0;
     }
   }
-  shuffle(list: Array<Track>): Array<Track> {
+  public shuffle(list: Track[]): Track[] {
     for (let i = list.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       const temp = list[i];
@@ -231,7 +204,7 @@ export class PlayerService {
     }
     return list;
   }
-  next() {
+  public next() {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
@@ -242,7 +215,7 @@ export class PlayerService {
       this.announce();
     }
   }
-  prev() {
+  public prev() {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
       this.currentTrack.isPlaying = false;
@@ -256,7 +229,7 @@ export class PlayerService {
       this.announce();
     }
   }
-  pause() {
+  public pause() {
     if (this.currentPlaylist) {
       this.isPlaying = false;
       this.isPaused = true;
@@ -264,7 +237,7 @@ export class PlayerService {
       this.announce();
     }
   }
-  resume() {
+  public resume() {
     if (this.currentPlaylist) {
       this.isPlaying = true;
       this.isPaused = false;
@@ -272,7 +245,7 @@ export class PlayerService {
       this.announce();
     }
   }
-  stop() {
+  public stop() {
     this.isPlaying = false;
     this.isPaused = false;
     this.currentPlaylist = null;
@@ -280,14 +253,14 @@ export class PlayerService {
     localStorage.removeItem("current-time");
     this.playlistSource.next(this.currentPlaylist);
   }
-  togglePlayPause() {
+  public togglePlayPause() {
     if (this.isPlaying) {
       this.pause();
     } else {
       this.resume();
     }
   }
-  announce() {
+  public announce() {
     if (this.currentPlaylist) {
       this.currentTrack = this.currentPlaylist.playlist.tracks[
         this.currentPlaylist.startIndex
@@ -317,14 +290,41 @@ export class PlayerService {
       }
     }
   }
-  getVolume(): number {
+  public getVolume(): number {
     return this.volume;
   }
-  setVolume(volume: number): void {
+  public setVolume(volume: number): void {
     this.volume = volume;
     this.volumeSource.next(this.volume);
   }
-  hideVolumeControl(): void {
+  public hideVolumeControl(): void {
     this.hideVolumeWindowAsSource.next(true);
+  }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
+  }
+
+  private setPlaylist(
+    playlist: any,
+    startIndex: number = 0,
+    forceRestart: boolean = true,
+    isShuffled: boolean = false,
+    type: string = "album"
+  ): void {
+    this.currentPlaylist = {
+      playlist,
+      startIndex,
+      isPlaying: (this.isPlaying = true),
+      isPaused: (this.isPaused = false),
+      isShuffled: (this.isShuffled = isShuffled),
+      forceRestart: (this.forceRestart = forceRestart),
+      isContinues: playlist.isContinues || type === "album",
+      type: playlist.type
+    };
   }
 }

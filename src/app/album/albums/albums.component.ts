@@ -1,63 +1,58 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { AlbumComponent } from "./../album/album.component";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
+import Album from "./../../org/arielext/musicdb/models/Album";
+import Artist from "./../../org/arielext/musicdb/models/Artist";
 import { CoreService } from "./../../utils/core.service";
 import { PathService } from "./../../utils/path.service";
 import { VsForDirective } from "./../../utils/vs-for.directive";
-import Artist from "./../../org/arielext/musicdb/models/artist";
-import Album from "./../../org/arielext/musicdb/models/album";
+import { AlbumComponent } from "./../album/album.component";
 
 @Component({
   templateUrl: "./albums.component.html"
 })
 export class AlbumsComponent implements OnInit, OnDestroy {
-  public items: Array<any> = [];
-  public letters: Array<any> = [];
+  public items: any[] = [];
+  public letters: any[] = [];
   public showJumpList = false;
-  private cummlativeLength: Array<any> = [];
+  private cummlativeLength: any[] = [];
   private core: musicdbcore;
   private subscription: Subscription;
-  private sorting: Array<string> = ["artist", "year"];
+  private sorting: string[] = ["artist", "year"];
 
-  constructor(
-    private coreService: CoreService,
-    private pathService: PathService,
-    private router: Router
-  ) {
+  constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(data => {
       this.ngOnInit();
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     const s = new Date().getTime();
     this.pathService.announcePage("Albums");
     const artists = this.core.artists;
     this.letters = this.core.sortedLetters;
-    const c = this;
-    const sorted = Object.keys(artists).sort(function(a, b) {
+    const sorted = Object.keys(artists).sort((a, b) => {
       return a < b ? -1 : 1;
     });
-    const tmp: Array<Artist> = [];
-    sorted.forEach(function(artistName) {
-      tmp.push(c.core.artists[artistName]);
+    const tmp: Artist[] = [];
+    sorted.forEach(artistName => {
+      tmp.push(this.core.artists[artistName]);
     });
     this.items = tmp;
-    this.items.forEach(function(item, index) {
-      const letterLength = c.getSize(item, index);
+    this.items.forEach((item, index) => {
+      const letterLength = this.getSize(item, index);
       if (index > 0) {
-        const prevLength = c.cummlativeLength[index - 1].l;
+        const prevLength = this.cummlativeLength[index - 1].l;
         const newLength = prevLength + letterLength;
-        c.cummlativeLength[index] = {
+        this.cummlativeLength[index] = {
           l: newLength,
           letter: item.letter.letter
         };
       } else {
-        c.cummlativeLength[index] = {
+        this.cummlativeLength[index] = {
           l: letterLength,
           letter: item.letter.letter
         };
@@ -65,34 +60,25 @@ export class AlbumsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  navigateToAlbum(album: Album) {
-    this.router.navigate([
-      "/letter",
-      album.artist.letter.escapedLetter,
-      "artist",
-      album.artist.sortName,
-      "album",
-      album.sortName
-    ]);
+  public navigateToAlbum(album: Album) {
+    this.router.navigate(["/letter", album.artist.letter.escapedLetter, "artist", album.artist.sortName, "album", album.sortName]);
   }
-  getSize(item: any, index: number) {
+  public getSize(item: any, index: number) {
     return item.albums.length * 90 + 49;
   }
-  toggleJumpList() {
+  public toggleJumpList() {
     this.showJumpList = !this.showJumpList;
   }
-  jumpToLetter(letter: any) {
+  public jumpToLetter(letter: any) {
     this.showJumpList = false;
-    const c = this;
-
-    this.items.some(function(item, i) {
+    this.items.some((item, i) => {
       let ret = false;
       if (item.letter.letter === letter.letter) {
         const jump = i > 0 ? i - 1 : 0;
-        window.scrollTo(0, c.cummlativeLength[jump].l);
+        window.scrollTo(0, this.cummlativeLength[jump].l);
         ret = true;
       }
       return ret;

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input } from "@angular/core";
-import { set, get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 import { BackgroundArtService } from "./background-art.service";
 
 @Directive({
@@ -8,40 +8,32 @@ import { BackgroundArtService } from "./background-art.service";
   providers: [BackgroundArtService]
 })
 export class BackgroundArtDirective {
-  NOIMAGE = "global/images/no-cover.png";
-
-  private el: HTMLElement;
+  public NOIMAGE = "global/images/no-cover.png";
   public loading = false;
   public loaded = false;
   public error = false;
+
+  // tslint:disable-next-line:no-input-rename
+  @Input("mdb-BackgroundArt") public media: any;
+
+  private el: HTMLElement;
   private loadingClass = "loading";
   private loadedClass = "loaded";
   private errorClass = "error";
 
-  // tslint:disable-next-line:no-input-rename
-  @Input("mdb-BackgroundArt") media: any;
-
-  constructor(
-    el: ElementRef,
-    private backgroundArtService: BackgroundArtService
-  ) {
+  constructor(el: ElementRef, private backgroundArtService: BackgroundArtService) {
     this.el = el.nativeElement;
     // this.loadImage(); // always load image
     setTimeout(() => {
       this.loadImage();
     }, 100);
   }
-  loadImage() {
-    if (
-      (!this.loaded && !this.loading) ||
-      this.hasClassName("always-replace")
-    ) {
+  public loadImage() {
+    if ((!this.loaded && !this.loading) || this.hasClassName("always-replace")) {
       this.loading = true;
       this.addClassName(this.loadingClass);
 
       let key = `art-${this.media.name}`;
-      const c = this;
-
       if (this.media.artist && !this.media.trackArtist) {
         key = `art-${this.media.artist.name}-${this.media.name}`;
       } else if (this.media.trackArtist) {
@@ -49,24 +41,24 @@ export class BackgroundArtDirective {
       }
       get(key).then((data: any) => {
         if (data) {
-          c.setImage(data);
+          this.setImage(data);
         } else {
-          c.backgroundArtService.getMediaArt(c.media).subscribe(
+          this.backgroundArtService.getMediaArt(this.media).subscribe(
             // tslint:disable-next-line:no-shadowed-variable
-            data => c.setImage(data),
+            data => this.setImage(data),
             error => {
-              c.el.style.backgroundImage = `url(${this.NOIMAGE})`;
-              c.error = true;
-              c.loading = false;
-              c.removeClassName(c.loadingClass);
-              c.addClassName(c.errorClass);
+              this.el.style.backgroundImage = `url(${this.NOIMAGE})`;
+              this.error = true;
+              this.loading = false;
+              this.removeClassName(this.loadingClass);
+              this.addClassName(this.errorClass);
             }
           );
         }
       });
     }
   }
-  setImage(data: any) {
+  public setImage(data: any) {
     let dsm = localStorage.getItem("dsm");
     if (dsm) {
       dsm = dsm + "/data/image-proxy?url=";
@@ -76,13 +68,9 @@ export class BackgroundArtDirective {
         this.backgroundArtService.getMediaArtFromLastFm(this.media).subscribe(
           // tslint:disable-next-line:no-shadowed-variable
           data => {
-            data = this.backgroundArtService.returnImageUrlFromLastFMResponse(
-              data
-            );
+            data = this.backgroundArtService.returnImageUrlFromLastFMResponse(data);
             if (data && data !== this.NOIMAGE) {
-              this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(
-                data
-              )})`;
+              this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`;
             } else {
               if (!data) {
                 data = this.NOIMAGE;
@@ -104,13 +92,9 @@ export class BackgroundArtDirective {
       } else {
         data = this.backgroundArtService.returnImageUrlFromLastFMResponse(data);
         if (data) {
-          const imageUrl = (this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(
-            data
-          )})`);
+          const imageUrl = (this.el.style.backgroundImage = `url(${dsm}${encodeURIComponent(data)})`);
         } else {
-          const imageUrl = (this.el.style.backgroundImage = `url(${
-            this.NOIMAGE
-          })`);
+          const imageUrl = (this.el.style.backgroundImage = `url(${this.NOIMAGE})`);
         }
 
         const item = {
@@ -126,44 +110,35 @@ export class BackgroundArtDirective {
       this.toggleLoaded(true);
     }
   }
-  getPosition() {
+  public getPosition() {
     const box = this.el.getBoundingClientRect();
-    const top =
-      box.top + (window.pageYOffset - document.documentElement.clientTop);
+    const top = box.top + (window.pageYOffset - document.documentElement.clientTop);
     return {
-      top: top,
-      left:
-        box.left + (window.pageXOffset - document.documentElement.clientLeft),
+      top,
+      left: box.left + (window.pageXOffset - document.documentElement.clientLeft),
       bottom: top + this.el.clientHeight
     };
   }
-  getLoadingContainer() {
+  public getLoadingContainer() {
     return this.el;
   }
-  hasClassName(name: string) {
-    return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(
-      this.getLoadingContainer().className
-    );
+  public hasClassName(name: string) {
+    return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.getLoadingContainer().className);
   }
-  addClassName(name: string) {
+  public addClassName(name: string) {
     if (!this.hasClassName(name)) {
       const container = this.getLoadingContainer();
-      container.className = container.className
-        ? [container.className, name].join(" ")
-        : name;
+      container.className = container.className ? [container.className, name].join(" ") : name;
     }
   }
-  removeClassName(name: string) {
+  public removeClassName(name: string) {
     if (this.hasClassName(name)) {
       const container = this.getLoadingContainer();
       const c = container.className;
-      container.className = c.replace(
-        new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"),
-        ""
-      );
+      container.className = this.replace(new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)", "g"), "");
     }
   }
-  toggleLoaded(enable: boolean) {
+  public toggleLoaded(enable: boolean) {
     this.loaded = enable;
     if (enable) {
       this.removeClassName(this.loadingClass);

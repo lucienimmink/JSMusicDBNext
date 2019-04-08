@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { ArtistComponent } from "./../../artist/artist/artist.component";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Letter from "./../../org/arielext/musicdb/models/Letter";
 import { CoreService } from "./../../utils/core.service";
-import { ArtistComponent } from "./../../artist/artist/artist.component";
 import { PathService } from "./../../utils/path.service";
 
 @Component({
@@ -12,16 +12,16 @@ import { PathService } from "./../../utils/path.service";
   templateUrl: "./letter-detail.component.html"
 })
 export class LetterDetailComponent implements OnInit, OnDestroy {
-  private letter: string;
-  public artists: Array<any> = [];
-  private core: musicdbcore;
-  private subscription: Subscription;
-  public sorting: Array<any> = [
+  public artists: any[] = [];
+  public sorting: any[] = [
     { name: "name", value: "sortName" },
     { name: "albums", value: "albums" }
   ];
-  private coreletter: Letter;
   public sort: string;
+  private letter: string;
+  private core: musicdbcore;
+  private subscription: Subscription;
+  private coreletter: Letter;
 
   constructor(
     private coreService: CoreService,
@@ -33,30 +33,30 @@ export class LetterDetailComponent implements OnInit, OnDestroy {
     this.subscription = this.core.coreParsed$.subscribe(data => {
       this.ngOnInit();
     });
-    this.letter = decodeURIComponent(this.route.snapshot.params["letter"]);
+    this.letter = decodeURIComponent(this.route.snapshot.params.letter);
     this.route.params.subscribe(data => {
-      this.letter = decodeURIComponent(data["letter"]);
+      this.letter = decodeURIComponent(data.letter);
       this.ngOnInit();
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.coreletter = this.core.letters[this.letter];
     if (this.coreletter) {
       this.pathService.announcePage("JSMusicDB Next", this.coreletter);
       this.artists = this.coreletter.sortAndReturnArtistsBy("sortName", "asc");
     }
   }
-  onSelect(artist: any) {
+  public onSelect(artist: any) {
     this.router.navigate([
       "Artist",
       { letter: artist.letter.escapedLetter, artist: artist.sortName }
     ]);
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  onSortChange(e: Event, sort: string) {
+  public onSortChange(e: Event, sort: string) {
     this.artists = this.coreletter.sortAndReturnArtistsBy(sort, "asc");
   }
 }

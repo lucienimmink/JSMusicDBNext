@@ -1,10 +1,10 @@
-import { throwError as observableThrowError, Observable } from "rxjs";
+import { Observable, throwError as observableThrowError } from "rxjs";
 
-import { catchError, map } from "rxjs/operators";
-import { Injectable } from "@angular/core";
 // import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { KJUR } from "jsrsasign";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable()
 export class LoginService {
@@ -16,7 +16,7 @@ export class LoginService {
     }
   }
 
-  doLogin(form: any, encoded: boolean = false): any {
+  public doLogin(form: any, encoded: boolean = false): any {
     const username = form.name;
     const password = form.password;
 
@@ -31,14 +31,14 @@ export class LoginService {
     });
 
     const options = {
-      headers: headers
+      headers
     };
 
     return this.http
       .post(`${localStorage.getItem("dsm")}/login`, null, options)
       .pipe(catchError(this.handleError));
   }
-  autoLogin() {
+  public autoLogin() {
     const cred = localStorage.getItem("jwt");
     if (cred) {
       return this.doLogin(cred, true);
@@ -47,7 +47,7 @@ export class LoginService {
       return observableThrowError(null);
     }
   }
-  encode(payload: any): string {
+  public encode(payload: any): string {
     return KJUR.jws.JWS.sign(
       "HS256",
       JSON.stringify({ alg: "HS256", typ: "JWT" }),

@@ -2,14 +2,14 @@ import Album from './Album';
 import Letter from './Letter';
 
 export default class Artist {
-  name: string;
-  bio: string;
-  art: string;
-  albums: Array<Album> = [];
-  letter: Letter;
-  albumArtist: string;
-  sortName: string;
-  isCollection: boolean;
+  public name: string;
+  public bio: string;
+  public art: string;
+  public albums: Album[] = [];
+  public letter: Letter;
+  public albumArtist: string;
+  public sortName: string;
+  public isCollection: boolean;
 
   constructor(json: any) {
     // a dummy artist is only used to search for a core artist but is not stored in the core.
@@ -23,22 +23,10 @@ export default class Artist {
     }
   }
 
-  private stripFromName(name: string, strip: Array<string>): string {
-    let f = (name) ? name.toUpperCase() : '';
-    f = f.trim();
-    strip.forEach((str) => {
-      const s = str.toUpperCase();
-      if (f.indexOf(s) === 0) {
-        f = f.substring(s.length);
-      }
-    });
-    return f;
-  }
-
-  url() {
+  public url() {
     return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.albumArtist || this.name)}/`;
   }
-  sortAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): void {
+  public sortAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): void {
     this.albums.sort((a, b) => {
       if (sortkey.indexOf('.') !== -1) {
         const sorter = sortkey.split('.');
@@ -58,8 +46,20 @@ export default class Artist {
       return 0;
     });
   }
-  sortAndReturnAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): Array<Album> {
+  public sortAndReturnAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): Album[] {
     this.sortAlbumsBy(sortkey, direction);
     return this.albums;
+  }
+
+  private stripFromName(name: string, strip: string[]): string {
+    let f = (name) ? name.toUpperCase() : '';
+    f = f.trim();
+    strip.forEach((str) => {
+      const s = str.toUpperCase();
+      if (f.indexOf(s) === 0) {
+        f = f.substring(s.length);
+      }
+    });
+    return f;
   }
 }

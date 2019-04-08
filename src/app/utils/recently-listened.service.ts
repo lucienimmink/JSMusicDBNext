@@ -1,16 +1,16 @@
-import { throwError as observableThrowError, Observable } from "rxjs";
-import { catchError, map } from "rxjs/operators";
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, throwError as observableThrowError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable()
 export class RecentlyListenedService {
   constructor(private http: HttpClient) {}
 
-  getRecentlyListened(user: string) {
+  public getRecentlyListened(user: string) {
     const options = {
       params: {
-        user: user,
+        user,
         method: "user.getrecenttracks",
         api_key: "956c1818ded606576d6941de5ff793a5",
         format: "json",

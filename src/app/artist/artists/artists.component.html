@@ -1,10 +1,10 @@
 <div class="animated-page">
   <div class="container container-longlist" imageLazyLoadArea>
-    <div *vsFor="letters; size:getSize; let _letters = vsCollection; scrollParent:'body'; excess: 2">
+    <div *vsFor="letters; size: getSize; let _letters = vsCollection; scrollParent: 'body'; excess: 2">
       <div class="row" *ngFor="let letter of _letters">
         <div class="col">
           <h4>
-            <a id="letter_{{letter.letter}}" (click)="toggleJumpList()">{{letter.letter}}</a>
+            <a id="letter_{{ letter.letter }}" (click)="toggleJumpList()">{{ letter.letter }}</a>
           </h4>
           <ul>
             <li *ngFor="let artist of letter.artists" (click)="navigateToArtist(artist)">
@@ -12,8 +12,8 @@
                 <mdb-artist [artist]="artist"></mdb-artist>
               </div>
               <div class="text-wrapper">
-                <span class="text">{{artist.albumArtist || artist.name}}</span>
-                <span class="small muted color-type-secondary">Albums: {{artist.albums.length}}</span>
+                <span class="text">{{ artist.albumArtist || artist.name }}</span>
+                <span class="small muted color-type-secondary">Albums: {{ artist.albums.length }}</span>
               </div>
             </li>
           </ul>
@@ -21,10 +21,10 @@
       </div>
     </div>
   </div>
-  <div class="jump-list" [ngClass]="{'visible': showJumpList}">
+  <div class="jump-list" [ngClass]="{ visible: showJumpList }">
     <ol>
       <li *ngFor="let letter of letters">
-        <a (click)="jumpToLetter(letter)">{{letter.letter}}</a>
+        <a (click)="jumpToLetter(letter)">{{ letter.letter }}</a>
       </li>
     </ol>
   </div>

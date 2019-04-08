@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { LastfmService } from './../utils/lastfm.service';
-import { CoreService } from './../utils/core.service';
 import { musicdbcore } from './../org/arielext/musicdb/core';
-import Artist from './../org/arielext/musicdb/models/Artist';
 import Album from './../org/arielext/musicdb/models/Album';
+import Artist from './../org/arielext/musicdb/models/Artist';
 import Track from './../org/arielext/musicdb/models/Track';
+import { CoreService } from './../utils/core.service';
+import { LastfmService } from './../utils/lastfm.service';
 import { Playlist } from './playlist';
 
 @Injectable()
 export class PlaylistService {
+  public playlistAnnounced$ = this.playlistSubject.asObservable();
+  public numberOfTracksInAPlaylist = 100;
 
   private core: musicdbcore;
   private username: string = localStorage.getItem('lastfm-username');
   private playlist: Playlist;
   private playlistSubject: Subject<any> = new Subject<any>();
-  public playlistAnnounced$ = this.playlistSubject.asObservable();
-  public numberOfTracksInAPlaylist = 100;
 
   constructor(private coreService: CoreService, private lastfmservice: LastfmService) {
     this.core = this.coreService.getCore();
   }
 
-  generateRandom(): any {
+  public generateRandom(): any {
     const coretracknames = Object.keys(this.core.tracks);
-    const randomTracks: Array<string> = this.shuffle(coretracknames).splice(0, this.numberOfTracksInAPlaylist);
+    const randomTracks: string[] = this.shuffle(coretracknames).splice(0, this.numberOfTracksInAPlaylist);
     const tmpPlaylist: Playlist = new Playlist();
     tmpPlaylist.name = `${this.numberOfTracksInAPlaylist} random tracks`;
     randomTracks.map((id) => {
@@ -34,7 +34,7 @@ export class PlaylistService {
     return tmpPlaylist;
   }
 
-  generateRadio(): any {
+  public generateRadio(): any {
     this.lastfmservice.getTopArtists(this.username).subscribe(
       data => {
         this.playlistSubject.next(this.extractArtists(data));
@@ -42,7 +42,7 @@ export class PlaylistService {
     );
   }
 
-  extractTracks(data: Array<any>): any {
+  public extractTracks(data: any[]): any {
     const tmpPlaylist: Playlist = new Playlist();
     tmpPlaylist.name = 'Loved tracks on Last.FM';
     data.map((line) => {
@@ -55,9 +55,9 @@ export class PlaylistService {
     });
     return tmpPlaylist;
   }
-  extractArtists(data: Array<any>): any {
-    const highRotation: Array<Artist> = [];
-    const mediumRotation: Array<Artist> = [];
+  public extractArtists(data: any[]): any {
+    const highRotation: Artist[] = [];
+    const mediumRotation: Artist[] = [];
     data.forEach((line, index) => {
       const artistName: string = line.name;
       line.dummy = true; // use dummy artist for lookup;
@@ -72,7 +72,7 @@ export class PlaylistService {
     return this.generateRadioList(highRotation, mediumRotation);
   }
 
-  generateRadioList(highRotation: Array<Artist>, mediumRotation: Array<Artist>): Playlist {
+  public generateRadioList(highRotation: Artist[], mediumRotation: Artist[]): Playlist {
     const tmpPlaylist: Playlist = new Playlist();
     tmpPlaylist.name = `${this.numberOfTracksInAPlaylist} random tracks based on your recently listened tracks`;
 
@@ -88,7 +88,7 @@ export class PlaylistService {
     return tmpPlaylist;
   }
 
-  getRandomTrackFromList(list: Array<Artist>): Track {
+  public getRandomTrackFromList(list: Artist[]): Track {
     const randomArtist: Artist = this.shuffle(list)[0];
     if (randomArtist) {
       const randomAlbum: Album = this.shuffle(randomArtist.albums)[0];
@@ -104,7 +104,7 @@ export class PlaylistService {
       return this.getRandomTrackFromList(list);
     }
   }
-  shuffle(list: Array<any>): Array<any> {
+  public shuffle(list: any[]): any[] {
     for (let i = list.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       const temp = list[i];
@@ -113,7 +113,7 @@ export class PlaylistService {
     }
     return list;
   }
-  getNextTrackForPlaylist(foundSimilair: Array<Artist>, playlist: any): Track {
+  public getNextTrackForPlaylist(foundSimilair: Artist[], playlist: any): Track {
     const nextTrack = this.getRandomTrackFromList(foundSimilair);
     if (nextTrack) {
       const nextArtist = nextTrack.artist;

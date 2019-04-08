@@ -3,25 +3,22 @@ declare const MediaMetadata: any;
 
 import { Component, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
 import { get } from "idb-keyval";
+import { Subscription } from "rxjs";
 
-import { PlayerService } from "./../player.service";
-import { AlbumArtComponent } from "./../../utils/album-art/album-art.component";
+import { ColorService } from "../../utils/color.service";
+import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
-import { LastfmService } from "./../../utils/lastfm.service";
-import { CoreService } from "./../../utils/core.service";
-import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import { AnimationService } from "./../../utils/animation.service";
-import { PathService } from "./../../utils/path.service";
-import { AlbumArtService } from "./../../utils/album-art.service";
-import {
-  removeCustomCss,
-  addCustomCssBasedOnRGBA
-} from "./../../utils/colorutil";
-import { ColorService } from "../../utils/color.service";
 import { Playlist } from "./../../playlist/playlist";
+import { AlbumArtService } from "./../../utils/album-art.service";
+import { AlbumArtComponent } from "./../../utils/album-art/album-art.component";
+import { AnimationService } from "./../../utils/animation.service";
+import { addCustomCssBasedOnRGBA, removeCustomCss } from "./../../utils/colorutil";
+import { CoreService } from "./../../utils/core.service";
+import { LastfmService } from "./../../utils/lastfm.service";
+import { PathService } from "./../../utils/path.service";
+import { PlayerService } from "./../player.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -30,6 +27,10 @@ import { Playlist } from "./../../playlist/playlist";
   providers: [AlbumArtService]
 })
 export class PlayerComponent implements OnDestroy {
+  public showPlayer = false;
+  public usesDynamicAccentColor: boolean = this.booleanState("dynamic-accent-color");
+
+  @ViewChild(AlbumArtComponent) public albumart: AlbumArtComponent;
   private subscription: Subscription;
   private subscription2: Subscription;
   private subscription3: Subscription;
@@ -40,7 +41,6 @@ export class PlayerComponent implements OnDestroy {
   private trackIndex: any;
   private track: Track;
   private currentTrack: Track;
-  public showPlayer = false;
   private isPlaying = false;
   private isPaused = false;
   private mediaObject: any;
@@ -58,11 +58,6 @@ export class PlayerComponent implements OnDestroy {
   private displayUpdater: any;
   private audioCtx: AudioContext;
   private rgba: any;
-  public usesDynamicAccentColor: boolean = this.booleanState(
-    "dynamic-accent-color"
-  );
-
-  @ViewChild(AlbumArtComponent) albumart: AlbumArtComponent;
 
   constructor(
     private pathService: PathService,
@@ -74,29 +69,25 @@ export class PlayerComponent implements OnDestroy {
     private albumartService: AlbumArtService,
     private colorService: ColorService
   ) {
-    this.subscription = this.playerService.playlistAnnounced$.subscribe(
-      playerData => {
-        if (playerData) {
-          this.playlist = playerData.playlist;
-          this.trackIndex = playerData.startIndex;
-          this.isPaused = playerData.isPaused;
-          this.isPlaying = playerData.isPlaying;
-          this.isShuffled = playerData.isShuffled;
-          this.forceRestart = playerData.forceRestart;
-          this.showPlayer = this.isPaused || this.isPlaying;
-          this.setTrack(playerData.position);
-        } else {
-          this.isPlaying = false;
-          this.showPlayer = false;
-          this.mediaObject.pause();
-        }
+    this.subscription = this.playerService.playlistAnnounced$.subscribe(playerData => {
+      if (playerData) {
+        this.playlist = playerData.playlist;
+        this.trackIndex = playerData.startIndex;
+        this.isPaused = playerData.isPaused;
+        this.isPlaying = playerData.isPlaying;
+        this.isShuffled = playerData.isShuffled;
+        this.forceRestart = playerData.forceRestart;
+        this.showPlayer = this.isPaused || this.isPlaying;
+        this.setTrack(playerData.position);
+      } else {
+        this.isPlaying = false;
+        this.showPlayer = false;
+        this.mediaObject.pause();
       }
-    );
-    this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(
-      () => {
-        this.showVolumeWindow = false;
-      }
-    );
+    });
+    this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
+      this.showVolumeWindow = false;
+    });
     this.mediaObject = document.querySelector("audio");
     this.mediaObject.crossOrigin = "anonymous";
     this.mediaObject.canPlayType("audio/flac");
@@ -130,12 +121,10 @@ export class PlayerComponent implements OnDestroy {
         this.readCurrentPlaylist();
       }
     });
-    this.subscription3 = this.playerService.volumeAnnounced.subscribe(
-      volume => {
-        this.volume = volume;
-        this.mediaObject.volume = this.volume / 100;
-      }
-    );
+    this.subscription3 = this.playerService.volumeAnnounced.subscribe(volume => {
+      this.volume = volume;
+      this.mediaObject.volume = this.volume / 100;
+    });
     this.subscription4 = pathService.pageAnnounced$.subscribe(page => {
       if (page.page === "Now playing") {
         this.showVolumeWindow = false;
@@ -176,8 +165,7 @@ export class PlayerComponent implements OnDestroy {
         },
         false
       );
-      this.systemMediaControls.playbackStatus =
-        Windows.Media.MediaPlaybackStatus.closed;
+      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.closed;
     }
     if (navigator.userAgent.indexOf("Mobi") === -1) {
       // lets only handle these calculations on desktop grade devices.
@@ -190,13 +178,8 @@ export class PlayerComponent implements OnDestroy {
       canvas.height = HEIGHT;
       const ctx = canvas.getContext("2d");
 
-      this.audioCtx = new ((window as any).AudioContext ||
-        (window as any).webkitAudioContext)();
-      const javascriptNode = this.audioCtx.createScriptProcessor(
-        1024 * 2,
-        1,
-        1
-      );
+      this.audioCtx = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
+      const javascriptNode = this.audioCtx.createScriptProcessor(1024 * 2, 1, 1);
       javascriptNode.connect(this.audioCtx.destination);
       const analyser = this.audioCtx.createAnalyser();
       const source = this.audioCtx.createMediaElementSource(this.mediaObject);
@@ -233,9 +216,7 @@ export class PlayerComponent implements OnDestroy {
           barHeight = dataArray[i] * y;
           // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
           // rgba(0, 120, 215, 1);
-          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[
-            i
-          ] / 255})`;
+          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[i] / 255})`;
           ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
           x += barWidth + 1;
         }
@@ -246,44 +227,24 @@ export class PlayerComponent implements OnDestroy {
     });
   }
 
-  private booleanState(key: string): boolean {
-    const raw = localStorage.getItem(key);
-    if (raw && raw === "true") {
-      return true;
-    }
-    return false;
-  }
-
-  setTrack(position: any) {
+  public setTrack(position: any) {
     setTimeout(() => {
       if (this.albumart) {
         this.albumart.ngOnInit();
       }
     });
     this.track = this.playlist.tracks[this.trackIndex];
-    if (
-      !this.currentTrack ||
-      (this.track && this.currentTrack.id !== this.track.id) ||
-      this.forceRestart
-    ) {
+    if (!this.currentTrack || (this.track && this.currentTrack.id !== this.track.id) || this.forceRestart) {
       const dsm = localStorage.getItem("dsm");
       if (dsm) {
         this.url = dsm;
       }
       const jwt = localStorage.getItem("jwt");
-      this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(
-        this.track.source.url
-      )}&jwt=${jwt}`;
+      this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}&jwt=${jwt}`;
       this.currentTrack = this.track;
       this.hasScrobbledCurrentTrack = false;
-      this.animationService.requestAnimation(
-        "enter",
-        document.querySelector(".player h4")
-      );
-      this.animationService.requestAnimation(
-        "enter",
-        document.querySelector(".player h5")
-      );
+      this.animationService.requestAnimation("enter", document.querySelector(".player h4"));
+      this.animationService.requestAnimation("enter", document.querySelector(".player h5"));
     }
     if (this.isPlaying) {
       this.mediaObject.play();
@@ -298,12 +259,12 @@ export class PlayerComponent implements OnDestroy {
       this.mediaObject.currentTime = position;
     }
   }
-  readCurrentPlaylist() {
+  public readCurrentPlaylist() {
     get("current-playlist").then(c => {
       const current: any = c; // bah bah bah!
       if (current) {
         const core = this.coreService.getCore();
-        const list: Array<Track> = [];
+        const list: Track[] = [];
         current.ids.forEach(id => {
           const track = core.tracks[id];
           list.push(track);
@@ -316,16 +277,11 @@ export class PlayerComponent implements OnDestroy {
 
         this.isShuffled = current.isShuffled;
         this.isCurrentPlaylistLoaded = true;
-        this.playerService.doPlayPlaylist(
-          playlist,
-          current.current,
-          false,
-          current.isShuffled
-        );
+        this.playerService.doPlayPlaylist(playlist, current.current, false, current.isShuffled);
       }
     });
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe(); // prevent memory leakage
     this.subscription2.unsubscribe(); // prevent memory leakage
     this.subscription3.unsubscribe(); // prevent memory leakage
@@ -337,15 +293,10 @@ export class PlayerComponent implements OnDestroy {
     this.mediaObject.removeEventListener("play");
     this.showVolumeWindow = false;
   }
-  navigateToArtist() {
-    this.router.navigate([
-      "/letter",
-      this.track.album.artist.letter.escapedLetter,
-      "artist",
-      this.track.album.artist.sortName
-    ]);
+  public navigateToArtist() {
+    this.router.navigate(["/letter", this.track.album.artist.letter.escapedLetter, "artist", this.track.album.artist.sortName]);
   }
-  navigateToAlbum() {
+  public navigateToAlbum() {
     this.router.navigate([
       "/letter",
       this.track.album.artist.letter.escapedLetter,
@@ -355,11 +306,11 @@ export class PlayerComponent implements OnDestroy {
       this.track.album.sortName
     ]);
   }
-  navigateToNowPlaying() {
+  public navigateToNowPlaying() {
     // this.router.navigate(['NowPlaying']);
     this.router.navigate(["/now-playing"]);
   }
-  next() {
+  public next() {
     if (this.trackIndex < this.playlist.tracks.length - 1) {
       this.trackIndex++;
       this.playerService.next();
@@ -377,120 +328,162 @@ export class PlayerComponent implements OnDestroy {
       }
     }
   }
-  prev() {
+  public prev() {
     if (this.trackIndex > 0) {
       this.trackIndex--;
       this.playerService.prev();
     }
   }
-  togglePlayPause() {
+  public togglePlayPause() {
     this.playerService.togglePlayPause();
   }
 
-  updateTime() {
+  public updateTime() {
     this.track.position = this.mediaObject.currentTime * 1000;
     if (!this.hasScrobbledCurrentTrack) {
       // TODO: this must be settings; add offline/manual scrobbling
-      if (
-        this.track.position >= 4 * 60 * 1000 ||
-        this.track.position / this.track.duration >= 0.5
-      ) {
+      if (this.track.position >= 4 * 60 * 1000 || this.track.position / this.track.duration >= 0.5) {
         this.hasScrobbledCurrentTrack = true;
         try {
           this.lastFMService.scrobbleTrack(this.track).subscribe(() => {
-            // console.log('track is scrobbled');
+            // console.info('track is scrobbled');
           });
-        } catch (e) {}
+        } catch (e) {
+          console.error(e);
+        }
       }
     }
-    localStorage.setItem(
-      "current-time",
-      this.mediaObject.currentTime.toString()
-    );
+    localStorage.setItem("current-time", this.mediaObject.currentTime.toString());
   }
 
-  onplay() {
-    this.lastFMService
-      .announceNowPlaying(this.track)
-      .subscribe(data => {}, error => {}, () => {});
+  public onplay() {
+    this.lastFMService.announceNowPlaying(this.track).subscribe();
     document.title = `${this.track.title} by ${this.track.trackArtist}`;
     if ("mediaSession" in navigator) {
-      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
-        url => {
-          (navigator as any).mediaSession.metadata = new MediaMetadata({
-            title: this.track.title,
-            artist: this.track.trackArtist,
-            album: this.track.album.name,
-            artwork: [{ src: url, sizes: "500x500", type: "image/png" }]
-          });
+      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {
+        (navigator as any).mediaSession.metadata = new MediaMetadata({
+          title: this.track.title,
+          artist: this.track.trackArtist,
+          album: this.track.album.name,
+          artwork: [{ src: url, sizes: "500x500", type: "image/png" }]
+        });
 
-          (navigator as any).mediaSession.setActionHandler("play", () => {
-            this.togglePlayPause();
-          });
-          (navigator as any).mediaSession.setActionHandler("pause", () => {
-            this.togglePlayPause();
-          });
-          (navigator as any).mediaSession.setActionHandler(
-            "previoustrack",
-            () => {
-              this.prev();
-            }
-          );
-          (navigator as any).mediaSession.setActionHandler("nexttrack", () => {
-            this.next();
-          });
-        }
-      );
+        (navigator as any).mediaSession.setActionHandler("play", () => {
+          this.togglePlayPause();
+        });
+        (navigator as any).mediaSession.setActionHandler("pause", () => {
+          this.togglePlayPause();
+        });
+        (navigator as any).mediaSession.setActionHandler("previoustrack", () => {
+          this.prev();
+        });
+        (navigator as any).mediaSession.setActionHandler("nexttrack", () => {
+          this.next();
+        });
+      });
     }
     if (this.isHostedApp) {
-      this.systemMediaControls.playbackStatus =
-        Windows.Media.MediaPlaybackStatus.playing;
+      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.playing;
       this.displayUpdater.type = Windows.Media.MediaPlaybackType.music;
-      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
-        url => {
-          // update system transport
-          try {
-            if (this.displayUpdater !== undefined) {
-              this.displayUpdater.musicProperties.albumArtist = this.track.trackArtist;
-              this.displayUpdater.musicProperties.artist = this.track.trackArtist;
-              this.displayUpdater.musicProperties.albumTitle = this.track.album.name;
-              this.displayUpdater.musicProperties.title = this.track.title;
-              if (url) {
-                // tslint:disable-next-line:max-line-length
-                this.displayUpdater.thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
-                  new Windows.Foundation.Uri(url)
-                );
-              }
-              this.displayUpdater.update();
+      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {
+        // update system transport
+        try {
+          if (this.displayUpdater !== undefined) {
+            this.displayUpdater.musicProperties.albumArtist = this.track.trackArtist;
+            this.displayUpdater.musicProperties.artist = this.track.trackArtist;
+            this.displayUpdater.musicProperties.albumTitle = this.track.album.name;
+            this.displayUpdater.musicProperties.title = this.track.title;
+            if (url) {
+              // tslint:disable-next-line:max-line-length
+              this.displayUpdater.thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(new Windows.Foundation.Uri(url));
             }
-          } catch (e) {
-            console.error("error occurred", e);
+            this.displayUpdater.update();
           }
-          // update live tile
-          this.updateWinTile(url);
+        } catch (e) {
+          console.error("error occurred", e);
         }
-      );
+        // update live tile
+        this.updateWinTile(url);
+      });
     }
-    document
-      .querySelector("mdb-player")
-      .dispatchEvent(
-        new CustomEvent("external.mdbplaying", { detail: this.track })
-      );
+    document.querySelector("mdb-player").dispatchEvent(new CustomEvent("external.mdbplaying", { detail: this.track }));
     if (this.audioCtx) {
       this.audioCtx.resume();
     }
     this.usesDynamicAccentColor = this.booleanState("dynamic-accent-color");
-    if (this.usesDynamicAccentColor) addCustomCssBasedOnRGBA(this.rgba);
+    if (this.usesDynamicAccentColor) {
+      addCustomCssBasedOnRGBA(this.rgba);
+    }
+  }
+
+  public onstop() {
+    document.querySelector("mdb-player").dispatchEvent(new Event("external.mdbstopped"));
+    document.title = `JSMusicDB Next`;
+    if (this.isHostedApp) {
+      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.stopped;
+    }
+    if (this.audioCtx) {
+      this.audioCtx.suspend();
+    }
+    removeCustomCss();
+  }
+  public onpause() {
+    document.querySelector("mdb-player").dispatchEvent(new CustomEvent("external.mdbpaused", { detail: this.track }));
+    document.title = `JSMusicDB Next`;
+    if (this.isHostedApp) {
+      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.paused;
+    }
+    if (this.audioCtx) {
+      this.audioCtx.suspend();
+    }
+    removeCustomCss();
+  }
+
+  public toggleShuffle() {
+    this.isShuffled = !this.isShuffled;
+    this.playerService.shufflePlaylist(this.isShuffled);
+  }
+  public toggleLoved() {
+    this.track.isLoved = !this.track.isLoved;
+    this.lastFMService.toggleLoved(this.track).subscribe();
+  }
+  public toggleVolumeWindow(e: Event) {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    this.showVolumeWindow = !this.showVolumeWindow;
+  }
+  public onprogress() {
+    const buffered = this.mediaObject.buffered;
+    if (buffered.length !== 0) {
+      this.track.buffered.start = buffered.start(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
+      this.track.buffered.end = buffered.end(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
+    }
+  }
+  public setVolume() {
+    this.mediaObject.volume = this.volume / 100;
+    this.playerService.setVolume(this.volume); // update the shared volume property
+  }
+  public jump(e: any): void {
+    const clientX = e.clientX || e.changedTouches[0].clientX;
+    const left = clientX;
+    const perc = left / document.querySelector(".player").clientWidth;
+    const pos = (this.track.duration / 1000) * perc;
+    this.playerService.setPosition(pos);
+  }
+
+  private booleanState(key: string): boolean {
+    const raw = localStorage.getItem(key);
+    if (raw && raw === "true") {
+      return true;
+    }
+    return false;
   }
   private updateWinTile(url: {}) {
     const Notifications = Windows.UI.Notifications;
-    Notifications.TileUpdateManager.createTileUpdaterForApplication(
-      "App"
-    ).clear();
+    Notifications.TileUpdateManager.createTileUpdaterForApplication("App").clear();
     // tslint:disable-next-line:max-line-length
-    const tileXml = Notifications.TileUpdateManager.getTemplateContent(
-      Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02
-    );
+    const tileXml = Notifications.TileUpdateManager.getTemplateContent(Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02);
     let textNode = tileXml.getElementsByTagName("text")[0];
     textNode.innerText = this.track.title;
     textNode = tileXml.getElementsByTagName("text")[1];
@@ -500,9 +493,7 @@ export class PlayerComponent implements OnDestroy {
       imageNode.attributes[1].value = url;
     }
     const currentTime = new Date();
-    const expiryTime = new Date(
-      currentTime.getTime() + Number(this.track.duration)
-    );
+    const expiryTime = new Date(currentTime.getTime() + Number(this.track.duration));
     let node = tileXml.importNode(
       this.getTileContent(url, "tileSquare310x310ImageAndText02")
         .getElementsByTagName("binding")
@@ -535,94 +526,28 @@ export class PlayerComponent implements OnDestroy {
       .appendChild(node);
     const tileNotification = new Notifications.TileNotification(tileXml);
     tileNotification.expirationTime = expiryTime;
-    Notifications.TileUpdateManager.createTileUpdaterForApplication(
-      "App"
-    ).update(tileNotification);
+    Notifications.TileUpdateManager.createTileUpdaterForApplication("App").update(tileNotification);
   }
 
   private getTileContent(url: {}, tiletype: string): any {
     const Notifications = Windows.UI.Notifications;
-    const tileXml = Notifications.TileUpdateManager.getTemplateContent(
-      Notifications.TileTemplateType[tiletype]
-    );
+    const tileXml = Notifications.TileUpdateManager.getTemplateContent(Notifications.TileTemplateType[tiletype]);
     try {
-      let textNode = tileXml.getElementsByTagName("text")[0];
+      const textNode = tileXml.getElementsByTagName("text")[0];
       textNode.innerText = this.track.title;
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     try {
-      let textNode = tileXml.getElementsByTagName("text")[1];
+      const textNode = tileXml.getElementsByTagName("text")[1];
       textNode.innerText = this.track.trackArtist;
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     if (url) {
       const imageNode = tileXml.getElementsByTagName("image")[0];
       imageNode.attributes[1].value = url;
     }
     return tileXml;
-  }
-
-  onstop() {
-    document
-      .querySelector("mdb-player")
-      .dispatchEvent(new Event("external.mdbstopped"));
-    document.title = `JSMusicDB Next`;
-    if (this.isHostedApp) {
-      this.systemMediaControls.playbackStatus =
-        Windows.Media.MediaPlaybackStatus.stopped;
-    }
-    if (this.audioCtx) {
-      this.audioCtx.suspend();
-    }
-    removeCustomCss();
-  }
-  onpause() {
-    document
-      .querySelector("mdb-player")
-      .dispatchEvent(
-        new CustomEvent("external.mdbpaused", { detail: this.track })
-      );
-    document.title = `JSMusicDB Next`;
-    if (this.isHostedApp) {
-      this.systemMediaControls.playbackStatus =
-        Windows.Media.MediaPlaybackStatus.paused;
-    }
-    if (this.audioCtx) {
-      this.audioCtx.suspend();
-    }
-    removeCustomCss();
-  }
-
-  toggleShuffle() {
-    this.isShuffled = !this.isShuffled;
-    this.playerService.shufflePlaylist(this.isShuffled);
-  }
-  toggleLoved() {
-    this.track.isLoved = !this.track.isLoved;
-    this.lastFMService.toggleLoved(this.track).subscribe(data => {});
-  }
-  toggleVolumeWindow(e: Event) {
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-    e.preventDefault();
-    this.showVolumeWindow = !this.showVolumeWindow;
-  }
-  onprogress() {
-    const buffered = this.mediaObject.buffered;
-    if (buffered.length !== 0) {
-      this.track.buffered.start =
-        buffered.start(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
-      this.track.buffered.end =
-        buffered.end(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
-    }
-  }
-  setVolume() {
-    this.mediaObject.volume = this.volume / 100;
-    this.playerService.setVolume(this.volume); // update the shared volume property
-  }
-  jump(e: any): void {
-    const clientX = e.clientX || e.changedTouches[0].clientX;
-    const left = clientX,
-      perc = left / document.querySelector(".player").clientWidth;
-    const pos = (this.track.duration / 1000) * perc;
-    this.playerService.setPosition(pos);
   }
 }

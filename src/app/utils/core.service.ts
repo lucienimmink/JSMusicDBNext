@@ -6,7 +6,7 @@ export class CoreService {
   constructor() {
     this.core = new musicdbcore();
   }
-   getCore(): musicdbcore {
+   public getCore(): musicdbcore {
      return this.core;
    }
 

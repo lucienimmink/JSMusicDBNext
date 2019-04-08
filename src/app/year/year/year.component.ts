@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlbumComponent } from "./../../album/album/album.component";
@@ -7,37 +7,33 @@ import { CoreService } from "./../../utils/core.service";
 import { PathService } from "./../../utils/path.service";
 import { VsForDirective } from "./../../utils/vs-for.directive";
 
-import Album from "./../../org/arielext/musicdb/models/album";
+import Album from "./../../org/arielext/musicdb/models/Album";
 
 @Component({
   templateUrl: "./year.component.html"
 })
 export class YearComponent implements OnInit, OnDestroy {
-  public items: Array<any> = [];
-  public years: Array<any> = [];
+  public items: any[] = [];
+  public years: any[] = [];
   public showJumpList = false;
-  private cummlativeLength: Array<any> = [];
+  private cummlativeLength: any[] = [];
   private core: musicdbcore;
   private subscription: Subscription;
 
-  constructor(
-    private coreService: CoreService,
-    private pathService: PathService,
-    private router: Router
-  ) {
+  constructor(private coreService: CoreService, private pathService: PathService, private router: Router) {
     this.core = this.coreService.getCore();
     this.subscription = this.core.coreParsed$.subscribe(data => {
       this.ngOnInit();
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.pathService.announcePage("Years");
     const yearsobject = this.core.years;
-    const sorted = Object.keys(yearsobject).sort(function(a, b) {
+    const sorted = Object.keys(yearsobject).sort((a, b) => {
       return parseInt(a, 10) < parseInt(b, 10) ? 1 : -1;
     });
-    const tmp: Array<any> = [];
+    const tmp: any[] = [];
     sorted.forEach(year => {
       if (year !== "undefined") {
         tmp.push(this.core.years[year]);
@@ -63,26 +59,19 @@ export class YearComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  navigateToAlbum(album: Album) {
-    this.router.navigate([
-      "/letter",
-      album.artist.letter.escapedLetter,
-      "artist",
-      album.artist.sortName,
-      "album",
-      album.sortName
-    ]);
+  public navigateToAlbum(album: Album) {
+    this.router.navigate(["/letter", album.artist.letter.escapedLetter, "artist", album.artist.sortName, "album", album.sortName]);
   }
-  getSize(item: any, index: number) {
+  public getSize(item: any, index: number) {
     return item.albums.length * 90 + 39;
   }
-  toggleJumpList() {
+  public toggleJumpList() {
     this.showJumpList = !this.showJumpList;
   }
-  jumpToLetter(year: any) {
+  public jumpToLetter(year: any) {
     this.showJumpList = false;
 
     this.items.some((item, i) => {

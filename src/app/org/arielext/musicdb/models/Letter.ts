@@ -2,10 +2,10 @@ import Artist from './Artist';
 
 export default class Letter {
 
-  letter: string;
-  escapedLetter: string;
-  artists: Array<Artist> = [];
-  active = false;
+  public letter: string;
+  public escapedLetter: string;
+  public artists: Artist[] = [];
+  public active = false;
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -16,33 +16,10 @@ export default class Letter {
       this.escapedLetter = encodeURIComponent(this.letter);
     }
   }
-  url() {
+  public url() {
     return `/letter/${this.escapedLetter}/`;
   }
-  private getFirstLetterOf(name: string): string {
-    let ret = '';
-    ret = this.stripFromName(name, ['the ', '"', 'a ']);
-    // now group the 1st char if it is a 'special char'
-    return this.groupIfSpecialChar(ret.substr(0, 1));
-  }
-  private stripFromName(name: string, strip: Array<string>): string {
-    let f = (name) ? name.toUpperCase() : '';
-    f = f.trim();
-    strip.forEach((str) => {
-      const s = str.toUpperCase();
-      if (f.indexOf(s) === 0) {
-        f = f.substring(s.length);
-      }
-    });
-    return f;
-  }
-  private groupIfSpecialChar(c: string): string {
-    if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '[', ']', '{', '}', '_', '-', '.'].indexOf(c) !== -1) {
-      return '#';
-    }
-    return c;
-  }
-  sortArtistsBy(sortkey: string = 'sortName', direction: string = 'asc'): void {
+  public sortArtistsBy(sortkey: string = 'sortName', direction: string = 'asc'): void {
     if (sortkey === 'albums') {
       this.artists.sort((a, b) => {
         if (a.albums.length > b.albums.length) {
@@ -73,8 +50,31 @@ export default class Letter {
       });
     }
   }
-  sortAndReturnArtistsBy(sortkey: string = 'name', direction = 'asc'): Array<Artist> {
+  public sortAndReturnArtistsBy(sortkey: string = 'name', direction = 'asc'): Artist[] {
     this.sortArtistsBy(sortkey, direction);
     return this.artists;
+  }
+  private getFirstLetterOf(name: string): string {
+    let ret = '';
+    ret = this.stripFromName(name, ['the ', '"', 'a ']);
+    // now group the 1st char if it is a 'special char'
+    return this.groupIfSpecialChar(ret.substr(0, 1));
+  }
+  private stripFromName(name: string, strip: string[]): string {
+    let f = (name) ? name.toUpperCase() : '';
+    f = f.trim();
+    strip.forEach((str) => {
+      const s = str.toUpperCase();
+      if (f.indexOf(s) === 0) {
+        f = f.substring(s.length);
+      }
+    });
+    return f;
+  }
+  private groupIfSpecialChar(c: string): string {
+    if (['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '[', ']', '{', '}', '_', '-', '.'].indexOf(c) !== -1) {
+      return '#';
+    }
+    return c;
   }
 }

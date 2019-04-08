@@ -1,23 +1,23 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { ArtistComponent } from "./../artist/artist.component";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import { CoreService } from "./../../utils/core.service";
 import { PathService } from "./../../utils/path.service";
 import { VsForDirective } from "./../../utils/vs-for.directive";
+import { ArtistComponent } from "./../artist/artist.component";
 
 @Component({
   templateUrl: "./artists.component.html"
 })
 export class ArtistsComponent implements OnInit, OnDestroy {
-  public letters: Array<any> = [];
-  private artists: Array<any> = [];
+  public letters: any[] = [];
   public showJumpList = false;
+  private artists: any[] = [];
   private core: musicdbcore;
   private subscription: Subscription;
-  private cummlativeLength: Array<number> = [];
+  private cummlativeLength: number[] = [];
 
   constructor(
     private coreService: CoreService,
@@ -30,7 +30,7 @@ export class ArtistsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.pathService.announcePage("Artists");
     this.letters = this.core.sortedLetters;
     this.letters.forEach((letter, index) => {
@@ -46,10 +46,10 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       letter.sortArtistsBy("sortName", "asc");
     });
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  navigateToArtist(artist) {
+  public navigateToArtist(artist) {
     this.router.navigate([
       "/letter",
       artist.letter.escapedLetter,
@@ -57,13 +57,13 @@ export class ArtistsComponent implements OnInit, OnDestroy {
       artist.sortName
     ]);
   }
-  getSize(item, index) {
+  public getSize(item, index) {
     return item.artists.length * 90 + 49;
   }
-  toggleJumpList() {
+  public toggleJumpList() {
     this.showJumpList = !this.showJumpList;
   }
-  jumpToLetter(letter: any) {
+  public jumpToLetter(letter: any) {
     this.showJumpList = false;
     const index = this.letters.indexOf(letter);
     const jump = index > 0 ? index - 1 : 0;

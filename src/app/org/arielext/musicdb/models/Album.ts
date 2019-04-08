@@ -3,17 +3,17 @@ import Track from './Track';
 
 export default class Album {
 
-  name: string;
-  sortName: string;
-  artist: Artist;
-  tracks: Array<Track> = [];
-  discs: Array<any> = [];
-  sortedDiscs: Array<any> = [];
-  year: any;
-  art: string;
-  modified = 0;
-  type: string;
-  isContinues = true;
+  public name: string;
+  public sortName: string;
+  public artist: Artist;
+  public tracks: Track[] = [];
+  public discs: any[] = [];
+  public sortedDiscs: any[] = [];
+  public year: any;
+  public art: string;
+  public modified = 0;
+  public type: string;
+  public isContinues = true;
 
   constructor (json: any) {
     if (json.album && json.title) {
@@ -28,7 +28,7 @@ export default class Album {
       }
     }
   }
-  url() {
+  public url() {
     // tslint:disable-next-line:max-line-length
     return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.name)}`;
   }

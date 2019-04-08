@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { BackgroundArtDirective } from './../../utils/background-art.directive';
 import Artist from './../../org/arielext/musicdb/models/Artist';
+import { BackgroundArtDirective } from './../../utils/background-art.directive';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -9,12 +9,12 @@ import Artist from './../../org/arielext/musicdb/models/Artist';
   templateUrl: './artist.component.html'
 })
 export class ArtistComponent {
-  @Input() artist: Artist;
-  @ViewChild(BackgroundArtDirective) backgroundArt: BackgroundArtDirective;
+  @Input() public artist: Artist;
+  @ViewChild(BackgroundArtDirective) public backgroundArt: BackgroundArtDirective;
 
   constructor(private router: Router) { }
 
-  select() {
+  public select() {
     this.router.navigate(['letter', this.artist.letter.escapedLetter, 'artist', this.artist.sortName]);
   }
 }

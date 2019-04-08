@@ -1,10 +1,10 @@
 import {
   Component,
-  Input,
-  OnInit,
-  Output,
   EventEmitter,
-  OnDestroy
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -17,8 +17,8 @@ import { Sort } from "./sort";
   templateUrl: "./sort.component.html"
 })
 export class SortComponent implements OnInit, OnDestroy {
-  @Input() sorting: Array<any>;
-  @Output() onSortChange = new EventEmitter<string>();
+  @Input() public sorting: any[];
+  @Output() public onSortChange = new EventEmitter<string>();
   public sort: Sort;
   public theme: string;
   private subscription: Subscription;
@@ -32,15 +32,15 @@ export class SortComponent implements OnInit, OnDestroy {
     this.theme = configService.mode;
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.sort.sort = this.sorting[0].value;
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  onChange(e: Event) {
+  public onChange(e: Event) {
     // emit the change to the parent
     this.onSortChange.emit(this.sort.sort);
   }

@@ -1,26 +1,15 @@
 declare const window: any;
 
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  ElementRef,
-  OnDestroy
-} from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit } from "@angular/core";
+import { get, set } from "idb-keyval";
 import { Subscription } from "rxjs";
-import { set, get } from "idb-keyval";
 
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AlbumArtService } from "./../album-art.service";
-import { AlbumArt } from "./album-art";
-import {
-  getDominantColor,
-  getColorsFromRGB,
-  addCustomCss
-} from "./../colorutil";
 import { ColorService } from "./../color.service";
+import { addCustomCss, getColorsFromRGB, getDominantColor } from "./../colorutil";
+import { AlbumArt } from "./album-art";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -29,12 +18,12 @@ import { ColorService } from "./../color.service";
   providers: [AlbumArtService]
 })
 export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
-  private subscription: Subscription;
   public albumart: AlbumArt = new AlbumArt();
 
-  @Input() album: Album;
-  @Input() track: Track;
-  @Input("dynamic-accent-color") dynamicAccentColor: boolean = false;
+  @Input() public album: Album;
+  @Input() public track: Track;
+  @Input("dynamic-accent-color") public dynamicAccentColor: boolean = false;
+  private subscription: Subscription;
 
   private searchArtist: string;
   private searchAlbum: string;
@@ -42,12 +31,7 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
   private NOIMAGE = "global/images/no-cover.png";
   private hasEvent: boolean = false;
 
-  constructor(
-    private albumArtService: AlbumArtService,
-    private elementRef: ElementRef,
-    private colorService: ColorService
-  ) {
-    const c = this;
+  constructor(private albumArtService: AlbumArtService, private elementRef: ElementRef, private colorService: ColorService) {
     this.albumart.name = "Unknown album";
     this.albumart.url = this.NOIMAGE;
     this.subscription = this.colorService.blob$.subscribe(() => {
@@ -61,23 +45,22 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
         image,
         rgba => {
           const colors = getColorsFromRGB(rgba);
-          c.colorService.setColor(colors.rgba);
+          this.colorService.setColor(colors.rgba);
           addCustomCss(colors);
         },
         true
       );
     });
   }
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  ngOnInit() {
+  public ngOnInit() {
     let key = "";
     if (this.album) {
       // album
       this.albumart.name = this.album.name;
-      this.searchArtist =
-        this.album.artist.albumArtist || this.album.artist.name;
+      this.searchArtist = this.album.artist.albumArtist || this.album.artist.name;
       this.searchAlbum = this.album.name;
       key = `art-${this.searchArtist}-${this.searchAlbum}`;
     } else {
@@ -98,20 +81,18 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
       if (data) {
         this.setImage(data);
       } else {
-        this.albumArtService
-          .getAlbumArt(this.searchArtist, this.searchAlbum, this.searchType)
-          .subscribe(
-            // tslint:disable-next-line:no-shadowed-variable
-            data => this.setImage(data),
-            error => (this.albumart.url = this.NOIMAGE)
-          );
+        this.albumArtService.getAlbumArt(this.searchArtist, this.searchAlbum, this.searchType).subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
+          data => this.setImage(data),
+          error => (this.albumart.url = this.NOIMAGE)
+        );
       }
     });
     if (this.dynamicAccentColor && !this.hasEvent) {
       // add loader to this.elementRef if not present
       // onload = colorthief
       // then save custom color using colorutil
-      const c = this;
+
       this.elementRef.nativeElement.childNodes[0].addEventListener(
         "load",
         function() {
@@ -119,7 +100,7 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
             this,
             rgba => {
               const colors = getColorsFromRGB(rgba);
-              c.colorService.setColor(colors.rgba);
+              this.colorService.setColor(colors.rgba);
               addCustomCss(colors);
             },
             false
@@ -131,45 +112,39 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges(changes) {
+  public ngOnChanges(changes) {
     this.ngOnInit();
   }
-  setImage(data: any) {
+  public setImage(data: any) {
     let dsm = localStorage.getItem("dsm");
     if (dsm) {
       dsm = dsm + "/data/image-proxy?url=";
     }
     if (data === "global/images/no-cover.png" || data === "" || !data) {
-      this.albumArtService
-        .getMediaArtFromLastFm(
-          this.searchArtist,
-          this.searchAlbum,
-          this.searchType
-        )
-        .subscribe(
-          // tslint:disable-next-line:no-shadowed-variable
-          data => {
-            data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
-            // TODO: perhaps we'd like to store the complete object in the future to have the ability to load smaller images over a metered line
-            if (data instanceof Object) {
+      this.albumArtService.getMediaArtFromLastFm(this.searchArtist, this.searchAlbum, this.searchType).subscribe(
+        // tslint:disable-next-line:no-shadowed-variable
+        data => {
+          data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
+          // TODO: perhaps we'd like to store the complete object in the future to have the ability to load smaller images over a metered line
+          if (data instanceof Object) {
+            data = this.NOIMAGE;
+          }
+          if (data && data !== "global/images/no-cover.png") {
+            this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
+          } else {
+            if (!data) {
               data = this.NOIMAGE;
             }
-            if (data && data !== "global/images/no-cover.png") {
-              this.albumart.url = `${dsm}${encodeURIComponent(data)}`;
-            } else {
-              if (!data) {
-                data = this.NOIMAGE;
-              }
-              this.albumart.url = data;
-            }
-            const item = {
-              _id: `art-${this.searchArtist}-${this.searchAlbum}`,
-              url: data || this.NOIMAGE
-            };
-            set(item._id, item.url);
-          },
-          error => (this.albumart.url = this.NOIMAGE)
-        );
+            this.albumart.url = data;
+          }
+          const item = {
+            _id: `art-${this.searchArtist}-${this.searchAlbum}`,
+            url: data || this.NOIMAGE
+          };
+          set(item._id, item.url);
+        },
+        error => (this.albumart.url = this.NOIMAGE)
+      );
     } else {
       data = this.albumArtService.returnImageUrlFromLastFMResponse(data);
       // TODO: perhaps we'd like to store the complete object in the future to have the ability to load smaller images over a metered line

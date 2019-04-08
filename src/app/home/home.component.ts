@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
-import { Router } from "@angular/router";
 import { NgClass } from "@angular/common";
-import { Subscription } from "rxjs";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { get, set } from "idb-keyval";
+import { Subscription } from "rxjs";
 
-import { musicdbcore } from "./../org/arielext/musicdb/core";
 import Artist from "../org/arielext/musicdb/models/Artist";
+import { AlbumComponent } from "./../album/album/album.component";
+import { musicdbcore } from "./../org/arielext/musicdb/core";
 import Album from "./../org/arielext/musicdb/models/Album";
 import Track from "./../org/arielext/musicdb/models/Track";
-import { CollectionService } from "./../utils/collection.service";
-import { CoreService } from "./../utils/core.service";
-import { PathService } from "./../utils/path.service";
-import { AlbumComponent } from "./../album/album/album.component";
-import { BackgroundArtDirective } from "./../utils/background-art.directive";
-import { RecentlyListenedService } from "./../utils/recently-listened.service";
-import { LastfmService } from "./../utils/lastfm.service";
-import { ConfigService } from "./../utils/config.service";
 import { PlayerService } from "./../player/player.service";
+import { BackgroundArtDirective } from "./../utils/background-art.directive";
+import { CollectionService } from "./../utils/collection.service";
+import { ConfigService } from "./../utils/config.service";
+import { CoreService } from "./../utils/core.service";
+import { LastfmService } from "./../utils/lastfm.service";
+import { PathService } from "./../utils/path.service";
+import { RecentlyListenedService } from "./../utils/recently-listened.service";
 import { User } from "./user";
 
 @Component({
@@ -26,19 +26,19 @@ import { User } from "./user";
   providers: [RecentlyListenedService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  public recentlyListenedTracks: Track[] = [];
+  public username: string;
   private RECENTLYLISTENEDINTERVAL: number = 1000 * 60;
 
   private core: musicdbcore;
-  public recentlyListenedTracks: Array<Track> = [];
-  private newListenedTracks: Array<Track> = [];
+  private newListenedTracks: Track[] = [];
   private counter: any;
   private loading = true;
   private subscription: Subscription;
   private subscription2: Subscription;
   private theme: string;
   private user: User;
-  public username: string;
-  private recentlyAdded: Array<Album> = [];
+  private recentlyAdded: Album[] = [];
 
   // tslint:disable-next-line:max-line-length
   constructor(
@@ -69,26 +69,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.init();
   }
 
-  ngOnInit() {}
-
-  onSubmit(): void {
-    this.lastFMService
-      .authenticate({ user: this.user.name, password: this.user.password })
-      .subscribe(data => {
-        // save in storage
-        localStorage.setItem("lastfm-token", data.session.key);
-        localStorage.setItem("lastfm-username", this.user.name);
-        // set in instance
-        this.username = this.user.name;
-        this.startPolling();
-      });
+  public onSubmit(): void {
+    this.lastFMService.authenticate({ user: this.user.name, password: this.user.password }).subscribe(data => {
+      // save in storage
+      localStorage.setItem("lastfm-token", data.session.key);
+      localStorage.setItem("lastfm-username", this.user.name);
+      // set in instance
+      this.username = this.user.name;
+      this.startPolling();
+    });
   }
 
-  init(skipCoreCheck: boolean = false): void {
-    if (
-      (this.core.isCoreParsed || skipCoreCheck) &&
-      localStorage.getItem("lastfm-username")
-    ) {
+  public init(skipCoreCheck: boolean = false): void {
+    if ((this.core.isCoreParsed || skipCoreCheck) && localStorage.getItem("lastfm-username")) {
       this.startPolling();
     }
     this.recentlyAdded = this.core.getLatestAdditions(14);
@@ -100,13 +93,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     clearInterval(this.counter);
     this.subscription.unsubscribe();
     this.subscription2.unsubscribe();
   }
 
-  startPolling(): void {
+  public startPolling(): void {
     if (!this.counter) {
       this.counter = setInterval(() => {
         this.checkRecentlyListened();
@@ -115,7 +108,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkRecentlyListened(): void {
+  public checkRecentlyListened(): void {
     this.newListenedTracks = [];
     this.loading = true;
     if (this.username !== "mdb-skipped") {
@@ -124,7 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           set("cached-recently-listened", data.recenttracks.track);
           this.populate(data.recenttracks.track);
         },
-        error => console.log(error)
+        error => console.error(error)
       );
     } else {
       get("recentlyListened").then((data: any) => {
@@ -136,24 +129,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  setDate(track: any): Date {
+  public setDate(track: any): Date {
     if (track["@attr"] && track["@attr"].nowplaying) {
       return new Date();
     } else {
       return new Date(Number(track.date.uts) * 1000);
     }
   }
-  setImage(track: any): String {
+  public setImage(track: any): string {
     if (track.image) {
-      return (
-        track.image[track.image.length - 1]["#text"] ||
-        "/global/images/no-cover.png"
-      );
+      return track.image[track.image.length - 1]["#text"] || "/global/images/no-cover.png";
     }
     return "/global/images/no-cover.png";
   }
 
-  populate(json: any): void {
+  public populate(json: any): void {
     this.newListenedTracks = [];
     json.forEach(fmtrack => {
       const track: Track = new Track({});
@@ -161,16 +151,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       track.album = fmtrack.album["#text"];
       track.title = fmtrack.name;
       track.image = this.setImage(fmtrack);
-      track.nowPlaying =
-        fmtrack["@attr"] && fmtrack["@attr"].nowplaying ? true : false;
+      track.nowPlaying = fmtrack["@attr"] && fmtrack["@attr"].nowplaying ? true : false;
       track.date = this.setDate(fmtrack);
       track.trackArtist = fmtrack.artist["#text"];
       track.isPlaying = false;
       track.isPaused = false;
       track.isLoved = false;
-      track.id = `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${
-        fmtrack.name
-      }`;
+      track.id = `${fmtrack.artist["#text"]}-${fmtrack.album["#text"]}-${fmtrack.name}`;
       this.newListenedTracks.push(track);
     });
     if (this.recentlyListenedTracks !== this.newListenedTracks) {
@@ -178,25 +165,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.loading = false;
   }
-  skipLastfm(): void {
+  public skipLastfm(): void {
     const username = "mdb-skipped";
     localStorage.setItem("lastfm-username", username);
     this.username = username;
     this.startPolling();
   }
-  playTrack(track: any): void {
+  public playTrack(track: any): void {
     // get the track from the core;
     const artist: Artist = this.core.getArtistByName(track.artist);
     if (artist) {
-      const album: Album = this.core.getAlbumByArtistAndName(
-        artist,
-        track.album
-      );
+      const album: Album = this.core.getAlbumByArtistAndName(artist, track.album);
       if (album) {
-        const coretrack: Track = this.core.getTrackByAlbumAndName(
-          album,
-          track.title
-        );
+        const coretrack: Track = this.core.getTrackByAlbumAndName(album, track.title);
         if (coretrack) {
           this.playerService.doPlayTrack(coretrack);
           setTimeout(() => {
