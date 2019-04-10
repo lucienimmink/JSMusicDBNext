@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   { path: "letters", loadChildren: "./letters/letters.module#LettersModule", canActivate: [AuthGuardService] },
   { path: "artists", loadChildren: "./artists/artists.module#ArtistsModule", canActivate: [AuthGuardService] },
   { path: "albums", loadChildren: "./albums/albums.module#AlbumsModule", canActivate: [AuthGuardService] },
-  { path: "years", component: YearComponent, canActivate: [AuthGuardService] },
+  { path: "years", loadChildren: "./years/years.module#YearsModule", canActivate: [AuthGuardService] },
   { path: "playlists", component: PlaylistComponent, canActivate: [AuthGuardService] },
   { path: "now-playing", component: NowPlayingComponent, canActivate: [AuthGuardService] },
   { path: "settings", component: SettingsComponent, canActivate: [AuthGuardService] },

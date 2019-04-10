@@ -33,7 +33,7 @@ import { MediaEvents } from "./utils/media-events";
 import { SortComponent } from "./utils/sort/sort.component";
 import { TimeFormatPipe } from "./utils/time-format.pipe";
 // import { VsForDirective } from "./utils/vs-for.directive";
-import { YearComponent } from "./year/year/year.component";
+// import { YearComponent } from "./year/year/year.component";
 
 import { SharedModule } from "./utils/shared/shared.module";
 
@@ -57,7 +57,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     LetterComponent,
     LetterDetailComponent,
     // LettersComponent,
-    YearComponent,
+    // YearComponent,
     TrackComponent,
     PlaylistComponent,
     ScrobbleCacheComponent,
