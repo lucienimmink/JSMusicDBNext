@@ -5,14 +5,14 @@ import { del, get, set } from "idb-keyval";
 import { Subject, Subscription } from "rxjs";
 
 import { ColorService } from "../../utils/color.service";
-import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import { CollectionService } from "./../../utils/collection.service";
-import { ConfigService } from "./../../utils/config.service";
-import { CoreService } from "./../../utils/core.service";
-import { LastfmService } from "./../../utils/lastfm.service";
-import { PathService } from "./../../utils/path.service";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
-import { Settings } from "./../settings";
+import { musicdbcore } from "../../org/arielext/musicdb/core";
+import { CollectionService } from "../../utils/collection.service";
+import { ConfigService } from "../../utils/config.service";
+import { CoreService } from "../../utils/core.service";
+import { LastfmService } from "../../utils/lastfm.service";
+import { PathService } from "../../utils/path.service";
+import { TimeFormatPipe } from "../../utils/time-format.pipe";
+import { Settings } from "../settings";
 
 declare function require(moduleName: string): any;
 const { version: appVersion } = require("../../../../package.json");

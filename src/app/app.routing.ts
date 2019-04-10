@@ -13,7 +13,7 @@ import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.compo
 // import { PlaylistComponent } from "./playlist/playlist/playlist.component";
 import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
 import { SearchComponent } from "./search/search/search.component";
-import { SettingsComponent } from "./settings/settings/settings.component";
+// import { SettingsComponent } from "./settings/settings/settings.component";
 // import { YearComponent } from "./year/year/year.component";
 
 import { LoginService } from "./login/login.service";
@@ -28,7 +28,7 @@ const appRoutes: Routes = [
   { path: "years", loadChildren: "./years/years.module#YearsModule", canActivate: [AuthGuardService] },
   { path: "playlists", loadChildren: "./playlists/playlists.module#PlaylistsModule", canActivate: [AuthGuardService] },
   { path: "now-playing", component: NowPlayingComponent, canActivate: [AuthGuardService] },
-  { path: "settings", component: SettingsComponent, canActivate: [AuthGuardService] },
+  { path: "settings", loadChildren: "./settings/settings.module#SettingsModule", canActivate: [AuthGuardService] },
   { path: "scrobble-cache", component: ScrobbleCacheComponent, canActivate: [AuthGuardService] },
   { path: "search/:query", component: SearchComponent, canActivate: [AuthGuardService] },
   { path: "letter/:letter", component: LetterDetailComponent, canActivate: [AuthGuardService] },

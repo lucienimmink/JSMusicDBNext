@@ -24,7 +24,7 @@ import { PlayerComponent } from "./player/player/player.component";
 // import { PlaylistComponent } from "./playlist/playlist/playlist.component";
 import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
 import { SearchComponent } from "./search/search/search.component";
-import { SettingsComponent } from "./settings/settings/settings.component";
+// import { SettingsComponent } from "./settings/settings/settings.component";
 import { TopmenuComponent } from "./topmenu/topmenu.component";
 // import { TrackComponent } from "./track/track/track.component";
 import { AlbumArtComponent } from "./utils/album-art/album-art.component";
@@ -61,7 +61,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     // TrackComponent,
     // PlaylistComponent,
     ScrobbleCacheComponent,
-    SettingsComponent,
+    // SettingsComponent,
     SearchComponent,
     NowPlayingComponent,
     PlayerComponent
