@@ -7,7 +7,7 @@ import { ModalModule, TooltipModule } from "ngx-bootstrap";
 import { environment } from "../environments/environment";
 
 import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
-import { AlbumComponent } from "./album/album/album.component";
+// import { AlbumComponent } from "./album/album/album.component";
 import { AlbumsComponent } from "./album/albums/albums.component";
 import { AppComponent } from "./app.component";
 import { appRoutingProviders, routing } from "./app.routing";
@@ -28,23 +28,25 @@ import { SettingsComponent } from "./settings/settings/settings.component";
 import { TopmenuComponent } from "./topmenu/topmenu.component";
 import { TrackComponent } from "./track/track/track.component";
 import { AlbumArtComponent } from "./utils/album-art/album-art.component";
-import { BackgroundArtDirective } from "./utils/background-art.directive";
+// import { BackgroundArtDirective } from "./utils/background-art.directive";
 import { MediaEvents } from "./utils/media-events";
 import { SortComponent } from "./utils/sort/sort.component";
 import { TimeFormatPipe } from "./utils/time-format.pipe";
-import { VsForDirective } from "./utils/vs-for.directive";
+// import { VsForDirective } from "./utils/vs-for.directive";
 import { YearComponent } from "./year/year/year.component";
+
+import { SharedModule } from "./utils/shared/shared.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    AlbumComponent,
-    BackgroundArtDirective,
+    // AlbumComponent,
+    // BackgroundArtDirective,
     AlbumDetailComponent,
     AlbumArtComponent,
     TimeFormatPipe,
     AlbumsComponent,
-    VsForDirective,
+    // VsForDirective,
     ArtistComponent,
     ArtistDetailComponent,
     ArtistsComponent,
@@ -69,7 +71,8 @@ import { YearComponent } from "./year/year/year.component";
     HttpClientModule,
     FormsModule,
     routing,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    SharedModule
     // , ModalModule.forRoot()
   ],
   providers: [appRoutingProviders, { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true }, { provide: LOCALE_ID, useValue: "en-GB" }],
