@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   { path: "login", loadChildren: "./login/login.module#LoginModule" },
   { path: "home", loadChildren: "./home/home.module#HomeModule", canActivate: [AuthGuardService] },
   { path: "letters", loadChildren: "./letters/letters.module#LettersModule", canActivate: [AuthGuardService] },
-  { path: "artists", component: ArtistsComponent, canActivate: [AuthGuardService] },
+  { path: "artists", loadChildren: "./artists/artists.module#ArtistsModule", canActivate: [AuthGuardService] },
   { path: "albums", loadChildren: "./albums/albums.module#AlbumsModule", canActivate: [AuthGuardService] },
   { path: "years", component: YearComponent, canActivate: [AuthGuardService] },
   { path: "playlists", component: PlaylistComponent, canActivate: [AuthGuardService] },

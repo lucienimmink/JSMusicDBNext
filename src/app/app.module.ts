@@ -12,12 +12,12 @@ import { AlbumDetailComponent } from "./album/album-detail/album-detail.componen
 import { AppComponent } from "./app.component";
 import { appRoutingProviders, routing } from "./app.routing";
 import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
-import { ArtistComponent } from "./artist/artist/artist.component";
-import { ArtistsComponent } from "./artist/artists/artists.component";
+// import { ArtistComponent } from "./artist/artist/artist.component";
+// import { ArtistsComponent } from "./artist/artists/artists.component";
 // import { HomeComponent } from "./home/home.component";
 import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 import { LetterComponent } from "./letter/letter/letter.component";
-import { LettersComponent } from "./letter/letters/letters.component";
+// import { LettersComponent } from "./letter/letters/letters.component";
 // import { LoginComponent } from "./login/login.component";
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
 import { PlayerComponent } from "./player/player/player.component";
@@ -47,16 +47,16 @@ import { SharedModule } from "./utils/shared/shared.module";
     TimeFormatPipe,
     // AlbumsComponent,
     // VsForDirective,
-    ArtistComponent,
+    // ArtistComponent,
     ArtistDetailComponent,
-    ArtistsComponent,
+    // ArtistsComponent,
     SortComponent,
     // HomeComponent,
     TopmenuComponent,
     // LoginComponent,
     LetterComponent,
     LetterDetailComponent,
-    LettersComponent,
+    // LettersComponent,
     YearComponent,
     TrackComponent,
     PlaylistComponent,
