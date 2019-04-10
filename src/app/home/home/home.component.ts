@@ -1,29 +1,23 @@
-import { NgClass } from "@angular/common";
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { get, set } from "idb-keyval";
 import { Subscription } from "rxjs";
 
-import Artist from "../org/arielext/musicdb/models/Artist";
-import { AlbumComponent } from "./../album/album/album.component";
-import { musicdbcore } from "./../org/arielext/musicdb/core";
-import Album from "./../org/arielext/musicdb/models/Album";
-import Track from "./../org/arielext/musicdb/models/Track";
-import { PlayerService } from "./../player/player.service";
-import { BackgroundArtDirective } from "./../utils/background-art.directive";
-import { CollectionService } from "./../utils/collection.service";
-import { ConfigService } from "./../utils/config.service";
-import { CoreService } from "./../utils/core.service";
-import { LastfmService } from "./../utils/lastfm.service";
-import { PathService } from "./../utils/path.service";
-import { RecentlyListenedService } from "./../utils/recently-listened.service";
-import { User } from "./user";
-
+import Artist from "../../org/arielext/musicdb/models/Artist";
+import { musicdbcore } from "../../org/arielext/musicdb/core";
+import Album from "../../org/arielext/musicdb/models/Album";
+import Track from "../../org/arielext/musicdb/models/Track";
+import { PlayerService } from "../../player/player.service";
+import { CollectionService } from "../../utils/collection.service";
+import { ConfigService } from "../../utils/config.service";
+import { CoreService } from "../../utils/core.service";
+import { LastfmService } from "../../utils/lastfm.service";
+import { PathService } from "../../utils/path.service";
+import { RecentlyListenedService } from "../../utils/recently-listened.service";
+import { User } from "../user";
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: "mdb-home",
-  templateUrl: "./home.component.html",
-  providers: [RecentlyListenedService]
+  selector: "app-home",
+  templateUrl: "./home.component.html"
 })
 export class HomeComponent implements OnDestroy {
   public recentlyListenedTracks: Track[] = [];

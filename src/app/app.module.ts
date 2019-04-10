@@ -14,7 +14,7 @@ import { appRoutingProviders, routing } from "./app.routing";
 import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
 import { ArtistComponent } from "./artist/artist/artist.component";
 import { ArtistsComponent } from "./artist/artists/artists.component";
-import { HomeComponent } from "./home/home.component";
+// import { HomeComponent } from "./home/home.component";
 import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 import { LetterComponent } from "./letter/letter/letter.component";
 import { LettersComponent } from "./letter/letters/letters.component";
@@ -51,7 +51,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     ArtistDetailComponent,
     ArtistsComponent,
     SortComponent,
-    HomeComponent,
+    // HomeComponent,
     TopmenuComponent,
     // LoginComponent,
     LetterComponent,
