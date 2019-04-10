@@ -9,7 +9,7 @@ import { RouterModule, Routes } from "@angular/router";
 // import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 // import { LettersComponent } from "./letter/letters/letters.component";
 // import { LoginComponent } from "./login/login.component";
-import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
+import { NowPlayingComponent } from "./now-playing/now-playing-old/now-playing.component";
 // import { PlaylistComponent } from "./playlist/playlist/playlist.component";
 // import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
 // import { SearchComponent } from "./search/search/search.component";
@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   { path: "albums", loadChildren: "./albums/albums.module#AlbumsModule", canActivate: [AuthGuardService] },
   { path: "years", loadChildren: "./years/years.module#YearsModule", canActivate: [AuthGuardService] },
   { path: "playlists", loadChildren: "./playlists/playlists.module#PlaylistsModule", canActivate: [AuthGuardService] },
-  { path: "now-playing", component: NowPlayingComponent, canActivate: [AuthGuardService] },
+  { path: "now-playing", loadChildren: "./now-playing/now-playing.module#NowPlayingModule", canActivate: [AuthGuardService] },
   { path: "settings", loadChildren: "./settings/settings.module#SettingsModule", canActivate: [AuthGuardService] },
   { path: "scrobble-cache", loadChildren: "./scrobble-cache/scrobble-cache.module#ScrobbleCacheModule", canActivate: [AuthGuardService] },
   { path: "search/:query", loadChildren: "./search/search.module#SearchModule", canActivate: [AuthGuardService] },

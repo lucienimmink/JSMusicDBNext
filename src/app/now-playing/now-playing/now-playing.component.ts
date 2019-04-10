@@ -6,16 +6,16 @@ import { Component, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/
 import { Router } from "@angular/router";
 import { catchError, map } from "rxjs/operators";
 
-import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import Track from "./../../org/arielext/musicdb/models/Track";
-import { PlayerService } from "./../../player/player.service";
-import { TrackComponent } from "./../../track/track/track.component";
-import { AnimationService } from "./../../utils/animation.service";
-import { BackgroundArtDirective } from "./../../utils/background-art.directive";
-import { CoreService } from "./../../utils/core.service";
-import { LastfmService } from "./../../utils/lastfm.service";
-import { PathService } from "./../../utils/path.service";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
+import { musicdbcore } from "../../org/arielext/musicdb/core";
+import Track from "../../org/arielext/musicdb/models/Track";
+import { PlayerService } from "../../player/player.service";
+import { TrackComponent } from "../../track/track/track.component";
+import { AnimationService } from "../../utils/animation.service";
+import { BackgroundArtDirective } from "../../utils/background-art.directive";
+import { CoreService } from "../../utils/core.service";
+import { LastfmService } from "../../utils/lastfm.service";
+import { PathService } from "../../utils/path.service";
+import { TimeFormatPipe } from "../../utils/time-format.pipe";
 
 @Component({
   templateUrl: "./now-playing.component.html"

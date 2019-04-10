@@ -19,7 +19,7 @@ import { appRoutingProviders, routing } from "./app.routing";
 import { LetterComponent } from "./letter/letter/letter.component";
 // import { LettersComponent } from "./letter/letters/letters.component";
 // import { LoginComponent } from "./login/login.component";
-import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
+// import { NowPlayingComponent } from "./now-playing/now-playing-old/now-playing.component";
 import { PlayerComponent } from "./player/player/player.component";
 // import { PlaylistComponent } from "./playlist/playlist/playlist.component";
 // import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
@@ -63,7 +63,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     // ScrobbleCacheComponent,
     // SettingsComponent,
     // SearchComponent,
-    NowPlayingComponent,
+    // NowPlayingComponent,
     PlayerComponent
   ],
   imports: [
