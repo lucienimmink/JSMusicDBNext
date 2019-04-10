@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { PlayerService } from "./../../player/player.service";
-import { Playlist } from "./../../playlist/playlist";
+import { Playlist } from "../../playlists/playlist";
 import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 
 @Component({

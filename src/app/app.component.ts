@@ -8,7 +8,7 @@ import { Observable, Subscription } from "rxjs";
 import { LoginService } from "./login/login.service";
 import { musicdbcore } from "./org/arielext/musicdb/core";
 import { PlayerService } from "./player/player.service";
-import { PlaylistService } from "./playlist/playlist.service";
+import { PlaylistService } from "./playlists/playlist.service";
 import { AnimationService } from "./utils/animation.service";
 import { CollectionService } from "./utils/collection.service";
 import { ColorService } from "./utils/color.service";

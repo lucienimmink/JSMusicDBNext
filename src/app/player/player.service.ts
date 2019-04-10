@@ -5,8 +5,8 @@ import { Subject, Subscription } from "rxjs";
 import { musicdbcore } from "./../org/arielext/musicdb/core";
 import Album from "./../org/arielext/musicdb/models/Album";
 import Track from "./../org/arielext/musicdb/models/Track";
-import { Playlist } from "./../playlist/playlist";
-import { PlaylistService } from "./../playlist/playlist.service";
+import { Playlist } from "../playlists/playlist";
+import { PlaylistService } from "../playlists/playlist.service";
 import { CoreService } from "./../utils/core.service";
 import { LastfmService } from "./../utils/lastfm.service";
 

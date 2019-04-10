@@ -1,26 +1,24 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 // import { ModalDirective } from 'ngx-bootstrap';
 
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import Album from "./../../org/arielext/musicdb/models/Album";
 import Artist from "./../../org/arielext/musicdb/models/Artist";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { PlayerService } from "./../../player/player.service";
-import { TrackComponent } from "./../../track/track/track.component";
 import { ConfigService } from "./../../utils/config.service";
 import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
-import { Playlist } from "../../playlists/playlist";
-import { PlaylistService } from "../../playlists/playlist.service";
+import { Playlist } from "./../playlist";
+import { PlaylistService } from "./../playlist.service";
 
 @Component({
-  templateUrl: "./playlist.component.html"
+  selector: "app-playlists",
+  templateUrl: "./playlists.component.html"
 })
-export class PlaylistComponent implements OnInit, OnDestroy {
+export class PlaylistsComponent implements OnInit, OnDestroy {
   public playlist: Playlist;
   public currentPlaylist: any;
   public loading = false;
@@ -186,50 +184,4 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     this.playlist = null;
     this.showStartingArtist = true;
   }
-
-  /*
-  addPlaylist(): void {
-    this.addModal.show();
-    this.newPlaylist = new Playlist();
-  }
-
-  doAddPlaylist(): void {
-    this.addModal.hide();
-    // this.playlist = this.newPlaylist;
-    this.playlist = new Playlist();
-    this.playlist.name = this.newPlaylist.name;
-    this.playlist.isOwn = true; // set to true so we can alter the name
-    this.ownPlaylists.push(this.playlist);
-    this.showStartingArtist = false;
-
-    // TODO: this should be a call to the backend
-    localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
-  }
-
-  updatePlaylist(playlist: Playlist): void {
-    this.newPlaylist = new Playlist();
-    this.newPlaylist.name = playlist.name;
-    this.newPlaylist.tracks = playlist.tracks;
-    this.newPlaylist.isOwn = true;
-
-    this.editModal.show();
-  }
-
-  doUpdatePlaylist(): void {
-    this.editModal.hide();
-    this.playlist.name = this.newPlaylist.name;
-
-    // TODO: this should be a call to the backend
-    localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
-  }
-
-  removePlaylist(playlist: Playlist): void {
-    let index = this.ownPlaylists.indexOf(playlist);
-    this.ownPlaylists.splice(index, 1);
-    this.playlist = null;
-
-    // TODO: this should be a call to the backend
-    localStorage.setItem('customlisttest', JSON.stringify(this.ownPlaylists));
-  }
-  */
 }

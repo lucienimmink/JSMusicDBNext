@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 
-import { musicdbcore } from "./../org/arielext/musicdb/core";
-import Album from "./../org/arielext/musicdb/models/Album";
-import Artist from "./../org/arielext/musicdb/models/Artist";
-import Track from "./../org/arielext/musicdb/models/Track";
-import { CoreService } from "./../utils/core.service";
-import { LastfmService } from "./../utils/lastfm.service";
+import { musicdbcore } from "../org/arielext/musicdb/core";
+import Album from "../org/arielext/musicdb/models/Album";
+import Artist from "../org/arielext/musicdb/models/Artist";
+import Track from "../org/arielext/musicdb/models/Track";
+import { CoreService } from "../utils/core.service";
+import { LastfmService } from "../utils/lastfm.service";
 import { Playlist } from "./playlist";
 
 @Injectable()
