@@ -6,66 +6,17 @@ import { TooltipModule } from "ngx-bootstrap";
 
 import { environment } from "../environments/environment";
 
-// import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
-// import { AlbumComponent } from "./album/album/album.component";
-// import { AlbumsComponent } from "./album/albums/albums.component";
 import { AppComponent } from "./app.component";
 import { appRoutingProviders, routing } from "./app.routing";
-// import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
-// import { ArtistComponent } from "./artist/artist/artist.component";
-// import { ArtistsComponent } from "./artist/artists/artists.component";
-// import { HomeComponent } from "./home/home.component";
-// import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 import { LetterComponent } from "./letter/letter/letter.component";
-// import { LettersComponent } from "./letter/letters/letters.component";
-// import { LoginComponent } from "./login/login.component";
-// import { NowPlayingComponent } from "./now-playing/now-playing-old/now-playing.component";
 import { PlayerComponent } from "./player/player/player.component";
-// import { PlaylistComponent } from "./playlist/playlist/playlist.component";
-// import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
-// import { SearchComponent } from "./search/search/search.component";
-// import { SettingsComponent } from "./settings/settings/settings.component";
 import { TopmenuComponent } from "./topmenu/topmenu.component";
-// import { TrackComponent } from "./track/track/track.component";
-// import { AlbumArtComponent } from "./utils/album-art/album-art.component";
-// import { BackgroundArtDirective } from "./utils/background-art.directive";
 import { MediaEvents } from "./utils/media-events";
 import { SortComponent } from "./utils/sort/sort.component";
-// import { TimeFormatPipe } from "./utils/time-format.pipe";
-// import { VsForDirective } from "./utils/vs-for.directive";
-// import { YearComponent } from "./year/year/year.component";
-
 import { SharedModule } from "./utils/shared/shared.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    // AlbumComponent,
-    // BackgroundArtDirective,
-    // AlbumDetailComponent,
-    // AlbumArtComponent,
-    // TimeFormatPipe,
-    // AlbumsComponent,
-    // VsForDirective,
-    // ArtistComponent,
-    // ArtistDetailComponent,
-    // ArtistsComponent,
-    SortComponent,
-    // HomeComponent,
-    TopmenuComponent,
-    // LoginComponent,
-    LetterComponent,
-    // LetterDetailComponent,
-    // LettersComponent,
-    // YearComponent,
-    // TrackComponent,
-    // PlaylistComponent,
-    // ScrobbleCacheComponent,
-    // SettingsComponent,
-    // SearchComponent,
-    // NowPlayingComponent,
-    PlayerComponent
-  ],
+  declarations: [AppComponent, SortComponent, TopmenuComponent, LetterComponent, PlayerComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
