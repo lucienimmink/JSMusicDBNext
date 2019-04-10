@@ -7,7 +7,7 @@ import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.comp
 import { ArtistsComponent } from "./artist/artists/artists.component";
 // import { HomeComponent } from "./home/home.component";
 import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
-import { LettersComponent } from "./letter/letters/letters.component";
+// import { LettersComponent } from "./letter/letters/letters.component";
 // import { LoginComponent } from "./login/login.component";
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
 import { PlaylistComponent } from "./playlist/playlist/playlist.component";
@@ -22,7 +22,7 @@ import { AuthGuardService } from "./utils/authguard.service";
 const appRoutes: Routes = [
   { path: "login", loadChildren: "./login/login.module#LoginModule" },
   { path: "home", loadChildren: "./home/home.module#HomeModule", canActivate: [AuthGuardService] },
-  { path: "letters", component: LettersComponent, canActivate: [AuthGuardService] },
+  { path: "letters", loadChildren: "./letters/letters.module#LettersModule", canActivate: [AuthGuardService] },
   { path: "artists", component: ArtistsComponent, canActivate: [AuthGuardService] },
   { path: "albums", loadChildren: "./albums/albums.module#AlbumsModule", canActivate: [AuthGuardService] },
   { path: "years", component: YearComponent, canActivate: [AuthGuardService] },
