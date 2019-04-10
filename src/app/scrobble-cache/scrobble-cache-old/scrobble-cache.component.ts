@@ -10,7 +10,6 @@ import { LastfmService } from "../../utils/lastfm.service";
 import { PathService } from "../../utils/path.service";
 
 @Component({
-  selector: "app-scrobble-cache",
   templateUrl: "./scrobble-cache.component.html"
 })
 export class ScrobbleCacheComponent implements OnInit, OnDestroy {

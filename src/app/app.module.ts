@@ -22,7 +22,7 @@ import { LetterComponent } from "./letter/letter/letter.component";
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
 import { PlayerComponent } from "./player/player/player.component";
 // import { PlaylistComponent } from "./playlist/playlist/playlist.component";
-import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
+// import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
 import { SearchComponent } from "./search/search/search.component";
 // import { SettingsComponent } from "./settings/settings/settings.component";
 import { TopmenuComponent } from "./topmenu/topmenu.component";
@@ -60,7 +60,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     // YearComponent,
     // TrackComponent,
     // PlaylistComponent,
-    ScrobbleCacheComponent,
+    // ScrobbleCacheComponent,
     // SettingsComponent,
     SearchComponent,
     NowPlayingComponent,
