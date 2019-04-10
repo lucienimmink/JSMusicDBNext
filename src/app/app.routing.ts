@@ -2,13 +2,13 @@ import { ModuleWithProviders } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
 import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
-import { AlbumsComponent } from "./album/albums/albums.component";
+// import { AlbumsComponent } from "./album/albums/albums.component";
 import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
 import { ArtistsComponent } from "./artist/artists/artists.component";
 import { HomeComponent } from "./home/home.component";
 import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 import { LettersComponent } from "./letter/letters/letters.component";
-import { LoginComponent } from "./login/login.component";
+// import { LoginComponent } from "./login/login.component";
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
 import { PlaylistComponent } from "./playlist/playlist/playlist.component";
 import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
@@ -20,7 +20,7 @@ import { LoginService } from "./login/login.service";
 import { AuthGuardService } from "./utils/authguard.service";
 
 const appRoutes: Routes = [
-  { path: "login", component: LoginComponent },
+  { path: "login", loadChildren: "./login/login.module#LoginModule" },
   { path: "home", component: HomeComponent, canActivate: [AuthGuardService] },
   { path: "letters", component: LettersComponent, canActivate: [AuthGuardService] },
   { path: "artists", component: ArtistsComponent, canActivate: [AuthGuardService] },

@@ -1,13 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { CollectionService } from "./../utils/collection.service";
-import { ConfigService } from "./../utils/config.service";
-import { CoreService } from "./../utils/core.service";
-import { LoginService } from "./login.service";
+import { CollectionService } from "./../../utils/collection.service";
+import { ConfigService } from "./../../utils/config.service";
+import { CoreService } from "./../../utils/core.service";
+import { LoginService } from "./../login.service";
 
-import { User } from "./user";
+import { User } from "./../user";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html"

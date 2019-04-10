@@ -8,7 +8,7 @@ import { environment } from "../environments/environment";
 
 import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
 // import { AlbumComponent } from "./album/album/album.component";
-import { AlbumsComponent } from "./album/albums/albums.component";
+// import { AlbumsComponent } from "./album/albums/albums.component";
 import { AppComponent } from "./app.component";
 import { appRoutingProviders, routing } from "./app.routing";
 import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
@@ -18,7 +18,7 @@ import { HomeComponent } from "./home/home.component";
 import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 import { LetterComponent } from "./letter/letter/letter.component";
 import { LettersComponent } from "./letter/letters/letters.component";
-import { LoginComponent } from "./login/login.component";
+// import { LoginComponent } from "./login/login.component";
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
 import { PlayerComponent } from "./player/player/player.component";
 import { PlaylistComponent } from "./playlist/playlist/playlist.component";
@@ -45,7 +45,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     AlbumDetailComponent,
     AlbumArtComponent,
     TimeFormatPipe,
-    AlbumsComponent,
+    // AlbumsComponent,
     // VsForDirective,
     ArtistComponent,
     ArtistDetailComponent,
@@ -53,7 +53,7 @@ import { SharedModule } from "./utils/shared/shared.module";
     SortComponent,
     HomeComponent,
     TopmenuComponent,
-    LoginComponent,
+    // LoginComponent,
     LetterComponent,
     LetterDetailComponent,
     LettersComponent,
