@@ -2,20 +2,20 @@ import { HttpClientModule } from "@angular/common/http";
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule, EVENT_MANAGER_PLUGINS } from "@angular/platform-browser";
-import { ModalModule, TooltipModule } from "ngx-bootstrap";
+import { TooltipModule } from "ngx-bootstrap";
 
 import { environment } from "../environments/environment";
 
-import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
+// import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
 // import { AlbumComponent } from "./album/album/album.component";
 // import { AlbumsComponent } from "./album/albums/albums.component";
 import { AppComponent } from "./app.component";
 import { appRoutingProviders, routing } from "./app.routing";
-import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
+// import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
 // import { ArtistComponent } from "./artist/artist/artist.component";
 // import { ArtistsComponent } from "./artist/artists/artists.component";
 // import { HomeComponent } from "./home/home.component";
-import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
+// import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 import { LetterComponent } from "./letter/letter/letter.component";
 // import { LettersComponent } from "./letter/letters/letters.component";
 // import { LoginComponent } from "./login/login.component";
@@ -27,7 +27,7 @@ import { PlayerComponent } from "./player/player/player.component";
 // import { SettingsComponent } from "./settings/settings/settings.component";
 import { TopmenuComponent } from "./topmenu/topmenu.component";
 // import { TrackComponent } from "./track/track/track.component";
-import { AlbumArtComponent } from "./utils/album-art/album-art.component";
+// import { AlbumArtComponent } from "./utils/album-art/album-art.component";
 // import { BackgroundArtDirective } from "./utils/background-art.directive";
 import { MediaEvents } from "./utils/media-events";
 import { SortComponent } from "./utils/sort/sort.component";
@@ -42,20 +42,20 @@ import { SharedModule } from "./utils/shared/shared.module";
     AppComponent,
     // AlbumComponent,
     // BackgroundArtDirective,
-    AlbumDetailComponent,
-    AlbumArtComponent,
+    // AlbumDetailComponent,
+    // AlbumArtComponent,
     // TimeFormatPipe,
     // AlbumsComponent,
     // VsForDirective,
     // ArtistComponent,
-    ArtistDetailComponent,
+    // ArtistDetailComponent,
     // ArtistsComponent,
     SortComponent,
     // HomeComponent,
     TopmenuComponent,
     // LoginComponent,
     LetterComponent,
-    LetterDetailComponent,
+    // LetterDetailComponent,
     // LettersComponent,
     // YearComponent,
     // TrackComponent,

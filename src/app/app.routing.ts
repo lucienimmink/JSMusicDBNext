@@ -1,12 +1,12 @@
 import { ModuleWithProviders } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 
-import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
+// import { AlbumDetailComponent } from "./album/album-detail/album-detail.component";
 // import { AlbumsComponent } from "./album/albums/albums.component";
-import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
+// import { ArtistDetailComponent } from "./artist/artist-detail/artist-detail.component";
 // import { ArtistsComponent } from "./artist/artists/artists.component";
 // import { HomeComponent } from "./home/home.component";
-import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
+// import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.component";
 // import { LettersComponent } from "./letter/letters/letters.component";
 // import { LoginComponent } from "./login/login.component";
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
@@ -31,9 +31,9 @@ const appRoutes: Routes = [
   { path: "settings", loadChildren: "./settings/settings.module#SettingsModule", canActivate: [AuthGuardService] },
   { path: "scrobble-cache", loadChildren: "./scrobble-cache/scrobble-cache.module#ScrobbleCacheModule", canActivate: [AuthGuardService] },
   { path: "search/:query", loadChildren: "./search/search.module#SearchModule", canActivate: [AuthGuardService] },
-  { path: "letter/:letter", component: LetterDetailComponent, canActivate: [AuthGuardService] },
-  { path: "letter/:letter/artist/:artist", component: ArtistDetailComponent, canActivate: [AuthGuardService] },
-  { path: "letter/:letter/artist/:artist/album/:album", component: AlbumDetailComponent, canActivate: [AuthGuardService] },
+  { path: "letter/:letter", loadChildren: "./letter-detail/letter-detail.module#LetterDetailModule", canActivate: [AuthGuardService] },
+  { path: "letter/:letter/artist/:artist", loadChildren: "./artist-detail/artist-detail.module#ArtistDetailModule", canActivate: [AuthGuardService] },
+  { path: "letter/:letter/artist/:artist/album/:album", loadChildren: "./album-detail/album-detail.module#AlbumDetailModule", canActivate: [AuthGuardService] },
   { path: "", loadChildren: "./home/home.module#HomeModule", canActivate: [AuthGuardService] }
 ];
 
