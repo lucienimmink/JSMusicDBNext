@@ -3,8 +3,9 @@
     <div class="row">
       <div class="col">
         <div *ngIf="artists.list && artists.list.length > 0">
-          <h4>Artists
-            <span class="small muted color-type-secondary">({{artists.list.length}})</span>
+          <h4>
+            Artists
+            <span class="small muted color-type-secondary">({{ artists.list.length }})</span>
           </h4>
           <div class="alert alert-info" *ngIf="artists.overflow">
             More artists are found. Refine search for less results
@@ -16,8 +17,9 @@
           </div>
         </div>
         <div *ngIf="albums.list && albums.list.length > 0">
-          <h4>Albums
-            <span class="small muted color-type-secondary">({{albums.list.length}})</span>
+          <h4>
+            Albums
+            <span class="small muted color-type-secondary">({{ albums.list.length }})</span>
           </h4>
           <div class="alert alert-info" *ngIf="albums.overflow">
             More albums are found. Refine search for less results
@@ -29,29 +31,33 @@
           </div>
         </div>
         <div *ngIf="tracks.list && tracks.list.length > 0">
-          <h4>Tracks
-            <span class="small muted color-type-secondary">({{tracks.list.length}})</span>
+          <h4>
+            Tracks
+            <span class="small muted color-type-secondary">({{ tracks.list.length }})</span>
           </h4>
           <div class="alert alert-info" *ngIf="tracks.overflow">
             More tracks are found. Refine search for less results
           </div>
           <ol class="list-group list-tracks">
-            <li class="list-group-item" *ngFor="let track of tracks.list" (click)="select(track)" [ngClass]="{'active': track.isPlaying || track.isPaused}"
-              style="display: flex;">
+            <li
+              class="list-group-item"
+              *ngFor="let track of tracks.list"
+              (click)="select(track)"
+              [ngClass]="{ active: track.isPlaying || track.isPaused }"
+              style="display: flex;"
+            >
               <div class="col-9 col-md-10 track-info">
                 <span *ngIf="!track.isPlaying && track.isPaused">
                   <span class="glyph glyph-pause"></span>
                 </span>
                 <span *ngIf="track.isPlaying && !track.isPaused">
-                  <span class="glyph glyph-play"></span>
-                </span>{{track.title}}
+                  <span class="glyph glyph-play"></span> </span
+                >{{ track.title }}
                 <br />
-                <span class="small muted">
-                  {{track.trackArtist}} &bull; {{track.album.name}}
-                </span>
+                <span class="small muted"> {{ track.trackArtist }} &bull; {{ track.album.name }} </span>
               </div>
               <div class="col-3 col-md-2 text-right">
-                {{track.duration | timeFormat }}
+                {{ track.duration | timeFormat }}
               </div>
             </li>
           </ol>

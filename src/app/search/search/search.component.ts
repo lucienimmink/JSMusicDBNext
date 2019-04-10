@@ -2,15 +2,10 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 
-import { AlbumComponent } from "./../../album/album/album.component";
-import { ArtistComponent } from "./../../artist/artist/artist.component";
-import { musicdbcore } from "./../../org/arielext/musicdb/core";
-import Track from "./../../org/arielext/musicdb/models/Track";
-import { TrackComponent } from "./../../track/track/track.component";
-import { CollectionService } from "./../../utils/collection.service";
-import { CoreService } from "./../../utils/core.service";
-import { PathService } from "./../../utils/path.service";
-import { TimeFormatPipe } from "./../../utils/time-format.pipe";
+import { musicdbcore } from "../../org/arielext/musicdb/core";
+import Track from "../../org/arielext/musicdb/models/Track";
+import { CoreService } from "../../utils/core.service";
+import { PathService } from "../../utils/path.service";
 
 @Component({
   templateUrl: "./search.component.html"

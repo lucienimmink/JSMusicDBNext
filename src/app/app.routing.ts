@@ -12,7 +12,7 @@ import { LetterDetailComponent } from "./letter/letter-detail/letter-detail.comp
 import { NowPlayingComponent } from "./now-playing/now-playing/now-playing.component";
 // import { PlaylistComponent } from "./playlist/playlist/playlist.component";
 // import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache/scrobble-cache.component";
-import { SearchComponent } from "./search/search/search.component";
+// import { SearchComponent } from "./search/search/search.component";
 // import { SettingsComponent } from "./settings/settings/settings.component";
 // import { YearComponent } from "./year/year/year.component";
 
@@ -30,7 +30,7 @@ const appRoutes: Routes = [
   { path: "now-playing", component: NowPlayingComponent, canActivate: [AuthGuardService] },
   { path: "settings", loadChildren: "./settings/settings.module#SettingsModule", canActivate: [AuthGuardService] },
   { path: "scrobble-cache", loadChildren: "./scrobble-cache/scrobble-cache.module#ScrobbleCacheModule", canActivate: [AuthGuardService] },
-  { path: "search/:query", component: SearchComponent, canActivate: [AuthGuardService] },
+  { path: "search/:query", loadChildren: "./search/search.module#SearchModule", canActivate: [AuthGuardService] },
   { path: "letter/:letter", component: LetterDetailComponent, canActivate: [AuthGuardService] },
   { path: "letter/:letter/artist/:artist", component: ArtistDetailComponent, canActivate: [AuthGuardService] },
   { path: "letter/:letter/artist/:artist/album/:album", component: AlbumDetailComponent, canActivate: [AuthGuardService] },
