@@ -22,10 +22,7 @@ const getReadableColor = (rgba, bgcolor): any => {
 };
 
 const getHighestContrast = (color): any => {
-  return tinycolor.readability("#000", color) >
-    tinycolor.readability("#fff", color)
-    ? "#000"
-    : "#fff";
+  return tinycolor.readability("#000", color) > tinycolor.readability("#fff", color) ? "#000" : "#fff";
 };
 const convertSwatchToRGB = (swatch): any => {
   if (swatch) {

@@ -92,7 +92,7 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
       // add loader to this.elementRef if not present
       // onload = colorthief
       // then save custom color using colorutil
-
+      const c = this;
       this.elementRef.nativeElement.childNodes[0].addEventListener(
         "load",
         function() {
@@ -100,7 +100,7 @@ export class AlbumArtComponent implements OnInit, OnChanges, OnDestroy {
             this,
             rgba => {
               const colors = getColorsFromRGB(rgba);
-              this.colorService.setColor(colors.rgba);
+              c.colorService.setColor(colors.rgba);
               addCustomCss(colors);
             },
             false

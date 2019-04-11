@@ -161,8 +161,6 @@ export class LastfmService {
       };
 
       return this.http.post("https://ws.audioscrobbler.com/2.0/", null, options).pipe(catchError(this.handleError));
-    } else {
-      return observableThrowError(null);
     }
   }
 

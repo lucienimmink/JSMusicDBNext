@@ -357,16 +357,20 @@ export class PlayerComponent implements OnDestroy {
   }
 
   public onplay() {
-    this.lastFMService.announceNowPlaying(this.track).subscribe();
+    try {
+      this.lastFMService.announceNowPlaying(this.track).subscribe();
+    } catch (e) {}
     document.title = `${this.track.title} by ${this.track.trackArtist}`;
     if ("mediaSession" in navigator) {
       get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {
-        (navigator as any).mediaSession.metadata = new MediaMetadata({
-          title: this.track.title,
-          artist: this.track.trackArtist,
-          album: this.track.album.name,
-          artwork: [{ src: url, sizes: "500x500", type: "image/png" }]
-        });
+        if (url) {
+          (navigator as any).mediaSession.metadata = new MediaMetadata({
+            title: this.track.title,
+            artist: this.track.trackArtist,
+            album: this.track.album.name,
+            artwork: [{ src: url, sizes: "500x500", type: "image/png" }]
+          });
+        }
 
         (navigator as any).mediaSession.setActionHandler("play", () => {
           this.togglePlayPause();
