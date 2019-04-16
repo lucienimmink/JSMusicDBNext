@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 // import { ModalDirective } from 'ngx-bootstrap';
 
+import { Playlist } from "../../playlists/playlist";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { PlayerService } from "./../../player/player.service";
-import { Playlist } from "../../playlists/playlist";
 import { ConfigService } from "./../../utils/config.service";
 import { CoreService } from "./../../utils/core.service";
 import { PathService } from "./../../utils/path.service";

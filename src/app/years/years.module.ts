@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
+import { SharedModule } from "../utils/shared/shared.module";
 import { YearsRoutingModule } from "./years-routing.module";
 import { YearsComponent } from "./years/years.component";
-import { SharedModule } from "../utils/shared/shared.module";
 
 @NgModule({
   declarations: [YearsComponent],

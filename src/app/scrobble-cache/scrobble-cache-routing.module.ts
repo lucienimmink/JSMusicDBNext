@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { ScrobbleCacheComponent } from "./scrobble-cache/scrobble-cache.component";
 
 const routes: Routes = [

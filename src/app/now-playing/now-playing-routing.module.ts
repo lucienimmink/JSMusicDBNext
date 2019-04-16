@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { NowPlayingComponent } from "./now-playing/now-playing.component";
 
 const routes: Routes = [

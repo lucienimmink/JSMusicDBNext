@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { del, set } from "idb-keyval";
 import { Subject, Subscription } from "rxjs";
 
+import { Playlist } from "../playlists/playlist";
+import { PlaylistService } from "../playlists/playlist.service";
 import { musicdbcore } from "./../org/arielext/musicdb/core";
 import Album from "./../org/arielext/musicdb/models/Album";
 import Track from "./../org/arielext/musicdb/models/Track";
-import { Playlist } from "../playlists/playlist";
-import { PlaylistService } from "../playlists/playlist.service";
 import { CoreService } from "./../utils/core.service";
 import { LastfmService } from "./../utils/lastfm.service";
 

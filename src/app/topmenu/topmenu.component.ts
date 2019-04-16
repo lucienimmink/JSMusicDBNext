@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { get } from "idb-keyval";
-import { Subscription } from "rxjs";
 import { TooltipConfig } from "ngx-bootstrap/tooltip";
+import { Subscription } from "rxjs";
 // import { TooltipModule } from 'ngx-bootstrap';
 
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";

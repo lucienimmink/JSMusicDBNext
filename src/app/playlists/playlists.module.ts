@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
+import { SharedModule } from "../utils/shared/shared.module";
 import { PlaylistsRoutingModule } from "./playlists-routing.module";
 import { PlaylistsComponent } from "./playlists/playlists.component";
-import { SharedModule } from "../utils/shared/shared.module";
 
 @NgModule({
   declarations: [PlaylistsComponent],

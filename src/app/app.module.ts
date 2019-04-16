@@ -12,8 +12,8 @@ import { LetterComponent } from "./letter/letter/letter.component";
 import { PlayerComponent } from "./player/player/player.component";
 import { TopmenuComponent } from "./topmenu/topmenu.component";
 import { MediaEvents } from "./utils/media-events";
-import { SortComponent } from "./utils/sort/sort.component";
 import { SharedModule } from "./utils/shared/shared.module";
+import { SortComponent } from "./utils/sort/sort.component";
 
 @NgModule({
   declarations: [AppComponent, SortComponent, TopmenuComponent, LetterComponent, PlayerComponent],

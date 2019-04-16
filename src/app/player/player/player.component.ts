@@ -6,11 +6,11 @@ import { Router } from "@angular/router";
 import { get } from "idb-keyval";
 import { Subscription } from "rxjs";
 
+import { Playlist } from "../../playlists/playlist";
 import { ColorService } from "../../utils/color.service";
 import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
-import { Playlist } from "../../playlists/playlist";
 import { AlbumArtService } from "./../../utils/album-art.service";
 import { AlbumArtComponent } from "./../../utils/album-art/album-art.component";
 import { AnimationService } from "./../../utils/animation.service";

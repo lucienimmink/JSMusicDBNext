@@ -3,9 +3,9 @@ import { Router } from "@angular/router";
 import { get, set } from "idb-keyval";
 import { Subscription } from "rxjs";
 
-import Artist from "../../org/arielext/musicdb/models/Artist";
 import { musicdbcore } from "../../org/arielext/musicdb/core";
 import Album from "../../org/arielext/musicdb/models/Album";
+import Artist from "../../org/arielext/musicdb/models/Artist";
 import Track from "../../org/arielext/musicdb/models/Track";
 import { PlayerService } from "../../player/player.service";
 import { CollectionService } from "../../utils/collection.service";

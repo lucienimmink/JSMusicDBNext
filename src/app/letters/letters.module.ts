@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { LettersRoutingModule } from './letters-routing.module';
 import { LettersComponent } from './letters/letters.component';

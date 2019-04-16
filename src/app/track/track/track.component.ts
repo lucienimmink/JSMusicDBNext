@@ -1,8 +1,8 @@
 import { Component, Input } from "@angular/core";
 
+import { Playlist } from "../../playlists/playlist";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { PlayerService } from "./../../player/player.service";
-import { Playlist } from "../../playlists/playlist";
 import { TimeFormatPipe } from "./../../utils/time-format.pipe";
 
 @Component({

@@ -4,9 +4,9 @@ import { Router } from "@angular/router";
 import { del, get, set } from "idb-keyval";
 import { Subject, Subscription } from "rxjs";
 
-import { ColorService } from "../../utils/color.service";
 import { musicdbcore } from "../../org/arielext/musicdb/core";
 import { CollectionService } from "../../utils/collection.service";
+import { ColorService } from "../../utils/color.service";
 import { ConfigService } from "../../utils/config.service";
 import { CoreService } from "../../utils/core.service";
 import { LastfmService } from "../../utils/lastfm.service";

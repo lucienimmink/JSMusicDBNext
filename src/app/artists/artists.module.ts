@@ -1,9 +1,9 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
+import { SharedModule } from "../utils/shared/shared.module";
 import { ArtistsRoutingModule } from "./artists-routing.module";
 import { ArtistsComponent } from "./artists/artists.component";
-import { SharedModule } from "../utils/shared/shared.module";
 
 @NgModule({
   declarations: [ArtistsComponent],

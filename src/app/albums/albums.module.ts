@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { AlbumsRoutingModule } from "./albums-routing.module";
 import { AlbumsListComponent } from "./albums-list/albums-list.component";
+import { AlbumsRoutingModule } from "./albums-routing.module";
 
 import { SharedModule } from ".././utils/shared/shared.module";
 
