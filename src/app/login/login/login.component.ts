@@ -42,9 +42,10 @@ export class LoginComponent implements OnDestroy {
   public onSubmit() {
     this.payLoad = JSON.stringify(this.user);
     this.loginService.doLogin(this.user).subscribe(
-      data => {
+      async data => {
         if (data.success) {
-          localStorage.setItem("jwt", this.loginService.encode(this.payLoad)); // save creds in storage
+          const jwt = await this.loginService.encode(this.payLoad);
+          localStorage.setItem("jwt", jwt); // save creds in storage
           this.getCollection();
         }
       },

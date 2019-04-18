@@ -359,7 +359,9 @@ export class PlayerComponent implements OnDestroy {
   public onplay() {
     try {
       this.lastFMService.announceNowPlaying(this.track).subscribe();
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
     document.title = `${this.track.title} by ${this.track.trackArtist}`;
     if ("mediaSession" in navigator) {
       get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {

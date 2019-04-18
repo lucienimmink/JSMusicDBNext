@@ -24,11 +24,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules"]
             },
-            "assets": [
-              "src/global",
-              "src/manifest.webmanifest",
-              "src/app/sw.js"
-            ],
+            "assets": ["src/global", "src/manifest.webmanifest", "src/app/sw.js"],
             "styles": ["src/sass/base.scss", "src/sass/animations.scss"],
             "scripts": []
           },
@@ -41,10 +37,10 @@
               "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": true,
               "serviceWorker": false,
-              "es5BrowserSupport": true,
+              "es5BrowserSupport": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

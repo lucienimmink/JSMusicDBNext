@@ -34,9 +34,7 @@ export class LoginService {
       headers
     };
 
-    return this.http
-      .post(`${localStorage.getItem("dsm")}/login`, null, options)
-      .pipe(catchError(this.handleError));
+    return this.http.post(`${localStorage.getItem("dsm")}/login`, null, options).pipe(catchError(this.handleError));
   }
   public autoLogin() {
     const cred = localStorage.getItem("jwt");
@@ -48,12 +46,7 @@ export class LoginService {
     }
   }
   public encode(payload: any): string {
-    return KJUR.jws.JWS.sign(
-      "HS256",
-      JSON.stringify({ alg: "HS256", typ: "JWT" }),
-      JSON.stringify(payload),
-      "jsmusicdbnext"
-    );
+    return KJUR.jws.JWS.sign("HS256", { alg: "HS256", typ: "JWT" }, payload, "jsmusicdbnext");
   }
   private handleError(error: any) {
     return observableThrowError(null);
