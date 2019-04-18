@@ -113,6 +113,11 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
       this.playerService.doPlayAlbum(this.album, this.album.tracks.indexOf(track), true, false);
     }
   }
+  public playAlbum() {
+    if (!this.isSwiping) {
+      this.playerService.doPlayAlbum(this.album, 0, true, false);
+    }
+  }
   public navigateToArtist(artist: any) {
     this.router.navigate(["Artist", { letter: artist.letter.escapedLetter, artist: artist.sortName }]);
   }

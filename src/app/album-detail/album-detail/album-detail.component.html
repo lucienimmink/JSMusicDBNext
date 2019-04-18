@@ -15,6 +15,9 @@
             songs: {{ album.tracks.length }}
             <span class="d-none d-sm-inline"> &bull; {{ totalRunningTime() | timeFormat }} &bull; {{ album.type }}</span>
           </h4>
+          <h5>
+            <button class="btn btn-primary" (click)="playAlbum()"><span class="glyph glyph-play"></span> Play album</button>
+          </h5>
         </div>
       </div>
     </div>

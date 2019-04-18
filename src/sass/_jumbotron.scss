@@ -1,33 +1,54 @@
 .jumbotron {
-  @include media-breakpoint-up(lg) {
-    padding-top: 2em;
-    padding-bottom: 2em;
-    margin: 0 -50px 0 -30px;
-  }
-  .container {
-    padding: 0;
-  }
-  img {
-    width: 100%;
-    height: auto !important;
-  }
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: -0.5rem;
-    margin-left: -15px;
-  }
-  h3,
-  h4 {
-    position: relative;
-    top: auto;
-    border-bottom: 0;
-    background: none;
-    font-size: 1.5rem;
-    &:hover {
-      background: none !important;
+    @include media-breakpoint-up(lg) {
+        padding-top: 2em;
+        padding-bottom: 2em;
+        margin: 0 -50px 0 -30px;
     }
-  }
-  h4 {
-    font-size: 1.2rem;
-  }
+    .container {
+        padding: 0;
+    }
+    img {
+        width: 100%;
+        height: auto !important;
+    }
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: -0.5rem;
+        margin-left: -15px;
+        margin-top: -10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    h3,
+    h4 {
+        position: relative;
+        top: auto;
+        border-bottom: 0;
+        background: none;
+        font-size: 1.5rem;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &:hover {
+            background: none !important;
+        }
+    }
+    h4 {
+        font-size: 1rem;
+        margin-top: 8px;
+        @include media-breakpoint-up(lg) {
+            margin-top: -14px;
+        }
+        @include media-breakpoint-up(xl) {
+            margin-top: 20px;
+        }
+    }
+    h5 {
+        margin-bottom: 0;
+    }
+    .btn {
+        margin-left: -15px;
+    }
 }
