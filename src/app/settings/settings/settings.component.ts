@@ -37,7 +37,6 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public visualisation: boolean = this.booleanState("visualisation-state");
   public tracking: boolean = this.booleanState("tracking-state");
-  public preferVideo: boolean = this.booleanState("preferVideo-state");
 
   public addToHomescreen: boolean = false;
 
@@ -183,10 +182,6 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
       localStorage.setItem("small-art", this.smallArt.toString());
     }
     localStorage.setItem("visualisation-state", this.visualisation.toString());
-  }
-  public togglePreferVideo() {
-    this.preferVideo = !this.preferVideo;
-    localStorage.setItem("preferVideo-state", this.preferVideo.toString());
   }
   public toggleSmallArt() {
     this.smallArt = !this.smallArt;
