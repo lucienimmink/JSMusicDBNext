@@ -5,21 +5,37 @@ import { LoginService } from "./login/login.service";
 import { AuthGuardService } from "./utils/authguard.service";
 
 const appRoutes: Routes = [
-  { path: "login", loadChildren: "./login/login.module#LoginModule" },
-  { path: "home", loadChildren: "./home/home.module#HomeModule", canActivate: [AuthGuardService] },
-  { path: "letters", loadChildren: "./letters/letters.module#LettersModule", canActivate: [AuthGuardService] },
-  { path: "artists", loadChildren: "./artists/artists.module#ArtistsModule", canActivate: [AuthGuardService] },
-  { path: "albums", loadChildren: "./albums/albums.module#AlbumsModule", canActivate: [AuthGuardService] },
-  { path: "years", loadChildren: "./years/years.module#YearsModule", canActivate: [AuthGuardService] },
-  { path: "playlists", loadChildren: "./playlists/playlists.module#PlaylistsModule", canActivate: [AuthGuardService] },
-  { path: "now-playing", loadChildren: "./now-playing/now-playing.module#NowPlayingModule", canActivate: [AuthGuardService] },
-  { path: "settings", loadChildren: "./settings/settings.module#SettingsModule", canActivate: [AuthGuardService] },
-  { path: "scrobble-cache", loadChildren: "./scrobble-cache/scrobble-cache.module#ScrobbleCacheModule", canActivate: [AuthGuardService] },
-  { path: "search/:query", loadChildren: "./search/search.module#SearchModule", canActivate: [AuthGuardService] },
-  { path: "letter/:letter", loadChildren: "./letter-detail/letter-detail.module#LetterDetailModule", canActivate: [AuthGuardService] },
-  { path: "letter/:letter/artist/:artist", loadChildren: "./artist-detail/artist-detail.module#ArtistDetailModule", canActivate: [AuthGuardService] },
-  { path: "letter/:letter/artist/:artist/album/:album", loadChildren: "./album-detail/album-detail.module#AlbumDetailModule", canActivate: [AuthGuardService] },
-  { path: "", loadChildren: "./home/home.module#HomeModule", canActivate: [AuthGuardService] }
+  { path: "login", loadChildren: () => import("./login/login.module").then(m => m.LoginModule) },
+  { path: "home", loadChildren: () => import("./home/home.module").then(m => m.HomeModule), canActivate: [AuthGuardService] },
+  { path: "letters", loadChildren: () => import("./letters/letters.module").then(m => m.LettersModule), canActivate: [AuthGuardService] },
+  { path: "artists", loadChildren: () => import("./artists/artists.module").then(m => m.ArtistsModule), canActivate: [AuthGuardService] },
+  { path: "albums", loadChildren: () => import("./albums/albums.module").then(m => m.AlbumsModule), canActivate: [AuthGuardService] },
+  { path: "years", loadChildren: () => import("./years/years.module").then(m => m.YearsModule), canActivate: [AuthGuardService] },
+  { path: "playlists", loadChildren: () => import("./playlists/playlists.module").then(m => m.PlaylistsModule), canActivate: [AuthGuardService] },
+  { path: "now-playing", loadChildren: () => import("./now-playing/now-playing.module").then(m => m.NowPlayingModule), canActivate: [AuthGuardService] },
+  { path: "settings", loadChildren: () => import("./settings/settings.module").then(m => m.SettingsModule), canActivate: [AuthGuardService] },
+  {
+    path: "scrobble-cache",
+    loadChildren: () => import("./scrobble-cache/scrobble-cache.module").then(m => m.ScrobbleCacheModule),
+    canActivate: [AuthGuardService],
+  },
+  { path: "search/:query", loadChildren: () => import("./search/search.module").then(m => m.SearchModule), canActivate: [AuthGuardService] },
+  {
+    path: "letter/:letter",
+    loadChildren: () => import("./letter-detail/letter-detail.module").then(m => m.LetterDetailModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "letter/:letter/artist/:artist",
+    loadChildren: () => import("./artist-detail/artist-detail.module").then(m => m.ArtistDetailModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "letter/:letter/artist/:artist/album/:album",
+    loadChildren: () => import("./album-detail/album-detail.module").then(m => m.AlbumDetailModule),
+    canActivate: [AuthGuardService],
+  },
+  { path: "", loadChildren: () => import("./home/home.module").then(m => m.HomeModule), canActivate: [AuthGuardService] },
 ];
 
 export const appRoutingProviders: any[] = [AuthGuardService, LoginService];

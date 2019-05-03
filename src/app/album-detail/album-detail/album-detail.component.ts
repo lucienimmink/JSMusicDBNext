@@ -14,7 +14,7 @@ import { PathService } from "./../../utils/path.service";
 
 @Component({
   selector: "app-album-detail",
-  templateUrl: "./album-detail.component.html"
+  templateUrl: "./album-detail.component.html",
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
   public album: Album;
@@ -64,7 +64,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
         const discnr = name.substring(5);
         discnrs.push({
           nr: discnr,
-          id: name
+          id: name,
         });
       });
       discnrs = discnrs.sort((a, b) => {
@@ -79,7 +79,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
       this.pathService.announcePath({
         artist: this.album.artist,
         album: this.album,
-        letter: this.album.artist.letter
+        letter: this.album.artist.letter,
       });
     }
 
@@ -116,6 +116,11 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   public playAlbum() {
     if (!this.isSwiping) {
       this.playerService.doPlayAlbum(this.album, 0, true, false);
+    }
+  }
+  public addToQueue() {
+    if (!this.isSwiping) {
+      this.playerService.doQueueAlbum(this.album);
     }
   }
   public navigateToArtist(artist: any) {

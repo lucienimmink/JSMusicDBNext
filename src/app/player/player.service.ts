@@ -55,6 +55,16 @@ export class PlayerService {
     this.setPlaylist(album, startIndex, forceRestart, isShuffled, "album");
     this.announce();
   }
+
+  public doQueueAlbum(album: Album) {
+    const { playlist, startIndex } = this.currentPlaylist;
+    const newPlaylist: Playlist = new Playlist();
+    newPlaylist.name = "queued playlist";
+    newPlaylist.type = "queue";
+    newPlaylist.tracks = [...playlist.tracks, ...album.tracks];
+    this.setPlaylist(newPlaylist, startIndex, false, false, "playlist");
+  }
+
   public doPlayPlaylist(playlist: Playlist, startIndex: number, forceRestart: boolean = false, isShuffled: boolean = false) {
     if (this.currentTrack) {
       this.currentTrack.isPaused = false;
@@ -80,7 +90,7 @@ export class PlayerService {
       isPaused: (this.isPaused = false),
       isShuffled: false,
       forceRestart: (this.forceRestart = true),
-      isContinues: false
+      isContinues: false,
     };
     this.announce();
   }
@@ -123,7 +133,7 @@ export class PlayerService {
       isShuffled: this.isShuffled,
       isContinues: this.currentPlaylist.isContinues,
       current: this.currentPlaylist.startIndex,
-      type: this.currentPlaylist.type
+      type: this.currentPlaylist.type,
     });
   }
   public playlistSync(): any {
@@ -138,7 +148,7 @@ export class PlayerService {
       isShuffled: this.isShuffled,
       isContinues: this.currentPlaylist.isContinues,
       current: this.currentPlaylist.startIndex,
-      type: this.currentPlaylist.type
+      type: this.currentPlaylist.type,
     };
   }
   public getCurrentPlaylist() {
@@ -279,6 +289,7 @@ export class PlayerService {
   }
 
   private setPlaylist(playlist: any, startIndex: number = 0, forceRestart: boolean = true, isShuffled: boolean = false, type: string = "album"): void {
+    console.log({ playlist, startIndex, forceRestart, isShuffled, type });
     this.currentPlaylist = {
       playlist,
       startIndex,
@@ -287,7 +298,7 @@ export class PlayerService {
       isShuffled: (this.isShuffled = isShuffled),
       forceRestart: (this.forceRestart = forceRestart),
       isContinues: playlist.isContinues || type === "album",
-      type: playlist.type
+      type: playlist.type,
     };
   }
 }

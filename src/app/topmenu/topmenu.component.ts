@@ -1,11 +1,9 @@
-import { Component, Input, OnDestroy, ViewChild } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { get } from "idb-keyval";
 import { TooltipConfig } from "ngx-bootstrap/tooltip";
 import { Subscription } from "rxjs";
 // import { TooltipModule } from 'ngx-bootstrap';
-
-import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { musicdbcore } from "./../org/arielext/musicdb/core";
 import { CoreService } from "./../utils/core.service";
 import { LastfmService } from "./../utils/lastfm.service";
@@ -15,14 +13,14 @@ import { Search } from "./search";
 export function getAlertConfig(): TooltipConfig {
   return Object.assign(new TooltipConfig(), {
     placement: "right",
-    delay: 250
+    delay: 250,
   });
 }
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "mdb-topmenu",
   templateUrl: "./topmenu.component.html",
-  providers: [{ provide: TooltipConfig, useFactory: getAlertConfig }]
+  providers: [{ provide: TooltipConfig, useFactory: getAlertConfig }],
 })
 export class TopmenuComponent implements OnDestroy, OnInit {
   public path: any;
