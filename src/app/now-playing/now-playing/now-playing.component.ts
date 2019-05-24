@@ -18,12 +18,13 @@ import { PathService } from "../../utils/path.service";
 import { TimeFormatPipe } from "../../utils/time-format.pipe";
 
 @Component({
-  templateUrl: "./now-playing.component.html"
+  templateUrl: "./now-playing.component.html",
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {
   public track: Track;
 
-  @ViewChild(BackgroundArtDirective) public albumart: BackgroundArtDirective;
+  @ViewChild(BackgroundArtDirective, { static: false })
+  public albumart: BackgroundArtDirective;
   private subscription: Subscription;
   private subscription2: Subscription;
   private subscription3: Subscription;
@@ -181,7 +182,7 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
       "artist",
       this.track.album.artist.sortName,
       "album",
-      this.track.album.sortName
+      this.track.album.sortName,
     ]);
   }
   public next() {

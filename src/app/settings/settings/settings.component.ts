@@ -19,7 +19,7 @@ const { version: appVersion } = require("../../../../package.json");
 
 @Component({
   selector: "app-settings",
-  templateUrl: "./settings.component.html"
+  templateUrl: "./settings.component.html",
 })
 export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public totals: any;
@@ -42,7 +42,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public startDate: Date;
   public stopDate: Date;
-  @ViewChild("themeForm") public currentForm: NgForm;
+  @ViewChild("themeForm", { static: false })
+  public currentForm: NgForm;
   public mode: string;
 
   public isVisualCapable: boolean = navigator.userAgent.indexOf("Mobi") === -1;
@@ -248,7 +249,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.isReloading = true;
         document.querySelector("mdb-player").dispatchEvent(
           new CustomEvent("external.mdbscanning", {
-            detail: { percentage: this.scanperc }
+            detail: { percentage: this.scanperc },
           })
         );
         setTimeout(e => {

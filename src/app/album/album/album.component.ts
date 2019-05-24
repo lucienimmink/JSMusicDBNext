@@ -10,7 +10,7 @@ import { BackgroundArtDirective } from './../../utils/background-art.directive';
 })
 export class AlbumComponent {
   @Input() public album: Album;
-  @ViewChild(BackgroundArtDirective) public backgroundArtDirective: BackgroundArtDirective;
+  @ViewChild(BackgroundArtDirective, {static: false}) public backgroundArtDirective: BackgroundArtDirective;
 
   constructor(private router: Router) { }
 
