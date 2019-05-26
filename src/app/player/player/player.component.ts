@@ -345,7 +345,7 @@ export class PlayerComponent implements OnDestroy {
     if (!this.hasScrobbledCurrentTrack) {
       if (
         this.track.position >= PlayerComponent.SCROBBLETIME ||
-        (this.track.position / this.track.duration >= 0.5 && performance.now() > PlayerComponent.SCROBBLETIME)
+        (this.track.position / this.track.duration >= 0.5 && performance.now() > PlayerComponent.SCROBBLETIME * 1000)
       ) {
         this.hasScrobbledCurrentTrack = true;
         try {
