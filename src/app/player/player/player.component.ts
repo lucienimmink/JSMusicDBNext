@@ -14,7 +14,10 @@ import Track from "./../../org/arielext/musicdb/models/Track";
 import { AlbumArtService } from "./../../utils/album-art.service";
 import { AlbumArtComponent } from "./../../utils/album-art/album-art.component";
 import { AnimationService } from "./../../utils/animation.service";
-import { addCustomCssBasedOnRGBA, removeCustomCss } from "./../../utils/colorutil";
+import {
+  addCustomCssBasedOnRGBA,
+  removeCustomCss
+} from "./../../utils/colorutil";
 import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
@@ -24,12 +27,14 @@ import { PlayerService } from "./../player.service";
   // tslint:disable-next-line:component-selector
   selector: "mdb-player",
   templateUrl: "./player.component.html",
-  providers: [AlbumArtService],
+  providers: [AlbumArtService]
 })
 export class PlayerComponent implements OnDestroy {
   private static readonly SCROBBLETIME: number = 4 * 60 * 1000;
   public showPlayer = false;
-  public usesDynamicAccentColor: boolean = this.booleanState("dynamic-accent-color");
+  public usesDynamicAccentColor: boolean = this.booleanState(
+    "dynamic-accent-color"
+  );
 
   @ViewChild(AlbumArtComponent, { static: false })
   public albumart: AlbumArtComponent;
@@ -71,25 +76,29 @@ export class PlayerComponent implements OnDestroy {
     private albumartService: AlbumArtService,
     private colorService: ColorService
   ) {
-    this.subscription = this.playerService.playlistAnnounced$.subscribe(playerData => {
-      if (playerData) {
-        this.playlist = playerData.playlist;
-        this.trackIndex = playerData.startIndex;
-        this.isPaused = playerData.isPaused;
-        this.isPlaying = playerData.isPlaying;
-        this.isShuffled = playerData.isShuffled;
-        this.forceRestart = playerData.forceRestart;
-        this.showPlayer = this.isPaused || this.isPlaying;
-        this.setTrack(playerData.position);
-      } else {
-        this.isPlaying = false;
-        this.showPlayer = false;
-        this.mediaObject.pause();
+    this.subscription = this.playerService.playlistAnnounced$.subscribe(
+      playerData => {
+        if (playerData) {
+          this.playlist = playerData.playlist;
+          this.trackIndex = playerData.startIndex;
+          this.isPaused = playerData.isPaused;
+          this.isPlaying = playerData.isPlaying;
+          this.isShuffled = playerData.isShuffled;
+          this.forceRestart = playerData.forceRestart;
+          this.showPlayer = this.isPaused || this.isPlaying;
+          this.setTrack(playerData.position);
+        } else {
+          this.isPlaying = false;
+          this.showPlayer = false;
+          this.mediaObject.pause();
+        }
       }
-    });
-    this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(() => {
-      this.showVolumeWindow = false;
-    });
+    );
+    this.subscription5 = this.playerService.hideVolumeWindowAnnounced$.subscribe(
+      () => {
+        this.showVolumeWindow = false;
+      }
+    );
     this.mediaObject = document.querySelector("audio");
     this.mediaObject.crossOrigin = "anonymous";
     this.mediaObject.canPlayType("audio/flac");
@@ -123,10 +132,12 @@ export class PlayerComponent implements OnDestroy {
         this.readCurrentPlaylist();
       }
     });
-    this.subscription3 = this.playerService.volumeAnnounced.subscribe(volume => {
-      this.volume = volume;
-      this.mediaObject.volume = this.volume / 100;
-    });
+    this.subscription3 = this.playerService.volumeAnnounced.subscribe(
+      volume => {
+        this.volume = volume;
+        this.mediaObject.volume = this.volume / 100;
+      }
+    );
     this.subscription4 = pathService.pageAnnounced$.subscribe(page => {
       if (page.page === "Now playing") {
         this.showVolumeWindow = false;
@@ -167,7 +178,8 @@ export class PlayerComponent implements OnDestroy {
         },
         false
       );
-      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.closed;
+      this.systemMediaControls.playbackStatus =
+        Windows.Media.MediaPlaybackStatus.closed;
     }
     if (navigator.userAgent.indexOf("Mobi") === -1) {
       // lets only handle these calculations on desktop grade devices.
@@ -180,8 +192,13 @@ export class PlayerComponent implements OnDestroy {
       canvas.height = HEIGHT;
       const ctx = canvas.getContext("2d");
 
-      this.audioCtx = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
-      const javascriptNode = this.audioCtx.createScriptProcessor(1024 * 2, 1, 1);
+      this.audioCtx = new ((window as any).AudioContext ||
+        (window as any).webkitAudioContext)();
+      const javascriptNode = this.audioCtx.createScriptProcessor(
+        1024 * 2,
+        1,
+        1
+      );
       javascriptNode.connect(this.audioCtx.destination);
       const analyser = this.audioCtx.createAnalyser();
       const source = this.audioCtx.createMediaElementSource(this.mediaObject);
@@ -199,7 +216,7 @@ export class PlayerComponent implements OnDestroy {
           r: 0,
           g: 110,
           b: 205,
-          a: 1,
+          a: 1
         };
         WIDTH = canvas.offsetWidth;
         HEIGHT = canvas.offsetHeight;
@@ -218,7 +235,9 @@ export class PlayerComponent implements OnDestroy {
           barHeight = dataArray[i] * y;
           // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
           // rgba(0, 120, 215, 1);
-          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[i] / 255})`;
+          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[
+            i
+          ] / 255})`;
           ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
           x += barWidth + 1;
         }
@@ -236,17 +255,29 @@ export class PlayerComponent implements OnDestroy {
       }
     });
     this.track = this.playlist.tracks[this.trackIndex];
-    if (!this.currentTrack || (this.track && this.currentTrack.id !== this.track.id) || this.forceRestart) {
+    if (
+      !this.currentTrack ||
+      (this.track && this.currentTrack.id !== this.track.id) ||
+      this.forceRestart
+    ) {
       const dsm = localStorage.getItem("dsm");
       if (dsm) {
         this.url = dsm;
       }
       const jwt = localStorage.getItem("jwt");
-      this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(this.track.source.url)}&jwt=${jwt}`;
+      this.mediaObject.src = `${this.url}/listen?path=${encodeURIComponent(
+        this.track.source.url
+      )}&jwt=${jwt}`;
       this.currentTrack = this.track;
       this.hasScrobbledCurrentTrack = false;
-      this.animationService.requestAnimation("enter", document.querySelector(".player h4"));
-      this.animationService.requestAnimation("enter", document.querySelector(".player h5"));
+      this.animationService.requestAnimation(
+        "enter",
+        document.querySelector(".player h4")
+      );
+      this.animationService.requestAnimation(
+        "enter",
+        document.querySelector(".player h5")
+      );
     }
     if (this.isPlaying) {
       this.mediaObject.play();
@@ -279,7 +310,12 @@ export class PlayerComponent implements OnDestroy {
 
         this.isShuffled = current.isShuffled;
         this.isCurrentPlaylistLoaded = true;
-        this.playerService.doPlayPlaylist(playlist, current.current, false, current.isShuffled);
+        this.playerService.doPlayPlaylist(
+          playlist,
+          current.current,
+          false,
+          current.isShuffled
+        );
       }
     });
   }
@@ -296,7 +332,12 @@ export class PlayerComponent implements OnDestroy {
     this.showVolumeWindow = false;
   }
   public navigateToArtist() {
-    this.router.navigate(["/letter", this.track.album.artist.letter.escapedLetter, "artist", this.track.album.artist.sortName]);
+    this.router.navigate([
+      "/letter",
+      this.track.album.artist.letter.escapedLetter,
+      "artist",
+      this.track.album.artist.sortName
+    ]);
   }
   public navigateToAlbum() {
     this.router.navigate([
@@ -305,7 +346,7 @@ export class PlayerComponent implements OnDestroy {
       "artist",
       this.track.album.artist.sortName,
       "album",
-      this.track.album.sortName,
+      this.track.album.sortName
     ]);
   }
   public navigateToNowPlaying() {
@@ -345,7 +386,8 @@ export class PlayerComponent implements OnDestroy {
     if (!this.hasScrobbledCurrentTrack) {
       if (
         this.track.position >= PlayerComponent.SCROBBLETIME ||
-        (this.track.position / this.track.duration >= 0.5 && performance.now() > PlayerComponent.SCROBBLETIME * 1000)
+        (this.track.position / this.track.duration >= 0.5 &&
+          performance.now() > PlayerComponent.SCROBBLETIME)
       ) {
         this.hasScrobbledCurrentTrack = true;
         try {
@@ -357,7 +399,10 @@ export class PlayerComponent implements OnDestroy {
         }
       }
     }
-    localStorage.setItem("current-time", this.mediaObject.currentTime.toString());
+    localStorage.setItem(
+      "current-time",
+      this.mediaObject.currentTime.toString()
+    );
   }
 
   public onplay() {
@@ -368,55 +413,69 @@ export class PlayerComponent implements OnDestroy {
     }
     document.title = `${this.track.title} by ${this.track.trackArtist}`;
     if ("mediaSession" in navigator) {
-      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {
-        if (url) {
-          (navigator as any).mediaSession.metadata = new MediaMetadata({
-            title: this.track.title,
-            artist: this.track.trackArtist,
-            album: this.track.album.name,
-            artwork: [{ src: url, sizes: "500x500", type: "image/png" }],
+      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
+        url => {
+          if (url) {
+            (navigator as any).mediaSession.metadata = new MediaMetadata({
+              title: this.track.title,
+              artist: this.track.trackArtist,
+              album: this.track.album.name,
+              artwork: [{ src: url, sizes: "500x500", type: "image/png" }]
+            });
+          }
+
+          (navigator as any).mediaSession.setActionHandler("play", () => {
+            this.togglePlayPause();
+          });
+          (navigator as any).mediaSession.setActionHandler("pause", () => {
+            this.togglePlayPause();
+          });
+          (navigator as any).mediaSession.setActionHandler(
+            "previoustrack",
+            () => {
+              this.prev();
+            }
+          );
+          (navigator as any).mediaSession.setActionHandler("nexttrack", () => {
+            this.next();
           });
         }
-
-        (navigator as any).mediaSession.setActionHandler("play", () => {
-          this.togglePlayPause();
-        });
-        (navigator as any).mediaSession.setActionHandler("pause", () => {
-          this.togglePlayPause();
-        });
-        (navigator as any).mediaSession.setActionHandler("previoustrack", () => {
-          this.prev();
-        });
-        (navigator as any).mediaSession.setActionHandler("nexttrack", () => {
-          this.next();
-        });
-      });
+      );
     }
     if (this.isHostedApp) {
-      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.playing;
+      this.systemMediaControls.playbackStatus =
+        Windows.Media.MediaPlaybackStatus.playing;
       this.displayUpdater.type = Windows.Media.MediaPlaybackType.music;
-      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {
-        // update system transport
-        try {
-          if (this.displayUpdater !== undefined) {
-            this.displayUpdater.musicProperties.albumArtist = this.track.trackArtist;
-            this.displayUpdater.musicProperties.artist = this.track.trackArtist;
-            this.displayUpdater.musicProperties.albumTitle = this.track.album.name;
-            this.displayUpdater.musicProperties.title = this.track.title;
-            if (url) {
-              // tslint:disable-next-line:max-line-length
-              this.displayUpdater.thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(new Windows.Foundation.Uri(url));
+      get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(
+        url => {
+          // update system transport
+          try {
+            if (this.displayUpdater !== undefined) {
+              this.displayUpdater.musicProperties.albumArtist = this.track.trackArtist;
+              this.displayUpdater.musicProperties.artist = this.track.trackArtist;
+              this.displayUpdater.musicProperties.albumTitle = this.track.album.name;
+              this.displayUpdater.musicProperties.title = this.track.title;
+              if (url) {
+                // tslint:disable-next-line:max-line-length
+                this.displayUpdater.thumbnail = Windows.Storage.Streams.RandomAccessStreamReference.createFromUri(
+                  new Windows.Foundation.Uri(url)
+                );
+              }
+              this.displayUpdater.update();
             }
-            this.displayUpdater.update();
+          } catch (e) {
+            console.error("error occurred", e);
           }
-        } catch (e) {
-          console.error("error occurred", e);
+          // update live tile
+          this.updateWinTile(url);
         }
-        // update live tile
-        this.updateWinTile(url);
-      });
+      );
     }
-    document.querySelector("mdb-player").dispatchEvent(new CustomEvent("external.mdbplaying", { detail: this.track }));
+    document
+      .querySelector("mdb-player")
+      .dispatchEvent(
+        new CustomEvent("external.mdbplaying", { detail: this.track })
+      );
     if (this.audioCtx) {
       this.audioCtx.resume();
     }
@@ -427,10 +486,13 @@ export class PlayerComponent implements OnDestroy {
   }
 
   public onstop() {
-    document.querySelector("mdb-player").dispatchEvent(new Event("external.mdbstopped"));
+    document
+      .querySelector("mdb-player")
+      .dispatchEvent(new Event("external.mdbstopped"));
     document.title = `JSMusicDB Next`;
     if (this.isHostedApp) {
-      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.stopped;
+      this.systemMediaControls.playbackStatus =
+        Windows.Media.MediaPlaybackStatus.stopped;
     }
     if (this.audioCtx) {
       this.audioCtx.suspend();
@@ -438,10 +500,15 @@ export class PlayerComponent implements OnDestroy {
     removeCustomCss();
   }
   public onpause() {
-    document.querySelector("mdb-player").dispatchEvent(new CustomEvent("external.mdbpaused", { detail: this.track }));
+    document
+      .querySelector("mdb-player")
+      .dispatchEvent(
+        new CustomEvent("external.mdbpaused", { detail: this.track })
+      );
     document.title = `JSMusicDB Next`;
     if (this.isHostedApp) {
-      this.systemMediaControls.playbackStatus = Windows.Media.MediaPlaybackStatus.paused;
+      this.systemMediaControls.playbackStatus =
+        Windows.Media.MediaPlaybackStatus.paused;
     }
     if (this.audioCtx) {
       this.audioCtx.suspend();
@@ -466,8 +533,10 @@ export class PlayerComponent implements OnDestroy {
   public onprogress() {
     const buffered = this.mediaObject.buffered;
     if (buffered.length !== 0) {
-      this.track.buffered.start = buffered.start(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
-      this.track.buffered.end = buffered.end(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
+      this.track.buffered.start =
+        buffered.start(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
+      this.track.buffered.end =
+        buffered.end(buffered.length !== 0 ? buffered.length - 1 : 0) * 1000;
     }
   }
   public setVolume() {
@@ -491,9 +560,13 @@ export class PlayerComponent implements OnDestroy {
   }
   private updateWinTile(url: {}) {
     const Notifications = Windows.UI.Notifications;
-    Notifications.TileUpdateManager.createTileUpdaterForApplication("App").clear();
+    Notifications.TileUpdateManager.createTileUpdaterForApplication(
+      "App"
+    ).clear();
     // tslint:disable-next-line:max-line-length
-    const tileXml = Notifications.TileUpdateManager.getTemplateContent(Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02);
+    const tileXml = Notifications.TileUpdateManager.getTemplateContent(
+      Notifications.TileTemplateType.tileSquare150x150PeekImageAndText02
+    );
     let textNode = tileXml.getElementsByTagName("text")[0];
     textNode.innerText = this.track.title;
     textNode = tileXml.getElementsByTagName("text")[1];
@@ -503,7 +576,9 @@ export class PlayerComponent implements OnDestroy {
       imageNode.attributes[1].value = url;
     }
     const currentTime = new Date();
-    const expiryTime = new Date(currentTime.getTime() + Number(this.track.duration));
+    const expiryTime = new Date(
+      currentTime.getTime() + Number(this.track.duration)
+    );
     let node = tileXml.importNode(
       this.getTileContent(url, "tileSquare310x310ImageAndText02")
         .getElementsByTagName("binding")
@@ -536,12 +611,16 @@ export class PlayerComponent implements OnDestroy {
       .appendChild(node);
     const tileNotification = new Notifications.TileNotification(tileXml);
     tileNotification.expirationTime = expiryTime;
-    Notifications.TileUpdateManager.createTileUpdaterForApplication("App").update(tileNotification);
+    Notifications.TileUpdateManager.createTileUpdaterForApplication(
+      "App"
+    ).update(tileNotification);
   }
 
   private getTileContent(url: {}, tiletype: string): any {
     const Notifications = Windows.UI.Notifications;
-    const tileXml = Notifications.TileUpdateManager.getTemplateContent(Notifications.TileTemplateType[tiletype]);
+    const tileXml = Notifications.TileUpdateManager.getTemplateContent(
+      Notifications.TileTemplateType[tiletype]
+    );
     try {
       const textNode = tileXml.getElementsByTagName("text")[0];
       textNode.innerText = this.track.title;
