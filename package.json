@@ -52,13 +52,17 @@
     "@types/node": "^11.13.11",
     "copy-webpack-plugin": "^5.0.3",
     "glob-all": "^3.1.0",
+    "node": "^12.3.1",
     "prettier-stylelint": "^0.4.2",
     "purgecss-webpack-plugin": "^1.5.0",
     "stylelint": "^9.10.1",
-    "ts-node": "^8.1.0",
+    "ts-node": "^8.2.0",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.5",
     "webpack-bundle-analyzer": "^3.3.2"
+  },
+  "engines": {
+    "npm": ">= 6"
   }
 }
