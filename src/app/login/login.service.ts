@@ -3,8 +3,7 @@ import { Observable, throwError as observableThrowError } from "rxjs";
 // import { Http, Response, RequestOptions, Headers } from "@angular/http";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { KJUR } from "jsrsasign";
-import { catchError, map } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 
 @Injectable()
 export class LoginService {
@@ -20,10 +19,13 @@ export class LoginService {
     const username = form.name;
     const password = form.password;
 
-    let payload = form;
+    const payload = form;
     if (!encoded) {
+      throw new Error("You should log in via the webcrypto flow; contact me");
+      /*
       localStorage.setItem("dsm", form.dsmport);
       payload = this.encode(form);
+      */
     }
 
     const headers = new HttpHeaders({
@@ -47,6 +49,7 @@ export class LoginService {
       return observableThrowError(null);
     }
   }
+  /*
   public encode(payload: any): string {
     return KJUR.jws.JWS.sign(
       "HS256",
@@ -55,6 +58,7 @@ export class LoginService {
       "jsmusicdbnext"
     );
   }
+  */
   public versionCheck(url: string) {
     return this.http.get(`${url}/version`);
   }
