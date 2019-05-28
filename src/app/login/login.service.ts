@@ -34,7 +34,9 @@ export class LoginService {
       headers
     };
 
-    return this.http.post(`${localStorage.getItem("dsm")}/login`, null, options).pipe(catchError(this.handleError));
+    return this.http
+      .post(`${localStorage.getItem("dsm")}/login`, null, options)
+      .pipe(catchError(this.handleError));
   }
   public autoLogin() {
     const cred = localStorage.getItem("jwt");
@@ -46,9 +48,32 @@ export class LoginService {
     }
   }
   public encode(payload: any): string {
-    return KJUR.jws.JWS.sign("HS256", { alg: "HS256", typ: "JWT" }, payload, "jsmusicdbnext");
+    return KJUR.jws.JWS.sign(
+      "HS256",
+      { alg: "HS256", typ: "JWT" },
+      payload,
+      "jsmusicdbnext"
+    );
+  }
+  public versionCheck(url: string) {
+    return this.http.get(`${url}/version`);
+  }
+  public getPublicKey(url: string) {
+    return this.http.get(`${url}/public-key`);
+  }
+  public authenticate(url: string, encryptedPayload: ArrayBuffer) {
+    return this.http.post(`${url}/authenticate`, {
+      encryptedPayload: this.arrayBufferToBase64(encryptedPayload)
+    });
   }
   private handleError(error: any) {
     return observableThrowError(null);
+  }
+  private arrayBufferToBase64(buffer) {
+    return btoa(
+      new Uint8Array(buffer).reduce((data, byte) => {
+        return data + String.fromCharCode(byte);
+      }, "")
+    );
   }
 }

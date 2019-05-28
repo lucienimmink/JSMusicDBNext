@@ -4,15 +4,46 @@
       <div class="col">
         <h4>Login</h4>
         <br />
-        <form role="form" class="form-horizontal" (ngSubmit)="onSubmit()" [ngClass]="{ 'theme-alt': theme === 'dark' }" #loginForm="ngForm">
+        <div class="alert alert-danger" *ngIf="noVersion">
+          <strong>Error</strong> Your mp3-streamer has no version check endpoint
+        </div>
+        <div class="alert alert-danger" *ngIf="lowVersion">
+          <strong>Error</strong> Your mp3-streamer's version is too low, please
+          update to at least {{ minimalVersion }}
+        </div>
+        <div class="alert alert-danger" *ngIf="loginFail">
+          <strong>Error</strong> Failed to login, please review your credentials
+        </div>
+        <form
+          role="form"
+          class="form-horizontal"
+          (ngSubmit)="onSubmit()"
+          [ngClass]="{ 'theme-alt': theme === 'dark' }"
+          #loginForm="ngForm"
+        >
           <div class="form-group row">
-            <label for="name" class="col-12 col-sm-4 col-lg-2 col-form-label">Username</label>
+            <label for="name" class="col-12 col-sm-4 col-lg-2 col-form-label"
+              >Username</label
+            >
             <div class="col col-sm-8 col-lg-10">
-              <input type="text" class="form-control" id="name" placeholder="e.g. JohnDoe" required [(ngModel)]="user.name" #name="ngModel" name="name" />
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="e.g. JohnDoe"
+                required
+                [(ngModel)]="user.name"
+                #name="ngModel"
+                name="name"
+              />
             </div>
           </div>
           <div class="form-group row">
-            <label for="password" class="col-12 col-sm-4 col-lg-2 col-form-label">Password</label>
+            <label
+              for="password"
+              class="col-12 col-sm-4 col-lg-2 col-form-label"
+              >Password</label
+            >
             <div class="col col-sm-8 col-lg-10">
               <input
                 type="password"
@@ -27,7 +58,9 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="dsmport" class="col-12 col-sm-4 col-lg-2 col-form-label">Mp3-streamer url</label>
+            <label for="dsmport" class="col-12 col-sm-4 col-lg-2 col-form-label"
+              >Mp3-streamer url</label
+            >
             <div class="col col-sm-8 col-lg-10">
               <input
                 type="string"
@@ -46,7 +79,13 @@
           </div>
           <div class="form-group row">
             <div class="col offset-md-4 offset-lg-2">
-              <button class="btn btn-primary" type="submit" [disabled]="!loginForm.form.valid">Login</button>
+              <button
+                class="btn btn-primary"
+                type="submit"
+                [disabled]="!loginForm.form.valid"
+              >
+                Login
+              </button>
             </div>
           </div>
         </form>
