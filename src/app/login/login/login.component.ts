@@ -20,12 +20,12 @@ export class LoginComponent implements OnDestroy {
   public theme: string;
   public isLoading = false;
   public minimalVersion: string = LoginComponent.MINIMALSTREAMVERSION;
+  public lowVersion: boolean = false;
+  public noVersion: boolean = false;
+  public loginFail: boolean = false;
   private payLoad: any;
   private subscription: Subscription;
   private sid: string;
-  private lowVersion: boolean = false;
-  private noVersion: boolean = false;
-  private loginFail: boolean = false;
 
   constructor(
     private loginService: LoginService,
