@@ -7,5 +7,8 @@
     "types": [],
     "target": "es5"
   },
+  "angularCompilerOptions": {
+    "enableIvy": false
+  },
   "exclude": ["test.ts", "**/*.spec.ts"]
 }
