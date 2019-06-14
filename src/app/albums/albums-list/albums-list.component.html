@@ -1,7 +1,7 @@
 <div class="animated-page">
   <div class="container container-longlist" imageLazyLoadArea>
-    <div *vsFor="items; size: getSize; let _items = vsCollection; scrollParent: 'body'; excess: 2">
-      <div class="row" *ngFor="let artist of _items">
+    <cdk-virtual-scroll-viewport [itemSize]="50" autosize>
+      <div class="row" *cdkVirtualFor="let artist of items">
         <div class="col">
           <h4>
             <a (click)="toggleJumpList()">{{ artist.albumArtist || artist.name }}</a>
@@ -21,7 +21,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </cdk-virtual-scroll-viewport>
   </div>
   <div class="jump-list" [ngClass]="{ visible: showJumpList }">
     <ol>

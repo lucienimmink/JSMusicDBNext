@@ -11,6 +11,6 @@ import { VsForDirective } from "../vs-for.directive";
 @NgModule({
   declarations: [AlbumComponent, BackgroundArtDirective, VsForDirective, ArtistComponent, TrackComponent, TimeFormatPipe, AlbumArtComponent],
   imports: [CommonModule],
-  exports: [AlbumComponent, BackgroundArtDirective, VsForDirective, ArtistComponent, TrackComponent, TimeFormatPipe, AlbumArtComponent]
+  exports: [AlbumComponent, BackgroundArtDirective, VsForDirective, ArtistComponent, TrackComponent, TimeFormatPipe, AlbumArtComponent],
 })
 export class SharedModule {}

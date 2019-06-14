@@ -1,3 +1,4 @@
+import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
@@ -8,6 +9,6 @@ import { SharedModule } from ".././utils/shared/shared.module";
 
 @NgModule({
   declarations: [AlbumsListComponent],
-  imports: [CommonModule, AlbumsRoutingModule, SharedModule]
+  imports: [CommonModule, AlbumsRoutingModule, SharedModule, ScrollingModule],
 })
 export class AlbumsModule {}
