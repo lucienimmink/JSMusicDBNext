@@ -86,20 +86,7 @@ function nextElementSibling(el: any) {
 
 @Directive({
   // tslint:disable-next-line:directive-selector
-  selector: "[vsFor]",
-  // tslint:disable-next-line:use-input-property-decorator
-  inputs: [
-    "originalCollection: vsFor",
-    "vsSize: vsForSize",
-    "vsOffsetAfter: vsForOffsetAfter",
-    "vsOffsetBefore: vsForOffsetBefore",
-    "vsExcess: vsForExcess",
-    "tagName: vsForTagName",
-    "vsScrollParent: vsForScrollParent",
-    "__horizontal: vsForHorizontal",
-    "vsAutoresize: vsForAutoresize",
-    "vsVisibleItems: vsForVisibleItems"
-  ]
+  selector: "[vsFor]"
 })
 export class VsForDirective implements OnInit, OnDestroy, OnChanges {
   public _originalCollection: any[] = [];
