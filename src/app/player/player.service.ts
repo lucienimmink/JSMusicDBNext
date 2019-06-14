@@ -289,7 +289,6 @@ export class PlayerService {
   }
 
   private setPlaylist(playlist: any, startIndex: number = 0, forceRestart: boolean = true, isShuffled: boolean = false, type: string = "album"): void {
-    console.log({ playlist, startIndex, forceRestart, isShuffled, type });
     this.currentPlaylist = {
       playlist,
       startIndex,
