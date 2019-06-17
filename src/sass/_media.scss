@@ -68,10 +68,14 @@
     text-shadow: 0 0 3px $black;
     > span {
       display: block;
+      font-size: 90%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       color: $white;
+      &.small {
+        font-size: 80%;
+      }
     }
   }
 }
