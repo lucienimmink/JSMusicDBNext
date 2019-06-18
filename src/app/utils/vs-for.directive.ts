@@ -1,18 +1,5 @@
 // tslint:disable
-import {
-  ChangeDetectorRef,
-  Directive,
-  ElementRef,
-  EmbeddedViewRef,
-  Input,
-  NgZone,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Renderer,
-  TemplateRef,
-  ViewContainerRef
-} from "@angular/core";
+import { Directive, ElementRef, EmbeddedViewRef, Input, NgZone, OnChanges, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from "@angular/core";
 
 const dde: any = document.documentElement;
 const matchingFunction = dde.matches
@@ -34,11 +21,7 @@ const matchingFunction = dde.matches
                 : null;
 
 function closestElement(el: Node, selector: string): HTMLElement {
-  while (
-    el !== document.documentElement &&
-    el != null &&
-    !el[matchingFunction](selector)
-  ) {
+  while (el !== document.documentElement && el != null && !el[matchingFunction](selector)) {
     el = el.parentNode;
   }
 
@@ -53,7 +36,7 @@ function getWindowScroll() {
   if ("pageYOffset" in window) {
     return {
       scrollTop: pageYOffset,
-      scrollLeft: pageXOffset
+      scrollLeft: pageXOffset,
     };
   } else {
     let sx: number;
@@ -65,7 +48,7 @@ function getWindowScroll() {
     sy = r.scrollTop || b.scrollTop || 0;
     return {
       scrollTop: sy,
-      scrollLeft: sx
+      scrollLeft: sx,
     };
   }
 }
@@ -79,31 +62,13 @@ function getClientSize(element: Node | Window, sizeProp: string): number {
 }
 
 function getScrollPos(element: Node | Window, scrollProp: string): number {
-  return element === window
-    ? getWindowScroll()[scrollProp]
-    : element[scrollProp];
+  return element === window ? getWindowScroll()[scrollProp] : element[scrollProp];
 }
 
-function getScrollOffset(
-  vsElement: HTMLElement,
-  scrollElement: HTMLElement | Window,
-  isHorizontal: boolean
-): number {
-  const vsPos = vsElement.getBoundingClientRect()[
-    isHorizontal ? "left" : "top"
-  ];
-  const scrollPos =
-    scrollElement === window
-      ? 0
-      : (scrollElement as HTMLElement).getBoundingClientRect()[
-          isHorizontal ? "left" : "top"
-        ];
-  const correction =
-    vsPos -
-    scrollPos +
-    (scrollElement === window ? getWindowScroll() : scrollElement)[
-      isHorizontal ? "scrollLeft" : "scrollTop"
-    ];
+function getScrollOffset(vsElement: HTMLElement, scrollElement: HTMLElement | Window, isHorizontal: boolean): number {
+  const vsPos = vsElement.getBoundingClientRect()[isHorizontal ? "left" : "top"];
+  const scrollPos = scrollElement === window ? 0 : (scrollElement as HTMLElement).getBoundingClientRect()[isHorizontal ? "left" : "top"];
+  const correction = vsPos - scrollPos + (scrollElement === window ? getWindowScroll() : scrollElement)[isHorizontal ? "scrollLeft" : "scrollTop"];
   return correction;
 }
 
@@ -121,7 +86,7 @@ function nextElementSibling(el: any) {
 
 @Directive({
   // tslint:disable-next-line:directive-selector
-  selector: "[vsFor]"
+  selector: "[vsFor]",
 })
 export class VsForDirective implements OnInit, OnChanges, OnDestroy {
   // tslint:disable:no-input-rename
@@ -182,13 +147,7 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
   get slicedCollection() {
     return this._slicedCollection;
   }
-  constructor(
-    private _element: ElementRef,
-    private _viewContainer: ViewContainerRef,
-    private _templateRef: TemplateRef<any>,
-    private _renderer: Renderer,
-    private _ngZone: NgZone
-  ) {
+  constructor(private _element: ElementRef, private _viewContainer: ViewContainerRef, private _templateRef: TemplateRef<any>, private _ngZone: NgZone) {
     let _prevClientSize: number;
     const reinitOnClientHeightChange = () => {
       if (!this.scrollParent) {
@@ -239,7 +198,8 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
   }
   public ngOnInit() {
     this.view = this._viewContainer.createEmbeddedView(this._templateRef);
-    this.parent = nextElementSibling(this._element.nativeElement);
+    // this.parent = nextElementSibling(this._element.nativeElement);
+    this.parent = this.view.rootNodes[0];
 
     this.initPlaceholders();
     this.__horizontal = false;
@@ -249,9 +209,7 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
     this.offsetSize = this.__horizontal ? "offsetWidth" : "offsetHeight";
     this.scrollPos = this.__horizontal ? "scrollLeft" : "scrollTop";
 
-    this.scrollParent = this.vsScrollParent
-      ? closestElement(this.parent, this.vsScrollParent)
-      : this.parent;
+    this.scrollParent = this.vsScrollParent ? closestElement(this.parent, this.vsScrollParent) : this.parent;
 
     this.elementSize = getClientSize(this.scrollParent, this.clientSize) || 50;
 
@@ -330,11 +288,7 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
     this._minStartIndex = this.originalLength;
     this._maxEndIndex = 0;
 
-    this.updateTotalSize(
-      typeof this.vsSize !== "undefined"
-        ? this.sizesCumulative[this.originalLength]
-        : this.elementSize * this.originalLength
-    );
+    this.updateTotalSize(typeof this.vsSize !== "undefined" ? this.sizesCumulative[this.originalLength] : this.elementSize * this.originalLength);
     this.updateInnerCollection();
   }
   public setAutoSize() {
@@ -366,20 +320,14 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
     const $scrollPosition = getScrollPos(window, this.scrollPos);
     const $clientSize = getClientSize(this.scrollParent, this.clientSize);
 
-    const scrollOffset =
-      this.parent === this.scrollParent
-        ? 0
-        : getScrollOffset(this.parent, this.scrollParent, this.__horizontal);
+    const scrollOffset = this.parent === this.scrollParent ? 0 : getScrollOffset(this.parent, this.scrollParent, this.__horizontal);
 
     let __startIndex = this.startIndex;
     let __endIndex = this.endIndex;
     if (typeof this.vsSize !== "undefined") {
       __startIndex = 0;
 
-      while (
-        this.sizesCumulative[__startIndex] <
-        $scrollPosition - this.vsOffsetBefore
-      ) {
+      while (this.sizesCumulative[__startIndex] < $scrollPosition - this.vsOffsetBefore) {
         __startIndex++;
       }
       if (__startIndex > 0) {
@@ -390,34 +338,16 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
       __startIndex = Math.max(Math.floor(__startIndex - this.vsExcess / 2), 0);
 
       __endIndex = __startIndex;
-      while (
-        this.sizesCumulative[__endIndex] <
-        $scrollPosition - this.vsOffsetBefore + $clientSize
-      ) {
+      while (this.sizesCumulative[__endIndex] < $scrollPosition - this.vsOffsetBefore + $clientSize) {
         __endIndex++;
       }
 
       // Adjust the end index according to the excess
-      __endIndex = Math.min(
-        Math.ceil(__endIndex + this.vsExcess / 2),
-        this.originalLength
-      );
+      __endIndex = Math.min(Math.ceil(__endIndex + this.vsExcess / 2), this.originalLength);
     } else {
-      __startIndex = Math.max(
-        Math.floor(
-          ($scrollPosition - this.vsOffsetBefore - scrollOffset) /
-            this.elementSize
-        ) -
-          this.vsExcess / 2,
-        0
-      );
+      __startIndex = Math.max(Math.floor(($scrollPosition - this.vsOffsetBefore - scrollOffset) / this.elementSize) - this.vsExcess / 2, 0);
 
-      __endIndex = Math.min(
-        __startIndex +
-          Math.ceil($clientSize / this.elementSize) +
-          this.vsExcess,
-        this.originalLength
-      );
+      __endIndex = Math.min(__startIndex + Math.ceil($clientSize / this.elementSize) + this.vsExcess, this.originalLength);
     }
 
     this._minStartIndex = Math.min(__startIndex, this._minStartIndex);
@@ -435,33 +365,23 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
 
     if (!digestRequired) {
       if (this.__options.hunked) {
-        if (
-          Math.abs(this.startIndex - this._prevStartIndex) >=
-            this.vsExcess / 2 ||
-          (this.startIndex === 0 && this._prevStartIndex !== 0)
-        ) {
+        if (Math.abs(this.startIndex - this._prevStartIndex) >= this.vsExcess / 2 || (this.startIndex === 0 && this._prevStartIndex !== 0)) {
           digestRequired = true;
         } else if (
           Math.abs(this.endIndex - this._prevEndIndex) >= this.vsExcess / 2 ||
-          (this.endIndex === this.originalLength &&
-            this._prevEndIndex !== this.originalLength)
+          (this.endIndex === this.originalLength && this._prevEndIndex !== this.originalLength)
         ) {
           digestRequired = true;
         }
       } else {
-        digestRequired =
-          this.startIndex !== this._prevStartIndex ||
-          this.endIndex !== this._prevEndIndex;
+        digestRequired = this.startIndex !== this._prevStartIndex || this.endIndex !== this._prevEndIndex;
       }
     }
 
     // console.warn(this.startIndex, this.endIndex);
 
     if (digestRequired) {
-      this.slicedCollection = this.originalCollection.slice(
-        this.startIndex,
-        this.endIndex
-      );
+      this.slicedCollection = this.originalCollection.slice(this.startIndex, this.endIndex);
       // this.view.setLocal('vsStartIndex', this.startIndex);
       this.view.context.vsStartIndex = this.startIndex;
 
@@ -484,9 +404,7 @@ export class VsForDirective implements OnInit, OnChanges, OnDestroy {
   };
   public _getOffset(index: number) {
     if (typeof this.vsSize !== "undefined") {
-      return (
-        this.sizesCumulative[index + this.startIndex] + this.vsOffsetBefore
-      );
+      return this.sizesCumulative[index + this.startIndex] + this.vsOffsetBefore;
     }
 
     return (index + this.startIndex) * this.elementSize + this.vsOffsetBefore;
