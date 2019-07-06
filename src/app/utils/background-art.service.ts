@@ -8,6 +8,7 @@ import { LastfmImageRetriever } from "./art/lastfm-image-retriever";
 @Injectable()
 export class BackgroundArtService {
   private lastFMImageRetriever: LastfmImageRetriever;
+  private API_KEY: string = "639fca5adcf955a19f9a04f8985e9ded";
   constructor(private http: HttpClient) {
     this.lastFMImageRetriever = new LastfmImageRetriever(http);
   }
@@ -29,14 +30,36 @@ export class BackgroundArtService {
       info.type
     );
   }
-  public returnImageUrlFromLastFMResponse(response: any): string {
+  public async returnImageUrlFromLastFMResponse(response: any) {
     if (response.album) {
       return response.album.image[response.album.image.length - 1]["#text"];
     }
     if (response.artist) {
+      // we need to fetch the image from fanart.tv for now
+      // use the mbid from the response
+      const mbid = response.artist.mbid;
+      if (mbid) {
+        return this.getArtistURLArtFormFanart(mbid, response.artist);
+      }
       return response.artist.image[response.artist.image.length - 1]["#text"];
     }
     return response;
+  }
+  private async getArtistURLArtFormFanart(mbid: string, artist: any) {
+    try {
+      const response = await fetch(
+        `https://webservice.fanart.tv/v3/music/${mbid}&?api_key=${
+          this.API_KEY
+        }&format=json`
+      );
+      const json = await response.json();
+      if (json.artistbackground) {
+        return json.artistbackground[0].url;
+      }
+    } catch (e) {
+      console.info("fanart has no art");
+    }
+    return artist.image[artist.image.length - 1]["#text"];
   }
   private extractInfo(media: any): any {
     let artist = "";
