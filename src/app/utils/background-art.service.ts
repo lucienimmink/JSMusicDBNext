@@ -61,11 +61,15 @@ export class BackgroundArtService {
   }
   private async getArtistURLArtFromAudioDB(artist: any) {
     const audiodbresponse = await fetch(
-      `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${artist.name}`
+      `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${encodeURIComponent(
+        artist.name
+      )}`
     );
-    const audiodbjson = await audiodbresponse.json();
-    if (audiodbjson && audiodbjson.artists) {
-      return audiodbjson.artists[0].strArtistFanart;
+    if (audiodbresponse.status === 200) {
+      const audiodbjson = await audiodbresponse.json();
+      if (audiodbjson && audiodbjson.artists) {
+        return audiodbjson.artists[0].strArtistFanart;
+      }
     }
     return artist.image[artist.image.length - 1]["#text"];
   }
