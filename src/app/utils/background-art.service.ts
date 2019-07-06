@@ -46,18 +46,26 @@ export class BackgroundArtService {
     return response;
   }
   private async getArtistURLArtFormFanart(mbid: string, artist: any) {
-    try {
-      const response = await fetch(
-        `https://webservice.fanart.tv/v3/music/${mbid}&?api_key=${
-          this.API_KEY
-        }&format=json`
-      );
+    const response = await fetch(
+      `https://webservice.fanart.tv/v3/music/${mbid}&?api_key=${
+        this.API_KEY
+      }&format=json`
+    );
+    if (response.status === 200) {
       const json = await response.json();
       if (json.artistbackground) {
         return json.artistbackground[0].url;
       }
-    } catch (e) {
-      console.info("fanart has no art");
+    }
+    return this.getArtistURLArtFromAudioDB(artist);
+  }
+  private async getArtistURLArtFromAudioDB(artist: any) {
+    const audiodbresponse = await fetch(
+      `https://www.theaudiodb.com/api/v1/json/1/search.php?s=${artist.name}`
+    );
+    const audiodbjson = await audiodbresponse.json();
+    if (audiodbjson && audiodbjson.artists) {
+      return audiodbjson.artists[0].strArtistFanart;
     }
     return artist.image[artist.image.length - 1]["#text"];
   }
