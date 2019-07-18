@@ -1,5 +1,6 @@
 import { ModuleWithProviders } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
+import { QuicklinkStrategy } from "ngx-quicklink";
 
 import { LoginService } from "./login/login.service";
 import { AuthGuardService } from "./utils/authguard.service";
@@ -40,4 +41,4 @@ const appRoutes: Routes = [
 
 export const appRoutingProviders: any[] = [AuthGuardService, LoginService];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules });
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { preloadingStrategy: QuicklinkStrategy });

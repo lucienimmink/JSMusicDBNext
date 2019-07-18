@@ -3,6 +3,7 @@ import { LOCALE_ID, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule, EVENT_MANAGER_PLUGINS } from "@angular/platform-browser";
 import { TooltipModule } from "ngx-bootstrap";
+import { QuicklinkModule } from "ngx-quicklink";
 
 import { environment } from "../environments/environment";
 
@@ -23,11 +24,12 @@ import { SortComponent } from "./utils/sort/sort.component";
     FormsModule,
     routing,
     TooltipModule.forRoot(),
-    SharedModule
+    SharedModule,
+    QuicklinkModule,
     // , ModalModule.forRoot()
   ],
   providers: [appRoutingProviders, { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true }, { provide: LOCALE_ID, useValue: "en-GB" }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor() {
