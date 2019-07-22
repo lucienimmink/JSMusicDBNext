@@ -1,4 +1,4 @@
-<div class="panel panel-background">
+<div class="panel panel-background" (click)="select()">
   <album-art [album]="album.name" [artist]="album.artist.albumArtist || album.artist.name"></album-art>
   <div class="panel-info color-type-primary-alt">
     <span>{{ album.name }}</span>

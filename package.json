@@ -32,7 +32,7 @@
     "@angular/platform-browser-dynamic": "^8.1.2",
     "@angular/router": "^8.1.2",
     "@thebespokepixel/es-tinycolor": "^1.0.5",
-    "album-art-component": "git+https://github.com/lucienimmink/album-art-webcomponent.git",
+    "album-art-component": "^1.0.0",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.9",
     "fanart.tv-api": "^2.0.1",
