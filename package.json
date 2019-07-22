@@ -4,11 +4,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "npm run --silent sass:dark && ng serve",
+    "start": "npm run --silent sass:dark && ng serve --aot",
     "sass": "node-sass",
     "sass:dark": "node-sass --output-style compressed --omit-source-map-url ./src/sass/dark.scss > ./src/global/css/dark.css",
     "build": "npm run --silent sass:dark && ng build --prod --i18n-locale=\"en-GB\"",
-    "bundle-report": "ng build --prod --i18n-locale=\"en-GB\" --stats-json && webpack-bundle-analyzer dist/stats.json",
+    "report": "webpack-bundle-analyzer dist/stats-es2015.json",
+    "bundle-report": "ng build --prod --i18n-locale=\"en-GB\" --stats-json && npm run --silent report",
     "lint": "tslint --fix --force -p .",
     "postversion": "npm run --silent build && npm publish && git push && git push --tags"
   },
@@ -31,6 +32,7 @@
     "@angular/platform-browser-dynamic": "^8.1.2",
     "@angular/router": "^8.1.2",
     "@thebespokepixel/es-tinycolor": "^1.0.5",
+    "album-art-component": "git+https://github.com/lucienimmink/album-art-webcomponent.git",
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.9",
     "fanart.tv-api": "^2.0.1",

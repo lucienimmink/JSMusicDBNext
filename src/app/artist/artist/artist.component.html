@@ -1,6 +1,7 @@
-<div [mdb-BackgroundArt]="artist" class="panel-background" (click)="select()">
+<div class="panel panel-background" (click)="select()">
+  <album-art [artist]="artist.albumArtist || artist.name"></album-art>
   <div class="panel-info color-type-primary-alt">
-    <span>{{artist.albumArtist || artist.name}}</span>
-    <span class="small muted">Albums: {{artist.albums.length}}</span>
+    <span>{{ artist.albumArtist || artist.name }}</span>
+    <span class="small muted">Albums: {{ artist.albums.length }}</span>
   </div>
 </div>

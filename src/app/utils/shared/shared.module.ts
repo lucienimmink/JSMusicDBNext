@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { AlbumComponent } from "../../album/album/album.component";
 import { ArtistComponent } from "../../artist/artist/artist.component";
 import { TrackComponent } from "../../track/track/track.component";
@@ -11,6 +11,7 @@ import { VsForDirective } from "../vs-for.directive";
 @NgModule({
   declarations: [AlbumComponent, BackgroundArtDirective, VsForDirective, ArtistComponent, TrackComponent, TimeFormatPipe, AlbumArtComponent],
   imports: [CommonModule],
-  exports: [AlbumComponent, BackgroundArtDirective, VsForDirective, ArtistComponent, TrackComponent, TimeFormatPipe, AlbumArtComponent]
+  exports: [AlbumComponent, BackgroundArtDirective, VsForDirective, ArtistComponent, TrackComponent, TimeFormatPipe, AlbumArtComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

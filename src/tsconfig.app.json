@@ -8,7 +8,7 @@
     "target": "es2015"
   },
   "angularCompilerOptions": {
-    "enableIvy": true
+    "enableIvy": false
   },
   "exclude": ["test.ts", "**/*.spec.ts"]
 }

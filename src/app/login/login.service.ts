@@ -4,7 +4,7 @@ import { Observable, throwError as observableThrowError } from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 // import { KJUR } from "jsrsasign";
-import { catchError, map } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { jwt } from "./jwt-token";
 
 @Injectable()
@@ -18,9 +18,6 @@ export class LoginService {
   }
 
   public doLogin(form: any, encoded: boolean = false): any {
-    const username = form.name;
-    const password = form.password;
-
     let payload = form;
     if (!encoded) {
       localStorage.setItem("dsm", form.dsmport);
@@ -28,16 +25,14 @@ export class LoginService {
     }
 
     const headers = new HttpHeaders({
-      "X-Cred": payload
+      "X-Cred": payload,
     });
 
     const options = {
-      headers
+      headers,
     };
 
-    return this.http
-      .post(`${localStorage.getItem("dsm")}/login`, null, options)
-      .pipe(catchError(this.handleError));
+    return this.http.post(`${localStorage.getItem("dsm")}/login`, null, options).pipe(catchError(this.handleError));
   }
   public autoLogin() {
     const cred = localStorage.getItem("jwt");
@@ -50,10 +45,7 @@ export class LoginService {
   }
   public encode(payload: any): string {
     // return KJUR.jws.JWS.sign("HS256", { alg: "HS256", typ: "JWT" }, payload, "jsmusicdbnext");
-    const token = new jwt.WebToken(
-      JSON.stringify(payload),
-      JSON.stringify({ alg: "HS256", typ: "JWT" })
-    );
+    const token = new jwt.WebToken(JSON.stringify(payload), JSON.stringify({ alg: "HS256", typ: "JWT" }));
     const signed = token.serialize("jsmusicdbnext");
     return signed;
   }
