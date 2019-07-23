@@ -2,7 +2,9 @@
   <div class="top">
     <div class="image-wrapper" *ngIf="!videoMode">
       <canvas *ngIf="showVisualisation"></canvas>
-      <div class="current-album-art always-replace" [mdb-BackgroundArt]="track" (swipeleft)="next()" (swiperight)="prev()"></div>
+      <div class="current-album-art always-replace" (swipeleft)="next()" (swiperight)="prev()">
+        <album-art [artist]="track.trackArtist" [album]="track.album.name"></album-art>
+      </div>
       <div class="previous-album-art" (swipeleft)="next()" (swiperight)="prev()"></div>
     </div>
     <div class="control-wrapper-wrapper">

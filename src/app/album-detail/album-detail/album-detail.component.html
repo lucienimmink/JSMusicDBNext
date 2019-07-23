@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row albumdetail">
         <div class="col-4 col-md-3 col-lg-2">
-          <mdb-album-art [album]="album"></mdb-album-art>
+          <album-art [album]="album.name" [artist]="album.artist.albumArtist || album.artist.name"></album-art>
         </div>
         <div class="col-8 col-md-9 col-lg-10">
           <h2>{{ album.name }}</h2>

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import "album-art-component";
 import { Subscription } from "rxjs";
 // import { ModalDirective } from 'ngx-bootstrap';
 

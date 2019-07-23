@@ -1,5 +1,5 @@
 import { HttpClientModule } from "@angular/common/http";
-import { LOCALE_ID, NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule, EVENT_MANAGER_PLUGINS } from "@angular/platform-browser";
 import { TooltipModule } from "ngx-bootstrap";
@@ -18,6 +18,7 @@ import { SortComponent } from "./utils/sort/sort.component";
   imports: [BrowserModule, HttpClientModule, FormsModule, routing, TooltipModule.forRoot(), SharedModule],
   providers: [appRoutingProviders, { provide: EVENT_MANAGER_PLUGINS, useClass: MediaEvents, multi: true }, { provide: LOCALE_ID, useValue: "en-GB" }],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {
   constructor() {
