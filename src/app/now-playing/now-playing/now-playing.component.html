@@ -1,11 +1,28 @@
-<div class="container-fluid animated-page" [ngClass]="{ slided: slided, 'small-art': smallArt, 'no-focus': noFocus }" id="nowPlaying" *ngIf="track">
+<div
+  class="container-fluid animated-page"
+  [ngClass]="{ slided: slided, 'small-art': smallArt, 'no-focus': noFocus }"
+  id="nowPlaying"
+  *ngIf="track"
+>
   <div class="top">
     <div class="image-wrapper" *ngIf="!videoMode">
       <canvas *ngIf="showVisualisation"></canvas>
-      <div class="current-album-art always-replace" (swipeleft)="next()" (swiperight)="prev()">
-        <album-art [artist]="track.trackArtist" [album]="track.album.name"></album-art>
+      <div
+        class="current-album-art always-replace"
+        (swipeleft)="next()"
+        (swiperight)="prev()"
+      >
+        <album-art
+          [artist]="track.trackArtist"
+          [album]="track.album.name"
+          objectFit="contain"
+        ></album-art>
       </div>
-      <div class="previous-album-art" (swipeleft)="next()" (swiperight)="prev()"></div>
+      <div
+        class="previous-album-art"
+        (swipeleft)="next()"
+        (swiperight)="prev()"
+      ></div>
     </div>
     <div class="control-wrapper-wrapper">
       <div class="row controls-wrapper">
@@ -17,7 +34,10 @@
               width: round((track.buffered.end / track.duration) * 100) + '%'
             }"
           ></div>
-          <div class="progress-bar" [ngStyle]="{ width: (track.position / track.duration) * 100 + '%' }"></div>
+          <div
+            class="progress-bar"
+            [ngStyle]="{ width: (track.position / track.duration) * 100 + '%' }"
+          ></div>
           <div
             id="position-indicator"
             [ngStyle]="{
@@ -27,8 +47,12 @@
           ></div>
         </div>
         <div id="progress-pusher" *ngIf="!videoMode"></div>
-        <span class="time start" *ngIf="!videoMode">{{ track.position | timeFormat }}</span>
-        <span class="time stop" *ngIf="!videoMode">{{ track.duration | timeFormat }}</span>
+        <span class="time start" *ngIf="!videoMode">{{
+          track.position | timeFormat
+        }}</span>
+        <span class="time stop" *ngIf="!videoMode">{{
+          track.duration | timeFormat
+        }}</span>
 
         <div class="track-info">
           <h4>{{ track.title }}</h4>
@@ -53,10 +77,19 @@
           <button class="btn btn-link" (click)="next()">
             <i class="glyph glyph-next"></i>
           </button>
-          <button class="btn btn-link btn-love" (click)="toggleLoved()" [ngClass]="{ active: track.isLoved }" *ngIf="lastfmusername !== 'mdb-skipped'">
+          <button
+            class="btn btn-link btn-love"
+            (click)="toggleLoved()"
+            [ngClass]="{ active: track.isLoved }"
+            *ngIf="lastfmusername !== 'mdb-skipped'"
+          >
             <i class="glyph glyph-star-outline"></i>
           </button>
-          <button class="btn btn-link btn-volume d-none d-md-inline" (click)="toggleVolumeWindow($event)" [disabled]="videoMode">
+          <button
+            class="btn btn-link btn-volume d-none d-md-inline"
+            (click)="toggleVolumeWindow($event)"
+            [disabled]="videoMode"
+          >
             <span
               class="glyph"
               [ngClass]="{
@@ -65,13 +98,24 @@
               }"
             ></span>
           </button>
-          <button class="btn btn-link d-none d-md-inline btn-shuffle" (click)="toggleShuffle()" [ngClass]="{ active: isShuffled }">
+          <button
+            class="btn btn-link d-none d-md-inline btn-shuffle"
+            (click)="toggleShuffle()"
+            [ngClass]="{ active: isShuffled }"
+          >
             <i class="glyph glyph-shuffle"></i>
           </button>
         </div>
 
         <div class="volume-control" [hidden]="!showVolumeWindow">
-          <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()" />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            [(ngModel)]="volume"
+            (input)="setVolume()"
+            (change)="setVolume()"
+          />
         </div>
 
         <div class="col-12">
@@ -100,15 +144,22 @@
         <div class="col-12">
           <h3>Nothing is playing</h3>
           <p>
-            This is where you'll see the song you're playing and songs that are coming up.
+            This is where you'll see the song you're playing and songs that are
+            coming up.
           </p>
           <p>
             Find an
-            <a routerLink="/artists"> <span class="glyph glyph-people"></span> artist</a>
+            <a routerLink="/artists">
+              <span class="glyph glyph-people"></span> artist</a
+            >
             or
-            <a routerLink="/albums"> <span class="glyph glyph-music-album"></span> album</a>
+            <a routerLink="/albums">
+              <span class="glyph glyph-music-album"></span> album</a
+            >
             that you want to play; or setup a
-            <a routerLink="/playlists"> <span class="glyph glyph-music-info"></span> playlist</a>
+            <a routerLink="/playlists">
+              <span class="glyph glyph-music-info"></span> playlist</a
+            >
           </p>
         </div>
       </div>
