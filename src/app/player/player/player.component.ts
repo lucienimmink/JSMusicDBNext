@@ -1,5 +1,6 @@
 declare const Windows: any;
 declare const MediaMetadata: any;
+declare const window: any;
 
 import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
@@ -13,7 +14,7 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AnimationService } from "./../../utils/animation.service";
-import { addCustomCss, addCustomCssBasedOnRGBA, getColorsFromRGB, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
+import { addCustomCss, addCustomCssBasedOnRGBA, getColorsFromRGB, getDominantColor, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
 import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
@@ -35,6 +36,7 @@ export class PlayerComponent implements OnDestroy {
   private subscription4: Subscription;
   private subscription5: Subscription;
   private subscription6: Subscription;
+  private subscription7: Subscription;
   private playlist: Playlist;
   private trackIndex: any;
   private track: Track;
@@ -222,6 +224,23 @@ export class PlayerComponent implements OnDestroy {
     this.subscription6 = this.colorService.color$.subscribe(rgba => {
       this.rgba = rgba;
     });
+    this.subscription7 = this.colorService.blob$.subscribe(() => {
+      const blob = new Blob([window.externalBlob], { type: "image/png" });
+      // build a url from the blob
+      const objectURL = URL.createObjectURL(blob);
+      const image = new Image();
+      image.src = objectURL;
+      // now let's set that color!
+      getDominantColor(
+        image,
+        rgba => {
+          const colors = getColorsFromRGB(rgba);
+          this.colorService.setColor(colors.rgba);
+          addCustomCss(colors);
+        },
+        true
+      );
+    });
   }
   public setTrack(position: any) {
     this.track = this.playlist.tracks[this.trackIndex];
@@ -279,6 +298,7 @@ export class PlayerComponent implements OnDestroy {
     this.subscription4.unsubscribe();
     this.subscription5.unsubscribe();
     this.subscription6.unsubscribe();
+    this.subscription7.unsubscribe();
     this.mediaObject.removeEventListener("ended");
     this.mediaObject.removeEventListener("timeupdate");
     this.mediaObject.removeEventListener("play");
