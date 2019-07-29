@@ -1,7 +1,7 @@
 declare const Windows: any;
 declare const MediaMetadata: any;
 
-import { Component, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import "album-art-component";
 import { get } from "idb-keyval";
@@ -13,7 +13,7 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AnimationService } from "./../../utils/animation.service";
-import { addCustomCssBasedOnRGBA, removeCustomCss } from "./../../utils/colorutil";
+import { addCustomCss, addCustomCssBasedOnRGBA, getColorsFromRGB, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
 import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
@@ -223,7 +223,6 @@ export class PlayerComponent implements OnDestroy {
       this.rgba = rgba;
     });
   }
-
   public setTrack(position: any) {
     this.track = this.playlist.tracks[this.trackIndex];
     if (!this.currentTrack || (this.track && this.currentTrack.id !== this.track.id) || this.forceRestart) {
@@ -438,7 +437,28 @@ export class PlayerComponent implements OnDestroy {
     }
     removeCustomCss();
   }
-
+  public onChangeArt(evt) {
+    if (this.usesDynamicAccentColor) {
+      const { art } = evt.detail;
+      getDominantColorByURL(
+        art,
+        rgba => {
+          const colors = getColorsFromRGB(rgba);
+          this.colorService.setColor(colors.rgba);
+          addCustomCss(colors);
+        },
+        false
+      );
+    } else {
+      this.colorService.setColor({
+        r: 0,
+        g: 110,
+        b: 205,
+        a: 1,
+      });
+      removeCustomCss();
+    }
+  }
   public toggleShuffle() {
     this.isShuffled = !this.isShuffled;
     this.playerService.shufflePlaylist(this.isShuffled);

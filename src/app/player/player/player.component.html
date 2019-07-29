@@ -7,7 +7,7 @@
   <div class="container-fluid">
     <div class="row row-sm">
       <div class="col-xs-4 col-player-art" (click)="navigateToNowPlaying()">
-        <album-art [artist]="track.trackArtist" [album]="track.album.name"></album-art>
+        <album-art [artist]="track.trackArtist" [album]="track.album.name" (art)="onChangeArt($event)"></album-art>
       </div>
       <div class="col-xs-11 col-player-special">
         <h4>{{ track.title }}</h4>
