@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "module": "esnext",
     "types": [],
-    "target": "es2015"
+    "target": "esnext"
   },
   "angularCompilerOptions": {
     "enableIvy": false
