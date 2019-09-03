@@ -1,6 +1,6 @@
 {
   "name": "jsmusicdb-next",
-  "version": "2.20.9",
+  "version": "2.21.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
