@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "module": "esnext",
     "types": [],
-    "target": "esnext"
+    "target": "esnext",
+    "allowSyntheticDefaultImports": true // fuse
   },
   "angularCompilerOptions": {
     "enableIvy": false

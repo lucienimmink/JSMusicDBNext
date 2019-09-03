@@ -8,7 +8,7 @@ import { CoreService } from "../../utils/core.service";
 import { PathService } from "../../utils/path.service";
 
 @Component({
-  templateUrl: "./search.component.html"
+  templateUrl: "./search.component.html",
 })
 export class SearchComponent implements OnInit, OnDestroy {
   public artists: any;
@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   private core: musicdbcore;
   private subscription: Subscription;
   private query: string;
-  private MAXALLOWEDITEMS = 15;
+  private MAXALLOWEDITEMS = 100;
 
   constructor(private pathService: PathService, private coreService: CoreService, private router: Router, private route: ActivatedRoute) {
     this.core = this.coreService.getCore();
@@ -47,7 +47,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
     return {
       list: view,
-      overflow: ret
+      overflow: ret,
     };
   }
 
