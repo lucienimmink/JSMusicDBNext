@@ -51,7 +51,7 @@
     "@angular/cli": "^8.3.4",
     "@angular/compiler-cli": "^8.2.6",
     "@angular/language-service": "^8.2.6",
-    "@types/node": "^11.13.20",
+    "@types/node": "^12.7.7",
     "copy-webpack-plugin": "^5.0.4",
     "glob-all": "^3.1.0",
     "node": "^12.10.0",
