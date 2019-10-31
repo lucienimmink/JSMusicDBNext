@@ -9,7 +9,10 @@
     "allowSyntheticDefaultImports": true // fuse
   },
   "angularCompilerOptions": {
-    "enableIvy": false
+    "enableIvy": true,
+    "fullTemplateTypeCheck": false,
+    "ivyTemplateTypeCheck": false,
+    "allowEmptyCodegenFiles": true
   },
   "exclude": ["test.ts", "**/*.spec.ts"]
 }
