@@ -1,15 +1,19 @@
 .jumbotron {
     @include media-breakpoint-up(lg) {
+        position: fixed;
+        width: calc(100% - 75px);
+        z-index: 1;
         padding-top: 2em;
         padding-bottom: 2em;
-        margin: 0 -50px 0 -30px;
+        left: 75px;
     }
     .container {
         padding: 0;
     }
-    img {
-        width: 100%;
-        height: auto !important;
+    album-art {
+      width: 100%;
+      height: auto;
+      margin-left: -10px;
     }
     h2 {
         font-size: 2.5rem;
@@ -52,4 +56,25 @@
     .btn {
         margin-left: -15px;
     }
+
+    &.shrunk {
+      h4,
+      h5 {
+        display: none;
+      }
+    }
+}
+@include media-breakpoint-up(lg) {
+  .jumbotron + .container {
+    padding-top: 240px;
+  }
+  /* hacks */
+  .col-4.shrunk {
+    flex: 0 0 9%;
+    max-width: 9%;
+    album-art {
+      display: block;
+      height: auto;
+    }
+  }
 }

@@ -51,6 +51,9 @@ h4,
 // jumbotrons
 .jumbotron {
   background: $gray-150;
+  &.shrunk {
+    background: $gray-150-semi;
+  }
   img {
     border: 1px solid $gray-150;
   }
