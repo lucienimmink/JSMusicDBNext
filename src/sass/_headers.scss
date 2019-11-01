@@ -12,10 +12,16 @@ h4,
   top: 48px;
   position: sticky;
   line-height: 1.5;
-  @include media-breakpoint-up(lg) {
-    top: 100px;
+  @include media-breakpoint-up(md) {
+    top: 100px; // 243px if in lg-album
   }
   &:hover {
     background: gray("100") !important;
+  }
+}
+
+.list-tracks .header-seperator {
+  @include media-breakpoint-up(lg) {
+    top: 243px;
   }
 }
