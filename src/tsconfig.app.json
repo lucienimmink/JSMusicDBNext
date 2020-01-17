@@ -3,16 +3,10 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "esnext",
+    "module": "ESNext",
     "types": [],
-    "target": "esnext",
+    "target": "ES2015",
     "allowSyntheticDefaultImports": true // fuse
-  },
-  "angularCompilerOptions": {
-    "enableIvy": true,
-    "fullTemplateTypeCheck": false,
-    "ivyTemplateTypeCheck": false,
-    "allowEmptyCodegenFiles": true
   },
   "exclude": ["test.ts", "**/*.spec.ts"]
 }
