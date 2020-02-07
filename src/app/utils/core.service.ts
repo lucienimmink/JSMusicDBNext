@@ -1,5 +1,7 @@
+import { Injectable } from "@angular/core";
 import { musicdbcore } from './../org/arielext/musicdb/core';
 
+@Injectable()
 export class CoreService {
   protected core: musicdbcore;
 

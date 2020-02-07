@@ -12,7 +12,7 @@ var JWTInternals = (function() {
     var slop;
     for (i = 0; i < s.length; ++i) {
       var v = b64urlmap.indexOf(s.charAt(i));
-      if (v < 0) continue;
+      if (v < 0) { continue; }
       if (k == 0) {
         ret += int2char(v >> 2);
         slop = v & 3;
@@ -32,7 +32,7 @@ var JWTInternals = (function() {
         k = 0;
       }
     }
-    if (k == 1) ret += int2char(slop << 2);
+    if (k == 1) { ret += int2char(slop << 2); }
     return ret;
   }
 
