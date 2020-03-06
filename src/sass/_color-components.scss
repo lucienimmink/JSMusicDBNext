@@ -231,9 +231,7 @@ body {
 }
 .progress-bar {
   .progress-circle {
-    &::after {
-      color: var(--primary);
-    }
+    background-color: var(--primary);
   }
 }
 
