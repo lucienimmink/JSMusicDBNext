@@ -61,7 +61,7 @@
     "node": "^12.16.1",
     "purgecss-webpack-plugin": "^1.6.0",
     "ts-node": "^8.6.2",
-    "tslint": "^5.20.1",
+    "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.7.5",
     "webpack-bundle-analyzer": "^3.6.0"
