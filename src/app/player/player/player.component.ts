@@ -168,58 +168,63 @@ export class PlayerComponent implements OnDestroy {
     }
     if (navigator.userAgent.indexOf("Mobi") === -1) {
       // lets only handle these calculations on desktop grade devices.
-      const canvas = document.querySelector("canvas");
+      let canvas = document.querySelector("canvas");
       let WIDTH = canvas.offsetWidth;
       let HEIGHT = canvas.offsetHeight;
       // set canvas defaults
 
       canvas.width = WIDTH;
       canvas.height = HEIGHT;
-      const ctx = canvas.getContext("2d");
+      let ctx = canvas.getContext("2d");
 
       this.audioCtx = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
-      const javascriptNode = this.audioCtx.createScriptProcessor(1024 * 2, 1, 1);
-      javascriptNode.connect(this.audioCtx.destination);
       const analyser = this.audioCtx.createAnalyser();
       const source = this.audioCtx.createMediaElementSource(this.mediaObject);
-
-      analyser.fftSize = 128;
-      const bufferLength = analyser.frequencyBinCount;
+      const sampleRate = this.audioCtx.sampleRate; // in hz
+      analyser.fftSize = this.calculateFft ( sampleRate ) // this gives us 64 bars to play with
+      const hearableBars = this.getHearableBars(sampleRate, analyser.fftSize)
       source.connect(analyser);
-      analyser.connect(javascriptNode);
-
       source.connect(this.audioCtx.destination);
-      javascriptNode.onaudioprocess = () => {
-        // tslint:disable-next-line:no-shadowed-variable
-        const canvas = document.querySelector("canvas");
-        const color = this.rgba || {
-          r: 0,
-          g: 110,
-          b: 205,
-          a: 1,
-        };
+      const dataArray = new Uint8Array(hearableBars);
+      analyser.getByteFrequencyData(dataArray);
+
+      const draw = () => {
+        requestAnimationFrame(draw);
+
+        // re-get canvas
+        canvas = document.querySelector("canvas");
         WIDTH = canvas.offsetWidth;
         HEIGHT = canvas.offsetHeight;
-        canvas.width = WIDTH;
-        canvas.height = HEIGHT;
-        // tslint:disable-next-line:no-shadowed-variable
-        const ctx = canvas.getContext("2d");
-        const dataArray = new Uint8Array(bufferLength);
-        analyser.getByteFrequencyData(dataArray);
-        ctx.clearRect(0, 0, WIDTH, HEIGHT);
-        const barWidth = Math.floor((WIDTH / bufferLength) * 1.1);
-        let barHeight;
-        let x = 0;
-        const y = (HEIGHT / 150) * 1.17;
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = dataArray[i] * y;
-          // ctx.fillStyle = `rgb(0,${Math.floor((barHeight * 0.47) / y)}, ${Math.floor((barHeight * 0.84) / y)})`
-          // rgba(0, 120, 215, 1);
-          ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[i] / 255})`;
-          ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
-          x += barWidth + 1;
+
+        if (WIDTH && HEIGHT) {
+          analyser.getByteFrequencyData(dataArray);
+
+          canvas.width = WIDTH;
+          canvas.height = HEIGHT;
+          ctx = canvas.getContext("2d");
+          ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+          const color = this.rgba || {
+            r: 0,
+            g: 110,
+            b: 205,
+            a: 1,
+          };
+
+          const barWidth = Math.floor((WIDTH / hearableBars) * 1.1);
+          let barHeight;
+          let x = 0;
+          const y = (HEIGHT / 150) * 1.17;
+
+          for (let i = 0; i < hearableBars; i++) {
+            barHeight = dataArray[i] * y;
+            ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[i] / 255})`;
+            ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
+            x += barWidth + 1;
+          }
         }
-      };
+      }
+      draw();
     }
     this.subscription6 = this.colorService.color$.subscribe(rgba => {
       this.rgba = rgba;
@@ -241,6 +246,34 @@ export class PlayerComponent implements OnDestroy {
         true
       );
     });
+  }
+  private calculateFft (sampleRate): number {
+    return Math.floor(sampleRate / 44100) * 128
+  }
+  private getHearableBars(sampleRate, fftSize): number {
+    const halfFFT = fftSize / 2;
+    switch (sampleRate) {
+      case 48000:
+        return halfFFT - 1
+      case 88200:
+        return halfFFT / 2
+      case 96000:
+        return (halfFFT / 2) - 2
+      case 176400:
+        return halfFFT / 4
+      case 192000:
+        return (halfFFT / 4) - 4
+      case 352800:
+        return halfFFT / 8
+      case 384000:
+        return (halfFFT / 8) - 8
+      case 705600:
+        return halfFFT / 16
+      case 768000:
+        return (halfFFT / 16) - 16
+      default:
+        return halfFFT;
+    }
   }
   public setTrack(position: any) {
     this.track = this.playlist.tracks[this.trackIndex];
