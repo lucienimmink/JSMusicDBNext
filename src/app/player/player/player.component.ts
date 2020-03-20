@@ -19,6 +19,7 @@ import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
 import { PlayerService } from "./../player.service";
+import { ThrowStmt } from "@angular/compiler";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -58,6 +59,11 @@ export class PlayerComponent implements OnDestroy {
   private displayUpdater: any;
   private audioCtx: AudioContext;
   private rgba: any;
+  private analyserID: number = -1;
+  private analyser: AnalyserNode;
+  private dataArray: Uint8Array;
+  private hearableBars: number;
+  private requestAnimationFrameLimited
 
   constructor(
     private pathService: PathService,
@@ -127,6 +133,17 @@ export class PlayerComponent implements OnDestroy {
     this.subscription4 = pathService.pageAnnounced$.subscribe(page => {
       if (page.page === "Now playing") {
         this.showVolumeWindow = false;
+        const hasVisualisation = this.booleanState("visualisation-state")
+        if (hasVisualisation) {
+          // do draw
+          this.requestAnimationFrameLimited = window.requestAnimationFrameRate(30)
+          this.analyserID = this.requestAnimationFrameLimited(this.draw.bind(this))
+        } else {
+          // kill draw
+          window.cancelAnimationFrameRate(this.analyserID)
+        }
+      } else {
+        window.cancelAnimationFrameRate(this.analyserID)
       }
     });
     if (this.isHostedApp) {
@@ -168,63 +185,17 @@ export class PlayerComponent implements OnDestroy {
     }
     if (navigator.userAgent.indexOf("Mobi") === -1) {
       // lets only handle these calculations on desktop grade devices.
-      let canvas = document.querySelector("canvas");
-      let WIDTH = canvas.offsetWidth;
-      let HEIGHT = canvas.offsetHeight;
-      // set canvas defaults
-
-      canvas.width = WIDTH;
-      canvas.height = HEIGHT;
-      let ctx = canvas.getContext("2d");
 
       this.audioCtx = new ((window as any).AudioContext || (window as any).webkitAudioContext)();
-      const analyser = this.audioCtx.createAnalyser();
+      this.analyser = this.audioCtx.createAnalyser();
       const source = this.audioCtx.createMediaElementSource(this.mediaObject);
       const sampleRate = this.audioCtx.sampleRate; // in hz
-      analyser.fftSize = this.calculateFft ( sampleRate ) // this gives us 64 bars to play with
-      const hearableBars = this.getHearableBars(sampleRate, analyser.fftSize)
-      source.connect(analyser);
+      this.analyser.fftSize = this.calculateFft ( sampleRate ) // this gives us 64 bars to play with
+      this.hearableBars = this.getHearableBars(sampleRate, this.analyser.fftSize)
+      source.connect(this.analyser);
       source.connect(this.audioCtx.destination);
-      const dataArray = new Uint8Array(hearableBars);
-      analyser.getByteFrequencyData(dataArray);
-
-      const draw = () => {
-        requestAnimationFrame(draw);
-
-        // re-get canvas
-        canvas = document.querySelector("canvas");
-        WIDTH = canvas.offsetWidth;
-        HEIGHT = canvas.offsetHeight;
-
-        if (WIDTH && HEIGHT) {
-          analyser.getByteFrequencyData(dataArray);
-
-          canvas.width = WIDTH;
-          canvas.height = HEIGHT;
-          ctx = canvas.getContext("2d");
-          ctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-          const color = this.rgba || {
-            r: 0,
-            g: 110,
-            b: 205,
-            a: 1,
-          };
-
-          const barWidth = Math.floor((WIDTH / hearableBars) * 1.1);
-          let barHeight;
-          let x = 0;
-          const y = (HEIGHT / 150) * 1.17;
-
-          for (let i = 0; i < hearableBars; i++) {
-            barHeight = dataArray[i] * y;
-            ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${dataArray[i] / 255})`;
-            ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
-            x += barWidth + 1;
-          }
-        }
-      }
-      draw();
+      this.dataArray = new Uint8Array(this.hearableBars);
+      this.analyser.getByteFrequencyData(this.dataArray);
     }
     this.subscription6 = this.colorService.color$.subscribe(rgba => {
       this.rgba = rgba;
@@ -246,6 +217,38 @@ export class PlayerComponent implements OnDestroy {
         true
       );
     });
+  }
+  private draw() {
+    this.analyserID = this.requestAnimationFrameLimited(this.draw.bind(this));
+    // re-get canvas
+    const canvas = document.querySelector("canvas");
+    const WIDTH = canvas.offsetWidth;
+    const HEIGHT = canvas.offsetHeight;
+
+    if (WIDTH && HEIGHT) {
+      const ctx = canvas.getContext("2d");
+      this.analyser.getByteFrequencyData(this.dataArray);
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
+      ctx.clearRect(0, 0, WIDTH, HEIGHT);
+      const color = this.rgba || {
+        r: 0,
+        g: 110,
+        b: 205,
+        a: 1,
+      };
+      const barWidth = Math.floor((WIDTH / this.hearableBars) * 1.1);
+      let barHeight;
+      let x = 0;
+      const y = (HEIGHT / 150) * 1.17;
+
+      for (let i = 0; i < this.hearableBars; i++) {
+        barHeight = this.dataArray[i] * y;
+        ctx.fillStyle = `rgba(${color.r},${color.g},${color.b},${this.dataArray[i] / 255})`;
+        ctx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
+        x += barWidth + 1;
+      }
+    }
   }
   private calculateFft (sampleRate): number {
     return Math.floor(sampleRate / 44100) * 128
@@ -624,3 +627,60 @@ export class PlayerComponent implements OnDestroy {
     return tileXml;
   }
 }
+
+(function(window) {
+  var maxFPS = 60;
+
+  window.requestAnimationFrameRate = function(fps) {
+      var period,
+          starter,
+          limit,
+          jitter;
+
+      if (typeof fps !== 'number') {
+          fps = maxFPS;
+      } else {
+          fps = Math.max(1, Math.min(maxFPS, fps));
+      }
+
+      period = 1000 / fps;
+
+      jitter = period * 0.1;
+
+      limit = period - jitter;
+
+      function requestAnimationFrameAtFPS(renderFrameCallBack) {
+          return (function() {
+              var handle;
+
+              function renderer(time) {
+                  var lastPeriod;
+
+                  starter = starter || time;
+                  lastPeriod = time - starter;
+
+                  if (lastPeriod < limit) {
+                      handle = window.requestAnimationFrame(renderer);
+                  } else {
+                      renderFrameCallBack(time);
+                      starter = time;
+                  }
+              }
+
+              handle = window.requestAnimationFrame(renderer);
+
+              return function() {
+                  window.cancelAnimationFrame(handle);
+              };
+          })();
+      }
+
+      return requestAnimationFrameAtFPS;
+  };
+
+  window.cancelAnimationFrameRate = function(handle) {
+    if (typeof handle === 'function') {
+      handle();
+    }
+  };
+})(window);
