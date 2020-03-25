@@ -49,7 +49,7 @@
   </span>
   <h1>
     <span *ngIf="path && path.album">
-      <span (click)="selectArtist(path)" class="clickable d-none d-sm-inline">{{ path.artist.albumArtist || path.artist.name }}</span> &bull;&nbsp;
+      <span (click)="selectArtist(path)" class="clickable d-none d-sm-inline">{{ path.artist.albumArtist || path.artist.name }}</span> &bull;
       <span>{{ path.album.name }}</span>
     </span>
     <span *ngIf="path && path.artist && !path.album">{{ path.artist.albumArtist || path.artist.name }}</span>

@@ -88,11 +88,10 @@ export function getDominantColorByURL(url, cb, override): any {
   }
 }
 export function getColorsFromRGB(rgba: any): any {
-  const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
-  // textcolor: has to be readable -> use contrast
   const textLight = getReadableColor(rgba, "#fff");
   const textDark = getReadableColor(rgba, "#000");
-  const darken = convertToStrict(new tinycolor(rgba).darken().toRgb());
+  const lighten = convertToStrict(new tinycolor(textLight).lighten().toRgb());
+  const darken = convertToStrict(new tinycolor(textDark).darken().toRgb());
   return {
     rgba,
     textLight,

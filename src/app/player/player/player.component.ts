@@ -19,7 +19,6 @@ import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
 import { PlayerService } from "./../player.service";
-import { ThrowStmt } from "@angular/compiler";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -63,7 +62,7 @@ export class PlayerComponent implements OnDestroy {
   private analyser: AnalyserNode;
   private dataArray: Uint8Array;
   private hearableBars: number;
-  private requestAnimationFrameLimited
+  private canShowAnimation: boolean = false;
 
   constructor(
     private pathService: PathService,
@@ -133,17 +132,12 @@ export class PlayerComponent implements OnDestroy {
     this.subscription4 = pathService.pageAnnounced$.subscribe(page => {
       if (page.page === "Now playing") {
         this.showVolumeWindow = false;
-        const hasVisualisation = this.booleanState("visualisation-state")
-        if (hasVisualisation) {
-          // do draw
-          this.requestAnimationFrameLimited = window.requestAnimationFrameRate(30)
-          this.analyserID = this.requestAnimationFrameLimited(this.draw.bind(this))
-        } else {
-          // kill draw
-          window.cancelAnimationFrameRate(this.analyserID)
+        this.canShowAnimation = this.booleanState("visualisation-state")
+        if (this.canShowAnimation) {
+          this.analyserID = window.requestAnimationFrame(this.draw.bind(this))
         }
       } else {
-        window.cancelAnimationFrameRate(this.analyserID)
+        this.canShowAnimation = false
       }
     });
     if (this.isHostedApp) {
@@ -219,7 +213,12 @@ export class PlayerComponent implements OnDestroy {
     });
   }
   private draw() {
-    this.analyserID = this.requestAnimationFrameLimited(this.draw.bind(this));
+    setTimeout(() => {
+      this.analyserID = window.requestAnimationFrame(this.draw.bind(this));
+      if (!this.canShowAnimation) {
+        window.cancelAnimationFrame(this.analyserID)
+      }
+    }, 1000 / 30);
     // re-get canvas
     const canvas = document.querySelector("canvas");
     const WIDTH = canvas.offsetWidth;
@@ -411,7 +410,7 @@ export class PlayerComponent implements OnDestroy {
     } catch (e) {
       // console.error("caught error", e);
     }
-    document.title = `${this.track.title} by ${this.track.trackArtist}`;
+    document.title = `${this.track.title} • ${this.track.trackArtist}`;
     if ("mediaSession" in navigator) {
       get(`art-${this.track.trackArtist}-${this.track.album.name}`).then(url => {
         if (url) {
@@ -628,59 +627,3 @@ export class PlayerComponent implements OnDestroy {
   }
 }
 
-(function(window) {
-  var maxFPS = 60;
-
-  window.requestAnimationFrameRate = function(fps) {
-      var period,
-          starter,
-          limit,
-          jitter;
-
-      if (typeof fps !== 'number') {
-          fps = maxFPS;
-      } else {
-          fps = Math.max(1, Math.min(maxFPS, fps));
-      }
-
-      period = 1000 / fps;
-
-      jitter = period * 0.1;
-
-      limit = period - jitter;
-
-      function requestAnimationFrameAtFPS(renderFrameCallBack) {
-          return (function() {
-              var handle;
-
-              function renderer(time) {
-                  var lastPeriod;
-
-                  starter = starter || time;
-                  lastPeriod = time - starter;
-
-                  if (lastPeriod < limit) {
-                      handle = window.requestAnimationFrame(renderer);
-                  } else {
-                      renderFrameCallBack(time);
-                      starter = time;
-                  }
-              }
-
-              handle = window.requestAnimationFrame(renderer);
-
-              return function() {
-                  window.cancelAnimationFrame(handle);
-              };
-          })();
-      }
-
-      return requestAnimationFrameAtFPS;
-  };
-
-  window.cancelAnimationFrameRate = function(handle) {
-    if (typeof handle === 'function') {
-      handle();
-    }
-  };
-})(window);
