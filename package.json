@@ -44,6 +44,7 @@
     "idb-keyval": "^3.2.0",
     "ngx-bootstrap": "^5.5.0",
     "node-sass": "^4.13.1",
+    "pocket.io": "^0.1.4",
     "rxjs": "^6.5.4",
     "tslib": "^1.11.0",
     "winstrap": "^0.5.12",

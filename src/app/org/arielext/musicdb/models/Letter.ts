@@ -37,23 +37,20 @@ export default class Letter {
         return 0;
       });
     } else {
+      const enCollator = new Intl.Collator('en');
       this.artists.sort((a, b) => {
+        let aSorter;
+        let bSorter;
         if (sortkey.indexOf(".") !== -1) {
           const sorter = sortkey.split(".");
-          if (a[sorter[0]][sorter[1]] < b[sorter[0]][sorter[1]]) {
-            return direction === "asc" ? -1 : 1;
-          } else if (a[sorter[0]][sorter[1]] > b[sorter[0]][sorter[1]]) {
-            return direction === "asc" ? 1 : -1;
-          } else {
-            return 0;
-          }
+          aSorter = a[sorter[0]][sorter[1]];
+          bSorter = b[sorter[0]][sorter[1]];
+        } else {
+          aSorter = a[sortkey].toUpperCase();
+          bSorter = b[sortkey].toUpperCase();
         }
-        if (a[sortkey].toUpperCase() < b[sortkey].toUpperCase()) {
-          return direction === "asc" ? -1 : 1;
-        } else if (a[sortkey].toUpperCase() > b[sortkey].toUpperCase()) {
-          return direction === "asc" ? 1 : -1;
-        }
-        return 0;
+        const output = enCollator.compare(aSorter, bSorter);
+        return direction === "asc" ? output : output * -1
       });
     }
   }
