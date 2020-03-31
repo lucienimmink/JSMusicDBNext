@@ -56,7 +56,7 @@
     "@angular/cli": "9.0.1",
     "@angular/compiler-cli": "^9.0.7",
     "@angular/language-service": "^9.0.7",
-    "@types/node": "^12.12.31",
+    "@types/node": "^13.9.8",
     "copy-webpack-plugin": "^5.0.5",
     "glob-all": "^3.2.1",
     "purgecss-webpack-plugin": "^1.6.0",
