@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, HostListener, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import "album-art-component";
 import { Subscription } from "rxjs";
 // import { ModalDirective } from 'ngx-bootstrap';
 
@@ -140,5 +141,13 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
       total += track.duration;
     });
     return total;
+  }
+  @HostListener("window:scroll", ["$event"])
+  public onScroll(e: Event) {
+    if (window.scrollY > 50) {
+      this.isShrunk = true;
+    } else {
+      this.isShrunk = false;
+    }
   }
 }

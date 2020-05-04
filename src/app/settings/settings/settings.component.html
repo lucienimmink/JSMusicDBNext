@@ -57,8 +57,11 @@
           >
             <i class="glyph glyph-sync"></i> now
           </button>
-          <span *ngIf="!scanperc && isReloading">
-            <div class="progress-bar" style="margin-left: 100px;">
+          <span
+            *ngIf="(!scanperc || scanperc == 100) && isReloading"
+            class="progress-wrapper"
+          >
+            <div class="progress-bar">
               <div class="progress-circle"></div>
               <div class="progress-circle"></div>
               <div class="progress-circle"></div>

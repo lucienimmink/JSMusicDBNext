@@ -7,6 +7,7 @@ const convertToStrict = (color): any => {
   color.r = Math.floor(color.r);
   color.g = Math.floor(color.g);
   color.b = Math.floor(color.b);
+  color.a = 1;
   // don't round down the alpha channel, silly :)
   return color;
 };
@@ -31,7 +32,7 @@ const convertSwatchToRGB = (swatch): any => {
       r: arr[0],
       g: arr[1],
       b: arr[2],
-      a: 1
+      a: 1,
     };
   }
   // if no swatch is found, use our default color
@@ -39,7 +40,7 @@ const convertSwatchToRGB = (swatch): any => {
     r: 0,
     g: 110,
     b: 205,
-    a: 1
+    a: 1,
   };
 };
 
@@ -48,37 +49,56 @@ export default (rgbstring: string): any => {
   return getColorsFromRGB(convertToStrict(rgba.toRgb()));
 };
 export function getDominantColor(img, cb, override): any {
+  getDominantColorByURL(img.src, cb, override);
+}
+export function getDominantColorByURL(url, cb, override): any {
   if (window.runningInElectron && !override) {
     // send an event to download this image
     document.querySelector("mdb-player").dispatchEvent(
       new CustomEvent("external.mdbuntaint", {
-        detail: { url: img.src }
+        detail: { url },
       })
     );
   } else {
     // clone the img object
     const clone = new Image();
     clone.crossOrigin = "Anonymous";
-    clone.src = img.src;
-    const fac = new FastAverageColor();
-    fac.getColorAsync(clone, color => {
-      cb(convertToStrict(new tinycolor(color.rgba).toRgb()));
-    });
+    clone.addEventListener(
+      "load",
+      evt => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = clone.width;
+        canvas.height = clone.height;
+        context.drawImage(clone, 0, 0);
+
+        const fac = new FastAverageColor();
+        const rgb = fac.getColor(canvas).value;
+        cb(
+          convertToStrict({
+            r: rgb[0],
+            g: rgb[1],
+            b: rgb[2],
+          })
+        );
+      },
+      false
+    );
+    clone.src = url;
   }
 }
 export function getColorsFromRGB(rgba: any): any {
-  const lighten = convertToStrict(new tinycolor(rgba).lighten().toRgb());
-  // textcolor: has to be readable -> use contrast
   const textLight = getReadableColor(rgba, "#fff");
   const textDark = getReadableColor(rgba, "#000");
-  const darken = convertToStrict(new tinycolor(rgba).darken().toRgb());
+  const lighten = convertToStrict(new tinycolor(textLight).lighten().toRgb());
+  const darken = convertToStrict(new tinycolor(textDark).darken().toRgb());
   return {
     rgba,
     textLight,
     textDark,
     lighten,
     darken,
-    letterColor: getHighestContrast(new tinycolor(rgba))
+    letterColor: getHighestContrast(new tinycolor(rgba)),
   };
 }
 export function convertRGBtoString(rgba: any): string {

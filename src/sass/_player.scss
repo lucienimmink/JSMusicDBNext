@@ -18,7 +18,6 @@
   cursor: pointer;
   transition: opacity 0.1s ease-in-out;
   opacity: 0.95;
-  will-change: opacity;
   width: 75px;
   height: 75px;
 
@@ -52,7 +51,7 @@
     overflow: hidden;
     margin: 0;
     background: transparent;
-    line-height: 1.3;
+    line-height: 1.35;
   }
   .row .btn {
     font-size: 24px;

@@ -4,14 +4,13 @@ import { Observable, Subscription, throwError as observableThrowError } from "rx
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { catchError, map } from "rxjs/operators";
+import "album-art-component";
 
 import { musicdbcore } from "../../org/arielext/musicdb/core";
 import Track from "../../org/arielext/musicdb/models/Track";
 import { PlayerService } from "../../player/player.service";
 import { TrackComponent } from "../../track/track/track.component";
 import { AnimationService } from "../../utils/animation.service";
-import { BackgroundArtDirective } from "../../utils/background-art.directive";
 import { CoreService } from "../../utils/core.service";
 import { LastfmService } from "../../utils/lastfm.service";
 import { PathService } from "../../utils/path.service";
@@ -22,9 +21,6 @@ import { TimeFormatPipe } from "../../utils/time-format.pipe";
 })
 export class NowPlayingComponent implements OnDestroy, OnInit {
   public track: Track;
-
-  @ViewChild(BackgroundArtDirective, { static: false })
-  public albumart: BackgroundArtDirective;
   private subscription: Subscription;
   private subscription2: Subscription;
   private subscription3: Subscription;
@@ -125,11 +121,6 @@ export class NowPlayingComponent implements OnDestroy, OnInit {
   }
 
   public setTrack() {
-    setTimeout(() => {
-      if (this.albumart) {
-        this.albumart.loadImage();
-      }
-    });
     this.track = this.playlist.tracks[this.trackIndex];
 
     if (this.currentTrack !== this.track) {

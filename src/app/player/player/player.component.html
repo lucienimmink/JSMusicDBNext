@@ -1,47 +1,48 @@
 <div *ngIf="showPlayer" class="player">
-    <div class="row">
-        <div class="progress" (click)="jump($event)">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{'width': ((track.position / track.duration)* 100) + '%'}"></div>
-        </div>
+  <div class="row">
+    <div class="progress" (click)="jump($event)">
+      <div class="progress-bar" role="progressbar" [ngStyle]="{ width: (track.position / track.duration) * 100 + '%' }"></div>
     </div>
-    <div class="container-fluid">
-        <div class="row row-sm">
-            <div class="col-xs-4 col-player-art" (click)="navigateToNowPlaying()">
-                <mdb-album-art [track]="track" [dynamic-accent-color]="usesDynamicAccentColor"></mdb-album-art>
-            </div>
-            <div class="col-xs-11 col-player-special">
-                <h4>{{track.title}}</h4>
-                <h5>
-                    <a (click)="navigateToArtist()">{{track.trackArtist}}</a>
-                    <span class="hidden-xs color-type-secondary"> &bull;
-                        <a (click)="navigateToAlbum()">{{track.album.name}}</a>
-                    </span>
-                </h5>
-            </div>
-            <div class="col-xs-9 text-right col-player-controls">
-                <a class="btn btn-link" (click)="prev()">
-                    <span class="glyph glyph-previous"></span>
-                </a>
-                <a class="btn btn-link" (click)="togglePlayPause()">
-                    <i class="glyph glyph-pause" *ngIf="isPlaying"></i>
-                    <i class="glyph glyph-play" *ngIf="isPaused"></i>
-                </a>
-                <a class="btn btn-link" (click)="next()">
-                    <span class="glyph glyph-next"></span>
-                </a>
-                <a class="btn btn-link d-none d-md-inline-block" (click)="toggleVolumeWindow($event)">
-                    <span class="glyph" [ngClass]="{'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span>
-                </a>
-                <a class="btn btn-link d-none d-md-inline-block btn-love" (click)="toggleLoved()" [ngClass]="{active:track.isLoved}">
-                    <i class="glyph glyph-star-outline"></i>
-                </a>
-                <a class="btn btn-link d-none d-md-inline-block btn-shuffle" (click)="toggleShuffle()" [ngClass]="{active:isShuffled}">
-                    <i class="glyph glyph-shuffle"></i>
-                </a>
-            </div>
-        </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row row-sm">
+      <div class="col-xs-4 col-player-art" (click)="navigateToNowPlaying()">
+        <album-art [artist]="track.trackArtist" [album]="track.album.name" (art)="onChangeArt($event)"></album-art>
+      </div>
+      <div class="col-xs-11 col-player-special">
+        <h4>{{ track.title }}</h4>
+        <h5>
+          <a (click)="navigateToArtist()">{{ track.trackArtist }}</a>
+          <span class="hidden-xs color-type-secondary">
+            &bull;
+            <a (click)="navigateToAlbum()">{{ track.album.name }}</a>
+          </span>
+        </h5>
+      </div>
+      <div class="col-xs-9 text-right col-player-controls">
+        <a class="btn btn-link" (click)="prev()">
+          <span class="glyph glyph-previous"></span>
+        </a>
+        <a class="btn btn-link" (click)="togglePlayPause()">
+          <i class="glyph glyph-pause" *ngIf="isPlaying"></i>
+          <i class="glyph glyph-play" *ngIf="isPaused"></i>
+        </a>
+        <a class="btn btn-link" (click)="next()">
+          <span class="glyph glyph-next"></span>
+        </a>
+        <a class="btn btn-link d-none d-md-inline-block" (click)="toggleVolumeWindow($event)">
+          <span class="glyph" [ngClass]="{ 'glyph-volume': volume > 0, 'glyph-mute': volume == 0 }"></span>
+        </a>
+        <a class="btn btn-link d-none d-md-inline-block btn-love" (click)="toggleLoved()" [ngClass]="{ active: track.isLoved }">
+          <i class="glyph glyph-star-outline"></i>
+        </a>
+        <a class="btn btn-link d-none d-md-inline-block btn-shuffle" (click)="toggleShuffle()" [ngClass]="{ active: isShuffled }">
+          <i class="glyph glyph-shuffle"></i>
+        </a>
+      </div>
     </div>
-    <div class="volume-control" [hidden]="!showVolumeWindow">
-        <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()">
-    </div>
+  </div>
+  <div class="volume-control" [hidden]="!showVolumeWindow">
+    <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()" (change)="setVolume()" />
+  </div>
 </div>

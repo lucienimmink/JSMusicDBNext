@@ -42,7 +42,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public startDate: Date;
   public stopDate: Date;
-  @ViewChild("themeForm", { static: false })
+  @ViewChild("themeForm")
   public currentForm: NgForm;
   public mode: string;
 

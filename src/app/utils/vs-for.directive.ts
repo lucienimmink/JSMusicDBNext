@@ -1,5 +1,5 @@
-// tslint:disable-next-line:max-line-length
-import { Directive, ElementRef, EmbeddedViewRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2, TemplateRef, ViewContainerRef } from "@angular/core";
+// tslint:disable
+import { Directive, ElementRef, EmbeddedViewRef, Input, NgZone, OnChanges, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from "@angular/core";
 
 const dde: any = document.documentElement;
 const matchingFunction = dde.matches
@@ -36,7 +36,7 @@ function getWindowScroll() {
   if ("pageYOffset" in window) {
     return {
       scrollTop: pageYOffset,
-      scrollLeft: pageXOffset
+      scrollLeft: pageXOffset,
     };
   } else {
     let sx: number;
@@ -48,7 +48,7 @@ function getWindowScroll() {
     sy = r.scrollTop || b.scrollTop || 0;
     return {
       scrollTop: sy,
-      scrollLeft: sx
+      scrollLeft: sx,
     };
   }
 }
@@ -87,56 +87,46 @@ function nextElementSibling(el: any) {
 @Directive({
   // tslint:disable-next-line:directive-selector
   selector: "[vsFor]",
-  // tslint:disable-next-line:use-input-property-decorator
-  inputs: [
-    "originalCollection: vsFor",
-    "vsSize: vsForSize",
-    "vsOffsetAfter: vsForOffsetAfter",
-    "vsOffsetBefore: vsForOffsetBefore",
-    "vsExcess: vsForExcess",
-    "tagName: vsForTagName",
-    "vsScrollParent: vsForScrollParent",
-    "__horizontal: vsForHorizontal",
-    "vsAutoresize: vsForAutoresize",
-    "vsVisibleItems: vsForVisibleItems"
-  ]
 })
-export class VsForDirective implements OnInit, OnDestroy, OnChanges {
-  public _originalCollection: any[] = [];
-  public _slicedCollection: any[] = [];
-  public originalLength: number;
-  public before: HTMLElement;
-  public after: HTMLElement;
-  public view: EmbeddedViewRef<any>;
-  public parent: HTMLElement;
-  public tagName = "div";
-  public __horizontal = false;
-  public __autoSize: boolean;
-  public __options: any;
-  public scrollParent: HTMLElement;
-  public clientSize: string;
-  public offsetSize: string;
-  public scrollPos: string;
-  public totalSize: number;
-  public sizesCumulative: number[];
-  public sizes: number[];
-  public elementSize: number;
-  public startIndex: number;
-  public endIndex: number;
-  public _prevStartIndex: number;
-  public _prevEndIndex: number;
-  public _minStartIndex: number;
-  public _maxEndIndex: number;
-  public onWindowResize: any;
-  public onZone: any;
+export class VsForDirective implements OnInit, OnChanges, OnDestroy {
+  // tslint:disable:no-input-rename
+  @Input("vsForSize") vsSize: any;
+  @Input("vsForOffsetBefore") vsOffsetBefore = 0;
+  @Input("vsForOffsetAfter") vsOffsetAfter = 0;
+  @Input("vsForExcess") vsExcess = 2;
+  @Input("vsForTagName") tagName = "div";
+  @Input("vsForHorizontal") __horizontal = false;
+  @Input("vsForScrollParent") vsScrollParent: string;
+  @Input("vsForAutoresize") vsAutoresize: boolean;
 
-  public vsSize: any;
-  public vsOffsetBefore = 0;
-  public vsOffsetAfter = 0;
-  public vsExcess = 2;
-  public vsScrollParent: string;
-  public vsAutoresize: boolean;
+  _originalCollection = [];
+  _slicedCollection = [];
+  originalLength: number;
+  before: HTMLElement;
+  after: HTMLElement;
+  view: EmbeddedViewRef<any>;
+  parent: HTMLElement;
+  __autoSize: boolean;
+  __options: any;
+  scrollParent: HTMLElement;
+  clientSize: string;
+  offsetSize: string;
+  scrollPos: string;
+  totalSize: number;
+  sizesCumulative: number[];
+  sizes: number[];
+  elementSize: number;
+  startIndex: number;
+  endIndex: number;
+  _prevStartIndex: number;
+  _prevEndIndex: number;
+  _minStartIndex: number;
+  _maxEndIndex: number;
+  onWindowResize: any;
+  onZone: any;
+  _timeout;
 
+  @Input("vsFor")
   set originalCollection(value: any[]) {
     this._originalCollection = value || [];
     if (this.scrollParent) {
@@ -144,6 +134,8 @@ export class VsForDirective implements OnInit, OnDestroy, OnChanges {
     } else {
       this.postDigest(this.refresh.bind(this));
     }
+    // this.slicedCollection = value.slice(1, -1);
+    // this.view.setLocal('vsCollection', this.slicedCollection);
   }
   get originalCollection() {
     return this._originalCollection;
@@ -155,13 +147,7 @@ export class VsForDirective implements OnInit, OnDestroy, OnChanges {
   get slicedCollection() {
     return this._slicedCollection;
   }
-  constructor(
-    private _element: ElementRef,
-    private _viewContainer: ViewContainerRef,
-    private _templateRef: TemplateRef<any>,
-    private _renderer: Renderer2,
-    private _ngZone: NgZone
-  ) {
+  constructor(private _element: ElementRef, private _viewContainer: ViewContainerRef, private _templateRef: TemplateRef<any>, private _ngZone: NgZone) {
     let _prevClientSize: number;
     const reinitOnClientHeightChange = () => {
       if (!this.scrollParent) {
@@ -212,7 +198,8 @@ export class VsForDirective implements OnInit, OnDestroy, OnChanges {
   }
   public ngOnInit() {
     this.view = this._viewContainer.createEmbeddedView(this._templateRef);
-    this.parent = nextElementSibling(this._element.nativeElement);
+    // this.parent = nextElementSibling(this._element.nativeElement);
+    this.parent = this.view.rootNodes[0];
 
     this.initPlaceholders();
     this.__horizontal = false;

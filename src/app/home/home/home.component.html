@@ -5,10 +5,22 @@
         <div *ngIf="recentlyListenedTracks.length > 0" class="wrapper-home">
           <h4>Recently listened</h4>
           <ol class="list-group list-recently">
-            <li class="list-group-item d-flex" *ngFor="let track of recentlyListenedTracks" (click)="playTrack(track)">
+            <li
+              class="list-group-item d-flex"
+              *ngFor="let track of recentlyListenedTracks"
+              (click)="playTrack(track)"
+            >
               <div class="image-wrapper col-3 col-md-2 col-lg-1">
-                <span *ngIf="track.nowPlaying === true" class="glyph glyph-play" aria-hidden="true"></span>
-                <img *ngIf="track.nowPlaying === false" class="nowplaying-image" src="{{ track.image }}" />
+                <span
+                  *ngIf="track.nowPlaying === true"
+                  class="glyph glyph-play"
+                  aria-hidden="true"
+                ></span>
+                <img
+                  *ngIf="track.nowPlaying === false"
+                  class="nowplaying-image"
+                  src="{{ track.image }}"
+                />
               </div>
               <div class="details-wrapper col-6 col-md-7 col-lg-8">
                 {{ track.artist }} &bull; {{ track.title }} <br />
@@ -18,10 +30,15 @@
                 <span *ngIf="!track.nowPlaying">
                   {{ track.date | date: "shortTime" }}
                   <span class="small muted">
-                    <span *ngIf="!track.nowPlaying">{{ track.date | date: "mediumDate" }}</span>
+                    <span *ngIf="!track.nowPlaying">{{
+                      track.date | date: "mediumDate"
+                    }}</span>
                   </span>
                 </span>
-                <span *ngIf="track.nowPlaying" [ngClass]="{ 'now-playing': track.nowPlaying }">
+                <span
+                  *ngIf="track.nowPlaying"
+                  [ngClass]="{ 'now-playing': track.nowPlaying }"
+                >
                   Playing
                 </span>
                 <span class="small muted" *ngIf="track.nowPlaying">
@@ -35,7 +52,10 @@
           <h4>Recently added / modified</h4>
           <div class="row">
             <div class="media-container col list-recently-added">
-              <div class="album-panel media-panel" *ngFor="let album of recentlyAdded">
+              <div
+                class="album-panel media-panel"
+                *ngFor="let album of recentlyAdded"
+              >
                 <mdb-album [album]="album"></mdb-album>
               </div>
             </div>
@@ -50,15 +70,36 @@
       <div class="col">
         <h4>Login to last.fm</h4>
         <br />
-        <form role="form" class="form-horizontal" (ngSubmit)="onSubmit()" [ngClass]="{ 'theme-alt': theme === 'dark' }" #lastfmForm="ngForm">
+        <form
+          role="form"
+          class="form-horizontal"
+          (ngSubmit)="onSubmit()"
+          [ngClass]="{ 'theme-alt': theme === 'dark' }"
+          #lastfmForm="ngForm"
+        >
           <div class="form-group row">
-            <label for="name" class="col-12 col-sm-4 col-lg-2 col-form-label">Username</label>
+            <label for="name" class="col-12 col-sm-4 col-lg-2 col-form-label"
+              >Username</label
+            >
             <div class="col col-sm-8 col-lg-10">
-              <input type="text" class="form-control" id="name" placeholder="e.g. JohnDoe" required name="name" [(ngModel)]="user.name" #name="ngModel" />
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="e.g. JohnDoe"
+                required
+                name="name"
+                [(ngModel)]="user.name"
+                #name="ngModel"
+              />
             </div>
           </div>
           <div class="form-group row">
-            <label for="password" class="col-12 col-sm-4 col-lg-2 col-form-label">Password</label>
+            <label
+              for="password"
+              class="col-12 col-sm-4 col-lg-2 col-form-label"
+              >Password</label
+            >
             <div class="col col-sm-8 col-lg-10">
               <input
                 type="password"
@@ -74,7 +115,11 @@
           </div>
           <div class="form-group row">
             <div class="col offset-md-4 offset-lg-2">
-              <button class="btn btn-primary" type="submit" [disabled]="!lastfmForm.form.valid">
+              <button
+                class="btn btn-primary"
+                type="submit"
+                [disabled]="!lastfmForm.form.valid"
+              >
                 Login
               </button>
               <button class="btn btn-link" type="button" (click)="skipLastfm()">

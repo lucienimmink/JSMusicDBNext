@@ -41,7 +41,6 @@
         transition: -webkit-transform 0.3s ease-out;
         transition: all 0.3s ease-out;
         opacity: 1;
-        will-change: transform, opacity;
         canvas {
             display: none;
         }
@@ -337,7 +336,6 @@ footer.hidePlayer {
     transform-origin: center;
     transition: all 0.1s linear;
     pointer-events: none;
-    will-change: margin;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;

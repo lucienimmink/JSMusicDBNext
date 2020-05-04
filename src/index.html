@@ -8,14 +8,9 @@
     <meta name="theme-color" content="#0078D7" />
     <meta name="Description" content="Web standards based music player" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="1024x1024"
-      href="/global/images/logo.png"
-    />
+    <link rel="icon" type="image/png" sizes="1024x1024" href="/global/images/logo.png" />
     <link rel="apple-touch-icon" href="/global/images/logo-180.png" />
-    <link rel="prefetch" href="/global/css/light.css" as="style" />
+    <link rel="preload" href="/global/css/light.css" as="style" />
     <link rel="prefetch" href="/global/css/dark.css" as="style" />
   </head>
 
@@ -23,7 +18,11 @@
     <mdb-root>
       <div class="preloader">
         <div>
-          <img src="global/images/logo.png" width="250" alt="Logo" />
+          <picture>
+            <source srcset="global/images/logo.webp" type="image/webp" />
+            <source srcset="global/images/logo.png" width="250" alt="Logo" type="image/jpeg" />
+            <img src="global/images/logo.png" width="250" alt="Logo" />
+          </picture>
         </div>
         <br />
         <br />
@@ -37,8 +36,7 @@
       </div>
     </mdb-root>
     <noscript>
-      Unfortunately JavaScript is needed for this JavaScript based client
-      webaudio based music database.
+      Unfortunately JavaScript is needed for this JavaScript based client webaudio based music database.
     </noscript>
 
     <script>

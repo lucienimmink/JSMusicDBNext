@@ -5,12 +5,12 @@ import { NowPlayingComponent } from "./now-playing/now-playing.component";
 const routes: Routes = [
   {
     path: "",
-    component: NowPlayingComponent
-  }
+    component: NowPlayingComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class NowPlayingRoutingModule {}

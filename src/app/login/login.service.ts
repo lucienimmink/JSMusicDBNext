@@ -29,11 +29,11 @@ export class LoginService {
     }
 
     const headers = new HttpHeaders({
-      "X-Cred": payload
+      "X-Cred": payload,
     });
 
     const options = {
-      headers
+      headers,
     };
 
     return this.http

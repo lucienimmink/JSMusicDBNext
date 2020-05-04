@@ -1,12 +1,12 @@
 .preloader {
-    width: 320px;
+  width: 320px;
+  margin: 0 auto;
+  text-align: center;
+  background: gray("100");
+  .progress-bar {
+    height: 6px;
+    width: 180px;
     margin: 0 auto;
-    text-align: center;
-    background: gray('100');
-    .progress-bar {
-        height: 0;
-        width: 180px;
-        margin: 0 auto;
-        float: none;
-    }
+    float: none;
+  }
 }

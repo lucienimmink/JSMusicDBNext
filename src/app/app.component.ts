@@ -1,6 +1,12 @@
 declare const Windows: any;
 
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from "@angular/core";
 import { tinycolor } from "@thebespokepixel/es-tinycolor";
 import { get, set } from "idb-keyval";
 import { Observable, Subscription } from "rxjs";
@@ -21,7 +27,17 @@ import { PathService } from "./utils/path.service";
   // tslint:disable-next-line:component-selector
   selector: "mdb-root",
   templateUrl: "./app.component.html",
-  providers: [CollectionService, CoreService, PathService, PlayerService, LastfmService, AnimationService, ConfigService, PlaylistService, ColorService]
+  providers: [
+    CollectionService,
+    CoreService,
+    PathService,
+    PlayerService,
+    LastfmService,
+    AnimationService,
+    ConfigService,
+    PlaylistService,
+    ColorService
+  ]
 })
 export class AppComponent implements OnInit, OnDestroy {
   public isPlaying = false;
@@ -53,27 +69,35 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     this.viewContainerRef = viewContainerRef;
 
-    this.subscription = this.playerService.playlistAnnounced$.subscribe(playerData => {
-      this.isPlaying = playerData ? true : false; // stopped playlist return a null
-    });
+    this.subscription = this.playerService.playlistAnnounced$.subscribe(
+      playerData => {
+        this.isPlaying = playerData ? true : false; // stopped playlist return a null
+      }
+    );
     if (this.booleanState("tracking-state")) {
       navigator.geolocation.getCurrentPosition(
         pos => {
-          this.configService.getSunriseInfo(pos.coords.latitude, pos.coords.longitude).subscribe(data => {
-            // set this info back in the service
-            this.configService.startDate = new Date(data.results.sunset);
-            this.configService.stopDate = new Date(data.results.sunrise);
-            this.configService.stopDate.setDate(this.configService.stopDate.getDate() + 1);
-            this.configService.geoSource.next();
-            this.configService.applyTheme();
-          });
+          this.configService
+            .getSunriseInfo(pos.coords.latitude, pos.coords.longitude)
+            .subscribe(data => {
+              // set this info back in the service
+              this.configService.startDate = new Date(data.results.sunset);
+              this.configService.stopDate = new Date(data.results.sunrise);
+              this.configService.stopDate.setDate(
+                this.configService.stopDate.getDate() + 1
+              );
+              this.configService.geoSource.next();
+              this.configService.applyTheme();
+            });
         },
         err => {
           this.configService.startDate = new Date();
           this.configService.startDate.setHours(21, 0, 0);
 
           this.configService.stopDate = new Date();
-          this.configService.stopDate.setDate(this.configService.stopDate.getDate() + 1);
+          this.configService.stopDate.setDate(
+            this.configService.stopDate.getDate() + 1
+          );
           this.configService.stopDate.setHours(7, 0, 0);
           this.configService.geoSource.next();
           this.configService.applyTheme();
@@ -84,7 +108,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.configService.startDate.setHours(21, 0, 0);
 
       this.configService.stopDate = new Date();
-      this.configService.stopDate.setDate(this.configService.stopDate.getDate() + 1);
+      this.configService.stopDate.setDate(
+        this.configService.stopDate.getDate() + 1
+      );
       this.configService.stopDate.setHours(7, 0, 0);
       this.configService.geoSource.next();
       this.configService.applyTheme();
@@ -96,11 +122,15 @@ export class AppComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.mediaObject = document.querySelector("audio");
     const canPlayType = this.mediaObject.canPlayType("audio/flac");
-    this.isFlacSupported = canPlayType === "probably" || canPlayType === "maybe";
+    this.isFlacSupported =
+      canPlayType === "probably" || canPlayType === "maybe";
   }
 
   public getCollection() {
-    this.collectionService.getCollection().subscribe(data => this.fillCollection(data), error => console.error(error));
+    this.collectionService.getCollection().subscribe(
+      data => this.fillCollection(data),
+      error => console.error(error)
+    );
   }
   public fillCollection(data: any): void {
     localStorage.setItem("lastParsed", new Date().getTime().toString());
@@ -128,7 +158,9 @@ export class AppComponent implements OnInit, OnDestroy {
       } else {
         this.isReloading = false;
         if (this.hasBeenReloading) {
-          document.querySelector("mdb-player").dispatchEvent(new CustomEvent("external.mdbscanstop"));
+          document
+            .querySelector("mdb-player")
+            .dispatchEvent(new CustomEvent("external.mdbscanstop"));
         }
         this.getCollection();
       }
