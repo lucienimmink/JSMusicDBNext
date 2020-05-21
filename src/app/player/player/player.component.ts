@@ -14,11 +14,12 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AnimationService } from "./../../utils/animation.service";
-import { addCustomCss, addCustomCssBasedOnRGBA, getColorsFromRGB, getDominantColor, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
+import { addCustomCss, addCustomCssBasedOnRGBA, getColorsFromRGBWithBGColor, getDominantColor, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
 import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
 import { PlayerService } from "./../player.service";
+import { ConfigService } from "../../utils/config.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -37,6 +38,7 @@ export class PlayerComponent implements OnDestroy {
   private subscription5: Subscription;
   private subscription6: Subscription;
   private subscription7: Subscription;
+  private subscription8: Subscription;
   private playlist: Playlist;
   private trackIndex: any;
   private track: Track;
@@ -63,6 +65,7 @@ export class PlayerComponent implements OnDestroy {
   private dataArray: Uint8Array;
   private hearableBars: number;
   private canShowAnimation: boolean = false;
+  private bgColor: string = '#fff';
 
   constructor(
     private pathService: PathService,
@@ -71,7 +74,8 @@ export class PlayerComponent implements OnDestroy {
     private lastFMService: LastfmService,
     private coreService: CoreService,
     private animationService: AnimationService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private configService: ConfigService
   ) {
     this.subscription = this.playerService.playlistAnnounced$.subscribe(playerData => {
       if (playerData) {
@@ -204,12 +208,21 @@ export class PlayerComponent implements OnDestroy {
       getDominantColor(
         image,
         rgba => {
-          const colors = getColorsFromRGB(rgba);
+          const colors = getColorsFromRGBWithBGColor(rgba, this.bgColor);
           this.colorService.setColor(colors.rgba);
+          colors.rgba = colors.textLight;
           addCustomCss(colors);
         },
         true
       );
+    });
+    this.subscription8 = this.configService.mode$.subscribe(mode => {
+      this.bgColor = (mode === 'light') ? "#fff" : '#000';
+      if (this.usesDynamicAccentColor && this.rgba) {
+        const colors = getColorsFromRGBWithBGColor(this.rgba, this.bgColor);
+        colors.rgba = colors.textLight;
+        addCustomCss(colors);
+      }
     });
   }
   private draw() {
@@ -334,6 +347,7 @@ export class PlayerComponent implements OnDestroy {
     this.subscription5.unsubscribe();
     this.subscription6.unsubscribe();
     this.subscription7.unsubscribe();
+    this.subscription8.unsubscribe();
     this.mediaObject.removeEventListener("ended");
     this.mediaObject.removeEventListener("timeupdate");
     this.mediaObject.removeEventListener("play");
@@ -498,8 +512,9 @@ export class PlayerComponent implements OnDestroy {
       getDominantColorByURL(
         art,
         rgba => {
-          const colors = getColorsFromRGB(rgba);
+          const colors = getColorsFromRGBWithBGColor(rgba, this.bgColor);
           this.colorService.setColor(colors.rgba);
+          colors.rgba = colors.textLight;
           addCustomCss(colors);
         },
         false

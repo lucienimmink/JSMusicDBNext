@@ -101,6 +101,20 @@ export function getColorsFromRGB(rgba: any): any {
     letterColor: getHighestContrast(new tinycolor(rgba)),
   };
 }
+export function getColorsFromRGBWithBGColor(rgba: any, bgColor: string): any {
+  const textLight = getReadableColor(rgba, bgColor);
+  const textDark = getReadableColor(rgba, bgColor);
+  const lighten = convertToStrict(new tinycolor(textLight).lighten().toRgb());
+  const darken = convertToStrict(new tinycolor(textDark).darken().toRgb());
+  return {
+    rgba,
+    textLight,
+    textDark,
+    lighten,
+    darken,
+    letterColor: getHighestContrast(new tinycolor(rgba)),
+  };
+}
 export function convertRGBtoString(rgba: any): string {
   return new tinycolor(rgba).toRgbString();
 }
