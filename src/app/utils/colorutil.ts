@@ -92,12 +92,16 @@ export function getColorsFromRGB(rgba: any): any {
   const textDark = getReadableColor(rgba, "#000");
   const lighten = convertToStrict(new tinycolor(textLight).lighten().toRgb());
   const darken = convertToStrict(new tinycolor(textDark).darken().toRgb());
+  const lighten30 = convertToStrict(new tinycolor(textLight).lighten(30).toRgb());
+  const darken30 = convertToStrict(new tinycolor(textDark).darken(30).toRgb());
   return {
     rgba,
     textLight,
     textDark,
     lighten,
     darken,
+    lighten30,
+    darken30,
     letterColor: getHighestContrast(new tinycolor(rgba)),
   };
 }
@@ -106,12 +110,16 @@ export function getColorsFromRGBWithBGColor(rgba: any, bgColor: string): any {
   const textDark = getReadableColor(rgba, bgColor);
   const lighten = convertToStrict(new tinycolor(textLight).lighten().toRgb());
   const darken = convertToStrict(new tinycolor(textDark).darken().toRgb());
+  const lighten30 = convertToStrict(new tinycolor(textLight).lighten(30).toRgb());
+  const darken30 = convertToStrict(new tinycolor(textDark).darken(30).toRgb());
   return {
     rgba,
     textLight,
     textDark,
     lighten,
     darken,
+    lighten30,
+    darken30,
     letterColor: getHighestContrast(new tinycolor(rgba)),
   };
 }
@@ -120,7 +128,7 @@ export function convertRGBtoString(rgba: any): string {
 }
 export function addCustomCss(colors: any): void {
   const accentCSSOverrideNode: HTMLElement = document.createElement("style");
-  const { rgba, darken, lighten, textLight, textDark, letterColor } = colors;
+  const { rgba, darken, lighten, textLight, textDark, letterColor, darken30, lighten30 } = colors;
   accentCSSOverrideNode.setAttribute("type", "text/css");
   accentCSSOverrideNode.id = "custom-css-node";
   accentCSSOverrideNode.textContent = `
@@ -129,6 +137,8 @@ export function addCustomCss(colors: any): void {
         --primary: rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, 1);
         --darken: rgba(${darken.r}, ${darken.g}, ${darken.b}, 1);
         --lighten: rgba(${lighten.r}, ${lighten.g}, ${lighten.b}, 1);
+        --darken30: rgba(${darken30.r}, ${darken30.g}, ${darken30.b}, 1);
+        --lighten30: rgba(${lighten30.r}, ${lighten30.g}, ${lighten30.b}, 1);
         --text-light: rgba(${textLight.r}, ${textLight.g}, ${textLight.b}, 1);
         --text-dark: rgba(${textDark.r}, ${textDark.g}, ${textDark.b}, 1);
         --letter-color: ${letterColor};

@@ -35,6 +35,9 @@ h4,
     background: var(--text-dark);
   }
 }
+.progress {
+  background-color: var(--darken30);
+}
 .progress-bar {
   .progress-circle {
     background-color: var(--primary);
@@ -64,4 +67,9 @@ a:not([href]):not([tabindex]),
 .jumbotron img,
 .container-longlist .panel-background {
   border: 1px solid gray("100");
+}
+
+// webkit
+::-webkit-scrollbar-track {
+  background-color: var(--darken30);
 }

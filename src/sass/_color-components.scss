@@ -7,7 +7,7 @@
   .state-label {
     color: gray("900");
   }
-  &:hover {
+  &:hover, &:active {
     border-color: gray("900");
     &::before {
       background-color: gray("900");
@@ -15,7 +15,7 @@
   }
   &.active {
     background-color: var(--primary);
-    &:hover {
+    &:hover, &:active {
       background-color: var(--primary);
     }
   }
@@ -23,7 +23,8 @@
 .btn-link {
   color: var(--primary);
 }
-.btn-link:hover {
+.btn-link:hover,
+.btn-link:focus  {
   color: var(--lighten);
 }
 .btn-primary {
@@ -31,7 +32,8 @@
   background-color: var(--primary);
   color: var(--letter-color);
 }
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
   border-color: var(--primary);
   background-color: var(--lighten);
 }
@@ -145,6 +147,7 @@ h4,
     a {
       &:hover,
       &:focus,
+      &:active,
       &.active {
         color: gray("100");
         background: var(--darken);
@@ -201,6 +204,9 @@ body {
 // player
 .player {
   background: gray("200");
+}
+.progress {
+  background-color: var(--lighten30);
 }
 .player .progress .progress-bar {
   background-color: var(--primary);
@@ -266,7 +272,7 @@ a:not([href]):not([tabindex]),
 
 // webkit
 ::-webkit-scrollbar-track {
-  background-color: gray("400");
+  background-color: var(--lighten30);
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--primary);
