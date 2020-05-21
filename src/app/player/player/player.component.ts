@@ -14,7 +14,7 @@ import { musicdbcore } from "./../../org/arielext/musicdb/core";
 import Album from "./../../org/arielext/musicdb/models/Album";
 import Track from "./../../org/arielext/musicdb/models/Track";
 import { AnimationService } from "./../../utils/animation.service";
-import { addCustomCss, addCustomCssBasedOnRGBA, getColorsFromRGBWithBGColor, getDominantColor, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
+import { addCustomCss, getColorsFromRGBWithBGColor, getDominantColor, getDominantColorByURL, removeCustomCss } from "./../../utils/colorutil";
 import { CoreService } from "./../../utils/core.service";
 import { LastfmService } from "./../../utils/lastfm.service";
 import { PathService } from "./../../utils/path.service";
@@ -479,8 +479,10 @@ export class PlayerComponent implements OnDestroy {
       this.audioCtx.resume();
     }
     this.usesDynamicAccentColor = this.booleanState("dynamic-accent-color");
-    if (this.usesDynamicAccentColor) {
-      addCustomCssBasedOnRGBA(this.rgba);
+    if (this.usesDynamicAccentColor && this.rgba) {
+      const colors = getColorsFromRGBWithBGColor(this.rgba, this.bgColor);
+      colors.rgba = colors.textLight;
+      addCustomCss(colors);
     }
   }
 

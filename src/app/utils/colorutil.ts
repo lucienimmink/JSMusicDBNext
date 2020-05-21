@@ -146,12 +146,6 @@ export function addCustomCss(colors: any): void {
   removeCustomCss();
   document.querySelector("body").appendChild(accentCSSOverrideNode);
 }
-export function addCustomCssBasedOnRGBA(rgba: any): void {
-  if (rgba) {
-    const colors = getColorsFromRGB(rgba);
-    addCustomCss(colors);
-  }
-}
 export function removeCustomCss(): void {
   if (document.querySelector("#custom-css-node")) {
     document.querySelector("#custom-css-node").remove();
