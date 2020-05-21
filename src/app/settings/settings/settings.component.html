@@ -333,6 +333,10 @@
           <span class="">Build version: </span>
           <span>{{ version }}</span>
         </div>
+        <div class="settings-page-p" *ngIf="connectionversion">
+          <span class="">{{ connectiontype }} version: </span>
+          <span>{{ connectionversion }}</span>
+        </div>
       </div>
     </div>
   </div>

@@ -13,6 +13,7 @@ import { LastfmService } from "../../utils/lastfm.service";
 import { PathService } from "../../utils/path.service";
 import { TimeFormatPipe } from "../../utils/time-format.pipe";
 import { Settings } from "../settings";
+import { LoginService } from "../../login/login.service";
 
 declare function require(moduleName: string): any;
 const { version: appVersion } = require("../../../../package.json");
@@ -26,6 +27,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public lastfmusername: string;
   public connectiontype = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
   public connectiondetails = "";
+  public connectionversion = "";
   public savePlaylistState: boolean = this.booleanState("save-playlist-state");
   public isContinuesplay: boolean = this.booleanState("continues-play");
   public hasDynamicAccentColor: boolean = this.booleanState("dynamic-accent-color");
@@ -68,7 +70,8 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private collectionService: CollectionService,
     private router: Router,
     private configService: ConfigService,
-    private colorService: ColorService
+    private colorService: ColorService,
+    private loginService: LoginService
   ) {
     this.settings = new Settings();
     this.core = this.coreService.getCore();
@@ -141,6 +144,13 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (window.deferredPrompt) {
       this.addToHomescreen = true;
     }
+    if (this.connectiontype === "node-mp3stream") {
+      this.loginService.versionCheck(this.connectiondetails).subscribe(
+        data => {
+          // @ts-ignore
+          this.connectionversion = data.version;
+        });
+      }
   }
 
   public ngOnDestroy() {
