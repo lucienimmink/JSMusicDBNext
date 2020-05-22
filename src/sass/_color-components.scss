@@ -205,9 +205,6 @@ body {
 .player {
   background: gray("200");
 }
-.progress {
-  background-color: var(--lighten30);
-}
 .player .progress .progress-bar {
   background-color: var(--primary);
 }
@@ -233,7 +230,7 @@ body {
 
 // progress
 .progress {
-  background: gray("400");
+  background-color: var(--lighten30);
 }
 .progress-bar {
   .progress-circle {
