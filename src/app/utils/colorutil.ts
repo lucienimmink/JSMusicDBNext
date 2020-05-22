@@ -120,7 +120,7 @@ export function getColorsFromRGBWithBGColor(rgba: any, bgColor: string): any {
     darken,
     lighten30,
     darken30,
-    letterColor: getHighestContrast(new tinycolor(rgba)),
+    letterColor: getHighestContrast(new tinycolor(textLight)),
   };
 }
 export function convertRGBtoString(rgba: any): string {
