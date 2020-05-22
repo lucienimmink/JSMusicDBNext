@@ -33,7 +33,7 @@
     "@angular/platform-browser": "^9.1.9",
     "@angular/platform-browser-dynamic": "^9.1.9",
     "@angular/router": "^9.1.9",
-    "@thebespokepixel/es-tinycolor": "^1.0.7",
+    "@thebespokepixel/es-tinycolor": "^2.0.1",
     "album-art-component": "^1.3.5",
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
