@@ -25,7 +25,7 @@ const { version: appVersion } = require("../../../../package.json");
 export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
   public totals: any;
   public lastfmusername: string;
-  public connectiontype = "node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
+  public connectiontype = "Node-mp3stream"; // we can implement more connection types later on (dsm, local, etc)
   public connectiondetails = "";
   public connectionversion = "";
   public savePlaylistState: boolean = this.booleanState("save-playlist-state");
@@ -144,7 +144,7 @@ export class SettingsComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (window.deferredPrompt) {
       this.addToHomescreen = true;
     }
-    if (this.connectiontype === "node-mp3stream") {
+    if (this.connectiontype === "Node-mp3stream") {
       this.loginService.versionCheck(this.connectiondetails).subscribe(
         data => {
           // @ts-ignore
