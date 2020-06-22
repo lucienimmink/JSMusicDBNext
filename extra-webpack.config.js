@@ -14,15 +14,17 @@ module.exports = {
       whitelistPatterns: [/^tooltip-/],
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
     }),
-    new CopyWebpackPlugin([
-      {
-        from: "./src/app/sw.js",
-        to: "sw.js"
-      },
-      {
-        from: "./src/global",
-        to: "global"
-      }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: "./src/app/sw.js",
+          to: "sw.js"
+        },
+        {
+          from: "./src/global",
+          to: "global"
+        }
+      ]
+    })
   ]
 };

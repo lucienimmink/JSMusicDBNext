@@ -115,47 +115,47 @@
 <aside class="d-none d-lg-block side-nav-xl">
   <ul class="side-nav__content nav flex-column">
     <li [ngClass]="{ active: page === 'Home' }" class="nav-item">
-      <a routerLink="/home" tooltip="Home" triggers="hover">
+      <a routerLink="/home" tooltip="Home" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-home"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Letters' }" class="d-md-none nav-item">
-      <a routerLink="/letters" tooltip="Letters" triggers="hover">
+      <a routerLink="/letters" tooltip="Letters" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-characters"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Artists' }" class="nav-item">
-      <a routerLink="/artists" tooltip="Artists" triggers="hover">
+      <a routerLink="/artists" tooltip="Artists" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-people"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Albums' }" class="nav-item">
-      <a routerLink="/albums" tooltip="Albums" triggers="hover">
+      <a routerLink="/albums" tooltip="Albums" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-music-album"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Years' }" class="nav-item">
-      <a routerLink="/years" tooltip="Years" triggers="hover">
+      <a routerLink="/years" tooltip="Years" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-calendar"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Playlists' }" class="nav-item">
-      <a routerLink="/playlists" tooltip="Playlists" triggers="hover">
+      <a routerLink="/playlists" tooltip="Playlists" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-music-info"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Now playing' }" class="nav-item">
-      <a routerLink="/now-playing" tooltip="Now Playing" triggers="hover">
+      <a routerLink="/now-playing" tooltip="Now Playing" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-audio"></span>
       </a>
     </li>
     <li *ngIf="manualScrobblingList.length > 0" [ngClass]="{ active: page === 'Scrobble cache' }" class="nav-item">
-      <a routerLink="/scrobble-cache" tooltip="Scrobble cache ({{ manualScrobblingList.length }})" triggers="hover">
+      <a routerLink="/scrobble-cache" tooltip="Scrobble cache ({{ manualScrobblingList.length }})" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-upload"></span>
       </a>
     </li>
     <li [ngClass]="{ active: page === 'Settings' }" class="nav-item">
-      <a routerLink="/settings" tooltip="Settings" triggers="hover">
+      <a routerLink="/settings" tooltip="Settings" triggers="hover" placement="left" container="body">
         <span class="glyph glyph-settings"></span>
       </a>
     </li>

@@ -268,13 +268,14 @@ a:not([href]):not([tabindex]),
 }
 
 // webkit
+/* purgecss start ignore */
 ::-webkit-scrollbar-track {
   background-color: var(--lighten30);
 }
 ::-webkit-scrollbar-thumb {
   background-color: var(--primary);
 }
-
+/* purgecss end ignore */
 .media-panel,
 .nowplaying-image,
 .jumbotron img,
