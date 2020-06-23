@@ -11,7 +11,7 @@ module.exports = {
   plugins: [
     new PurgecssPlugin({
       whitelist: ["tooltip"],
-      whitelistPatterns: [/^tooltip-/],
+      whitelistPatterns: [/^tooltip-/, /^bs-tooltip-/, /^in$/, /^right$/, /^show$/],
       paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true })
     }),
     new CopyWebpackPlugin({
