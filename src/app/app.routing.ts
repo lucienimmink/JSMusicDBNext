@@ -1,4 +1,3 @@
-import { ModuleWithProviders } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 import { LoginService } from "./login/login.service";
@@ -40,4 +39,4 @@ const appRoutes: Routes = [
 
 export const appRoutingProviders: any[] = [AuthGuardService, LoginService];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules });
+export const routing = RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules });
