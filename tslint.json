@@ -1,6 +1,9 @@
 {
   "extends": ["tslint:latest", "tslint-config-prettier"],
   "rules": {
+    "deprecation": {
+      "severity": "warning"
+    },
     "max-line-length": {
       "options": [160]
     },
