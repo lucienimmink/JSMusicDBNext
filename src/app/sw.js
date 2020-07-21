@@ -10,21 +10,18 @@ const CACHE_NAME = "v1";
 
 self.addEventListener("fetch", function(event) {
   // SKIP cachecheck if it's the streaming path
-  // Same for authentication util calls
   if (
     event.request.url.indexOf("/listen") !== -1 ||
-    event.request.url.indexOf("file://") !== -1 ||
-    event.request.url.indexOf("/version") !== -1 ||
-    event.request.url.indexOf("/public-key") !== -1
+    event.request.url.indexOf("file://") !== -1
   ) {
     // nothing to see here, carry on
-  } else if (event.request.url.indexOf("music.json") !== -1 || event.request.url.indexOf("progress.txt") !== -1) {
+  } else if (event.request.url.indexOf("music.json") !== -1) {
     // send back from the cache but always update the cache with the networks version.
     event.respondWith(fromCache(event.request));
     event.waitUntil(update(event.request).then(refresh));
   } else {
     event.respondWith(
-      fromCache(event.request).then(function(response) {
+      caches.match(event.request).then(function(response) {
         // Cache hit - return response
         if (response) {
           return response;
@@ -41,9 +38,24 @@ self.addEventListener("fetch", function(event) {
           if (!response) {
             return response;
           }
-          addToCache(event.request, response),then((function () {
+          if (
+            fetchRequest.url.indexOf("/data/") === -1 &&
+            fetchRequest.url.indexOf("lastfm-img2") === -1
+          ) {
             return response;
-          }));
+          }
+
+          // IMPORTANT: Clone the response. A response is a stream
+          // and because we want the browser to consume the response
+          // as well as the cache consuming the response, we need
+          // to clone it so we have two streams.
+          var responseToCache = response.clone();
+
+          caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(event.request, responseToCache);
+          });
+
+          return response;
         });
       })
     );
@@ -53,12 +65,6 @@ self.addEventListener("fetch", function(event) {
 function fromCache(request) {
   return caches.open(CACHE_NAME).then(function(cache) {
     return cache.match(request);
-  });
-}
-
-function addToCache(request, response) {
-  return caches.open(CACHE_NAME).then(function(cache) {
-    return cache.put(request, response.clone());
   });
 }
 
