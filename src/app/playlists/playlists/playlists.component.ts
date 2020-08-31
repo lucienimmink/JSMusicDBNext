@@ -20,6 +20,7 @@ import { PlaylistService } from "./../playlist.service";
 })
 export class PlaylistsComponent implements OnInit, OnDestroy {
   public playlist: Playlist;
+  public playlistLength: number = 0;
   public currentPlaylist: any;
   public loading = false;
   public username: string = localStorage.getItem("lastfm-username");
@@ -81,26 +82,6 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.pathService.announcePage("Playlists");
     this.artists = this.core.artistsList();
     this.ownPlaylists = [];
-
-    // TODO this should a call from the backend
-    if (localStorage.getItem("customlisttest")) {
-      const list: any[] = JSON.parse(localStorage.getItem("customlisttest"));
-      if (list) {
-        list.forEach(item => {
-          const playlist = new Playlist();
-          playlist.name = item.name;
-          playlist.isOwn = true;
-          item.tracks.forEach(id => {
-            const track: Track = this.core.getTrackById(id);
-            if (track && track.title) {
-              playlist.tracks.push(track);
-            }
-          });
-
-          this.ownPlaylists.push(playlist);
-        });
-      }
-    }
   }
   public ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -112,16 +93,19 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
     this.showStartingArtist = false;
     if (name === "current") {
       this.playlist = this.currentPlaylist;
+      this.calculateLength();
       this.loading = false;
     } else if (name === "last.fm") {
       this.lastfmservice.getLovedTracks(this.username).subscribe(data => {
         this.playlist = this.playlistService.extractTracks(data.lovedtracks.track);
+        this.calculateLength();
         this.loading = false;
       });
     } else if (name === "random") {
       this.playlist = this.playlistService.generateRandom();
       this.playlist.isContinues = true;
       this.playlist.type = name;
+      this.calculateLength();
       this.loading = false;
     } else if (name === "radio") {
       this.playlist = this.generateRadio();
@@ -129,6 +113,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       this.askForStartingArtist();
     } else if (name instanceof Playlist) {
       this.playlist = name;
+      this.calculateLength();
       this.loading = false;
     } else {
       console.info("unknown playlist", name);
@@ -140,6 +125,7 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
       this.playlist = this.playlistService.extractArtists(data);
       this.playlist.isContinues = true;
       this.playlist.type = "radio";
+      this.calculateLength();
       this.loading = false;
     });
   }
@@ -177,11 +163,19 @@ export class PlaylistsComponent implements OnInit, OnDestroy {
         }
       }
       // if no new similair artists are found this is the end of the line.
+      this.calculateLength();
     });
   }
   private askForStartingArtist(): void {
     this.loading = false;
     this.playlist = null;
     this.showStartingArtist = true;
+  }
+
+  private calculateLength(): void {
+    this.playlistLength = 0;
+    this.playlist.tracks.forEach((track: Track) => {
+      this.playlistLength += track.duration;
+    })
   }
 }

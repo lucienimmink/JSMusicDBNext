@@ -45,15 +45,7 @@
       <div class="col-12 col-lg-9 offset-lg-3" *ngIf="playlist && !loading && !showStartingArtist">
         <h4 class="playlists-header">
           {{ playlist.name }}
-          <span class="small muted color-type-secondary">({{ playlist.tracks.length }})</span>
-          &nbsp;
-          <a (click)="updatePlaylist(playlist)" *ngIf="playlist.isOwn">
-            <span class="glyph glyph-edit small"></span>
-          </a>
-          &nbsp;
-          <a (click)="removePlaylist(playlist)" *ngIf="playlist.isOwn">
-            <span class="glyph glyph-delete small"></span>
-          </a>
+          <span class="small muted color-type-secondary">({{ playlist.tracks.length }} / {{ playlistLength | timeFormat }} )</span>
         </h4>
         <div class="animated-page" *ngIf="playlist && playlist.tracks && playlist.tracks.length !== 0">
           <mdb-tracklist [playlist]="playlist" *ngIf="!loading"></mdb-tracklist>
