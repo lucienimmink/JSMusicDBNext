@@ -55,7 +55,7 @@
   }
   .row .btn {
     font-size: 24px;
-    transition: all 0.25s linear;
+    transition: all 0.25s ease-in-out;
     border-radius: 50%;
     text-align: center;
     display: inline-block;
@@ -71,13 +71,10 @@
     position: relative;
     margin: -1px 0 0 4px;
   }
+  .row .btn:active,
   .row .btn.active {
     background: var(--primary);
     color: var(--letter-color);
-  }
-  .row .btn:active {
-    background: gray("100");
-    color: var(--primary);
   }
   .col-player-art {
     width: 75px;

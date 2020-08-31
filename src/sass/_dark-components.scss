@@ -31,9 +31,13 @@ h4,
 }
 // player
 .player {
-  .row .btn:active {
+  .row .btn:active, .row .btn.actvie {
     background: var(--text-dark);
   }
+}
+#nowPlaying .icons button.active,
+#nowPlaying .icons button:active {
+  background: var(--text-dark);
 }
 .progress {
   background-color: var(--darken30);
