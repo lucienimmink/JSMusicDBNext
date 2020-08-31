@@ -15,7 +15,7 @@ import { User } from "./../user";
   templateUrl: "./login.component.html"
 })
 export class LoginComponent implements OnDestroy {
-  private static readonly MINIMALSTREAMVERSION: string = "4.0.0";
+  private static readonly MINIMALSTREAMVERSION: string = "^4.0.0";
   public user: User;
   public theme: string;
   public isLoading = false;
