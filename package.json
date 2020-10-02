@@ -59,7 +59,7 @@
     "@types/node": "^12.12.62",
     "copy-webpack-plugin": "^6.1.1",
     "glob-all": "^3.2.1",
-    "purgecss-webpack-plugin": "^2.3.0",
+    "purgecss-webpack-plugin": "^3.0.0",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
