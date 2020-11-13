@@ -55,7 +55,7 @@
     "@angular-devkit/build-angular": "^0.1000.8",
     "@angular/cli": "^10.1.4",
     "@angular/compiler-cli": "^10.1.4",
-    "@angular/language-service": "^10.1.4",
+    "@angular/language-service": "^11.0.0",
     "@types/node": "^12.12.62",
     "copy-webpack-plugin": "^6.1.1",
     "glob-all": "^3.2.1",
