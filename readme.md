@@ -1,6 +1,7 @@
-# JSMusicDB Next
+# JSMusicDBNext
 
 A web standards based music database and player.
+*note*: A new version is under development. This repository is set read-only from 13-11-2020 onwards.
 
 ## Development server
 
